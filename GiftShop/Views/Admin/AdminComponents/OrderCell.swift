@@ -1,0 +1,47 @@
+//  OrderCell.swift
+//  GiftShop
+//  Created by Анастасия Набатова on 9/2/24.
+
+import SwiftUI
+
+
+struct OrderCell: View {
+    @Environment(\.presentationMode) var presentationMode
+    @StateObject var orderDetailVM: OrderDetailVM = OrderDetailVM()
+    @StateObject var statusColors = StatusColors()
+    let order: Order
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("Дата: \(Extentions.shared.formattedDate(order.date))")
+                    .font(.custom("AvenirNext", size: 18))
+                HStack {
+                    Text("Статус: ")
+                        .font(.custom("AvenirNext", size: 18))
+                    Text(order.status)
+                        .font(.custom("AvenirNext", size: 18))
+                        .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                }
+            }
+            Spacer()
+            NavigationLink(
+                destination: OrderDetail(orderDetailVM: orderDetailVM, order: order),
+                label: {
+                    Text("Подробнее")
+                        .font(.system(size: 14))
+                        .fontWeight(.medium)
+                        .frame(maxWidth: 100, minHeight: 30)
+                        .foregroundColor(.white)
+                        .background(Color(.green))
+                        .cornerRadius(20)
+                        .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
+                })
+            .buttonStyle(PlainButtonStyle())
+        }
+                           
+       
+    }
+}
+
+

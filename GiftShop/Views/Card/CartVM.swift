@@ -1,0 +1,80 @@
+//  CartVM.swift
+//  GiftShop
+//  Created by Анастасия Набатова on 8/1/24.
+
+import Foundation
+
+final class CartVM: ObservableObject {
+    
+    static let shared = CartVM()
+    private let orderService = OrderService()
+    private let productsRepository = ProductsRepository()
+    private let productsDB = ProductService.shared
+    @Published var orderProducts: [Product] = []
+    @Published var productCountMessage: String = ""
+    @Published var promoCode: String = ""
+    @Published var promoResultText: String = ""
+    @Published var isPromoSheetVisible: Bool = false
+    
+    private init() {}
+    
+    func fetchOrder() {
+        orderProducts = orderService.retreiveProducts()
+        productsRepository.save(orderProducts)
+        let (totalPrice, _) = orderService.calculatePrice()
+        productCountMessage = "\(totalPrice)"
+    }
+    
+    func addPromoProductToOrder(for product: Product) {
+        _ = orderService.addProduct(product)
+        fetchOrder()
+    }
+    
+    func updateProduct(_ product: Product, _ count: Int) {
+        product.quantity = count
+        if count == 0 {
+            orderProducts = orderService.removeProduct(product)
+        } else {
+            _ = orderService.update(product, count)
+            fetchOrder()
+        }
+    }
+    
+    func orderButtonTapped(with promoCode: String?) {
+        if let currentUser = AuthService.shared.currentUser {
+            var order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: "new", promocode: promoCode ?? "")
+            order.positions = orderProducts.map{ position in
+                return Position(id: UUID().uuidString, product: position, count: position.quantity)
+            }
+            if order.positions.isEmpty {
+                print("Заказ пуст!")
+            } else {
+                DBOrdersService.shared.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+                    switch result {
+                    case .success(let order):
+                        print("Заказ успешно отправлен. Сумма заказа: \(order.cost)")
+                        self?.orderProducts.removeAll()
+                        self?.productsRepository.save(self?.orderProducts ?? [Product]())
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
+    
+    func applyPromoCode() {
+        if promoCode.lowercased() == "promo 10" {
+            promoResultText = "Ура! Вы получили скидку 10% на заказ!"
+        } else if promoCode.lowercased() == "promo 20" {
+            promoResultText = "Ура! Вы получили скидку 20% на заказ!"
+        } else if promoCode.lowercased() == "promo 30" {
+            promoResultText = "Ура! Вы получили скидку 30% на заказ!"
+        } else {
+            promoResultText = "Такого кода не существует"
+        }
+        promoCode = ""
+    }
+}
+
+
