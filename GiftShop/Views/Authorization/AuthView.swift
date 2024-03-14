@@ -67,7 +67,7 @@ struct AuthView: View {
                         }
                         AuthService.shared.signUp(email: self.email, password: self.password) { result in
                             switch result {
-                            case .success(let user):
+                            case .success(_):
                                 self.isShowAlert.toggle()
                                 self.email = ""
                                 self.password = ""

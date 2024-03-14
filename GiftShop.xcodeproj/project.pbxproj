@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24CB5D01D14D4B98077C85E8 /* Pods_GiftShop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81595415D5B830AF89D0BC92 /* Pods_GiftShop.framework */; };
 		710082BE2B4C5643007831F5 /* ProductDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710082BD2B4C5643007831F5 /* ProductDetailVM.swift */; };
 		710082C02B4C61D1007831F5 /* CartVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710082BF2B4C61D1007831F5 /* CartVM.swift */; };
 		710082C22B4C6228007831F5 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710082C12B4C6228007831F5 /* Position.swift */; };
@@ -80,6 +81,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51EA9A0E1F65AD52C0CE210C /* Pods-GiftShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiftShop.release.xcconfig"; path = "Target Support Files/Pods-GiftShop/Pods-GiftShop.release.xcconfig"; sourceTree = "<group>"; };
+		5811559A5B9260F571E67C59 /* Pods-GiftShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiftShop.debug.xcconfig"; path = "Target Support Files/Pods-GiftShop/Pods-GiftShop.debug.xcconfig"; sourceTree = "<group>"; };
 		710082BD2B4C5643007831F5 /* ProductDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailVM.swift; sourceTree = "<group>"; };
 		710082BF2B4C61D1007831F5 /* CartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartVM.swift; sourceTree = "<group>"; };
 		710082C12B4C6228007831F5 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 		71E45FB92B48776900941CE7 /* CatalogVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogVM.swift; sourceTree = "<group>"; };
 		71E45FBC2B487DE200941CE7 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		71FF920F2B5EDCD500180598 /* DBOrdersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBOrdersService.swift; sourceTree = "<group>"; };
+		81595415D5B830AF89D0BC92 /* Pods_GiftShop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GiftShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,12 +162,21 @@
 				711ED9352B5010BE0052752F /* FirebaseCrashlytics in Frameworks */,
 				711ED92F2B5010BE0052752F /* FirebaseAppDistribution-Beta in Frameworks */,
 				711ED9332B5010BE0052752F /* FirebaseAuthCombine-Community in Frameworks */,
+				24CB5D01D14D4B98077C85E8 /* Pods_GiftShop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534DCC2B2D8A1773BE8AF9D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81595415D5B830AF89D0BC92 /* Pods_GiftShop.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7110A8C02B8381B900457615 /* ProductsEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +316,8 @@
 			children = (
 				71E45F9A2B48568F00941CE7 /* GiftShop */,
 				71E45F992B48568F00941CE7 /* Products */,
+				ED176DA6A259E0EFED3D184B /* Pods */,
+				534DCC2B2D8A1773BE8AF9D3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -387,6 +402,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		ED176DA6A259E0EFED3D184B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5811559A5B9260F571E67C59 /* Pods-GiftShop.debug.xcconfig */,
+				51EA9A0E1F65AD52C0CE210C /* Pods-GiftShop.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -394,6 +418,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 71E45FA62B48569000941CE7 /* Build configuration list for PBXNativeTarget "GiftShop" */;
 			buildPhases = (
+				59DE3B6520F14EA8B20F9013 /* [CP] Check Pods Manifest.lock */,
 				71E45F942B48568F00941CE7 /* Sources */,
 				71E45F952B48568F00941CE7 /* Frameworks */,
 				71E45F962B48568F00941CE7 /* Resources */,
@@ -481,6 +506,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		59DE3B6520F14EA8B20F9013 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GiftShop-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		71E45F942B48568F00941CE7 /* Sources */ = {
@@ -650,6 +700,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
@@ -658,6 +709,7 @@
 		};
 		71E45FA72B48569000941CE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5811559A5B9260F571E67C59 /* Pods-GiftShop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -691,6 +743,7 @@
 		};
 		71E45FA82B48569000941CE7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51EA9A0E1F65AD52C0CE210C /* Pods-GiftShop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
