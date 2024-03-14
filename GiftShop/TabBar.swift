@@ -4,23 +4,17 @@
 
 import SwiftUI
 
-enum Tab {
-    case catalog
-    case cart
-    case profile
-}
-
 struct TabBar: View {
     
     @StateObject var viewModel: MainTabViewModel
     @State private var tabColor: Color = .black
-    @State private var selectedTab: Tab = .catalog
+    private let authService = AuthService()
     
     var body: some View {
         
         TabView {
-            if AuthService.shared.currentUser != nil {
-                if AuthService.shared.currentUser?.uid == "OKYK7MdkwCTxWh5jl6MvbLk48B02" {
+            if authService.currentUser != nil {
+                if authService.currentUser?.uid == "OKYK7MdkwCTxWh5jl6MvbLk48B02" {
                     OrdersView()
                         .tabItem {
                             VStack {
@@ -59,7 +53,7 @@ struct TabBar: View {
                             }
                         }
                 }
-            } else if AuthService.shared.currentUser == nil {
+            } else if authService.currentUser == nil {
                 CatalogView()
                     .tabItem {
                         VStack {

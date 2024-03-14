@@ -14,6 +14,7 @@ struct AuthView: View {
     @State private var isTabViewShow = false
     @State private var isShowAlert = false
     @State private var isAuth = true
+    private let authService = AuthService()
     
     var body: some View {
         VStack(spacing: 20) {
@@ -49,7 +50,7 @@ struct AuthView: View {
                 Button {
                     if isAuth {
                         print("авторизация пользователя")
-                        AuthService.shared.signIn(email: email, password: password) { result in
+                        authService.signIn(email: email, password: password) { result in
                             switch result {
                             case .success(_):
                                 isTabViewShow.toggle()
@@ -65,7 +66,7 @@ struct AuthView: View {
                             self.isShowAlert.toggle()
                             return
                         }
-                        AuthService.shared.signUp(email: self.email, password: self.password) { result in
+                        authService.signUp(email: self.email, password: self.password) { result in
                             switch result {
                             case .success(_):
                                 self.isShowAlert.toggle()
@@ -118,10 +119,10 @@ struct AuthView: View {
         }
         .animation(.easeInOut(duration: 0.3), value: isAuth)
         .fullScreenCover(isPresented: $isTabViewShow) {
-            if AuthService.shared.currentUser?.uid == "VZ8WXQXaV9fUdkfpQwAjRhaGk9w1" {
+            if authService.currentUser?.uid == "VZ8WXQXaV9fUdkfpQwAjRhaGk9w1" {
                 OrdersView()
             } else {
-                let mainTabBarVM = MainTabViewModel(user: AuthService.shared.currentUser!)
+                let mainTabBarVM = MainTabViewModel(user: authService.currentUser!)
                 TabBar(viewModel: mainTabBarVM)
             }
         }

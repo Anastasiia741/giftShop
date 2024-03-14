@@ -50,7 +50,6 @@ final class OrderService {
         }
         products.append(product)
         productRepository.save(products)
-        print("---> Product add", products)
         return products
     }
     

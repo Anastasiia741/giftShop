@@ -9,19 +9,16 @@ import FirebaseFirestore
 
 class DBOrdersService {
     
-    static let shared = DBOrdersService()
     private let db = Firestore.firestore()
     private var orderHistory = [Order]()
-    private let authService = AuthService.shared
     private var ordersRef: CollectionReference { return db.collection("orders") }
-
-    init() {}
+    
+    public init() {}
     
     //MARK: - Save order in firebace
     func saveOrder(order: Order,
                    promocode: String,
                    completion: @escaping (Result<Order, Error>) -> ()) {
-
         ordersRef.document(order.id).setData(order.representation) { error in
             if let error = error {
                 completion(.failure(error))
@@ -85,9 +82,7 @@ class DBOrdersService {
                 completion([])
                 return
             }
-            
             var userOrders: [Order] = []
-            
             for document in querySnapshot!.documents {
                 if let orderId = document["id"] as? String,
                    let userId = document["userID"] as? String,
@@ -158,7 +153,6 @@ class DBOrdersService {
                     completion(.failure(error))
                     return
                 }
-                
                 guard let querySnapshot = querySnapshot else {
                     completion(.success([]))
                     return

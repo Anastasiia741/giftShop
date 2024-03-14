@@ -39,5 +39,5 @@ struct ProfileCell: View {
                              date: Date(),
                              status: "",
                              promocode: ""),
-                viewModel: ProfileVM.shared)
+                viewModel: ProfileVM())
 }

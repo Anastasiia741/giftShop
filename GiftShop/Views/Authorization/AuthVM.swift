@@ -12,7 +12,7 @@ final class AuthVM: ObservableObject {
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var isAuth: Bool = true
-    private let authService = AuthService.shared
+    private let authService = AuthService()
 }
 
 extension AuthVM {

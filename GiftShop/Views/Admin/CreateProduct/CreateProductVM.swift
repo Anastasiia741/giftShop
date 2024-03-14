@@ -8,7 +8,7 @@ import Combine
 
 final class CreateProductVM: ObservableObject {
     
-    private let productsDB = ProductService.shared
+    private let productsDB = ProductService()
     @Published var productImage: UIImage?
     @Published var imageURL: String?
     @Published var productName: String = ""

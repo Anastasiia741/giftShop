@@ -137,7 +137,7 @@ struct ProfileView: View {
                     List {
                         Section(header: Text("Ваши заказы").font(.custom("AvenirNext-bold", size: 16))) {
                             ForEach(viewModel.orders, id: \.id) { order in
-                                ProfileCell(order: order, viewModel: ProfileVM.shared)
+                                ProfileCell(order: order, viewModel: ProfileVM())
                             }
                         }
                         .listStyle(.plain)

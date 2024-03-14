@@ -6,14 +6,8 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 
-enum Errors: Error {
-    case noCurrentUser
-    case invalidImageData
-}
-
 final class ProductService {
     
-    static let shared = ProductService()
     private let db = Firestore.firestore()
     private let productCollection = Firestore.firestore().collection("products")
     private let storage = Storage.storage()
@@ -21,7 +15,7 @@ final class ProductService {
     var products: Product?
     var listenerRegistation: ListenerRegistration?
     
-    init() {}
+    public init() {}
     
     //  MARK: - add collection 'product' in firebase
     func add(product: Product, completion: @escaping (Error?) -> Void) throws {

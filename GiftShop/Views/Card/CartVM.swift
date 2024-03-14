@@ -8,8 +8,10 @@ final class CartVM: ObservableObject {
     
     static let shared = CartVM()
     private let orderService = OrderService()
+    private let authService = AuthService()
+    private let dbOrdersService = DBOrdersService()
     private let productsRepository = ProductsRepository()
-    private let productsDB = ProductService.shared
+    private let productsDB = ProductService()
     @Published var orderProducts: [Product] = []
     @Published var productCountMessage: String = ""
     @Published var promoCode: String = ""
@@ -41,7 +43,7 @@ final class CartVM: ObservableObject {
     }
     
     func orderButtonTapped(with promoCode: String?) {
-        if let currentUser = AuthService.shared.currentUser {
+        if let currentUser = authService.currentUser {
             var order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: "new", promocode: promoCode ?? "")
             order.positions = orderProducts.map{ position in
                 return Position(id: UUID().uuidString, product: position, count: position.quantity)
@@ -49,7 +51,7 @@ final class CartVM: ObservableObject {
             if order.positions.isEmpty {
                 print("Заказ пуст!")
             } else {
-                DBOrdersService.shared.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+                dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
                     switch result {
                     case .success(let order):
                         print("Заказ успешно отправлен. Сумма заказа: \(order.cost)")

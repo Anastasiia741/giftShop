@@ -49,7 +49,7 @@ final class OrderDetailVM: ObservableObject {
        }
        
        func fetchOrderStatus() {
-           if let orderID = selectedOrder?.id {
+//           if let orderID = selectedOrder?.id {
 //               orderService.fetchOrderStatus(orderID: orderID) { [weak self] (status) in
 //                   if let status = status {
 ////                       self?..showStatusButton(status: status)
@@ -57,7 +57,7 @@ final class OrderDetailVM: ObservableObject {
 //                       print("Failed to fetch order status.")
 //                   }
 //               }
-           }
+//           }
        }
     
 }

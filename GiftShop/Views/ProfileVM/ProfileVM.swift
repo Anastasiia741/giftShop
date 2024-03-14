@@ -9,6 +9,10 @@ import FirebaseStorage
 
 final class ProfileVM: ObservableObject {
     
+    private let authService = AuthService()
+    private let databaseService = DBOrdersService()
+    private let profileService = ProfileService()
+    
     @Published var orders: [Order] = []
     @Published var profile: NewUser?
     
@@ -18,16 +22,9 @@ final class ProfileVM: ObservableObject {
     @Published var imageURL = ""
     @Published var image: UIImage?
     
-    
-    static let shared = ProfileVM()
-    private let authService = AuthService.shared
-    private let databaseService = DBOrdersService.shared
-    private let profileService = ProfileService.shared
-    private let productService = ProductService.shared
-    
+
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else {
-            print("Текущий пользователь не определен")
             return
         }
         
@@ -44,13 +41,11 @@ final class ProfileVM: ObservableObject {
             if let imageURL = user.image {
                 loadImage(from: imageURL)
             }
-            
-            print("Данные пользователя получены", self.imageURL)
         } catch {
             print("Ошибка при получении данных пользователя: \(error.localizedDescription)")
         }
     }
-
+    
     
     func loadImage(from url: String) {
         
@@ -74,19 +69,16 @@ final class ProfileVM: ObservableObject {
         }
     }
     
-    
     func saveProfile() async {
         guard var updatedProfile = profile else {
-            print("Профиль пользователя не инициализирован")
             return
         }
-        
         updatedProfile.name = name
         updatedProfile.phone = phoneNumber
         updatedProfile.address = address
         updatedProfile.image = imageURL
         
-         saveProfileToFirebase(updatedProfile) { result in
+        saveProfileToFirebase(updatedProfile) { result in
             switch result {
             case .success(let updatedProfile):
                 print("Профиль успешно сохранен:", updatedProfile)
@@ -100,17 +92,16 @@ final class ProfileVM: ObservableObject {
         if let email = authService.currentUser?.email {
             profileService.setProfile(user: profile, email: email) { result in
                 switch result {
-                    case .success(let updatedProfile):
-                        print("Данные профиля успешно обновлены", updatedProfile.image ?? "")
-                        completion(.success(updatedProfile))
-                    case .failure(let error):
-                        print("Ошибка при сохранении данных профиля: \(error.localizedDescription)")
-                        completion(.failure(error))
+                case .success(let updatedProfile):
+                    print("Данные профиля успешно обновлены", updatedProfile.image ?? "")
+                    completion(.success(updatedProfile))
+                case .failure(let error):
+                    print("Ошибка при сохранении данных профиля: \(error.localizedDescription)")
+                    completion(.failure(error))
                 }
             }
         }
     }
-
     
     func saveProfileImage() async {
         guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
@@ -122,7 +113,6 @@ final class ProfileVM: ObservableObject {
             
             if var updatedProfile = self.profile {
                 updatedProfile.image = imageLink
-                // Добавление закрывающей скобки для замыкания completion
                 saveProfileToFirebase(updatedProfile) { result in
                     switch result {
                     case .success(let updatedProfile):
@@ -136,8 +126,6 @@ final class ProfileVM: ObservableObject {
             print("Ошибка при сохранении изображения профиля: \(error.localizedDescription)")
         }
     }
-
-    
     
     func fetchOrderHistory() {
         databaseService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
@@ -145,10 +133,6 @@ final class ProfileVM: ObservableObject {
             case .success(let orderHistory):
                 self?.orders = orderHistory
                 self?.orders.sort { $0.date > $1.date }
-                print("Полученные заказы:")
-                for order in orderHistory {
-                    print("Заказ ID: \(order.id) Дата: \(order.date)")
-                }
             case .failure(let error):
                 print("Ошибка при получении истории заказов: \(error.localizedDescription)")
             }
@@ -176,5 +160,4 @@ final class ProfileVM: ObservableObject {
             }
         }
     }
-    
 }

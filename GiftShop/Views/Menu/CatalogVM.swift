@@ -12,10 +12,11 @@ final class CatalogVM: ObservableObject {
     static let shared = CatalogVM()
     @Published var popularProducts: [Product] = []
     @Published var allProducts: [Product] = []
+    private let productService = ProductService()
     
     func fetchAllProducts() async {
         do {
-            let result = try await ProductService.shared.fetchAllProducts()
+            let result = try await productService.fetchAllProducts()
             DispatchQueue.main.async {
                 self.allProducts = result
                 self.popularProducts = result.filter { $0.category.lowercased() == "барсетка" }

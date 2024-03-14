@@ -7,11 +7,10 @@ import FirebaseAuth
 
 final class AuthService {
     
-    static let shared = AuthService()
-    private let profileDatabase = ProfileService.shared
+    private let profileDatabase = ProfileService()
     private let auth = Auth.auth()
     
-    private init() {}
+    public init() {}
     
     var currentUser: User? {
         return auth.currentUser
