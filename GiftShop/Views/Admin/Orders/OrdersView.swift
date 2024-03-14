@@ -47,14 +47,12 @@ struct OrdersView: View {
                 Button(action: {
                 isQuitAlertPresenter = true
             }) {
-                Image(systemName: "arrowshape.turn.up.right")
+                Image(systemName: "rectangle.portrait.and.arrow.right.fill")
             })
             .confirmationDialog("Хотите выйти?", isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()
-                    Task {
-                      await viewModel.logout()
-                    }
+                       viewModel.logout()
                 } label: {
                     Text("Выйти")
                 }

@@ -29,8 +29,8 @@ final class OrderDetailVM: ObservableObject {
            if let order = selectedOrder {
                let dateFormatter = DateFormatter()
                dateFormatter.dateFormat = "dd.MM.yyyy \nВремя - HH:mm"
-               let dateString = dateFormatter.string(from: order.date)
-               let orderItemsText = formatOrderItemsText(for: order)
+               _ = dateFormatter.string(from: order.date)
+               _ = formatOrderItemsText(for: order)
            }
        }
        

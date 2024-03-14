@@ -10,10 +10,10 @@ protocol DetailOrderViewProtocol {
 
 
 struct OrderDetail: View {
-   
+    
     @ObservedObject var orderDetailVM: OrderDetailVM
     private let order: Order
-
+    
     init(orderDetailVM: OrderDetailVM, order: Order) {
         self.orderDetailVM = orderDetailVM
         self.order = order
@@ -87,9 +87,4 @@ struct OrderDetail: View {
     }
 }
 
-//struct OrderDetail_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let order = Order(id: "1", userID: "user123", positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: "PROMO123")
-//        return OrderDetail(orderDetailVM: OrderDetailVM.shared, order: order, userProfile: userProfile)
-//    }
-//}
+
