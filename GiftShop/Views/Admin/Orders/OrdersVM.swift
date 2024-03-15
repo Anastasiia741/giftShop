@@ -27,11 +27,9 @@ final class OrdersVM: ObservableObject {
         switch status {
         case .all:
             filteredOrders = orders
-            print("---->", filteredOrders)
         default:
             filteredOrders = orders.filter { $0.status == status.rawValue }
         }
-       
     }
     
     func logout()  {

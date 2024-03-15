@@ -5,16 +5,6 @@
 import Foundation
 import FirebaseAuth
 
-enum Users {
-    static let userId = "VZ8WXQXaV9fUdkfpQwAjRhaGk9w1"
-}
-
-enum UserState {
-    case admin
-    case authenticated
-    case notAuthenticated
-}
-
 final class MainTabViewModel: ObservableObject {
     
     @Published var user: User?

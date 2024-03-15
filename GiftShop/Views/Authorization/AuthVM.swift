@@ -37,7 +37,7 @@ extension AuthVM {
     }
     
     func disclaimerLabelTapped() {
-        if let url = URL(string: "https://ilten.github.io/app-policy/") {
+        if let url = URL(string: TextMessage.Authorization.policy) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }

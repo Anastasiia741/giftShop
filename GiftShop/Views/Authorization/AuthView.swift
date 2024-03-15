@@ -18,37 +18,36 @@ struct AuthView: View {
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
-            Text(isAuth ? "Авторизация" : "Регистрация")
+            Text(isAuth ? TextMessage.Authorization.authorization : TextMessage.Authorization.registration)
                 .padding(isAuth ? 16 : 18)
                 .padding(.horizontal, 30)
                 .font(.title2.bold())
-                .background(Color("whiteAlfa"))
+                .background(Colors.whiteAlfa)
                 .cornerRadius(isAuth ? 30 : 40)
                 .padding(.horizontal, 12)
             VStack{
                 TextField("Введите email", text: $email)
                     .padding()
-                    .background(Color("whiteAlfa"))
+                    .background(Colors.whiteAlfa)
                     .cornerRadius(12)
                     .padding(4)
                     .padding(.horizontal, 12)
                 SecureField("Введите пароль", text: $password)
                     .padding()
-                    .background(Color("whiteAlfa"))
+                    .background(Colors.whiteAlfa)
                     .cornerRadius(12)
                     .padding(4)
                     .padding(.horizontal, 12)
                 if !isAuth {
                     SecureField("Повторите пароль", text: $confirmPassword)
                         .padding()
-                        .background(Color("whiteAlfa"))
+                        .background(Colors.whiteAlfa)
                         .cornerRadius(12)
                         .padding(4)
                         .padding(.horizontal, 12)
                 }
                 Button {
                     if isAuth {
-                        print("авторизация пользователя")
                         AuthService.shared.signIn(email: email, password: password) { result in
                             switch result {
                             case .success(_):
@@ -59,7 +58,6 @@ struct AuthView: View {
                             }
                         }
                     } else {
-                        print("регистрация пользователя")
                         guard password == confirmPassword else {
                             self.alertMessage = "Пароли не совпадают"
                             self.isShowAlert.toggle()
@@ -81,10 +79,10 @@ struct AuthView: View {
                     }
                 }
             label: {
-                Text(isAuth ? "Войти" :  "Регистрация")
+                Text(isAuth ? "Войти" : TextMessage.Authorization.registration)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(LinearGradient(colors: [Color("yellowColor"), Color("redColor")], startPoint: .leading, endPoint: .trailing))
+                    .background(LinearGradient(colors: [Colors.yellow, Colors.red], startPoint: .leading, endPoint: .trailing))
                     .cornerRadius(8)
                     .padding(8)
                     .padding(.horizontal, 12)
@@ -101,15 +99,15 @@ struct AuthView: View {
                         .padding(8)
                         .padding(.horizontal, 12)
                         .font(.title3.bold())
-                        .foregroundColor(Color("brownColor"))
+                        .foregroundColor(Colors.brown)
                 }
             }
             .padding()
             .padding(.top, 16)
-            .background(Color("whiteAlfa"))
+            .background(Colors.whiteAlfa)
             .cornerRadius(24)
             .padding(isAuth ? 30 : 12)
-            Image("authScreen")
+            Images.Auth.background
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -118,7 +116,7 @@ struct AuthView: View {
         }
         .animation(.easeInOut(duration: 0.3), value: isAuth)
         .fullScreenCover(isPresented: $isTabViewShow) {
-            if AuthService.shared.currentUser?.uid == "VZ8WXQXaV9fUdkfpQwAjRhaGk9w1" {
+            if AuthService.shared.currentUser?.uid == Accesses.currentUser {
                 OrdersView()
             } else {
                 let mainTabBarVM = MainTabViewModel(user: AuthService.shared.currentUser!)
@@ -126,7 +124,7 @@ struct AuthView: View {
             }
         }
         .alert(isPresented: $isShowAlert) {
-            Alert(title: Text("Ошибка"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            Alert(title: Text(AlertMessage.errorTitle), message: Text(alertMessage), dismissButton: .default(Text(AlertMessage.applyAction)))
         }
     }
 }

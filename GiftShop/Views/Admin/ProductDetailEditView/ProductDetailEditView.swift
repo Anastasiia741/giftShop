@@ -82,7 +82,7 @@ struct ProductDetailEditView: View {
                 Spacer().frame(width: 16)
                 Button("Сохранить") {
                     Task {
-                       await viewModel.saveEditedProduct()
+                        await viewModel.saveEditedProduct()
                     }
                 }
                 .font(.system(size: 16))
@@ -116,8 +116,6 @@ struct ProductDetailEditView: View {
         .sheet(isPresented: $isShowingCameraPicker) {
             ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
-        
-        
     }
 }
 

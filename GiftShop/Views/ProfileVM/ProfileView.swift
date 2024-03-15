@@ -37,7 +37,7 @@ struct ProfileView: View {
                                 isAlertPresented = true
                             }
                     } else {
-                        Image("profile")
+                        Images.Profile.icon
                             .resizable()
                             .clipShape(Circle())
                             .frame(width: 120, height: 120)
@@ -45,18 +45,18 @@ struct ProfileView: View {
                                 isAlertPresented = true
                             }
                     }
-                    
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Ваше имя")
                             .padding(.leading, 20)
-                            .font(.custom("AvenirNext-bold", size: 18))
+                            .font(.custom(TextStyle.avenirBold, size: 18))
+                        
                         TextField("Введите имя", text: $viewModel.name)
-                            .font(.custom("AvenirNext-regular", size: 16))
+                            .font(.custom(TextStyle.avenirBold, size: 16))
                             .padding(.horizontal)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         TextField("Введите номер телефона", text: $viewModel.phoneNumber)
                             .keyboardType(.numberPad)
-                            .font(.custom("AvenirNext-regular", size: 16))
+                            .font(.custom(TextStyle.avenirRegular, size: 16))
                             .padding(.horizontal)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -83,9 +83,9 @@ struct ProfileView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Адрес доставки")
                         .padding(.leading, 20)
-                        .font(.custom("AvenirNext-bold", size: 16))
+                        .font(.custom(TextStyle.avenirBold, size: 16))
                     TextField("Ваш адрес доставки", text: $viewModel.address)
-                        .font(.custom("AvenirNext-regular", size: 16))
+                        .font(.custom(TextStyle.avenirRegular, size: 16))
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }.padding(.horizontal)
@@ -94,8 +94,6 @@ struct ProfileView: View {
                 HStack{
                     Spacer()
                     Button {
-                        print("Сохранить")
-                        
                         Task {
                             await viewModel.saveProfile()
                             if let selectedImage = selectedImage {
@@ -106,11 +104,11 @@ struct ProfileView: View {
                         }
                     } label: {
                         Text("Сохранить")
-                            .font(.custom("AvenirNext-regular", size: 12))
+                            .customTextStyle(TextStyle.avenirRegular, size: 12)
                             .frame(width: 100, height: 25)
-                            .background(Color("promoButton"))
+                            .background(Colors.promo)
                             .cornerRadius(20)
-                            .shadow(color: Color("promoButton").opacity(0.5), radius: 5, x: 0, y: 5)
+                            .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
                             .foregroundColor(.white)
                             .padding(.trailing, 15)
                     }
@@ -124,18 +122,18 @@ struct ProfileView: View {
                     Spacer()
                     VStack(alignment: .center, spacing: 16) {
                         Text("Ваши заказы будут тут")
-                            .font(.custom("AvenirNext-bold", size: 16))
-                        Image("emptyOrdersImage")
+                            .customTextStyle(TextStyle.avenirBold, size: 16)
+                        Images.Profile.emptyList
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 150)
                         Text("Заказов пока нет")
-                            .font(.custom("AvenirNext-bold", size: 16))
+                            .customTextStyle(TextStyle.avenirBold, size: 16)
                         Spacer()
                     }
                 } else {
                     List {
-                        Section(header: Text("Ваши заказы").font(.custom("AvenirNext-bold", size: 16))) {
+                        Section(header: Text("Ваши заказы").customTextStyle(TextStyle.avenirBold, size: 16)) {
                             ForEach(viewModel.orders, id: \.id) { order in
                                 ProfileCell(order: order, viewModel: ProfileVM.shared)
                             }
@@ -146,7 +144,6 @@ struct ProfileView: View {
                 //MARK: - Delete account
                 HStack(alignment: .center) {
                     Button{
-                        print("delete")
                         isRemoveAlertPresenter.toggle()
                     } label: {
                         Text("Удалить аккаунт")
@@ -184,7 +181,7 @@ struct ProfileView: View {
                         isQuitAlertPresenter.toggle()
                         viewModel.logout()
                     }) {
-                        Image(systemName: "rectangle.portrait.and.arrow.forward")
+                        Images.Profile.exit
                             .imageScale(.small)
                             .foregroundColor(.black)
                     }

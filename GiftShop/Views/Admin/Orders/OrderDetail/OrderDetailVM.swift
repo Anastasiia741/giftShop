@@ -5,13 +5,13 @@
 import Foundation
 
 final class OrderDetailVM: ObservableObject {
+   
     private let profileService = ProfileService()
     private let orderService = OrderService()
     @Published var selectedOrder: Order?
     @Published var userProfile: NewUser?
-
     static let shared = OrderDetailVM()
-
+    
     func fetchUserProfile() async {
         guard let userID = selectedOrder?.userID else { return }
         do {
@@ -24,40 +24,25 @@ final class OrderDetailVM: ObservableObject {
         }
     }
     
+    func fetchOrderDetails() {
+        if let order = selectedOrder {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yyyy \nВремя - HH:mm"
+            _ = dateFormatter.string(from: order.date)
+            _ = formatOrderItemsText(for: order)
+        }
+    }
     
-       func fetchOrderDetails() {
-           if let order = selectedOrder {
-               let dateFormatter = DateFormatter()
-               dateFormatter.dateFormat = "dd.MM.yyyy \nВремя - HH:mm"
-               _ = dateFormatter.string(from: order.date)
-               _ = formatOrderItemsText(for: order)
-           }
-       }
-       
-       func formatOrderItemsText(for order: Order) -> String {
-           var itemsText = ""
-           for position in order.positions {
-               let itemText = "\(position.product.name): \(position.count) шт."
-               if itemsText.isEmpty {
-                   itemsText = itemText
-               } else {
-                   itemsText += "\n\(itemText)"
-               }
-           }
-           
-           return itemsText
-       }
-       
-       func fetchOrderStatus() {
-           if let orderID = selectedOrder?.id {
-//               orderService.fetchOrderStatus(orderID: orderID) { [weak self] (status) in
-//                   if let status = status {
-////                       self?..showStatusButton(status: status)
-//                   } else {
-//                       print("Failed to fetch order status.")
-//                   }
-//               }
-           }
-       }
-    
+    func formatOrderItemsText(for order: Order) -> String {
+        var itemsText = ""
+        for position in order.positions {
+            let itemText = "\(position.product.name): \(position.count) шт."
+            if itemsText.isEmpty {
+                itemsText = itemText
+            } else {
+                itemsText += "\n\(itemText)"
+            }
+        }
+        return itemsText
+    }
 }

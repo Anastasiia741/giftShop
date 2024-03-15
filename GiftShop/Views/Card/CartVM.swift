@@ -47,12 +47,10 @@ final class CartVM: ObservableObject {
                 return Position(id: UUID().uuidString, product: position, count: position.quantity)
             }
             if order.positions.isEmpty {
-                print("Заказ пуст!")
             } else {
                 DBOrdersService.shared.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
                     switch result {
                     case .success(let order):
-                        print("Заказ успешно отправлен. Сумма заказа: \(order.cost)")
                         self?.orderProducts.removeAll()
                         self?.productsRepository.save(self?.orderProducts ?? [Product]())
                     case .failure(let error):

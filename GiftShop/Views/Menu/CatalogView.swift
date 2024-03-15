@@ -15,11 +15,11 @@ struct CatalogView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text("Популярное")
+                        Text(TextMessage.Menu.porular)
                             .font(.title3.bold())
                             .foregroundColor(.black)
                             .padding(.leading, 20)
-                        Image("background2")
+                        Images.Menu.popular
                             .resizable()
                             .frame(width: 30, height: 35)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -38,13 +38,12 @@ struct CatalogView: View {
                         }.padding()
                     }
                 }
-                
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text("Товары")
+                        Text(TextMessage.Menu.products)
                             .font(.title3.bold())
                             .foregroundColor(.black)
-                        Image("background2")
+                        Images.Menu.popular
                             .resizable()
                             .frame(width: 30, height: 35)
                             .frame(maxWidth: .infinity, alignment: .leading)

@@ -26,11 +26,11 @@ struct PopularProductCell: View {
             VStack(spacing: 4) {
                 HStack{
                     Text(product.name)
-                        .font(.custom("AvenirNext-regular", size: 12))
+                        .customTextStyle(TextStyle.avenirRegular, size: 12)
                         .frame(height: 40)
                     Spacer()
                     Text("\(product.price) com")
-                        .font(.custom("AvenirNext-bold", size: 12))
+                        .customTextStyle(TextStyle.avenirBold, size: 12)
                 }
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
@@ -43,7 +43,6 @@ struct PopularProductCell: View {
         .onAppear {
             if let productImage = product.image {
                 let imageRef = Storage.storage().reference(forURL: productImage)
-                
                 imageRef.downloadURL { url, error in
                     if let error = error {
                         print(error.localizedDescription)
