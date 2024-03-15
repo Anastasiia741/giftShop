@@ -13,7 +13,6 @@ enum TextMessage {
         
     }
     
-    
     enum Cart {
         static let descriptionMain = "Введите описание для главного экрана"
         static let descriptionDetail = "Введите подробное описание"
@@ -28,9 +27,6 @@ enum TextMessage {
         static let enter = "Войти"
         static let policy = "https://ilten.github.io/app-policy/"
     }
-    
-    
-    
 }
 
 enum TextStyle {

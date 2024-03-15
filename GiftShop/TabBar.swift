@@ -12,7 +12,7 @@ struct TabBar: View {
     var body: some View {
         TabView {
             if AuthService.shared.currentUser != nil {
-                if AuthService.shared.currentUser?.uid == Accesses.currentUser {
+                if AuthService.shared.currentUser?.uid == Accesses.adminUser {
                     OrdersView()
                         .tabItem {
                             VStack {

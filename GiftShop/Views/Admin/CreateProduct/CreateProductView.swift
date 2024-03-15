@@ -17,7 +17,7 @@ struct CreateProductView: View {
                 List {
                     Section(header: Text("Изображение").foregroundColor(.black)) {
                         VStack {
-                            Image(uiImage: (viewModel.productImage ?? Images.CreateProduct.image)!)
+                            Image(uiImage: (viewModel.productImage ??  UIImage()))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(maxWidth: .infinity, maxHeight: 260)
