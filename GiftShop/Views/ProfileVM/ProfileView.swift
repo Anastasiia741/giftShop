@@ -49,6 +49,7 @@ struct ProfileView: View {
                         Text("Ваше имя")
                             .padding(.leading, 20)
                             .font(.custom(TextStyle.avenirBold, size: 18))
+                        
                         TextField("Введите имя", text: $viewModel.name)
                             .font(.custom(TextStyle.avenirBold, size: 16))
                             .padding(.horizontal)
@@ -103,7 +104,7 @@ struct ProfileView: View {
                         }
                     } label: {
                         Text("Сохранить")
-                            .font(.custom(TextStyle.avenirRegular, size: 12))
+                            .customTextStyle(TextStyle.avenirRegular, size: 12)
                             .frame(width: 100, height: 25)
                             .background(Colors.promo)
                             .cornerRadius(20)
@@ -121,18 +122,18 @@ struct ProfileView: View {
                     Spacer()
                     VStack(alignment: .center, spacing: 16) {
                         Text("Ваши заказы будут тут")
-                            .font(.custom(TextStyle.avenirBold, size: 16))
+                            .customTextStyle(TextStyle.avenirBold, size: 16)
                         Images.Profile.emptyList
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 150)
                         Text("Заказов пока нет")
-                            .font(.custom(TextStyle.avenirBold, size: 16))
+                            .customTextStyle(TextStyle.avenirBold, size: 16)
                         Spacer()
                     }
                 } else {
                     List {
-                        Section(header: Text("Ваши заказы").font(.custom(TextStyle.avenirBold, size: 16))) {
+                        Section(header: Text("Ваши заказы").customTextStyle(TextStyle.avenirBold, size: 16)) {
                             ForEach(viewModel.orders, id: \.id) { order in
                                 ProfileCell(order: order, viewModel: ProfileVM.shared)
                             }

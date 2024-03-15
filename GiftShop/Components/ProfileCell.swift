@@ -18,14 +18,14 @@ struct ProfileCell: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Сумма: \(order.cost)")
-                .font(.custom(TextStyle.avenirBold, size: 16))
+                .customTextStyle(TextStyle.avenirBold, size: 16)
             Text("Дата: \(dateFormatter.string(from: order.date))")
-                .font(.custom(TextStyle.avenir, size: 14))
+                .customTextStyle(TextStyle.avenir, size: 14)
             HStack {
                 Text("Статус: ")
-                    .font(.custom(TextStyle.avenir, size: 14))
+                    .customTextStyle(TextStyle.avenir, size: 14)
                 Text(order.status)
-                    .font(.custom(TextStyle.avenir, size: 14))
+                    .customTextStyle(TextStyle.avenir, size: 14)
                     .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
             }
         }

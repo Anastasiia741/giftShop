@@ -39,7 +39,9 @@ enum Images {
         static let icon = Image("profile")
         static let emptyList = Image("emptyOrdersImage")
         static let exit = Image(systemName: "rectangle.portrait.and.arrow.forward")
-
-
+    }
+    
+    enum Auth {
+        static let background = Image("authScreen")
     }
 }

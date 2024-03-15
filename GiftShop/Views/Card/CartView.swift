@@ -167,14 +167,14 @@ struct CartView: View {
                 Spacer()
                 if viewModel.promoResultText.isEmpty {
                     Text("Разблокируйте эксклюзивную скидку!")
-                        .font(.custom(TextStyle.avenirRegular, size: 20))
+                        .customTextStyle(TextStyle.avenirRegular, size: 20)
                         .multilineTextAlignment(.center)
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
                         .padding([.top], 20)
                 } else {
                     Text(viewModel.promoResultText)
-                        .font(.custom(TextStyle.avenirRegular, size: 20))
+                        .customTextStyle(TextStyle.avenirRegular, size: 20)
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
                         .padding([.top], 20)

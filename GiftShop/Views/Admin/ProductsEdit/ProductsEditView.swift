@@ -40,7 +40,7 @@ struct ProductsEditView: View {
                 }
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text(TextMessage.Menu.products)
+                        Text(TextMessage.Menu.porular)
                             .font(.title3.bold())
                             .foregroundColor(.black)
                         Images.Menu.popular

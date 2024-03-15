@@ -15,12 +15,12 @@ struct OrderCell: View {
         HStack {
             VStack(alignment: .leading) {
                 Text("Дата: \(Extentions.shared.formattedDate(order.date))")
-                    .font(.custom(TextStyle.avenir, size: 18))
+                    .customTextStyle(TextStyle.avenir, size: 18)
                 HStack {
                     Text("Статус: ")
-                        .font(.custom(TextStyle.avenir, size: 18))
+                        .customTextStyle(TextStyle.avenir, size: 18)
                     Text(order.status)
-                        .font(.custom(TextStyle.avenir, size: 18))
+                        .customTextStyle(TextStyle.avenir, size: 18)
                         .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
                 }
             }

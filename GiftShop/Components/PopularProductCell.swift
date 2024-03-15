@@ -26,11 +26,11 @@ struct PopularProductCell: View {
             VStack(spacing: 4) {
                 HStack{
                     Text(product.name)
-                        .font(.custom(TextStyle.avenirRegular, size: 12))
+                        .customTextStyle(TextStyle.avenirRegular, size: 12)
                         .frame(height: 40)
                     Spacer()
                     Text("\(product.price) com")
-                        .font(.custom(TextStyle.avenirBold, size: 12))
+                        .customTextStyle(TextStyle.avenirBold, size: 12)
                 }
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)

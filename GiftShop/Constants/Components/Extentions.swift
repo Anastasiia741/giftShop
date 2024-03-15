@@ -31,3 +31,10 @@ final class Extentions: ObservableObject {
        }
    }
 }
+
+
+extension Text {
+    func customTextStyle(_ style: String, size: CGFloat) -> Text {
+        self.font(.custom(style, size: size))
+    }
+}

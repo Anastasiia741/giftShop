@@ -17,28 +17,28 @@ struct OrderDetail: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Детали заказа")
-                .font(.custom("AvenirNext-regular", size: 22))
+                .customTextStyle(TextStyle.avenirRegular, size: 22)
                 .fontWeight(.bold)
                 .padding(.top)
             VStack(alignment: .leading, spacing: 10) {
                 Text("Дата заказа: \(Extentions.shared.formattedDate(order.date))")
-                    .font(.custom(TextStyle.avenirRegular, size: 18))
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
                 Text("Статус: \(order.status)")
-                    .font(.custom(TextStyle.avenirRegular, size: 18))
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .foregroundColor(Extentions.shared.statusColor(for: order.status))
                 Text("Промокод: \(order.promocode)")
-                    .font(.custom(TextStyle.avenirRegular, size: 18))
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
             }
             .padding(.horizontal)
             VStack(alignment: .leading, spacing: 10) {
                 Text("Товары:")
-                    .font(.custom(TextStyle.avenirRegular, size: 18))
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .bold()
                 ForEach(order.positions) { position in
                     HStack {
                         VStack(alignment: .leading) {
                             Text("Название: \(position.product.name): \(position.count) шт.")
-                                .font(.custom(TextStyle.avenirRegular, size: 16))
+                                .customTextStyle(TextStyle.avenirRegular, size: 16)
                         }
                         .padding(.vertical, 5)
                     }
@@ -50,18 +50,18 @@ struct OrderDetail: View {
             }
             .padding(.horizontal)
             Text("Сумма: \(order.cost) сом")
-                .font(.custom(TextStyle.avenirRegular, size: 18))
+                .customTextStyle(TextStyle.avenirRegular, size: 18)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .padding(.top)
             Text("Имя: ")
-                .font(.custom(TextStyle.avenirRegular, size: 18))
+                .customTextStyle(TextStyle.avenirRegular, size: 18)
             Text("Email: ")
-                .font(.custom(TextStyle.avenirRegular, size: 18))
+                .customTextStyle(TextStyle.avenirRegular, size: 18)
             Text("Адрес доставки: ")
-                .font(.custom(TextStyle.avenirRegular, size: 18))
+                .customTextStyle(TextStyle.avenirRegular, size: 18)
             Text("Номер телефона: ")
-                .font(.custom(TextStyle.avenirRegular, size: 18))
+                .customTextStyle(TextStyle.avenirRegular, size: 18)
             Spacer()
         }
         Button(action: {

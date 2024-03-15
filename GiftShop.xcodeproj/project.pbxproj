@@ -216,7 +216,6 @@
 		711ED95C2B5012580052752F /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				71DCC3202B9A20BE00442C32 /* Extentions.swift */,
 				711ED95D2B5012650052752F /* OrderStatus.swift */,
 				714F7AE22B59892000E533AD /* AlertMessage.swift */,
 				714F76BC2B602AA200931C2A /* Texts.swift */,
@@ -237,6 +236,17 @@
 				71AD03AC2B766CB3006231F9 /* AdminComponents */,
 			);
 			path = Admin;
+			sourceTree = "<group>";
+		};
+		712716922BA4856A00460FB1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				71DCC3202B9A20BE00442C32 /* Extentions.swift */,
+				71353CD72B6D5770008A7868 /* ImagePicker.swift */,
+				71AD03AF2B768663006231F9 /* StatusColors.swift */,
+			);
+			name = Components;
+			path = Constants/Components;
 			sourceTree = "<group>";
 		};
 		71353CD42B696707008A7868 /* ProfileVM */ = {
@@ -348,6 +358,7 @@
 				71E45FBB2B48777200941CE7 /* ViewModel */,
 				71E45FB82B48774C00941CE7 /* Model */,
 				711ED8EB2B5008D00052752F /* Services */,
+				712716922BA4856A00460FB1 /* Components */,
 				711ED95C2B5012580052752F /* Constants */,
 				71E45F9F2B48569000941CE7 /* Assets.xcassets */,
 				717D0FD32B5AD2B7001F2E6E /* Products.json */,
@@ -405,8 +416,6 @@
 			isa = PBXGroup;
 			children = (
 				711ED9732B504D680052752F /* MainTabViewModel.swift */,
-				71AD03AF2B768663006231F9 /* StatusColors.swift */,
-				71353CD72B6D5770008A7868 /* ImagePicker.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
