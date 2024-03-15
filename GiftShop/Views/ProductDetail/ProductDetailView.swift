@@ -9,7 +9,7 @@ struct ProductDetailView: View {
     
     @State var count = 1
     @Environment(\.presentationMode) var presentationMode
-    var viewModel: ProductDetailVM
+    @ObservedObject var viewModel: ProductDetailVM
     var orderService = OrderService()
     
     var body: some View {
@@ -40,6 +40,8 @@ struct ProductDetailView: View {
                 
                 ScrollView {
                     Text("\(viewModel.product.detail)")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading)
                 }
                 
                 HStack{
