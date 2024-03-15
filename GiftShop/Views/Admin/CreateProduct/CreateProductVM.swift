@@ -15,8 +15,6 @@ final class CreateProductVM: ObservableObject {
     @Published var productCategory: String = ""
     @Published var productPrice: String = ""
     @Published var productDetail: String = ""
-    var cancelLables = Set<AnyCancellable>()
-
     
     private func isInputValid() -> Bool {
         if productName.isEmpty || productCategory.isEmpty || String(productPrice).isEmpty || productImage == nil {
@@ -43,21 +41,20 @@ final class CreateProductVM: ObservableObject {
         let newProduct = makeNewProduct()
         
         if let selectedImage = productImage, let imageURL = imageURL {
-               do {
-                   let uploadedImageURL = try await productsDB.upload(image: selectedImage, url: imageURL)
-                   newProduct.image = uploadedImageURL
-                   print("Изображение успешно загружено")
-               } catch {
-                   print("Ошибка при загрузке изображения:", error.localizedDescription)
-                   return
-               }
-           }
-           
-           do {
-               try await createProduct(newProduct)
-           } catch {
-               print("Ошибка создания продукта:", error.localizedDescription)
-           }
+            do {
+                let uploadedImageURL = try await productsDB.upload(image: selectedImage, url: imageURL)
+                newProduct.image = uploadedImageURL
+            } catch {
+                print("Ошибка при загрузке изображения:", error.localizedDescription)
+                return
+            }
+        }
+        
+        do {
+            try await createProduct(newProduct)
+        } catch {
+            print("Ошибка создания продукта:", error.localizedDescription)
+        }
     }
     
     func createProduct(_ product: Product) async throws {

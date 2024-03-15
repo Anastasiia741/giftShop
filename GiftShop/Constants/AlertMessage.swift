@@ -39,6 +39,7 @@ enum AlertMessage {
     static let errorTitle = "Ошибка"
     static let errorMessage = "Произошла ошибка при сохранении товара."
     static let exitTitle = "Хотите выйти?"
+    static let exit = "Выйти"
     static let authMessage = "Заполните все поля"
     static let authError = "Ошибка авторизации:"
     static let authFields = "Заполните все поля"
@@ -50,5 +51,4 @@ enum AlertMessage {
     static let deleteAction = "Удалить"
     static let deleteTitle = "Аккаунт удален"
     static let deleteMessage = "Ваш аккаунт успешно удален."
-
 }

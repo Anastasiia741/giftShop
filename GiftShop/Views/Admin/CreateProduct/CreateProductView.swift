@@ -17,7 +17,7 @@ struct CreateProductView: View {
                 List {
                     Section(header: Text("Изображение").foregroundColor(.black)) {
                         VStack {
-                            Image(uiImage: viewModel.productImage ?? UIImage(named: "photo")!)
+                            Image(uiImage: viewModel.productImage ?? Images.CreateProduct.image!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(maxWidth: .infinity, maxHeight: 260)
@@ -48,7 +48,7 @@ struct CreateProductView: View {
                 
                 Button("Сохранить") {
                     Task {
-                     await viewModel.createNewProduct()
+                        await viewModel.createNewProduct()
                     }
                 }
                 .font(.system(size: 16))
@@ -76,9 +76,7 @@ struct CreateProductView: View {
             }
         }
     }
-    
 }
-
 
 struct CreateProductView_Previews: PreviewProvider {
     static var previews: some View {

@@ -27,7 +27,6 @@ final class ProfileVM: ObservableObject {
     
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else {
-            print("Текущий пользователь не определен")
             return
         }
         

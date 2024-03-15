@@ -35,7 +35,7 @@ struct ProductDetailView: View {
                     Spacer()
                     Text("\(viewModel.product.price) сом")
                         .font(.title)
-                        .font(.custom("AvenirNext-bold", size: 16))
+                        .font(.custom(TextStyle.avenirBold, size: 16))
                 }.padding(.horizontal)
                 
                 ScrollView {
@@ -61,9 +61,9 @@ struct ProductDetailView: View {
                     Text("добавить")
                         .padding()
                         .padding(.horizontal, 60)
-                        .foregroundColor(Color("brownColor"))
+                        .foregroundColor(Colors.browm)
                         .font(.title3.bold())
-                        .background(LinearGradient(colors: [Color("lightYellowColor"), Color("orangeColor")], startPoint: .leading, endPoint: .trailing))
+                        .background(LinearGradient(colors: [Colors.lightYellow, Colors.orange], startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(30)
                 }.padding(.bottom)
                 Spacer()

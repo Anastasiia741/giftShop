@@ -4,58 +4,50 @@
 
 import SwiftUI
 
-enum Tab {
-    case catalog
-    case cart
-    case profile
-}
-
 struct TabBar: View {
     
     @StateObject var viewModel: MainTabViewModel
     @State private var tabColor: Color = .black
-    @State private var selectedTab: Tab = .catalog
     
     var body: some View {
-        
         TabView {
             if AuthService.shared.currentUser != nil {
-                if AuthService.shared.currentUser?.uid == "OKYK7MdkwCTxWh5jl6MvbLk48B02" {
+                if AuthService.shared.currentUser?.uid == Accesses.currentUser {
                     OrdersView()
                         .tabItem {
                             VStack {
-                                Image(systemName: "list.bullet")
+                                Images.TabBar.order
                             }
                         }
                     ProductsEditView(catalogVM: CatalogVM.shared)
                         .tabItem {
                             VStack {
-                                Image(systemName: "square.and.pencil")
+                                Images.TabBar.productEdit
                             }
                         }
                     CreateProductView()
                         .tabItem {
                             VStack {
-                                Image(systemName: "plus.circle")
+                                Images.TabBar.createProduct
                             }
                         }
                 } else {
                     CatalogView()
                         .tabItem {
                             VStack {
-                                Image(systemName: "menucard")
+                                Images.TabBar.menu
                             }
                         }
                     CartView(viewModel: CartVM.shared)
                         .tabItem {
                             VStack {
-                                Image(systemName: "cart")
+                                Images.TabBar.cart
                             }
                         }
                     ProfileView()
                         .tabItem {
                             VStack {
-                                Image(systemName: "person.circle")
+                                Images.TabBar.profile
                             }
                         }
                 }
@@ -63,19 +55,19 @@ struct TabBar: View {
                 CatalogView()
                     .tabItem {
                         VStack {
-                            Image(systemName: "menucard")
+                            Images.TabBar.menu
                         }
                     }
                 CartView(viewModel: CartVM.shared)
                     .tabItem {
                         VStack {
-                            Image(systemName: "cart")
+                            Images.TabBar.cart
                         }
                     }
                 AuthView()
                     .tabItem {
                         VStack {
-                            Image(systemName: "person.circle")
+                            Images.TabBar.profile
                         }
                     }
             }

@@ -6,13 +6,6 @@ import Foundation
 import SwiftUI
 import FirebaseStorage
 
-
-//protocol EditProductProtocol: AnyObject {
-//    var selectedProduct: Product? { get set }
-//
-//    func saveButtonTapped()
-//}
-
 final class ProductDetailEditVM: ObservableObject {
     
     private let productsDB = ProductService.shared
@@ -46,7 +39,6 @@ final class ProductDetailEditVM: ObservableObject {
         do {
             try await productsDB.update(product: selectedProduct)
             print("Данные сохранены: \(String(describing: selectedProduct.name))")
-            
             if isImageChange, let selectedImage = selectedImage, let imageURL = selectedProduct.image {
                 do {
                     let uploadedImageURL = try await productsDB.uploadImageToFirebase(selectedImage, imageURL)
@@ -61,9 +53,6 @@ final class ProductDetailEditVM: ObservableObject {
         }
     }
     
-    
-    
-    
     func deleteProduct() async {
         do {
             try await productsDB.delete(product: selectedProduct)
@@ -73,4 +62,3 @@ final class ProductDetailEditVM: ObservableObject {
         }
     }
 }
-

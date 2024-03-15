@@ -13,7 +13,6 @@ struct OrdersView: View {
     
     var body: some View {
         NavigationView {
-            
             VStack {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
@@ -44,22 +43,21 @@ struct OrdersView: View {
                 }
             }
             .navigationBarItems(trailing:
-                Button(action: {
+                                    Button(action: {
                 isQuitAlertPresenter = true
             }) {
-                Image(systemName: "rectangle.portrait.and.arrow.right.fill")
+                Images.Orders.exit
             })
-            .confirmationDialog("Хотите выйти?", isPresented: $isQuitAlertPresenter) {
+            .confirmationDialog(AlertMessage.exitTitle, isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()
-                       viewModel.logout()
+                    viewModel.logout()
                 } label: {
-                    Text("Выйти")
+                    Text(AlertMessage.exit)
                 }
                 Button(role: .cancel) {
-                    print("Отмена")
                 } label: {
-                    Text("Отмена")
+                    Text(AlertMessage.cancelAction)
                 }
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
@@ -71,8 +69,6 @@ struct OrdersView: View {
         }
     }
 }
-
-
 
 #Preview {
     OrdersView()

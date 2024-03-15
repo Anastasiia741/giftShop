@@ -25,28 +25,29 @@ struct CartView: View {
                     // MARK: - Order
                     Section {
                         if viewModel.orderProducts.isEmpty {
-                            Text("Корзина пока пуста")
-                                .font(.headline)
-                                .foregroundColor(.gray)
-                            Image("emptyCartImage")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 130)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.clear)
-                            Text("Добавьте товары в корзину, чтобы начать покупки!")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        else {
+                            Section {
+                                Text(TextMessage.Cart.cardEmpty)
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                Images.Cart.emptyCart
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 130)
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.clear)
+                                Text("Добавьте товары в корзину, чтобы начать покупки!")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                        } else {
                             Section(header:
                                         HStack(alignment: .center, spacing: 10) {
-                                Text("Товары")
+                                Text(TextMessage.Menu.products)
                                     .font(.system(size: 14, weight: .bold))
                                     .foregroundColor(.gray)
                                     .padding(.top, 6)
                                     .padding(.leading, 12)
-                                Image("background4")
+                                Images.Cart.background4
                                     .resizable()
                                     .frame(width: 30, height: 35)
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -62,6 +63,7 @@ struct CartView: View {
                             }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
+                        
                     }.onAppear {
                         self.viewModel.fetchOrder()
                     }
@@ -106,9 +108,9 @@ struct CartView: View {
                                     .fontWeight(.bold)
                                     .frame(maxWidth: 130, minHeight: 35)
                                     .foregroundColor(.white)
-                                    .background(Color("promoButton"))
+                                    .background(Colors.promo)
                                     .cornerRadius(20)
-                                    .shadow(color: Color("promoButton").opacity(0.5), radius: 5, x: 0, y: 5)
+                                    .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
                                     .sheet(isPresented: $isPromoSheetVisible, content: {
                                         promoCodeView
                                             .presentationDetents([.fraction(0.30)])
@@ -129,7 +131,6 @@ struct CartView: View {
                         Spacer()
                         Text("\(viewModel.productCountMessage) сом").fontWeight(.bold)
                         Button(action: {
-                            print("Заказать")
                             if viewModel.orderProducts.isEmpty {
                                 isPresented.toggle()
                             } else {
@@ -142,9 +143,9 @@ struct CartView: View {
                                 .padding()
                                 .foregroundColor(.white)
                                 .frame(maxWidth: 120)
-                                .background(Color("buyButton"))
+                                .background(Colors.buy)
                                 .cornerRadius(23)
-                                .shadow(color: Color("buyButton").opacity(0.5), radius: 5, x: 0, y: 5)
+                                .shadow(color: Colors.buy.opacity(0.5), radius: 5, x: 0, y: 5)
                         }.sheet(isPresented: $isPresented) {
                             CatalogView()
                         }
@@ -157,7 +158,7 @@ struct CartView: View {
     
     var promoCodeView: some View {
         ZStack(alignment: .top)  {
-            Image("background6")
+            Images.Cart.background6
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
@@ -166,14 +167,14 @@ struct CartView: View {
                 Spacer()
                 if viewModel.promoResultText.isEmpty {
                     Text("Разблокируйте эксклюзивную скидку!")
-                        .font(.custom("AvenirNext-regular", size: 20))
+                        .font(.custom(TextStyle.avenirRegular, size: 20))
                         .multilineTextAlignment(.center)
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
                         .padding([.top], 20)
                 } else {
                     Text(viewModel.promoResultText)
-                        .font(.custom("AvenirNext-regular", size: 20))
+                        .font(.custom(TextStyle.avenirRegular, size: 20))
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
                         .padding([.top], 20)
@@ -192,9 +193,9 @@ struct CartView: View {
                             .padding()
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .background(Color("promoCancel"))
+                            .background(Colors.promoCancel)
                             .cornerRadius(20)
-                            .shadow(color: Color("promoCancel").opacity(0.5), radius: 5, x: 10, y: 5)
+                            .shadow(color: Colors.promoCancel.opacity(0.5), radius: 5, x: 10, y: 5)
                     }
                     
                     Button(action: {
@@ -206,9 +207,9 @@ struct CartView: View {
                             .padding()
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .background(Color("promoApply"))
+                            .background(Colors.promoApply)
                             .cornerRadius(20)
-                            .shadow(color: Color("promoApply").opacity(0.5), radius: 5, x: 10, y: 5)
+                            .shadow(color: Colors.promoApply.opacity(0.5), radius: 5, x: 10, y: 5)
                     }
                 }
                 .padding()
