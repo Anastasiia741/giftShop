@@ -42,6 +42,5 @@ final class OrdersVM: ObservableObject {
             }
         }
     }
-    
 }
 
