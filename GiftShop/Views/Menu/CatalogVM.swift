@@ -18,7 +18,7 @@ final class CatalogVM: ObservableObject {
             let result = try await ProductService.shared.fetchAllProducts()
             DispatchQueue.main.async {
                 self.allProducts = result
-                self.popularProducts = result.filter { $0.category.lowercased() == "барсетка" }
+                self.popularProducts = result.filter { $0.category.lowercased() == TextMessage.Menu.porularProducts }
             }
         } catch {
             print(error.localizedDescription)

@@ -35,14 +35,14 @@ struct CartView: View {
                                     .frame(height: 130)
                                     .frame(maxWidth: .infinity)
                                     .background(Color.clear)
-                                Text("Добавьте товары в корзину, чтобы начать покупки!")
+                                Text("add_items_to_cart".localized)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
                         } else {
                             Section(header:
                                         HStack(alignment: .center, spacing: 10) {
-                                Text(TextMessage.Menu.products)
+                                Text("products".localized)
                                     .font(.system(size: 14, weight: .bold))
                                     .foregroundColor(.gray)
                                     .padding(.top, 6)
@@ -70,7 +70,7 @@ struct CartView: View {
                     .padding(.bottom, 6)
                     
                     // MARK: - Popular product
-                    Section(header: Text("Добавить к заказу?")
+                    Section(header: Text("add to order".localized)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.gray)) {
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -95,7 +95,7 @@ struct CartView: View {
                     // MARK: - Promo Section
                     Section {
                         HStack(spacing: 24) {
-                            Text("Получить скидку!").font(.system(size: 16, weight: .bold))
+                            Text("get_discount".localized).font(.system(size: 16, weight: .bold))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.7)
                                 .truncationMode(.tail)
@@ -103,7 +103,7 @@ struct CartView: View {
                             Button(action: {
                                 isPromoSheetVisible.toggle()
                             }) {
-                                Text("Промокод")
+                                Text("promo_code".localized)
                                     .font(.body)
                                     .fontWeight(.bold)
                                     .frame(maxWidth: 130, minHeight: 35)
@@ -127,9 +127,9 @@ struct CartView: View {
                 // MARK: - Action Buttons Section
                 VStack {
                     HStack(spacing: 24) {
-                        Text("Итого").fontWeight(.bold)
+                        Text("total".localized).fontWeight(.bold)
                         Spacer()
-                        Text("\(viewModel.productCountMessage) сом").fontWeight(.bold)
+                        Text("\(viewModel.productCountMessage) \(NSLocalizedString("com", comment: ""))").fontWeight(.bold)
                         Button(action: {
                             if viewModel.orderProducts.isEmpty {
                                 isPresented.toggle()
@@ -137,7 +137,7 @@ struct CartView: View {
                                 viewModel.orderButtonTapped(with: promo) // Оформляем заказ
                             }
                         }) {
-                            Text("Заказать")
+                            Text("order".localized)
                                 .font(.body)
                                 .fontWeight(.bold)
                                 .padding()
@@ -166,7 +166,7 @@ struct CartView: View {
             VStack(spacing: 8) {
                 Spacer()
                 if viewModel.promoResultText.isEmpty {
-                    Text("Разблокируйте эксклюзивную скидку!")
+                    Text("unlock_exclusive_discount".localized)
                         .customTextStyle(TextStyle.avenirRegular, size: 20)
                         .multilineTextAlignment(.center)
                         .multilineTextAlignment(.center)
@@ -179,7 +179,7 @@ struct CartView: View {
                         .fontWeight(.semibold)
                         .padding([.top], 20)
                 }
-                TextField("Введите промокод", text: $promo)
+                TextField("enter_promo_code".localized, text: $promo)
                     .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .font(.body)
@@ -188,7 +188,7 @@ struct CartView: View {
                     Button(action: {
                         isPromoSheetVisible = false
                     }) {
-                        Text("Отмена")
+                        Text("cancel".localized)
                             .fontWeight(.semibold)
                             .padding()
                             .foregroundColor(.white)
@@ -197,12 +197,11 @@ struct CartView: View {
                             .cornerRadius(20)
                             .shadow(color: Colors.promoCancel.opacity(0.5), radius: 5, x: 10, y: 5)
                     }
-                    
                     Button(action: {
                         viewModel.promoCode = promo
                         viewModel.applyPromoCode()
                     }) {
-                        Text("Применить")
+                        Text("apply".localized)
                             .fontWeight(.semibold)
                             .padding()
                             .foregroundColor(.white)

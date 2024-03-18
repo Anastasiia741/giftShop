@@ -15,7 +15,7 @@ struct ProductsEditView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text(TextMessage.Menu.porular)
+                        Text("popular".localized)
                             .font(.title3.bold())
                             .foregroundColor(.black)
                             .padding(.leading, 20)
@@ -40,7 +40,7 @@ struct ProductsEditView: View {
                 }
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text(TextMessage.Menu.porular)
+                        Text("products".localized)
                             .font(.title3.bold())
                             .foregroundColor(.black)
                         Images.Menu.popular

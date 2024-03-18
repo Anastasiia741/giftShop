@@ -70,7 +70,6 @@ final class AuthService {
             if let error = error {
                 completion(.failure(error))
             } else {
-                print("Пользователь удален")
                 completion(.success(()))
             }
         }

@@ -15,7 +15,7 @@ struct CreateProductView: View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text("Изображение").foregroundColor(.black)) {
+                    Section(header: Text("image".localized).foregroundColor(.black)) {
                         VStack {
                             Image(uiImage: (viewModel.productImage ??  UIImage()))
                                 .resizable()
@@ -30,14 +30,14 @@ struct CreateProductView: View {
                                 }
                         }
                     }
-                    Section(header: Text("Описание").foregroundColor(.black)) {
-                        TextField("Название товара", text: $viewModel.productName)
-                        TextField("Категория", text: $viewModel.productCategory)
+                    Section(header: Text("description".localized).foregroundColor(.black)) {
+                        TextField("product_name".localized, text: $viewModel.productName)
+                        TextField("category".localized, text: $viewModel.productCategory)
                             .keyboardType(.alphabet)
-                        TextField("Цена", text: $viewModel.productPrice)
+                        TextField("price".localized, text: $viewModel.productPrice)
                             .keyboardType(.decimalPad)
                     }
-                    Section(header: Text("Подробное описание товара").foregroundColor(.black)) {
+                    Section(header: Text("detailed_product_descrip".localized).foregroundColor(.black)) {
                         TextEditor(text: $viewModel.productDetail)
                             .frame(height: 100)
                             .padding(.horizontal)
@@ -46,7 +46,7 @@ struct CreateProductView: View {
                     }
                 }
                 
-                Button("Сохранить") {
+                Button("save".localized) {
                     Task {
                         await viewModel.createNewProduct()
                     }
@@ -60,11 +60,11 @@ struct CreateProductView: View {
                 .shadow(color: Color(.orange).opacity(0.5), radius: 5, x: 0, y: 5)
                 .padding(.bottom)
             }
-            .confirmationDialog("Выберите источник фото", isPresented: $showImgAlert) {
-                Button("Галерея") {
+            .confirmationDialog("select_photo_source".localized, isPresented: $showImgAlert) {
+                Button("gallery".localized) {
                     isShowingGalleryPicker = true
                 }
-                Button("Камера") {
+                Button("camera".localized) {
                     isShowingCameraPicker = true
                 }
             }

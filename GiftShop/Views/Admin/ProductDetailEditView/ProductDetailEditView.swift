@@ -35,26 +35,26 @@ struct ProductDetailEditView: View {
             }
             .padding([.leading, .trailing], 20)
             VStack(alignment: .leading, spacing: 8) {
-                Text("Название товара").font(.callout)
-                TextField("Введите название товара", text: $viewModel.selectedProduct.name)
+                Text("product_name".localized).font(.callout)
+                TextField("enter_product_name".localized, text: $viewModel.selectedProduct.name)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                Text("Категория").font(.callout)
-                TextField("Введите категорию", text: $viewModel.selectedProduct.category)
+                Text("category".localized).font(.callout)
+                TextField("enter_category".localized, text: $viewModel.selectedProduct.category)
                     .keyboardType(.alphabet)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                Text("Цена").font(.callout)
-                TextField("Введите цену", text: Binding(
+                Text("price".localized).font(.callout)
+                TextField("enter_price".localized, text: Binding(
                     get: { String(viewModel.selectedProduct.price) },
                     set: { viewModel.selectedProduct.price = Int($0) ?? 0 }))
                 .keyboardType(.decimalPad)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                Text("Подробное описание товара").font(.callout)
+                Text("detailed_product_descrip".localized).font(.callout)
                 TextEditor(text: $viewModel.selectedProduct.detail)
                     .frame(height: 100)
                     .padding(.horizontal, 20)
@@ -62,7 +62,7 @@ struct ProductDetailEditView: View {
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             }.padding([.leading, .trailing], 20)
             HStack(spacing: 16){
-                Button("Удалить") {
+                Button("delete".localized) {
                     showDeleteAlert = true
                 }
                 .font(.system(size: 16))
@@ -73,14 +73,14 @@ struct ProductDetailEditView: View {
                 .cornerRadius(20)
                 .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
                 .alert(isPresented: $showDeleteAlert) {
-                    Alert(title: Text("Удалить товар?"), primaryButton: .cancel(Text("Да")) {
+                    Alert(title: Text("delete_product".localized), primaryButton: .cancel(Text("yes".localized)) {
                         Task {
                             await viewModel.deleteProduct()
                         }
-                    }, secondaryButton: .destructive(Text("Нет")))
+                    }, secondaryButton: .destructive(Text("no".localized)))
                 }
                 Spacer().frame(width: 16)
-                Button("Сохранить") {
+                Button("save".localized) {
                     Task {
                         await viewModel.saveEditedProduct()
                     }
@@ -91,24 +91,23 @@ struct ProductDetailEditView: View {
                 .foregroundColor(.white)
                 .background(Color(.green))
                 .cornerRadius(20)
-                .shadow(color: Color(.orange).opacity(0.5), radius: 5, x: 0, y: 5)
+                .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
                 .alert(isPresented: $showSaveAlert) {
-                    Alert(title: Text("Данные успешно сохранены"), dismissButton: .default(Text("Ок")))
+                    Alert(title: Text("data_saved_successfully".localized), dismissButton: .default(Text("ok".localized)))
                 }
             }
             .padding(.bottom)
             
         }
-        .confirmationDialog("Выберите источник фото", isPresented: $showImgAlert) {
-            Button("Галерея") {
+        .confirmationDialog("select_photo_source".localized, isPresented: $showImgAlert) {
+            Button("gallery".localized) {
                 isShowingGalleryPicker = true
             }
-            Button("Камера") {
+            Button("camera".localized) {
                 isShowingCameraPicker = true
             }
         }
         .onAppear {
-            //            viewModel.loadImage(from: viewModel.imageURL)
         }
         .sheet(isPresented: $isShowingGalleryPicker) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)

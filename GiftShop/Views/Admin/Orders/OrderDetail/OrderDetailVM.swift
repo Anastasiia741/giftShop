@@ -36,7 +36,7 @@ final class OrderDetailVM: ObservableObject {
     func formatOrderItemsText(for order: Order) -> String {
         var itemsText = ""
         for position in order.positions {
-            let itemText = "\(position.product.name): \(position.count) шт."
+            let itemText = "\(position.product.name): \(position.count) \(NSLocalizedString("amount", comment: ""))."
             if itemsText.isEmpty {
                 itemsText = itemText
             } else {

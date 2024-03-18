@@ -1,0 +1,107 @@
+/* 
+  Localizable.strings
+  GiftShop
+  Created by Анастасия Набатова on 18/3/24.
+*/
+
+//MARK: - Auth
+"empty_string" = "";
+"enter_email" = "Введите email";
+"enter_password" = "Введите пароль";
+"repeat_password" = "Повторите пароль";
+"authorization" = "Войти";
+"registration" = "Регистрация";
+"already_have_an_account" = "Уже есть аккаунт";
+
+//MARK: - OrderDetail
+"order_details" = "Детали заказа";
+"order_date" = "Дата заказа:";
+"status" = "Статус:";
+"promo_code" = "Промокод:";
+"goods" = "Товары:";
+"name" = "Название:";
+"amount" = "шт";
+"sum" = "Сумма:";
+"som" = "сом";
+"name" = "Имя:";
+"email" = "Email:";
+"delivery_address" = "Адрес доставки:";
+"phone_number" = "Номер телефона:";
+
+//MARK: - ProductDetailEditView
+"product_name" = "Название товара";
+"enter_product_name" = "Введите название товара";
+"category" = "Категория";
+"enter_category" = "Введите категорию";
+"price" = "Цена";
+"enter_price" = "Введите цену";
+"detailed_product_descrip" = "Подробное описание товара";
+"delete" = "Удалить";
+"save" = "Сохранить";
+
+//MARK: - CreateProductView
+"image" = "Изображение";
+"description" = "Описание";
+
+//MARK: - OrderCell
+"date_of" = "Дата:";
+"more_details" = "Подробнее";
+
+//MARK: - CatalogView
+"popular" = "Популярное";
+"products" = "Товары";
+
+//MARK: - ProductDetailView
+"quantity" = "Количество: ";
+"add" = "добавить";
+
+//MARK: - CartView
+"add_items_to_cart" = "Добавьте товары в корзину, чтобы начать покупки!";
+"add to order" = "Добавить к заказу?";
+"get_discount" = "Получить скидку!";
+"promo_code" = "Промокод";
+"total" = "Итого";
+"order" = "Заказать";
+"unlock_exclusive_discount" = "Разблокируйте эксклюзивную скидку!";
+"enter_promo_code" = "Введите промокод";
+"cancel" = "Отмена";
+"apply" = "Применить";
+"10%_discount" = "Ура! Вы получили скидку 10% на заказ!";
+"20%_discount" = "Ура! Вы получили скидку 20% на заказ!";
+"30%_discount" = "Ура! Вы получили скидку 30% на заказ!";
+"code_does_not_exist" = "Такого кода не существует";
+
+//MARK: - ProfileView
+"your_name" = "Ваше имя";
+"enter_your_name" = "Введите имя";
+"enter_phone_number" = "Введите номер телефона";
+"delivery_address" = "Адрес доставки";
+"your_delivery_address" = "Ваш адрес доставки";
+"your_orders" = "Ваши заказы будут тут";
+"no_orders_yet" = "Заказов пока нет";
+"your_orders" = "Ваши заказы";
+"delete_account" = "Удалить аккаунт";
+
+//MARK: - Alerts
+"registration_error" = "Ошибка регистрации";
+"password_mismatch" = "Пароли не совпадают";
+"delete_product" = "Удалить товар?";
+"yes" = "Да";
+"no" = "Нет";
+"data_saved_successfully" = "Данные успешно сохранены";
+"ok" = "Ок";
+"select_photo_source" = "Выберите источник фото";
+"gallery" = "Галерея";
+"camera" = "Камера";
+"delete_account?" = "Удалить аккаунт?";
+"data_successfully_saved" = "Ваши данные успешно сохранены";
+"log_out?" = "Хотите выйти?";
+"go_out" = "Выйти";
+"cancel" = "Отмена";
+"error" = "Ошибка";
+
+
+
+
+
+

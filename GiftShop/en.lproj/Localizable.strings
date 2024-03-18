@@ -1,0 +1,104 @@
+/* 
+  Localizable.strings
+  GiftShop
+  Created by Анастасия Набатова on 18/3/24.
+*/
+
+//MARK: - Auth
+"empty_string" = "";
+"enter_email" = "Enter email";
+"enter_password" = "Enter password";
+"repeat_password" = "Repeat password";
+"authorization" = "Sign in";
+"registration" = "Registration";
+"already_have_an_account" = "Have an account";
+
+//MARK: - OrderDetail
+"order_details" = "Order details";
+"order_date" = "Дата заказа:";
+"status" = "Status:";
+"promo_code" = "Промокод:";
+"goods" = "Goods:";
+"name" = "Название:";
+"amount" = "pcs";
+"sum" = "Sum:";
+"som" = "som";
+"name" = "Name:";
+"email" = "Email:";
+"delivery_address" = "Delivery address:";
+"phone_number" = "Phone number:";
+
+//MARK: - ProductDetailEditView
+"product_name" ="Product Name";
+"enter_product_name" = "Enter product name";
+"category" = "Category";
+"enter_category" = "Enter category";
+"price" = "Price";
+"enter_price" ="Enter price";
+"detailed_product_descrip" = "Detailed product description";
+"delete" = "Delete";
+"save" = "Save";
+
+//MARK: - CreateProductView
+"image" = "Image";
+"description" = "Description";
+
+//MARK: - OrderCell
+"date_of" = "Date of";
+"more_details" = "More details";
+
+//MARK: - CatalogView
+"popular" = "Popular";
+"products" = "Products";
+
+//MARK: - ProductDetailView
+"quantity" = "Quantity:";
+"add" = "add";
+
+//MARK: - CartView
+"add_items_to_cart" = "Add items to cart to start shopping!";
+"add to order" = "Add to order?";
+"get_discount" = "Get a discount!";
+"promo_code" = "Promo code";
+"total" = "Total";
+"order" = "Order";
+"unlock_exclusive_discount" = "Unlock an exclusive discount!";
+"enter_promo_code" = "Enter promotional code";
+"cancel" = "Cancel";
+"apply" = "Apply";
+"10%_discount" = "Hurray! You received a 10% discount on your order!";
+"20%_discount" = "Hurray! You received a 20% discount on your order!";
+"30%_discount" = "Hurray! You received a 30% discount on your order!";
+"code_does_not_exist" = "Such code does not exist";
+
+//MARK: - ProfileView
+"your_name" = "Your name";
+"enter_your_name" = "Enter your name";
+"enter_phone_number" = "Enter phone number";
+"delivery_address" = "Delivery address";
+"your_delivery_address" = "Your delivery address";
+"your_orders" = "Your orders will be here";
+"no_orders_yet" = "No orders yet";
+"your_orders" = "Your orders";
+"delete_account" = "Delete account";
+
+//MARK: - Alerts
+"registration_error" = "Registration error";
+"password_mismatch" = "Password mismatch";
+"delete_product" = "Delete product?";
+"yes" = "Yes";
+"no" = "No";
+"data_saved_successfully" = "Data saved successfully";
+"ok" = "OK";
+"select_photo_source" = "Select photo source";
+"gallery" = "Gallery";
+"camera" = "Camera";
+"delete_account?" = "Delete account?";
+"data_successfully_saved" = "Your data has been successfully saved";
+"log_out?" = "Do you want to go out?";
+"go_out" = "Go out";
+"cancel" = "Cancel";
+"error" = "Error";
+
+
+

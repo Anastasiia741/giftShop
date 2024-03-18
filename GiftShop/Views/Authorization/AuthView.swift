@@ -18,7 +18,7 @@ struct AuthView: View {
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
-            Text(isAuth ? TextMessage.Authorization.authorization : TextMessage.Authorization.registration)
+            Text(isAuth ? "authorization".localized : "registration".localized)
                 .padding(isAuth ? 16 : 18)
                 .padding(.horizontal, 30)
                 .font(.title2.bold())
@@ -26,20 +26,20 @@ struct AuthView: View {
                 .cornerRadius(isAuth ? 30 : 40)
                 .padding(.horizontal, 12)
             VStack{
-                TextField("Введите email", text: $email)
+                TextField("enter_email".localized, text: $email)
                     .padding()
                     .background(Colors.whiteAlfa)
                     .cornerRadius(12)
                     .padding(4)
                     .padding(.horizontal, 12)
-                SecureField("Введите пароль", text: $password)
+                SecureField("enter_password".localized, text: $password)
                     .padding()
                     .background(Colors.whiteAlfa)
                     .cornerRadius(12)
                     .padding(4)
                     .padding(.horizontal, 12)
                 if !isAuth {
-                    SecureField("Повторите пароль", text: $confirmPassword)
+                    SecureField("repeat_password".localized, text: $confirmPassword)
                         .padding()
                         .background(Colors.whiteAlfa)
                         .cornerRadius(12)
@@ -53,13 +53,13 @@ struct AuthView: View {
                             case .success(_):
                                 isTabViewShow.toggle()
                             case .failure(let error):
-                                alertMessage = "Registration error \(error.localizedDescription)"
+                                alertMessage = "\(NSLocalizedString("registration_error", comment: "")) \(error.localizedDescription)"
                                 isShowAlert.toggle()
                             }
                         }
                     } else {
                         guard password == confirmPassword else {
-                            self.alertMessage = "Пароли не совпадают"
+                            self.alertMessage = "password_mismatch".localized
                             self.isShowAlert.toggle()
                             return
                         }
@@ -72,14 +72,14 @@ struct AuthView: View {
                                 self.confirmPassword = ""
                                 self.isAuth.toggle()
                             case .failure(let error):
-                                alertMessage = "Registration error \(error.localizedDescription)"
+                                alertMessage = "\(NSLocalizedString("registration_error", comment: "")) \(error.localizedDescription)"
                                 self.isShowAlert.toggle()
                             }
                         }
                     }
                 }
             label: {
-                Text(isAuth ? "Войти" : TextMessage.Authorization.registration)
+                Text(isAuth ? "authorization".localized : "registration".localized)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(LinearGradient(colors: [Colors.yellow, Colors.red], startPoint: .leading, endPoint: .trailing))
@@ -92,7 +92,7 @@ struct AuthView: View {
                 Button {
                     isAuth.toggle()
                 } label: {
-                    Text(isAuth ? "Регистрация" : "Уже есть аккаунт")
+                    Text(isAuth ? "registration".localized : "already_have_an_account".localized)
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(8)
@@ -124,7 +124,7 @@ struct AuthView: View {
             }
         }
         .alert(isPresented: $isShowAlert) {
-            Alert(title: Text(AlertMessage.errorTitle), message: Text(alertMessage), dismissButton: .default(Text(AlertMessage.applyAction)))
+            Alert(title: Text("error".localized), message: Text(alertMessage), dismissButton: .default(Text("ok".localized)))
         }
     }
 }

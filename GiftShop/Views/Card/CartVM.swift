@@ -50,7 +50,7 @@ final class CartVM: ObservableObject {
             } else {
                 DBOrdersService.shared.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
                     switch result {
-                    case .success(let order):
+                    case .success(_):
                         self?.orderProducts.removeAll()
                         self?.productsRepository.save(self?.orderProducts ?? [Product]())
                     case .failure(let error):
@@ -63,13 +63,13 @@ final class CartVM: ObservableObject {
     
     func applyPromoCode() {
         if promoCode.lowercased() == "promo 10" {
-            promoResultText = "Ура! Вы получили скидку 10% на заказ!"
+            promoResultText = "10%_discount".localized
         } else if promoCode.lowercased() == "promo 20" {
-            promoResultText = "Ура! Вы получили скидку 20% на заказ!"
+            promoResultText = "20%_discount".localized
         } else if promoCode.lowercased() == "promo 30" {
-            promoResultText = "Ура! Вы получили скидку 30% на заказ!"
+            promoResultText = "30%_discount".localized
         } else {
-            promoResultText = "Такого кода не существует"
+            promoResultText = "code_does_not_exist".localized
         }
         promoCode = ""
     }

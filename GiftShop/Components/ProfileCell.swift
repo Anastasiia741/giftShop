@@ -17,12 +17,12 @@ struct ProfileCell: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Сумма: \(order.cost)")
+            Text("\(NSLocalizedString("sum", comment: "")) \(order.cost)")
                 .customTextStyle(TextStyle.avenirBold, size: 16)
-            Text("Дата: \(dateFormatter.string(from: order.date))")
+            Text("\(NSLocalizedString("date_of", comment: "")) \(dateFormatter.string(from: order.date))")
                 .customTextStyle(TextStyle.avenir, size: 14)
             HStack {
-                Text("Статус: ")
+                Text("status".localized)
                     .customTextStyle(TextStyle.avenir, size: 14)
                 Text(order.status)
                     .customTextStyle(TextStyle.avenir, size: 14)

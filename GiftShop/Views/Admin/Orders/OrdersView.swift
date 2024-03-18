@@ -48,16 +48,16 @@ struct OrdersView: View {
             }) {
                 Images.Orders.exit
             })
-            .confirmationDialog(AlertMessage.exitTitle, isPresented: $isQuitAlertPresenter) {
+            .confirmationDialog("log_out?".localized, isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()
                     viewModel.logout()
                 } label: {
-                    Text(AlertMessage.exit)
+                    Text("yes".localized)
                 }
                 Button(role: .cancel) {
                 } label: {
-                    Text(AlertMessage.cancelAction)
+                    Text("cancel".localized)
                 }
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {

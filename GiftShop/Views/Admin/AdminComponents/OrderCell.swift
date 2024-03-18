@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-
 struct OrderCell: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var orderDetailVM: OrderDetailVM = OrderDetailVM()
@@ -14,10 +13,10 @@ struct OrderCell: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Дата: \(Extentions.shared.formattedDate(order.date))")
+                Text("\(NSLocalizedString("date_of", comment: "")) \(Extentions.shared.formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenir, size: 18)
                 HStack {
-                    Text("Статус: ")
+                    Text("status".localized)
                         .customTextStyle(TextStyle.avenir, size: 18)
                     Text(order.status)
                         .customTextStyle(TextStyle.avenir, size: 18)
@@ -28,7 +27,7 @@ struct OrderCell: View {
             NavigationLink(
                 destination: OrderDetail(orderDetailVM: orderDetailVM, order: order),
                 label: {
-                    Text("Подробнее")
+                    Text("more_details".localized)
                         .font(.system(size: 14))
                         .fontWeight(.medium)
                         .frame(maxWidth: 100, minHeight: 30)

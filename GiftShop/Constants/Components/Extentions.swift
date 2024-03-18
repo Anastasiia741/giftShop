@@ -5,9 +5,9 @@
 import SwiftUI
 
 final class Extentions: ObservableObject {
-   
+    
     static let shared = Extentions()
-
+    
     func formattedDate(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
@@ -15,26 +15,33 @@ final class Extentions: ObservableObject {
     }
     
     func statusColor(for status: String) -> Color {
-       switch status {
-       case OrderStatus.new.rawValue:
-           return .green
-       case OrderStatus.processing.rawValue:
-           return .blue
-       case OrderStatus.shipped.rawValue:
-           return .orange
-       case OrderStatus.delivered.rawValue:
-           return .green
-       case OrderStatus.cancelled.rawValue:
-           return .red
-       default:
-           return .primary
-       }
-   }
+        switch status {
+        case OrderStatus.new.rawValue:
+            return .green
+        case OrderStatus.processing.rawValue:
+            return .blue
+        case OrderStatus.shipped.rawValue:
+            return .orange
+        case OrderStatus.delivered.rawValue:
+            return .green
+        case OrderStatus.cancelled.rawValue:
+            return .red
+        default:
+            return .primary
+        }
+    }
 }
-
 
 extension Text {
     func customTextStyle(_ style: String, size: CGFloat) -> Text {
         font(.custom(style, size: size))
+    }
+}
+
+extension String {
+    
+    var localized: String {
+        NSLocalizedString(self,
+                          comment: "\(self) could not be found Localizable.strings")
     }
 }
