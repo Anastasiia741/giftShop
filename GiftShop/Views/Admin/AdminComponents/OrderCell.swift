@@ -13,10 +13,10 @@ struct OrderCell: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("\(NSLocalizedString("date_of", comment: "")) \(Extentions.shared.formattedDate(order.date))")
+                Text("\(Localization.dateOf) \(Extentions.shared.formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenir, size: 18)
                 HStack {
-                    Text("status".localized)
+                    Text(Localization.status)
                         .customTextStyle(TextStyle.avenir, size: 18)
                     Text(order.status)
                         .customTextStyle(TextStyle.avenir, size: 18)
@@ -27,7 +27,7 @@ struct OrderCell: View {
             NavigationLink(
                 destination: OrderDetail(orderDetailVM: orderDetailVM, order: order),
                 label: {
-                    Text("more_details".localized)
+                    Text(Localization.moreDetails)
                         .font(.system(size: 14))
                         .fontWeight(.medium)
                         .frame(maxWidth: 100, minHeight: 30)

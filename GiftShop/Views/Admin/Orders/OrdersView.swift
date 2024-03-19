@@ -39,7 +39,6 @@ struct OrdersView: View {
                 .padding()
                 List(viewModel.filteredOrders) { order in
                     OrderCell(order: order)
-                    
                 }
             }
             .navigationBarItems(trailing:
@@ -48,16 +47,16 @@ struct OrdersView: View {
             }) {
                 Images.Orders.exit
             })
-            .confirmationDialog("log_out?".localized, isPresented: $isQuitAlertPresenter) {
+            .confirmationDialog(Localization.logOut, isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()
                     viewModel.logout()
                 } label: {
-                    Text("yes".localized)
+                    Text(Localization.logOut)
                 }
                 Button(role: .cancel) {
                 } label: {
-                    Text("cancel".localized)
+                    Text(Localization.cancel)
                 }
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {

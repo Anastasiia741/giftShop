@@ -17,9 +17,9 @@
 "order_details" = "Детали заказа";
 "order_date" = "Дата заказа:";
 "status" = "Статус:";
-"promo_code" = "Промокод:";
+"promo_code" = "Промокод";
 "goods" = "Товары:";
-"name" = "Название:";
+"title" = "Название:";
 "amount" = "шт";
 "sum" = "Сумма:";
 "som" = "сом";
@@ -57,9 +57,8 @@
 
 //MARK: - CartView
 "add_items_to_cart" = "Добавьте товары в корзину, чтобы начать покупки!";
-"add to order" = "Добавить к заказу?";
+"add_to_order" = "Добавить к заказу?";
 "get_discount" = "Получить скидку!";
-"promo_code" = "Промокод";
 "total" = "Итого";
 "order" = "Заказать";
 "unlock_exclusive_discount" = "Разблокируйте эксклюзивную скидку!";
@@ -75,12 +74,12 @@
 "your_name" = "Ваше имя";
 "enter_your_name" = "Введите имя";
 "enter_phone_number" = "Введите номер телефона";
-"delivery_address" = "Адрес доставки";
-"your_delivery_address" = "Ваш адрес доставки";
-"your_orders" = "Ваши заказы будут тут";
+"your_delivery_address" = "Адрес доставки";
+"enter_your_delivery_address" = "Ваш адрес доставки";
+"your_future_orders" = "Ваши заказы будут тут";
 "no_orders_yet" = "Заказов пока нет";
 "your_orders" = "Ваши заказы";
-"delete_account" = "Удалить аккаунт";
+"delete_account_name" = "Удалить аккаунт";
 
 //MARK: - Alerts
 "registration_error" = "Ошибка регистрации";
@@ -93,9 +92,9 @@
 "select_photo_source" = "Выберите источник фото";
 "gallery" = "Галерея";
 "camera" = "Камера";
-"delete_account?" = "Удалить аккаунт?";
+"delete_account" = "Удалить аккаунт?";
 "data_successfully_saved" = "Ваши данные успешно сохранены";
-"log_out?" = "Хотите выйти?";
+"log_out" = "Хотите выйти?";
 "go_out" = "Выйти";
 "cancel" = "Отмена";
 "error" = "Ошибка";

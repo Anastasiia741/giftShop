@@ -16,28 +16,28 @@ struct OrderDetail: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("order_details".localized)
+            Text(Localization.orderDetails)
                 .customTextStyle(TextStyle.avenirRegular, size: 22)
                 .fontWeight(.bold)
                 .padding(.top)
             VStack(alignment: .leading, spacing: 10) {
-                Text("\(NSLocalizedString("order_date", comment: "")) \(Extentions.shared.formattedDate(order.date))")
+                Text("\(Localization.orderDate) \(Extentions.shared.formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
-                Text("\(NSLocalizedString("status", comment: "")) \(order.status)")
+                Text("\(Localization.status) \(order.status)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .foregroundColor(Extentions.shared.statusColor(for: order.status))
-                Text("\(NSLocalizedString("promo_code", comment: "")) \(order.promocode)")
+                Text("\(Localization.promoCode) \(order.promocode)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
             }
             .padding(.horizontal)
             VStack(alignment: .leading, spacing: 10) {
-                Text("goods")
+                Text(Localization.goods)
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .bold()
                 ForEach(order.positions) { position in
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(NSLocalizedString("name", comment: "")) \(position.product.name): \(position.count) \(NSLocalizedString("amount", comment: "")).")
+                            Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
                                 .customTextStyle(TextStyle.avenirRegular, size: 16)
                         }
                         .padding(.vertical, 5)
@@ -49,18 +49,18 @@ struct OrderDetail: View {
                 }
             }
             .padding(.horizontal)
-            Text("\(NSLocalizedString("sum", comment: "")) \(order.cost) \(NSLocalizedString("som", comment: ""))")
+            Text("\(Localization.sum) \(order.cost) \(Localization.som)")
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .padding(.top)
-            Text("name".localized)
+            Text(Localization.name)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text("email".localized)
+            Text(Localization.email)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text("delivery_address".localized)
+            Text(Localization.deliveryAddress)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text("phone_number".localized)
+            Text(Localization.phoneNumber)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
             Spacer()
         }

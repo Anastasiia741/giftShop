@@ -15,9 +15,9 @@ struct CreateProductView: View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text("image".localized).foregroundColor(.black)) {
+                    Section(header: Text(Localization.image).foregroundColor(.black)) {
                         VStack {
-                            Image(uiImage: (viewModel.productImage ??  UIImage()))
+                            Image(uiImage: (viewModel.productImage ?? Images.CreateProduct.image ?? UIImage()))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(maxWidth: .infinity, maxHeight: 260)
@@ -30,14 +30,14 @@ struct CreateProductView: View {
                                 }
                         }
                     }
-                    Section(header: Text("description".localized).foregroundColor(.black)) {
-                        TextField("product_name".localized, text: $viewModel.productName)
-                        TextField("category".localized, text: $viewModel.productCategory)
+                    Section(header: Text(Localization.description).foregroundColor(.black)) {
+                        TextField(Localization.productName, text: $viewModel.productName)
+                        TextField(Localization.category, text: $viewModel.productCategory)
                             .keyboardType(.alphabet)
-                        TextField("price".localized, text: $viewModel.productPrice)
+                        TextField(Localization.price, text: $viewModel.productPrice)
                             .keyboardType(.decimalPad)
                     }
-                    Section(header: Text("detailed_product_descrip".localized).foregroundColor(.black)) {
+                    Section(header: Text(Localization.detailedProductDescrip).foregroundColor(.black)) {
                         TextEditor(text: $viewModel.productDetail)
                             .frame(height: 100)
                             .padding(.horizontal)
@@ -45,8 +45,7 @@ struct CreateProductView: View {
                             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                     }
                 }
-                
-                Button("save".localized) {
+                Button(Localization.save) {
                     Task {
                         await viewModel.createNewProduct()
                     }
@@ -60,11 +59,11 @@ struct CreateProductView: View {
                 .shadow(color: Color(.orange).opacity(0.5), radius: 5, x: 0, y: 5)
                 .padding(.bottom)
             }
-            .confirmationDialog("select_photo_source".localized, isPresented: $showImgAlert) {
-                Button("gallery".localized) {
+            .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
+                Button(Localization.gallery) {
                     isShowingGalleryPicker = true
                 }
-                Button("camera".localized) {
+                Button(Localization.camera) {
                     isShowingCameraPicker = true
                 }
             }

@@ -35,26 +35,26 @@ struct ProductDetailEditView: View {
             }
             .padding([.leading, .trailing], 20)
             VStack(alignment: .leading, spacing: 8) {
-                Text("product_name".localized).font(.callout)
-                TextField("enter_product_name".localized, text: $viewModel.selectedProduct.name)
+                Text(Localization.productName).font(.callout)
+                TextField(Localization.enterProductName, text: $viewModel.selectedProduct.name)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                Text("category".localized).font(.callout)
-                TextField("enter_category".localized, text: $viewModel.selectedProduct.category)
+                Text(Localization.category).font(.callout)
+                TextField(Localization.enterCategory, text: $viewModel.selectedProduct.category)
                     .keyboardType(.alphabet)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                Text("price".localized).font(.callout)
-                TextField("enter_price".localized, text: Binding(
+                Text(Localization.price).font(.callout)
+                TextField(Localization.enterPrice, text: Binding(
                     get: { String(viewModel.selectedProduct.price) },
                     set: { viewModel.selectedProduct.price = Int($0) ?? 0 }))
                 .keyboardType(.decimalPad)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                Text("detailed_product_descrip".localized).font(.callout)
+                Text(Localization.detailedProductDescrip).font(.callout)
                 TextEditor(text: $viewModel.selectedProduct.detail)
                     .frame(height: 100)
                     .padding(.horizontal, 20)
@@ -62,7 +62,7 @@ struct ProductDetailEditView: View {
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             }.padding([.leading, .trailing], 20)
             HStack(spacing: 16){
-                Button("delete".localized) {
+                Button(Localization.delete) {
                     showDeleteAlert = true
                 }
                 .font(.system(size: 16))
@@ -73,14 +73,14 @@ struct ProductDetailEditView: View {
                 .cornerRadius(20)
                 .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
                 .alert(isPresented: $showDeleteAlert) {
-                    Alert(title: Text("delete_product".localized), primaryButton: .cancel(Text("yes".localized)) {
+                    Alert(title: Text(Localization.deleteProduct), primaryButton: .cancel(Text(Localization.yes)) {
                         Task {
                             await viewModel.deleteProduct()
                         }
-                    }, secondaryButton: .destructive(Text("no".localized)))
+                    }, secondaryButton: .destructive(Text(Localization.no)))
                 }
                 Spacer().frame(width: 16)
-                Button("save".localized) {
+                Button(Localization.save) {
                     Task {
                         await viewModel.saveEditedProduct()
                     }
@@ -93,17 +93,16 @@ struct ProductDetailEditView: View {
                 .cornerRadius(20)
                 .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
                 .alert(isPresented: $showSaveAlert) {
-                    Alert(title: Text("data_saved_successfully".localized), dismissButton: .default(Text("ok".localized)))
+                    Alert(title: Text(Localization.dataSavedSuccessfully), dismissButton: .default(Text(Localization.ok)))
                 }
             }
             .padding(.bottom)
-            
         }
-        .confirmationDialog("select_photo_source".localized, isPresented: $showImgAlert) {
-            Button("gallery".localized) {
+        .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
+            Button(Localization.gallery) {
                 isShowingGalleryPicker = true
             }
-            Button("camera".localized) {
+            Button(Localization.camera) {
                 isShowingCameraPicker = true
             }
         }

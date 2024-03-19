@@ -67,6 +67,7 @@
 		71AD03B32B76881A006231F9 /* OrderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03B22B76881A006231F9 /* OrderDetail.swift */; };
 		71AD03B52B768A00006231F9 /* OrderDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03B42B768A00006231F9 /* OrderDetailVM.swift */; };
 		71BE6A922BA85A1E0004ED32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 71BE6A902BA85A1E0004ED32 /* Localizable.strings */; };
+		71BE6A982BA9A34E0004ED32 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE6A972BA9A34E0004ED32 /* Localization.swift */; };
 		71DCC3212B9A20BE00442C32 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCC3202B9A20BE00442C32 /* Extentions.swift */; };
 		71E45F9C2B48568F00941CE7 /* GiftShopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E45F9B2B48568F00941CE7 /* GiftShopApp.swift */; };
 		71E45F9E2B48568F00941CE7 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E45F9D2B48568F00941CE7 /* AuthView.swift */; };
@@ -124,6 +125,7 @@
 		71AD03B42B768A00006231F9 /* OrderDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailVM.swift; sourceTree = "<group>"; };
 		71BE6A912BA85A1E0004ED32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71BE6A932BA85D520004ED32 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		71BE6A972BA9A34E0004ED32 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		71DCC3202B9A20BE00442C32 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		71E45F982B48568F00941CE7 /* GiftShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GiftShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E45F9B2B48568F00941CE7 /* GiftShopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftShopApp.swift; sourceTree = "<group>"; };
@@ -330,6 +332,15 @@
 			path = OrderDetail;
 			sourceTree = "<group>";
 		};
+		71BE6A962BA9A3200004ED32 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				71BE6A902BA85A1E0004ED32 /* Localizable.strings */,
+				71BE6A972BA9A34E0004ED32 /* Localization.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		71E45F8F2B48568F00941CE7 = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +365,7 @@
 				71E45F9B2B48568F00941CE7 /* GiftShopApp.swift */,
 				71E45FA92B4868A000941CE7 /* TabBar.swift */,
 				71E45FB22B48712A00941CE7 /* Views */,
+				71BE6A962BA9A3200004ED32 /* Localization */,
 				71E45FB52B48723200941CE7 /* Components */,
 				71E45FBB2B48777200941CE7 /* ViewModel */,
 				71E45FB82B48774C00941CE7 /* Model */,
@@ -364,7 +376,6 @@
 				717D0FD32B5AD2B7001F2E6E /* Products.json */,
 				714F7ADC2B59515B00E533AD /* GoogleService-Info.plist */,
 				71E45FA12B48569000941CE7 /* Preview Content */,
-				71BE6A902BA85A1E0004ED32 /* Localizable.strings */,
 			);
 			path = GiftShop;
 			sourceTree = "<group>";
@@ -601,6 +612,7 @@
 				71AD03B52B768A00006231F9 /* OrderDetailVM.swift in Sources */,
 				71AD03B02B768663006231F9 /* StatusColors.swift in Sources */,
 				711ED8EA2B50085B0052752F /* AuthService.swift in Sources */,
+				71BE6A982BA9A34E0004ED32 /* Localization.swift in Sources */,
 				711ED9622B504B150052752F /* ProductsRepository.swift in Sources */,
 				714F7AE52B599D9900E533AD /* ProfileService.swift in Sources */,
 				714F76BD2B602AA200931C2A /* Texts.swift in Sources */,

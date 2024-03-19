@@ -63,13 +63,13 @@ final class CartVM: ObservableObject {
     
     func applyPromoCode() {
         if promoCode.lowercased() == "promo 10" {
-            promoResultText = "10%_discount".localized
+            promoResultText = Localization.discount10
         } else if promoCode.lowercased() == "promo 20" {
-            promoResultText = "20%_discount".localized
+            promoResultText = Localization.discount20
         } else if promoCode.lowercased() == "promo 30" {
-            promoResultText = "30%_discount".localized
+            promoResultText = Localization.discount30
         } else {
-            promoResultText = "code_does_not_exist".localized
+            promoResultText = Localization.codeDoesNotExist
         }
         promoCode = ""
     }

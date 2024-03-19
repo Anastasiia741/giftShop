@@ -38,10 +38,3 @@ extension Text {
     }
 }
 
-extension String {
-    
-    var localized: String {
-        NSLocalizedString(self,
-                          comment: "\(self) could not be found Localizable.strings")
-    }
-}
