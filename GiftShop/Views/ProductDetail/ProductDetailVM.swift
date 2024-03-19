@@ -10,11 +10,8 @@ final class ProductDetailVM: ObservableObject {
     
     @Published var product: Product
     @Published var imageURL: URL?
-    @Published var isImageLoaded = false
-    
-    let orderService = OrderService()
-    
     @Published var count = 0
+    private let orderService = OrderService()
     
     init(product: Product) {
         self.product = product
@@ -30,7 +27,6 @@ final class ProductDetailVM: ObservableObject {
                     if let imageURL = url {
                         DispatchQueue.main.async {
                             self?.imageURL = imageURL
-                            self?.isImageLoaded = true
                         }
                     }
                 }

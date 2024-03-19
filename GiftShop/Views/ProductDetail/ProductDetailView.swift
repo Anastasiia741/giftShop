@@ -6,11 +6,10 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ProductDetailView: View {
-    
-    @State var count = 1
-    @Environment(\.presentationMode) var presentationMode
+   
     @ObservedObject var viewModel: ProductDetailVM
-    var orderService = OrderService()
+    @Environment(\.presentationMode) var presentationMode
+    @State var count = 1
     
     var body: some View {
         VStack(spacing: 16) {
@@ -43,7 +42,6 @@ struct ProductDetailView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading)
                 }
-                
                 HStack{
                     Stepper(value: $count, in: 1...100) {
                         Text("\(Localization.quantity) \(self.count)")

@@ -7,9 +7,9 @@ import SwiftUI
 struct OrdersView: View {
     
     @StateObject var viewModel = OrdersVM()
+    @State private var selectedStatus: OrderStatus = .all
     @State private var isQuitAlertPresenter = false
     @State private var isAuthViewPresenter = false
-    @State private var selectedStatus: OrderStatus = .all
     
     var body: some View {
         NavigationView {

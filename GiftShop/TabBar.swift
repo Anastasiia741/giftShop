@@ -38,7 +38,7 @@ struct TabBar: View {
                                 Images.TabBar.menu
                             }
                         }
-                    CartView(viewModel: CartVM.shared)
+                    CartView()
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
@@ -58,7 +58,7 @@ struct TabBar: View {
                             Images.TabBar.menu
                         }
                     }
-                CartView(viewModel: CartVM.shared)
+                CartView()
                     .tabItem {
                         VStack {
                             Images.TabBar.cart

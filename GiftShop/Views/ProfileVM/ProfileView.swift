@@ -9,19 +9,15 @@ import SDWebImageSwiftUI
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileVM()
-    
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
     @State private var isAlertPresented = false
-    
     @State private var isShowingCameraPicker = false
     @State private var isShowingGalleryPicker = false
-    
     @State private var isQuitAlertPresenter = false
     @State private var isRemoveAlertPresenter = false
     @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
-    
     @State private var isProfileSavedAlert = false
     
     var body: some View {
@@ -135,7 +131,7 @@ struct ProfileView: View {
                     List {
                         Section(header: Text(Localization.yourOrders).customTextStyle(TextStyle.avenirBold, size: 16)) {
                             ForEach(viewModel.orders, id: \.id) { order in
-                                ProfileCell(order: order, viewModel: ProfileVM.shared)
+                                ProfileCell(order: order, viewModel: viewModel)
                             }
                         }
                         .listStyle(.plain)

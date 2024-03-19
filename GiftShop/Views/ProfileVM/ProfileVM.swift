@@ -6,24 +6,17 @@ import Foundation
 import SwiftUI
 import FirebaseStorage
 
-
 final class ProfileVM: ObservableObject {
-    
+   
+    private let authService = AuthService.shared
+    private let dbOrdersService = DBOrdersService()
     @Published var orders: [Order] = []
     @Published var profile: NewUser?
-    
     @Published var name = ""
     @Published var phoneNumber = ""
     @Published var address = ""
     @Published var imageURL = ""
     @Published var image: UIImage?
-    
-    
-    static let shared = ProfileVM()
-    private let authService = AuthService.shared
-    private let databaseService = DBOrdersService.shared
-    private let profileService = ProfileService.shared
-    private let productService = ProductService.shared
     
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else {
@@ -31,14 +24,13 @@ final class ProfileVM: ObservableObject {
         }
         let currentUserUID = currentUser.uid
         do {
-            let user = try await profileService.getProfile(by: currentUserUID)
+            let user = try await ProfileService.shared.getProfile(by: currentUserUID)
             DispatchQueue.main.async {
                 self.profile = user
                 self.name = user.name
                 self.phoneNumber = user.phone
                 self.address = user.address
             }
-            
             if let imageURL = user.image {
                 loadImage(from: imageURL)
             }
@@ -47,12 +39,10 @@ final class ProfileVM: ObservableObject {
         }
     }
     
-    
     func loadImage(from url: String) {
         guard let profileImageURL = profile?.image else {
             return
         }
-        
         let imageRef = Storage.storage().reference(forURL: profileImageURL)
         imageRef.downloadURL { downloadedURL, error in
             if let error = error {
@@ -89,7 +79,7 @@ final class ProfileVM: ObservableObject {
     
     func saveProfileToFirebase(_ profile: NewUser, completion: @escaping (Result<NewUser, Error>) -> ()) {
         if let email = authService.currentUser?.email {
-            profileService.setProfile(user: profile, email: email) { result in
+            ProfileService.shared.setProfile(user: profile, email: email) { result in
                 switch result {
                 case .success(let updatedProfile):
                     print("Данные профиля успешно обновлены", updatedProfile.image ?? "")
@@ -107,7 +97,7 @@ final class ProfileVM: ObservableObject {
         let imageName = UUID().uuidString
         
         do {
-            let imageLink = try await profileService.save(imageData: imageData, imageName)
+            let imageLink = try await ProfileService.shared.save(imageData: imageData, imageName)
             self.imageURL = imageLink
             
             if var updatedProfile = self.profile {
@@ -127,7 +117,7 @@ final class ProfileVM: ObservableObject {
     }
     
     func fetchOrderHistory() {
-        databaseService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
+        dbOrdersService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
             switch result {
             case .success(let orderHistory):
                 self?.orders = orderHistory
@@ -159,5 +149,4 @@ final class ProfileVM: ObservableObject {
             }
         }
     }
-    
 }

@@ -9,10 +9,7 @@ import FirebaseFirestore
 
 class DBOrdersService {
     
-    static let shared = DBOrdersService()
     private let db = Firestore.firestore()
-    private var orderHistory = [Order]()
-    private let authService = AuthService.shared
     private var ordersRef: CollectionReference { return db.collection("orders") }
 
     init() {}

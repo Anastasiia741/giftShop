@@ -34,7 +34,6 @@ struct Order: Identifiable {
     }
     
     init(id: String, userID: String, positions: [Position], date: Date, status: String, promocode: String ) {
-        
         self.id = id
         self.userID = userID
         self.positions = positions

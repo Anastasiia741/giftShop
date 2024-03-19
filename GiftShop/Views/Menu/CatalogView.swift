@@ -6,9 +6,9 @@ import SwiftUI
 
 struct CatalogView: View {
     
-    @StateObject var viewModel = CatalogVM()
-    let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
-    let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
+    @StateObject private var viewModel = CatalogVM()
+    private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
+    private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
     
     var body: some View {
         NavigationView {

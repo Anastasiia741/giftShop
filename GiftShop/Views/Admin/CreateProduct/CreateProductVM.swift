@@ -8,13 +8,13 @@ import Combine
 
 final class CreateProductVM: ObservableObject {
     
-    private let productsDB = ProductService.shared
     @Published var productImage: UIImage?
     @Published var imageURL: String?
     @Published var productName: String = ""
     @Published var productCategory: String = ""
     @Published var productPrice: String = ""
     @Published var productDetail: String = ""
+    private var productService = ProductService()
     
     private func isInputValid() -> Bool {
         if productName.isEmpty || productCategory.isEmpty || String(productPrice).isEmpty || productImage == nil {
@@ -39,17 +39,15 @@ final class CreateProductVM: ObservableObject {
     
     func createNewProduct() async {
         let newProduct = makeNewProduct()
-        
         if let selectedImage = productImage, let imageURL = imageURL {
             do {
-                let uploadedImageURL = try await productsDB.upload(image: selectedImage, url: imageURL)
+                let uploadedImageURL = try await productService.upload(image: selectedImage, url: imageURL)
                 newProduct.image = uploadedImageURL
             } catch {
                 print("Ошибка при загрузке изображения:", error.localizedDescription)
                 return
             }
         }
-        
         do {
             try await createProduct(newProduct)
         } catch {
@@ -58,7 +56,7 @@ final class CreateProductVM: ObservableObject {
     }
     
     func createProduct(_ product: Product) async throws {
-        try await productsDB.create(product: product)
+        try await productService.create(product: product)
         print("Продукт успешно создан: \(product.name)")
     }
 }

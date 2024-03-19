@@ -6,7 +6,7 @@ import Foundation
 
 final class OrderService {
     
-    let productRepository = ProductsRepository()
+    private let productRepository = ProductsRepository()
     
     func calculatePrice() -> (Int, Int) {
         var totalPrice = 0
@@ -50,7 +50,6 @@ final class OrderService {
         }
         products.append(product)
         productRepository.save(products)
-        print("---> Product add", products)
         return products
     }
     

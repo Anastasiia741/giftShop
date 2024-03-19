@@ -8,14 +8,12 @@ import FirebaseAuth
 final class AuthService {
     
     static let shared = AuthService()
-    private let profileDatabase = ProfileService.shared
     private let auth = Auth.auth()
-    
-    private init() {}
-    
     var currentUser: User? {
         return auth.currentUser
     }
+    
+    private init() {}
     
     //  MARK: - SignIn
     func signIn(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
@@ -37,7 +35,7 @@ final class AuthService {
                                       phone: "",
                                       address: "",
                                       email: email)
-                self.profileDatabase.setProfile(user: newUser, email: email) { resultDB in
+                ProfileService.shared.setProfile(user: newUser, email: email) { resultDB in
                     switch resultDB {
                     case .success(_):
                         completion(.success(result.user))

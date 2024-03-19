@@ -6,16 +6,15 @@ import Foundation
 
 final class OrdersVM: ObservableObject {
     
-    private var databaseService = DBOrdersService.shared
+    private let dbOrdersService = DBOrdersService()
     private let authService = AuthService.shared
-
+    private var selectOrder: Order?
+    private var selectedStatus: OrderStatus = .all
     @Published var filteredOrders: [Order] = []
     @Published var orders: [Order] = []
-    var selectOrder: Order?
-    private var selectedStatus: OrderStatus = .all
     
     func fetchUserOrders() {
-        databaseService.fetchUserOrders { [weak self] orders  in
+        dbOrdersService.fetchUserOrders { [weak self] orders  in
             let sortedOrders = orders.sorted(by: { $0.date > $1.date })
             self?.orders = sortedOrders
             self?.filterOrdersByStatus(.all)

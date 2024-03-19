@@ -6,17 +6,14 @@ import SwiftUI
 
 struct CartView: View {
     
-    @StateObject var viewModel: CartVM
-    @StateObject var viewM = CatalogVM()
+    @StateObject private var viewModel = CartVM.shared
+    @StateObject var catalogVM = CatalogVM()
     @State private var promo: String = ""
     @State private var isPromoCodeEntryPresented = false
     @State private var isPromoSheetVisible = false
     @State private var isPresented: Bool = false
-    
-    
     @State private var orderPlaced: Bool = false
-    
-    let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
+    private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
     
     var body: some View {
         NavigationView {
@@ -63,19 +60,17 @@ struct CartView: View {
                             }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
-                        
                     }.onAppear {
                         self.viewModel.fetchOrder()
                     }
                     .padding(.bottom, 6)
-                    
                     // MARK: - Popular product
                     Section(header: Text(Localization.addToOrder)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.gray)) {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: layoutForPopular, spacing: 16) {
-                                    ForEach(viewM.popularProducts, id: \.id) { item in
+                                    ForEach(catalogVM.popularProducts, id: \.id) { item in
                                         PopularProductCell(product: item)
                                             .foregroundColor(.black)
                                             .onTapGesture {
@@ -87,11 +82,10 @@ struct CartView: View {
                         }.onAppear {
                             Task {
                                 do {
-                                    await self.viewM.fetchAllProducts()
+                                    await self.catalogVM.fetchAllProducts()
                                 }
                             }
                         }
-                    
                     // MARK: - Promo Section
                     Section {
                         HStack(spacing: 24) {
@@ -123,7 +117,6 @@ struct CartView: View {
                         }
                     }
                 }
-                
                 // MARK: - Action Buttons Section
                 VStack {
                     HStack(spacing: 24) {
@@ -224,7 +217,7 @@ struct CartView: View {
 
 struct CartView_Previews: PreviewProvider {
     static var previews: some View {
-        CartView(viewModel: CartVM.shared )
+        CartView()
     }
 }
 

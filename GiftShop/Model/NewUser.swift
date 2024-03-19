@@ -22,7 +22,6 @@ struct NewUser: Identifiable {
         repres["address"] = self.address
         repres["email"] = self.email
         repres["image"] = self.image
-        
         return repres
     }
 }

@@ -5,6 +5,7 @@
 import SwiftUI
 
 struct OrderCell: View {
+    
     @Environment(\.presentationMode) var presentationMode
     @StateObject var orderDetailVM: OrderDetailVM = OrderDetailVM()
     @StateObject var statusColors = StatusColors()

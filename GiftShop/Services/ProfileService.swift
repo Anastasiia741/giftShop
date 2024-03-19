@@ -9,9 +9,9 @@ import FirebaseStorage
 final class ProfileService {
     
     static let shared = ProfileService()
-    private let db = Firestore.firestore()
     private let storage = Storage.storage()
     @Published var image: UIImage?
+    private let db = Firestore.firestore()
     private var usersRef: CollectionReference {
         return db.collection("users")
     }
