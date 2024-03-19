@@ -4,8 +4,6 @@
 
 import Foundation
 
-
-
 struct Localization {
     //MARK: - Auth
     static let emptyString = "empty_string".localized
@@ -92,7 +90,6 @@ struct Localization {
     static let logOut = "log_out".localized
     static let goOut = "go_out".localized
     static let error = "error".localized
-
 }
 
 private extension String {

@@ -29,7 +29,7 @@ struct PopularProductCell: View {
                         .customTextStyle(TextStyle.avenirRegular, size: 12)
                         .frame(height: 40)
                     Spacer()
-                    Text("\(product.price) \(NSLocalizedString("com", comment: ""))")
+                    Text("\(product.price) \(Localization.som)")
                         .customTextStyle(TextStyle.avenirBold, size: 12)
                 }
                 .padding(.horizontal, 6)
