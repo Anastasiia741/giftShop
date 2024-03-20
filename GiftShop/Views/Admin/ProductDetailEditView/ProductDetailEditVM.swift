@@ -9,7 +9,7 @@ import FirebaseStorage
 final class ProductDetailEditVM: ObservableObject {
     
     private let productsDB = ProductService()
-    @Published var selectedProduct: Product
+    @Published var selectedProduct: Product?
     @Published var selectedImage: UIImage?
     @Published var imageURL: URL?
     @Published var isImageChange = false
@@ -19,7 +19,7 @@ final class ProductDetailEditVM: ObservableObject {
     }
     
     func updateImageDetail() {
-        if let productImage = selectedProduct.image {
+        if let productImage = selectedProduct?.image {
             let imageRef = Storage.storage().reference(forURL: productImage)
             imageRef.downloadURL { [weak self] url, error in
                 if let error = error {
@@ -35,29 +35,37 @@ final class ProductDetailEditVM: ObservableObject {
         }
     }
     
-    func saveEditedProduct() async {
-        do {
-            try await productsDB.update(product: selectedProduct)
-            if isImageChange, let selectedImage = selectedImage, let imageURL = selectedProduct.image {
-                do {
-                    let uploadedImageURL = try await productsDB.uploadImageToFirebase(selectedImage, imageURL)
-                    selectedProduct.image = uploadedImageURL
-                    self.imageURL = URL(string: uploadedImageURL)
-                } catch {
-                    print("Ошибка при загрузке изображения в Firebase Storage: \(error.localizedDescription)")
+    func saveEditedProduct() {
+        guard let selectedProduct = selectedProduct else { return }
+        productsDB.update(product: selectedProduct) { error in
+            if let error = error {
+                print("Ошибка при обновлении данных: \(error.localizedDescription)")
+            } else {
+                print("Данные сохранены: \(selectedProduct)")
+                if self.isImageChange == true {
+                    guard let selectedImage = self.selectedImage, let imageURL = selectedProduct.image else { return }
+                    self.productsDB.uploadImageToFirebase(selectedImage, imageURL) { imageURL in
+                        if let imageURL = imageURL {
+                            self.selectedProduct?.image = imageURL
+                        } else {
+                            print("Ошибка при загрузке изображения в Firebase Storage.")
+                        }
+                    }
                 }
             }
-        } catch {
-            print("Ошибка при обновлении данных: \(error.localizedDescription)")
         }
     }
     
-    func deleteProduct() async {
-        do {
-            try await productsDB.delete(product: selectedProduct)
-            print("Товар успешно удален")
-        } catch {
-            print("Ошибка удаления продукта: \(error.localizedDescription)")
+    func deleteProduct()  {
+        guard let product = selectedProduct else {
+            return
+        }
+        productsDB.delete(product: product)  { error in
+            if let error = error {
+                print("Ошибка удаления продукта: \(error.localizedDescription)")
+            } else {
+                print("Товар успешно удален")
+            }
         }
     }
 }

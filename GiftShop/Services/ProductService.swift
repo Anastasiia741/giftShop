@@ -51,106 +51,141 @@ final class ProductService {
     }
     
     //  MARK: - Use this method for CreateProductScreenVC
-    func create(product: Product) async throws {
+    func create(product: Product, completion: @escaping (Error?) -> Void) {
+        let newProduct = product
+        newProduct.id = UUID().hashValue
         do {
             let newDocumentRef = try productCollection.addDocument(from: product)
             product.documentID = newDocumentRef.documentID
-            try await self.update(product: product)
+            update(product: product, completion: completion)
         } catch {
-            throw error
+           completion(error)
         }
     }
     
     //  MARK: - Сreate new product in firestore
-    func update(product: Product) async throws {
+    func update(product: Product, completion: @escaping (Error?) -> Void) {
         let productID = product.id
-        do {
-            let snapshot = try await productCollection.whereField("id", isEqualTo: productID).getDocuments()
-            for document in snapshot.documents {
-                var data: [String: Any] = [
+        productCollection.whereField("id", isEqualTo: productID).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(error)
+            } else if let snapshot = querySnapshot, !snapshot.isEmpty {
+                let document = snapshot.documents.first
+                document?.reference.updateData([
                     "name": product.name,
+                    "category": product.category,
                     "detail": product.detail,
                     "price": product.price,
+                    "image": product.image ?? "",
                     "quantity": product.quantity
-                ]
-                if let image = product.image {
-                    data["image"] = image
+                ]) { error in
+                    if let error = error {
+                        completion(error)
+                    } else {
+                        print("Документ успешно обновлен. ID: \(productID)")
+                        completion(nil)
+                    }
                 }
-                try await document.reference.updateData(data)
+            } else {
+                completion(error)
             }
-        } catch {
-            throw error
         }
     }
     
     //  MARK: - Save image in storage
-    func save(imageData: Data, nameImg: String) async throws -> String {
-        let storageRef = storage.reference(forURL: "gs://giftshop-d7b5d.appspot.com/productImages").child(nameImg)
-        do {
-            storageRef.putData(imageData, metadata: nil)
-            let downloadURL = try await storageRef.downloadURL()
-            return downloadURL.absoluteString
-        } catch {
-            throw error
+    func save(imageData: Data, nameImg: String, completion: @escaping (_ imageLink: String?) -> Void) {
+        let storageRef = storage.reference(forURL: Accesses.storage).child(nameImg)
+        storageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                completion(nil)
+            } else {
+                storageRef.downloadURL { (url, error) in
+                    if let downloadURL = url {
+                        completion(downloadURL.absoluteString)
+                    } else {
+                        completion(nil)
+                    }
+                }
+            }
         }
     }
     
     //  MARK: - Upload imagelink in firestore
-    func upload(image: UIImage?, url: String) async throws -> String? {
-        guard let image = image,
-              let imageData = image.jpegData(compressionQuality: 0.5) else {
-            return nil
+    func upload(image: UIImage?,url: String, completion: @escaping (String?, Error?) -> Void) {
+        guard let image = image, let imageData = image.jpegData(compressionQuality: 0.5) else {
+            completion(nil, nil)
+            return
         }
         let fileName = UUID().uuidString + url + ".jpg"
-        do {
-            return try await save(imageData: imageData, nameImg: fileName)
-        } catch {
-            throw error
+        save(imageData: imageData, nameImg: fileName) { imageLink in
+            if let imageLink = imageLink {
+                completion(imageLink, nil)
+            } else {
+                completion(nil, nil)
+            }
         }
     }
     
     //  MARK: - Upload new image for firebase
-    func uploadImageToFirebase(_ image: UIImage, _ imageURL: String) async throws -> String {
+    func uploadImageToFirebase(_ image: UIImage, _ imageURL: String, completion: @escaping (String?) -> Void) {
         let imageRef = Storage.storage().reference(forURL: imageURL)
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            throw Errors.invalidImageData
-        }
-        do {
-            imageRef.putData(imageData, metadata: nil)
-            let downloadURL = try await imageRef.downloadURL()
-            return downloadURL.absoluteString
-        } catch {
-            throw error
+        if let imageData = image.jpegData(compressionQuality: 0.8) {
+            imageRef.putData(imageData, metadata: nil) { (_, error) in
+                if let error = error {
+                    completion(nil)
+                } else {
+                    imageRef.downloadURL { (url, error) in
+                        if let url = url {
+                            let newImageURL = url.absoluteString
+                            completion(newImageURL)
+                        } else {
+                            completion(nil)
+                        }
+                    }
+                }
+            }
         }
     }
     
-    
     //  MARK: - Upload new image for storage
-    func uploadNewImage(_ selectedImage: UIImage, _ imageName: String) async throws -> String? {
+    func uploadNewImage(_ selectedImage: UIImage, _ imageName: String, completion: @escaping (String?, Error?) -> Void) {
         guard let imageData = selectedImage.jpegData(compressionQuality: 0.5) else {
-            return nil
+            completion(nil, nil)
+            return
         }
-        let uniqueImageURL = "gs://giftshop-d7b5d.appspot.com/productImages/"
+        let uniqueImageURL = Accesses.uniqueImageURL
         let storageRef = storage.reference(forURL: uniqueImageURL)
-        do {
-            storageRef.putData(imageData, metadata: nil)
-            let downloadURL = try await storageRef.downloadURL()
-            return downloadURL.absoluteString
-        } catch {
-            print("Ошибка при загрузке нового изображения: ", error)
-            throw error
+        storageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                print("Ошибка при загрузке нового изображения: ", error)
+                completion(nil, error)
+            } else {
+                storageRef.downloadURL { (url, error) in
+                    if let downloadURL = url {
+                        completion(downloadURL.absoluteString, nil)
+                    } else {
+                        completion(nil, nil)
+                    }
+                }
+            }
         }
     }
     
     //  MARK: - Delete product from firestore
-    func delete(product: Product) async throws {
+    func delete(product: Product, completion: @escaping (Error?) -> Void) {
         let productID = product.id
         productCollection.whereField("id", isEqualTo: productID)
-        let snapshot = try await productCollection.whereField("id", isEqualTo: productID).getDocuments()
-        
-        for document in snapshot.documents {
-            try await document.reference.delete()
-        }
+            .getDocuments { (snapshot, error) in
+                if let error = error {
+                    completion(error)
+                } else {
+                    for document in snapshot!.documents {
+                        document.reference.delete { error in
+                            completion(error)
+                        }
+                    }
+                }
+            }
     }
     
     //  MARK: - Delete image from storage

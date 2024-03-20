@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ProductDetailEditView: View {
     
-    @StateObject var viewModel: ProductDetailEditVM
+    @State var viewModel: ProductDetailEditVM
     @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
@@ -36,30 +36,45 @@ struct ProductDetailEditView: View {
             .padding([.leading, .trailing], 20)
             VStack(alignment: .leading, spacing: 8) {
                 Text(Localization.productName).font(.callout)
-                TextField(Localization.enterProductName, text: $viewModel.selectedProduct.name)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                TextField(Localization.enterProductName, text: Binding(
+                    get: { viewModel.selectedProduct?.name ?? "" },
+                    set: { newValue in
+                        viewModel.selectedProduct?.name = newValue
+                    }
+                ))
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 Text(Localization.category).font(.callout)
-                TextField(Localization.enterCategory, text: $viewModel.selectedProduct.category)
-                    .keyboardType(.alphabet)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                TextField(Localization.enterCategory, text: Binding(
+                    get: { viewModel.selectedProduct?.category ?? "" },
+                    set: { newValue in
+                        viewModel.selectedProduct?.category = newValue
+                    }
+                ))
+                .keyboardType(.alphabet)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 Text(Localization.price).font(.callout)
                 TextField(Localization.enterPrice, text: Binding(
-                    get: { String(viewModel.selectedProduct.price) },
-                    set: { viewModel.selectedProduct.price = Int($0) ?? 0 }))
+                    get: { String(viewModel.selectedProduct?.price ?? 0) },
+                    set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }))
                 .keyboardType(.decimalPad)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 Text(Localization.detailedProductDescrip).font(.callout)
-                TextEditor(text: $viewModel.selectedProduct.detail)
-                    .frame(height: 100)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 5)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                TextEditor(text: Binding(
+                    get: { viewModel.selectedProduct?.detail ?? "" },
+                    set: { newValue in
+                        viewModel.selectedProduct?.detail = newValue
+                    }
+                ))
+                .frame(height: 100)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 5)
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             }.padding([.leading, .trailing], 20)
             HStack(spacing: 16){
                 Button(Localization.delete) {
@@ -74,16 +89,12 @@ struct ProductDetailEditView: View {
                 .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
                 .alert(isPresented: $showDeleteAlert) {
                     Alert(title: Text(Localization.deleteProduct), primaryButton: .cancel(Text(Localization.yes)) {
-                        Task {
-                            await viewModel.deleteProduct()
-                        }
+                        viewModel.deleteProduct()
                     }, secondaryButton: .destructive(Text(Localization.no)))
                 }
                 Spacer().frame(width: 16)
                 Button(Localization.save) {
-                    Task {
-                        await viewModel.saveEditedProduct()
-                    }
+                    viewModel.saveEditedProduct()
                 }
                 .font(.system(size: 16))
                 .fontWeight(.medium)

@@ -37,26 +37,32 @@ final class CreateProductVM: ObservableObject {
             quantity: 1)
     }
     
-    func createNewProduct() async {
+    func createNewProduct() {
         let newProduct = makeNewProduct()
+        
         if let selectedImage = productImage, let imageURL = imageURL {
-            do {
-                let uploadedImageURL = try await productService.upload(image: selectedImage, url: imageURL)
-                newProduct.image = uploadedImageURL
-            } catch {
-                print("Ошибка при загрузке изображения:", error.localizedDescription)
-                return
+            productService.upload(image: selectedImage, url: imageURL) { [weak self] uploadedImageURL, error in
+                if let uploadedImageURL = uploadedImageURL {
+                    newProduct.image = uploadedImageURL
+                } else if let error = error {
+                    print("Ошибка при загрузке изображения:", error.localizedDescription)
+                    return
+                }
+                self?.createProduct(newProduct)
             }
+        } else {
+            createProduct(newProduct)
         }
-        do {
-            try await createProduct(newProduct)
-        } catch {
-            print("Ошибка создания продукта:", error.localizedDescription)
-        }
+        
     }
     
-    func createProduct(_ product: Product) async throws {
-        try await productService.create(product: product)
-        print("Продукт успешно создан: \(product.name)")
+    func createProduct(_ product: Product) {
+        productService.create(product: product) { error in
+            if let error = error {
+                print("Ошибка создания продукта:", error.localizedDescription)
+            } else {
+                print("Продукт создан: \(product.name)")
+            }
+        }
     }
 }
