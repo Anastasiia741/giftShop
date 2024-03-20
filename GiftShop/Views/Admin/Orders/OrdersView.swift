@@ -45,14 +45,17 @@ struct OrdersView: View {
                                     Button(action: {
                 isQuitAlertPresenter = true
             }) {
-                Images.Orders.exit
+                Images.Profile.exit
+                    .imageScale(.small)
+                    .foregroundColor(.black)
             })
+//           TASK: - fix title
             .confirmationDialog(Localization.logOut, isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()
                     viewModel.logout()
                 } label: {
-                    Text(Localization.logOut)
+                    Text(Localization.yes)
                 }
                 Button(role: .cancel) {
                 } label: {

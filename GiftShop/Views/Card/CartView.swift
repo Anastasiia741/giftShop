@@ -23,7 +23,7 @@ struct CartView: View {
                     Section {
                         if viewModel.orderProducts.isEmpty {
                             Section {
-                                Text(TextMessage.Cart.cardEmpty)
+                                Text(Localization.emptyСart)
                                     .font(.headline)
                                     .foregroundColor(.gray)
                                 Images.Cart.emptyCart
