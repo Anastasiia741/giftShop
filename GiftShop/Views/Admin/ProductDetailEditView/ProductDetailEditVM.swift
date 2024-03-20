@@ -8,12 +8,12 @@ import FirebaseStorage
 
 final class ProductDetailEditVM: ObservableObject {
     
-    private let productsDB = ProductService.shared
+    private let productsDB = ProductService()
     @Published var selectedProduct: Product
-    @Published var isImageChange = false
     @Published var selectedImage: UIImage?
     @Published var imageURL: URL?
-    
+    @Published var isImageChange = false
+
     init(selectedProduct: Product) {
         self.selectedProduct = selectedProduct
     }

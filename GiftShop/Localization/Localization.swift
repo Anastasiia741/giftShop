@@ -50,8 +50,14 @@ struct Localization {
     static let quantity = "quantity".localized
     static let add = "add".localized
     //MARK: - CartView
+    static let emptyСart = "empty_cart".localized
     static let addItemsToCart = "add_items_to_cart".localized
     static let addToOrder = "add_to_order".localized
+    //TASK: - add messages
+    static let cardMessage = "order_sent_successfully".localized
+    static let cardEmpty = "your_cart_is_empty".localized
+    static let cardOrder = "we_preparing_order".localized
+    //
     static let getDiscount = "get_discount".localized
     static let total = "total".localized
     static let order = "order".localized
@@ -73,7 +79,6 @@ struct Localization {
     static let noOrdersYet = "no_orders_yet".localized
     static let yourOrders = "your_orders".localized
     static let deleteAccountName = "delete_account".localized
-    
     //MARK: - Alerts
     static let registrationError = "registration_error".localized
     static let passwordMismatch = "password_mismatch".localized

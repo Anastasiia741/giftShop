@@ -5,9 +5,7 @@
 import SwiftUI
 
 final class StatusColors: ObservableObject {
-    
-    static let shared = StatusColors()
-    
+        
     func getTextColor(_ status: OrderStatus) -> Color  {
         switch status {
         case .new:

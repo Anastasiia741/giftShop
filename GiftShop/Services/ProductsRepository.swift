@@ -4,12 +4,7 @@
 
 import Foundation
 
-protocol ProductsRepositoryI {
-    func save(_ products: [Product])
-    func retrieve() -> [Product]
-}
-
-final class ProductsRepository: ProductsRepositoryI {
+final class ProductsRepository {
     
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()

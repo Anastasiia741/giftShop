@@ -4,23 +4,9 @@
 
 import Foundation
 
-enum TextMessage {
-    static let empty = ""
-    
+enum TextMessage {    
     enum Menu {
         static let porularProducts = "барсетка"
-    }
-    
-    enum Cart {
-        static let descriptionMain = "Введите описание для главного экрана"
-        static let descriptionDetail = "Введите подробное описание"
-        static let cardMessade = "Заказ успешно отправлен. Сумма заказа:"
-        static let cardEmpty = "Ваша корзина пока пуста"
-        static let cardOrder = "Мы уже готовим ваш заказ. Ожидайте 🌺"
-    }
-    
-    enum Authorization {
-        static let policy = "https://ilten.github.io/app-policy/"
     }
 }
 

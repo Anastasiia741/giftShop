@@ -6,4 +6,5 @@ import Foundation
 
 enum Accesses {
     static let adminUser = "OKYK7MdkwCTxWh5jl6MvbLk48B02"
+    static let policy = "https://ilten.github.io/app-policy/"
 }

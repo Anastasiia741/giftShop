@@ -5,9 +5,11 @@
 import SwiftUI
 
 struct OrderCell: View {
+    
     @Environment(\.presentationMode) var presentationMode
     @StateObject var orderDetailVM: OrderDetailVM = OrderDetailVM()
     @StateObject var statusColors = StatusColors()
+    @State private var isOrderDetailActive = false
     let order: Order
     
     var body: some View {
@@ -24,19 +26,23 @@ struct OrderCell: View {
                 }
             }
             Spacer()
-            NavigationLink(
-                destination: OrderDetail(orderDetailVM: orderDetailVM, order: order),
-                label: {
-                    Text(Localization.moreDetails)
-                        .font(.system(size: 14))
-                        .fontWeight(.medium)
-                        .frame(maxWidth: 100, minHeight: 30)
-                        .foregroundColor(.white)
-                        .background(Color(.green))
-                        .cornerRadius(20)
-                        .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
-                })
+            Button(action: {
+                isOrderDetailActive = true
+            }) {
+                
+                Text(Localization.moreDetails)
+                    .font(.system(size: 14))
+                    .fontWeight(.medium)
+                    .frame(maxWidth: 100, minHeight: 30)
+                    .foregroundColor(.white)
+                    .background(Color(.green))
+                    .cornerRadius(20)
+                    .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
+            }
             .buttonStyle(PlainButtonStyle())
+            .sheet(isPresented: $isOrderDetailActive) {
+                OrderDetail(orderDetailVM: orderDetailVM, order: order)
+            }
         }
     }
 }

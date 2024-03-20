@@ -7,8 +7,8 @@ import SwiftUI
 struct ProductsEditView: View {
     
     @StateObject var catalogVM: CatalogVM
-    let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
-    let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
+    private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
+    private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
     
     var body: some View {
         NavigationView {

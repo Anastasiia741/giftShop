@@ -9,14 +9,14 @@ final class CartVM: ObservableObject {
     static let shared = CartVM()
     private let orderService = OrderService()
     private let productsRepository = ProductsRepository()
-    private let productsDB = ProductService.shared
+    private let dbOrdersService = DBOrdersService()
     @Published var orderProducts: [Product] = []
     @Published var productCountMessage: String = ""
     @Published var promoCode: String = ""
     @Published var promoResultText: String = ""
     @Published var isPromoSheetVisible: Bool = false
     
-    private init() {}
+    init() {}
     
     func fetchOrder() {
         orderProducts = orderService.retreiveProducts()
@@ -48,7 +48,7 @@ final class CartVM: ObservableObject {
             }
             if order.positions.isEmpty {
             } else {
-                DBOrdersService.shared.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+                dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
                     switch result {
                     case .success(_):
                         self?.orderProducts.removeAll()

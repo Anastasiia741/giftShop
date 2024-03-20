@@ -7,21 +7,18 @@ import FirebaseFirestore
 import FirebaseStorage
 
 enum Errors: Error {
-    case noCurrentUser
     case invalidImageData
 }
 
 final class ProductService {
     
-    static let shared = ProductService()
     private let db = Firestore.firestore()
-    private let productCollection = Firestore.firestore().collection("products")
     private let storage = Storage.storage()
-    private var cachedProducts: [Product] = []
-    var products: Product?
-    var listenerRegistation: ListenerRegistration?
+    private var savedProducts: [Product] = []
+    private var listenerRegistation: ListenerRegistration?
+    private lazy var productCollection = Firestore.firestore().collection("products")
     
-    init() {}
+     init() {}
     
     //  MARK: - add collection 'product' in firebase
     func add(product: Product, completion: @escaping (Error?) -> Void) throws {
@@ -32,8 +29,8 @@ final class ProductService {
     
     //  MARK: - Fetch and monitor changes of products from firebase
     func fetchAllProducts() async throws -> [Product] {
-        if !cachedProducts.isEmpty {
-            return cachedProducts
+        if !savedProducts.isEmpty {
+            return savedProducts
         }
         
         let querySnapshot = try await db.collection("products").getDocuments()
@@ -45,7 +42,7 @@ final class ProductService {
                 products.append(product)
             }
         }
-        self.cachedProducts = products
+        self.savedProducts = products
         return products
     }
     
@@ -94,7 +91,6 @@ final class ProductService {
             let downloadURL = try await storageRef.downloadURL()
             return downloadURL.absoluteString
         } catch {
-            print("Ошибка загрузки: ", error)
             throw error
         }
     }
@@ -109,7 +105,6 @@ final class ProductService {
         do {
             return try await save(imageData: imageData, nameImg: fileName)
         } catch {
-            print("Ошибка при сохранении изображения: ", error)
             throw error
         }
     }
@@ -125,7 +120,6 @@ final class ProductService {
             let downloadURL = try await imageRef.downloadURL()
             return downloadURL.absoluteString
         } catch {
-            print("Ошибка при загрузке нового изображения в Firebase Storage: \(error.localizedDescription)")
             throw error
         }
     }
