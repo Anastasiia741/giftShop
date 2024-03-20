@@ -33,7 +33,7 @@ struct ProductDetailView: View {
                     Text("\(viewModel.product.name)")
                         .font(.title.bold())
                     Spacer()
-                    Text("\(viewModel.product.price) сом")
+                    Text("\(viewModel.product.price) \(Localization.som)")
                         .font(.title)
                         .customTextStyle(TextStyle.avenirBold, size: 16)
                 }.padding(.horizontal)
@@ -46,7 +46,7 @@ struct ProductDetailView: View {
                 
                 HStack{
                     Stepper(value: $count, in: 1...100) {
-                        Text("Количество: \(self.count)")
+                        Text("\(Localization.quantity) \(self.count)")
                     }
                 }.padding([.horizontal, .bottom], 12)
                 Button {
@@ -60,7 +60,7 @@ struct ProductDetailView: View {
                     viewModel.addProductToCart(product)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("добавить")
+                    Text(Localization.add)
                         .padding()
                         .padding(.horizontal, 60)
                         .foregroundColor(Colors.brown)

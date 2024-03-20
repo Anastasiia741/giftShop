@@ -38,7 +38,6 @@ final class ProductDetailEditVM: ObservableObject {
     func saveEditedProduct() async {
         do {
             try await productsDB.update(product: selectedProduct)
-            print("Данные сохранены: \(String(describing: selectedProduct.name))")
             if isImageChange, let selectedImage = selectedImage, let imageURL = selectedProduct.image {
                 do {
                     let uploadedImageURL = try await productsDB.uploadImageToFirebase(selectedImage, imageURL)

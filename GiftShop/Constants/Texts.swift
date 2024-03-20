@@ -8,9 +8,7 @@ enum TextMessage {
     static let empty = ""
     
     enum Menu {
-        static let porular = "Популярное"
-        static let products = "Товары"
-        
+        static let porularProducts = "барсетка"
     }
     
     enum Cart {
@@ -22,9 +20,6 @@ enum TextMessage {
     }
     
     enum Authorization {
-        static let authorization = "Авторизация"
-        static let registration = "Регистрация"
-        static let enter = "Войти"
         static let policy = "https://ilten.github.io/app-policy/"
     }
 }

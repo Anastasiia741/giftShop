@@ -46,15 +46,15 @@ struct ProfileView: View {
                             }
                     }
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Ваше имя")
+                        Text(Localization.yourName)
                             .padding(.leading, 20)
                             .font(.custom(TextStyle.avenirBold, size: 18))
                         
-                        TextField("Введите имя", text: $viewModel.name)
+                        TextField(Localization.enterYourName, text: $viewModel.name)
                             .font(.custom(TextStyle.avenirBold, size: 16))
                             .padding(.horizontal)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        TextField("Введите номер телефона", text: $viewModel.phoneNumber)
+                        TextField(Localization.enterPhoneNumber, text: $viewModel.phoneNumber)
                             .keyboardType(.numberPad)
                             .font(.custom(TextStyle.avenirRegular, size: 16))
                             .padding(.horizontal)
@@ -62,11 +62,11 @@ struct ProfileView: View {
                     }
                 }
                 
-                .confirmationDialog("Выберите источник фото", isPresented: $isAlertPresented) {
-                    Button("Галерея") {
+                .confirmationDialog(Localization.selectPhotoSource, isPresented: $isAlertPresented) {
+                    Button(Localization.gallery) {
                         isShowingGalleryPicker = true
                     }
-                    Button("Камера") {
+                    Button(Localization.camera) {
                         isShowingCameraPicker = true
                     }
                 }
@@ -81,10 +81,10 @@ struct ProfileView: View {
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Адрес доставки")
+                    Text(Localization.yourDeliveryAddress)
                         .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 16))
-                    TextField("Ваш адрес доставки", text: $viewModel.address)
+                    TextField(Localization.enterYourDeliveryAddress, text: $viewModel.address)
                         .font(.custom(TextStyle.avenirRegular, size: 16))
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -103,7 +103,7 @@ struct ProfileView: View {
                             isProfileSavedAlert.toggle()
                         }
                     } label: {
-                        Text("Сохранить")
+                        Text(Localization.save)
                             .customTextStyle(TextStyle.avenirRegular, size: 12)
                             .frame(width: 100, height: 25)
                             .background(Colors.promo)
@@ -121,19 +121,19 @@ struct ProfileView: View {
                 if viewModel.orders.isEmpty {
                     Spacer()
                     VStack(alignment: .center, spacing: 16) {
-                        Text("Ваши заказы будут тут")
+                        Text(Localization.yourOrders)
                             .customTextStyle(TextStyle.avenirBold, size: 16)
                         Images.Profile.emptyList
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 150)
-                        Text("Заказов пока нет")
+                        Text(Localization.noOrdersYet)
                             .customTextStyle(TextStyle.avenirBold, size: 16)
                         Spacer()
                     }
                 } else {
                     List {
-                        Section(header: Text("Ваши заказы").customTextStyle(TextStyle.avenirBold, size: 16)) {
+                        Section(header: Text(Localization.yourOrders).customTextStyle(TextStyle.avenirBold, size: 16)) {
                             ForEach(viewModel.orders, id: \.id) { order in
                                 ProfileCell(order: order, viewModel: ProfileVM.shared)
                             }
@@ -146,7 +146,7 @@ struct ProfileView: View {
                     Button{
                         isRemoveAlertPresenter.toggle()
                     } label: {
-                        Text("Удалить аккаунт")
+                        Text(Localization.deleteAccountName)
                             .font(.system(size: 12))
                             .padding()
                             .padding(.horizontal, 20)
@@ -156,20 +156,20 @@ struct ProfileView: View {
                     }
                     .alert(isPresented: $isRemoveAlertPresenter) {
                         Alert(
-                            title: Text("Удалить аккаунт?"),
-                            primaryButton: .destructive(Text("Да")) {
+                            title: Text(Localization.deleteAccount),
+                            primaryButton: .destructive(Text(Localization.yes)) {
                                 viewModel.deleteAccount()
                                 viewModel.logout()
                                 isAuthViewPresenter = true
                             },
-                            secondaryButton: .cancel(Text("Нет"))
+                            secondaryButton: .cancel(Text(Localization.no))
                         )
                     }
                 }
             }
             .padding()
             .alert(isPresented: $isProfileSavedAlert) {
-                Alert(title: Text("Ваши данные успешно сохранены"), dismissButton: .default(Text("OK")))
+                Alert(title: Text(Localization.dataSuccessfullySaved), dismissButton: .default(Text(Localization.ok)))
             }
             .onAppear {
                 viewModel.fetchOrderHistory()
@@ -188,16 +188,15 @@ struct ProfileView: View {
                 }
             )
             //MARK: - Logout
-            .confirmationDialog("Хотите выйти?", isPresented: $isQuitAlertPresenter) {
+            .confirmationDialog(Localization.logOut, isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()
                 } label: {
-                    Text("Выйти")
+                    Text(Localization.logOut)
                 }
                 Button(role: .cancel) {
-                    print("Отмена")
                 } label: {
-                    Text("Отмена")
+                    Text(Localization.cancel)
                 }
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {

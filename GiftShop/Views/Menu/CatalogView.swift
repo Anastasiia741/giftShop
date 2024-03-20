@@ -15,7 +15,7 @@ struct CatalogView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text(TextMessage.Menu.porular)
+                        Text(Localization.popular)
                             .font(.title3.bold())
                             .foregroundColor(.black)
                             .padding(.leading, 20)
@@ -40,7 +40,7 @@ struct CatalogView: View {
                 }
                 Section {
                     HStack(alignment: .center, spacing: 10) {
-                        Text(TextMessage.Menu.products)
+                        Text(Localization.products)
                             .font(.title3.bold())
                             .foregroundColor(.black)
                         Images.Menu.popular

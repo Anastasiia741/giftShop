@@ -31,7 +31,7 @@ struct CartCell: View {
                 Text(position.name)
                     .font(.headline)
                 HStack {
-                    Text("\(position.quantity) шт.")
+                    Text("\(position.quantity) \(Localization.amount)")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     Spacer()

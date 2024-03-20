@@ -29,7 +29,7 @@ struct ProductCell: View {
                         .customTextStyle(TextStyle.avenirRegular, size: 14)
                         .frame(height: 40)
                     Spacer()
-                    Text("\(product.price) com")
+                    Text("\(product.price) \(Localization.som)")
                         .customTextStyle(TextStyle.avenirBold, size: 14)
                 }
                 .padding(.horizontal, 6)
@@ -56,7 +56,6 @@ struct ProductCell: View {
         }
     }
 }
-
 
 struct ProductCell_Previews: PreviewProvider {
     static var previews: some View {

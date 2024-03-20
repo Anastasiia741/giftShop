@@ -29,7 +29,7 @@ struct PopularProductCell: View {
                         .customTextStyle(TextStyle.avenirRegular, size: 12)
                         .frame(height: 40)
                     Spacer()
-                    Text("\(product.price) com")
+                    Text("\(product.price) \(Localization.som)")
                         .customTextStyle(TextStyle.avenirBold, size: 12)
                 }
                 .padding(.horizontal, 6)
@@ -56,7 +56,6 @@ struct PopularProductCell: View {
         }
     }
 }
-
 
 #Preview {
     PopularProductCell(product: Product(id: 1,

@@ -16,28 +16,28 @@ struct OrderDetail: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Детали заказа")
+            Text(Localization.orderDetails)
                 .customTextStyle(TextStyle.avenirRegular, size: 22)
                 .fontWeight(.bold)
                 .padding(.top)
             VStack(alignment: .leading, spacing: 10) {
-                Text("Дата заказа: \(Extentions.shared.formattedDate(order.date))")
+                Text("\(Localization.orderDate) \(Extentions.shared.formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
-                Text("Статус: \(order.status)")
+                Text("\(Localization.status) \(order.status)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .foregroundColor(Extentions.shared.statusColor(for: order.status))
-                Text("Промокод: \(order.promocode)")
+                Text("\(Localization.promoCode) \(order.promocode)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
             }
             .padding(.horizontal)
             VStack(alignment: .leading, spacing: 10) {
-                Text("Товары:")
+                Text(Localization.goods)
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .bold()
                 ForEach(order.positions) { position in
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("Название: \(position.product.name): \(position.count) шт.")
+                            Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
                                 .customTextStyle(TextStyle.avenirRegular, size: 16)
                         }
                         .padding(.vertical, 5)
@@ -49,18 +49,18 @@ struct OrderDetail: View {
                 }
             }
             .padding(.horizontal)
-            Text("Сумма: \(order.cost) сом")
+            Text("\(Localization.sum) \(order.cost) \(Localization.som)")
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .padding(.top)
-            Text("Имя: ")
+            Text(Localization.name)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text("Email: ")
+            Text(Localization.email)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text("Адрес доставки: ")
+            Text(Localization.deliveryAddress)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text("Номер телефона: ")
+            Text(Localization.phoneNumber)
                 .customTextStyle(TextStyle.avenirRegular, size: 18)
             Spacer()
         }
