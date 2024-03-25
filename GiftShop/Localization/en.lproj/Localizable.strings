@@ -19,11 +19,11 @@
 "status" = "Status:";
 "promo_code" = "Промокод:";
 "goods" = "Goods:";
-"name" = "Название:";
+"name" = "Title";
 "amount" = "pcs";
 "sum" = "Sum:";
 "som" = "som";
-"name" = "Name:";
+"name" = "Name";
 "email" = "Email:";
 "delivery_address" = "Delivery address:";
 "phone_number" = "Phone number:";

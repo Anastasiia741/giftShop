@@ -28,6 +28,10 @@ struct OrderCell: View {
             Spacer()
             Button(action: {
                 isOrderDetailActive = true
+                orderDetailVM.selectedOrder = order
+                Task {
+                 await orderDetailVM.fetchUserProfile()
+                }
             }) {
                 
                 Text(Localization.moreDetails)

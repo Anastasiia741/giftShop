@@ -49,7 +49,7 @@ struct OrdersView: View {
                     .imageScale(.small)
                     .foregroundColor(.black)
             })
-//           TASK: - fix title
+ //           TASK: - fix title
             .confirmationDialog(Localization.logOut, isPresented: $isQuitAlertPresenter) {
                 Button {
                     isAuthViewPresenter.toggle()

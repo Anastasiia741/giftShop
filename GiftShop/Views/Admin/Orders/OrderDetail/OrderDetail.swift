@@ -6,7 +6,7 @@ import SwiftUI
 
 struct OrderDetail: View {
     
-    @ObservedObject var orderDetailVM: OrderDetailVM
+    @ObservedObject var orderDetailVM = OrderDetailVM()
     private let order: Order
     
     init(orderDetailVM: OrderDetailVM, order: Order) {
@@ -19,14 +19,14 @@ struct OrderDetail: View {
             Text(Localization.orderDetails)
                 .customTextStyle(TextStyle.avenirRegular, size: 22)
                 .fontWeight(.bold)
-                .padding(.top)
+                .padding([.top, .leading])
             VStack(alignment: .leading, spacing: 10) {
                 Text("\(Localization.orderDate) \(Extentions.shared.formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                 Text("\(Localization.status) \(order.status)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .foregroundColor(Extentions.shared.statusColor(for: order.status))
-                Text("\(Localization.promoCode) \(order.promocode)")
+                Text("\(Localization.promoCode): \(order.promocode)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
             }
             .padding(.horizontal)
@@ -36,32 +36,32 @@ struct OrderDetail: View {
                     .bold()
                 ForEach(order.positions) { position in
                     HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
-                                .customTextStyle(TextStyle.avenirRegular, size: 16)
-                        }
-                        .padding(.vertical, 5)
+                        Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
+                            .customTextStyle(TextStyle.avenirRegular, size: 16)
                     }
-                    .padding(.horizontal)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
-                    .padding(.vertical, 5)
                 }
             }
+            .padding()
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(10)
             .padding(.horizontal)
-            Text("\(Localization.sum) \(order.cost) \(Localization.som)")
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-                .padding(.top)
-            Text(Localization.name)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text(Localization.email)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text(Localization.deliveryAddress)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text(Localization.phoneNumber)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
+            .padding(.vertical, 5)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("\(Localization.name): \(orderDetailVM.userProfile?.name ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.email) \(orderDetailVM.userProfile?.email ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.deliveryAddress) \(orderDetailVM.userProfile?.address ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.phoneNumber) \(orderDetailVM.userProfile?.phone ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.sum) \(order.cost) \(Localization.som)")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                    .padding(.top)
+            }
+            .padding(.leading)
             Spacer()
         }
         Button(action: {
