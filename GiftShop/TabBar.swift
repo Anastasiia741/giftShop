@@ -11,8 +11,8 @@ struct TabBar: View {
     
     var body: some View {
         TabView {
-            if AuthService.shared.currentUser != nil {
-                if AuthService.shared.currentUser?.uid == Accesses.adminUser {
+            if let userID = viewModel.userID {
+                if userID == Accesses.adminUser {
                     OrdersView()
                         .tabItem {
                             VStack {
@@ -51,7 +51,7 @@ struct TabBar: View {
                             }
                         }
                 }
-            } else if AuthService.shared.currentUser == nil {
+            } else {
                 CatalogView()
                     .tabItem {
                         VStack {
@@ -73,6 +73,9 @@ struct TabBar: View {
             }
         }
         .accentColor(tabColor)
+        .onAppear {
+            viewModel.fetchUserId()
+        }
     }
 }
 

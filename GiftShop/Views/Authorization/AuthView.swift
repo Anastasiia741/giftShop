@@ -7,9 +7,8 @@ import FirebaseAuth
 
 struct AuthView: View {
     
-    @State private var email = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
+    @ObservedObject private var viewModel = AuthVM()
+    @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var isTabViewShow = false
     @State private var isShowAlert = false
@@ -26,20 +25,20 @@ struct AuthView: View {
                 .cornerRadius(isAuth ? 30 : 40)
                 .padding(.horizontal, 12)
             VStack{
-                TextField(Localization.enterEmail, text: $email)
+                TextField(Localization.enterEmail, text: $viewModel.email)
                     .padding()
                     .background(Colors.whiteAlfa)
                     .cornerRadius(12)
                     .padding(4)
                     .padding(.horizontal, 12)
-                SecureField(Localization.enterPassword, text: $password)
+                SecureField(Localization.enterPassword, text: $viewModel.password)
                     .padding()
                     .background(Colors.whiteAlfa)
                     .cornerRadius(12)
                     .padding(4)
                     .padding(.horizontal, 12)
                 if !isAuth {
-                    SecureField(Localization.repeatPassword, text: $confirmPassword)
+                    SecureField(Localization.repeatPassword, text: $viewModel.confirmPassword)
                         .padding()
                         .background(Colors.whiteAlfa)
                         .cornerRadius(12)
@@ -48,7 +47,7 @@ struct AuthView: View {
                 }
                 Button {
                     if isAuth {
-                        AuthService.shared.signIn(email: email, password: password) { result in
+                        AuthService().signIn(email: viewModel.email, password: viewModel.password) { result in
                             switch result {
                             case .success(_):
                                 isTabViewShow.toggle()
@@ -58,22 +57,26 @@ struct AuthView: View {
                             }
                         }
                     } else {
-                        guard password == confirmPassword else {
-                            self.alertMessage = Localization.passwordMismatch
-                            self.isShowAlert.toggle()
+                        guard viewModel.password == viewModel.confirmPassword else {
+                            alertTitle = Localization.attention
+                            alertMessage = Localization.passwordMismatch
+                            isShowAlert.toggle()
                             return
                         }
-                        AuthService.shared.signUp(email: self.email, password: self.password) { result in
+                        AuthService().signUp(email: viewModel.email, password: viewModel.password) { result in
                             switch result {
                             case .success(_):
-                                self.isShowAlert.toggle()
-                                self.email = ""
-                                self.password = ""
-                                self.confirmPassword = ""
-                                self.isAuth.toggle()
+                                isShowAlert.toggle()
+                                viewModel.email = ""
+                                viewModel.password = ""
+                                viewModel.confirmPassword = ""
+                                alertTitle = Localization.congratulations
+                                alertMessage = Localization.dataSavedSuccessfully
+                                isAuth.toggle()
                             case .failure(let error):
-                                alertMessage = "\(Localization.registrationError) \(error.localizedDescription)"
-                                self.isShowAlert.toggle()
+                                alertTitle = Localization.registrationError
+                                alertMessage = error.localizedDescription
+                                isShowAlert.toggle()
                             }
                         }
                     }
@@ -116,15 +119,15 @@ struct AuthView: View {
         }
         .animation(.easeInOut(duration: 0.3), value: isAuth)
         .fullScreenCover(isPresented: $isTabViewShow) {
-            if AuthService.shared.currentUser?.uid == Accesses.adminUser {
+            if AuthService().currentUser?.uid == Accesses.adminUser {
                 OrdersView()
             } else {
-                let mainTabBarVM = MainTabViewModel(user: AuthService.shared.currentUser!)
+                let mainTabBarVM = MainTabViewModel()
                 TabBar(viewModel: mainTabBarVM)
             }
         }
         .alert(isPresented: $isShowAlert) {
-            Alert(title: Text(Localization.error), message: Text(alertMessage), dismissButton: .default(Text(Localization.ok)))
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text(Localization.ok)))
         }
     }
 }
