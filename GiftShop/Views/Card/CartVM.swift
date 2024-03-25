@@ -10,6 +10,7 @@ final class CartVM: ObservableObject {
     private let orderService = OrderService()
     private let productsRepository = ProductsRepository()
     private let dbOrdersService = DBOrdersService()
+    private let authService = AuthService()
     @Published var orderProducts: [Product] = []
     @Published var productCountMessage: String = ""
     @Published var promoCode: String = ""
@@ -41,7 +42,7 @@ final class CartVM: ObservableObject {
     }
     
     func orderButtonTapped(with promoCode: String?) {
-        if let currentUser = AuthService.shared.currentUser {
+        if let currentUser = authService.currentUser {
             var order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: "new", promocode: promoCode ?? "")
             order.positions = orderProducts.map{ position in
                 return Position(id: UUID().uuidString, product: position, count: position.quantity)

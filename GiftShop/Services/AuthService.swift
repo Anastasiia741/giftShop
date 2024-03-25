@@ -7,13 +7,13 @@ import FirebaseAuth
 
 final class AuthService {
     
-    static let shared = AuthService()
+//    static let shared = AuthService()
     private let auth = Auth.auth()
     var currentUser: User? {
         return auth.currentUser
     }
     
-    private init() {}
+    init() {}
     
     //  MARK: - SignIn
     func signIn(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {

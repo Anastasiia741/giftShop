@@ -7,7 +7,9 @@ import Foundation
 final class OrdersVM: ObservableObject {
     
     private let dbOrdersService = DBOrdersService()
-    private let authService = AuthService.shared
+
+    private let authService = AuthService()
+    private var selectOrder: Order?
     private var selectedStatus: OrderStatus = .all
     @Published var filteredOrders: [Order] = []
     @Published var orders: [Order] = []
