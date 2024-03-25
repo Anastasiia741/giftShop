@@ -10,6 +10,7 @@ final class ProfileService {
     
     static let shared = ProfileService()
     private let storage = Storage.storage()
+    private let authService =  AuthService()
     @Published var image: UIImage?
     private let db = Firestore.firestore()
     private var usersRef: CollectionReference {
@@ -32,7 +33,7 @@ final class ProfileService {
     
     // MARK: - Get profile info
     func getProfile(by userId: String? = nil) async throws -> NewUser {
-        let documentIdToFetch = userId ?? AuthService.shared.currentUser!.uid
+        let documentIdToFetch = userId ?? authService.currentUser!.uid
         do {
             let docSnapshot = try await usersRef.document(documentIdToFetch).getDocument()
             guard let data = docSnapshot.data() else {

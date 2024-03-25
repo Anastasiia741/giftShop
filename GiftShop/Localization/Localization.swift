@@ -95,6 +95,8 @@ struct Localization {
     static let logOut = "log_out".localized
     static let goOut = "go_out".localized
     static let error = "error".localized
+    static let attention = "attention".localized
+    static let congratulations = "congratulations".localized
 }
 
 private extension String {

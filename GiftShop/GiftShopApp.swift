@@ -14,7 +14,7 @@ struct GiftShopApp: App {
     
     var body: some Scene {
         WindowGroup {
-            let viewModel = MainTabViewModel(user: nil)
+            let viewModel = MainTabViewModel()
             TabBar(viewModel: viewModel)
         }
     }

@@ -8,11 +8,11 @@ import FirebaseAuth
 
 final class AuthVM: ObservableObject {
     
+    private let authService = AuthService()
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var isAuth: Bool = true
-    private let authService = AuthService.shared
 }
 
 extension AuthVM {
