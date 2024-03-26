@@ -11,4 +11,7 @@ enum Accesses {
     static let uniqueImageURL = "gs://giftshop-d7b5d.appspot.com/productImages/"
     static let products = "products"
     static let id = "id"
+    static let orders = "orders"
+    static let positions = "positions"
+    static let userID = "userID"
 }
