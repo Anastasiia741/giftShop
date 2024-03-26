@@ -46,9 +46,7 @@ struct CreateProductView: View {
                     }
                 }
                 Button(Localization.save) {
-                    Task {
-                        await viewModel.createNewProduct()
-                    }
+                    viewModel.createNewProduct()
                 }
                 .font(.system(size: 16))
                 .fontWeight(.medium)
@@ -73,6 +71,14 @@ struct CreateProductView: View {
             .sheet(isPresented: $isShowingCameraPicker) {
                 ImagePicker(sourceType: .camera, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
             }
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(
+                    title: Text("Внимание"),
+                    message: Text(viewModel.alertMessage),
+                    dismissButton: .default(Text(Localization.ok))
+                )
+            }
+            
         }
     }
 }

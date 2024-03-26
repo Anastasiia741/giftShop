@@ -6,19 +6,15 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 
-enum Errors: Error {
-    case invalidImageData
-}
-
 final class ProductService {
     
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
     private var savedProducts: [Product] = []
     private var listenerRegistation: ListenerRegistration?
-    private lazy var productCollection = Firestore.firestore().collection("products")
+    private lazy var productCollection = Firestore.firestore().collection(Accesses.products)
     
-     init() {}
+    init() {}
     
     //  MARK: - add collection 'product' in firebase
     func add(product: Product, completion: @escaping (Error?) -> Void) throws {
@@ -33,7 +29,7 @@ final class ProductService {
             return savedProducts
         }
         
-        let querySnapshot = try await db.collection("products").getDocuments()
+        let querySnapshot = try await db.collection(Accesses.products).getDocuments()
         
         var products: [Product] = []
         
@@ -50,7 +46,7 @@ final class ProductService {
         listenerRegistation?.remove()
     }
     
-    //  MARK: - Use this method for CreateProductScreenVC
+    //  MARK: - create new product
     func create(product: Product, completion: @escaping (Error?) -> Void) {
         let newProduct = product
         newProduct.id = UUID().hashValue
@@ -59,14 +55,14 @@ final class ProductService {
             product.documentID = newDocumentRef.documentID
             update(product: product, completion: completion)
         } catch {
-           completion(error)
+            completion(error)
         }
     }
     
-    //  MARK: - Сreate new product in firestore
+    //  MARK: - create new product in firestore
     func update(product: Product, completion: @escaping (Error?) -> Void) {
         let productID = product.id
-        productCollection.whereField("id", isEqualTo: productID).getDocuments { (querySnapshot, error) in
+        productCollection.whereField(Accesses.id, isEqualTo: productID).getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(error)
             } else if let snapshot = querySnapshot, !snapshot.isEmpty {
@@ -111,7 +107,7 @@ final class ProductService {
     }
     
     //  MARK: - Upload imagelink in firestore
-    func upload(image: UIImage?,url: String, completion: @escaping (String?, Error?) -> Void) {
+    func upload(image: UIImage?, url: String, completion: @escaping (String?, Error?) -> Void) {
         guard let image = image, let imageData = image.jpegData(compressionQuality: 0.5) else {
             completion(nil, nil)
             return
@@ -126,7 +122,7 @@ final class ProductService {
         }
     }
     
-    //  MARK: - Upload new image for firebase
+    //  MARK: - Upload new imagelink for firebase
     func uploadImageToFirebase(_ image: UIImage, _ imageURL: String, completion: @escaping (String?) -> Void) {
         let imageRef = Storage.storage().reference(forURL: imageURL)
         if let imageData = image.jpegData(compressionQuality: 0.8) {
@@ -174,7 +170,7 @@ final class ProductService {
     //  MARK: - Delete product from firestore
     func delete(product: Product, completion: @escaping (Error?) -> Void) {
         let productID = product.id
-        productCollection.whereField("id", isEqualTo: productID)
+        productCollection.whereField(Accesses.id, isEqualTo: productID)
             .getDocuments { (snapshot, error) in
                 if let error = error {
                     completion(error)
@@ -190,7 +186,7 @@ final class ProductService {
     
     //  MARK: - Delete image from storage
     func deleteImage(_ imageName: String, completion: @escaping (Error?) -> Void) {
-        let storageRef = storage.reference(forURL: "giftshop-d7b5d.appspot.com/productImages").child(imageName)
+        let storageRef = storage.reference(forURL: Accesses.uniqueImageURL).child(imageName)
         storageRef.delete { error in
             completion(error)
         }
