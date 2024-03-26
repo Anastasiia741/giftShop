@@ -7,18 +7,19 @@ import SwiftUI
 
 struct ProductDetailEditView: View {
     
-    @State var viewModel: ProductDetailEditVM
+    @ObservedObject var viewModel: ProductDetailEditVM
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
     @State private var showImgAlert = false
     @State private var showDeleteAlert = false
-    @State private var showSaveAlert = false
     
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
-                WebImage(url: viewModel.imageURL )
+                WebImage(url: viewModel.imageURL)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(maxWidth: .infinity, maxHeight: 260)
@@ -103,9 +104,6 @@ struct ProductDetailEditView: View {
                 .background(Color(.green))
                 .cornerRadius(20)
                 .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
-                .alert(isPresented: $showSaveAlert) {
-                    Alert(title: Text(Localization.dataSavedSuccessfully), dismissButton: .default(Text(Localization.ok)))
-                }
             }
             .padding(.bottom)
         }
@@ -117,13 +115,20 @@ struct ProductDetailEditView: View {
                 isShowingCameraPicker = true
             }
         }
-        .onAppear {
-        }
         .sheet(isPresented: $isShowingGalleryPicker) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
         .sheet(isPresented: $isShowingCameraPicker) {
             ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
+        }
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text(viewModel.alertTitle),
+                message: Text(""),
+                dismissButton: .default(Text(Localization.ok)){
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
         }
     }
 }

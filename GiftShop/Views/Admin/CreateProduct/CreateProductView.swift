@@ -78,7 +78,6 @@ struct CreateProductView: View {
                     dismissButton: .default(Text(Localization.ok))
                 )
             }
-            
         }
     }
 }
