@@ -8,60 +8,60 @@ import Combine
 
 final class CreateProductVM: ObservableObject {
     
+    private var productService = ProductService()
     @Published var productImage: UIImage?
     @Published var imageURL: String?
     @Published var productName: String = ""
     @Published var productCategory: String = ""
     @Published var productPrice: String = ""
     @Published var productDetail: String = ""
-    private var productService = ProductService()
+    @Published var alertMessage = ""
+    @Published var showAlert = false
     
-    private func isInputValid() -> Bool {
-        if productName.isEmpty || productCategory.isEmpty || String(productPrice).isEmpty || productImage == nil {
-            return false
+    private func createProduct(_ product: Product) {
+        productService.create(product: product) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                DispatchQueue.main.async {
+                    self.alertMessage = "Данные успешно сохранены"
+                    self.showAlert = true
+                    self.clearFields()
+                }
+            }
         }
-        if imageURL == nil {
-            return false
-        }
-        return true
     }
     
-    private func makeNewProduct() -> Product {
-        return Product(
-            id: 0,
-            name: productName,
-            category: productCategory,
-            detail: productDetail,
-            price: Int(productPrice) ?? 0,
-            image: imageURL,
-            quantity: 1)
+    private func clearFields() {
+        productName = ""
+        productCategory = ""
+        productPrice = ""
+        productDetail = ""
+        productImage = nil
     }
     
     func createNewProduct() {
-        let newProduct = makeNewProduct()
-        
-        if let selectedImage = productImage, let imageURL = imageURL {
-            productService.upload(image: selectedImage, url: imageURL) { [weak self] uploadedImageURL, error in
-                if let uploadedImageURL = uploadedImageURL {
-                    newProduct.image = uploadedImageURL
-                } else if let error = error {
-                    print("Ошибка при загрузке изображения:", error.localizedDescription)
-                    return
-                }
-                self?.createProduct(newProduct)
-            }
-        } else {
-            createProduct(newProduct)
+        guard !productName.isEmpty, !productCategory.isEmpty, !productPrice.isEmpty, productImage != nil else {
+            alertMessage = "Не все поля заполнены."
+            showAlert = true
+            return
         }
         
-    }
-    
-    func createProduct(_ product: Product) {
-        productService.create(product: product) { error in
-            if let error = error {
-                print("Ошибка создания продукта:", error.localizedDescription)
-            } else {
-                print("Продукт создан: \(product.name)")
+        if let selectedImage = productImage {
+            productService.upload(image: selectedImage, url: productName) { [weak self] uploadedImageURL, error in
+                if let uploadedImageURL = uploadedImageURL {
+                    let newProduct = Product(
+                        id: 0,
+                        name: self?.productName ?? "",
+                        category: self?.productCategory ?? "",
+                        detail: self?.productDetail ?? "",
+                        price: Int(self?.productPrice ?? "") ?? 0,
+                        image: uploadedImageURL,
+                        quantity: 1)
+                    self?.createProduct(newProduct)
+                } else if let error = error {
+                    print("Ошибка при загрузке изображения:", error.localizedDescription)
+                }
             }
         }
     }

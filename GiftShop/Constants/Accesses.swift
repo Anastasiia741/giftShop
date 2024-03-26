@@ -9,4 +9,6 @@ enum Accesses {
     static let policy = "https://ilten.github.io/app-policy/"
     static let storage = "gs://giftshop-d7b5d.appspot.com/productImages"    
     static let uniqueImageURL = "gs://giftshop-d7b5d.appspot.com/productImages/"
+    static let products = "products"
+    static let id = "id"
 }
