@@ -15,6 +15,7 @@ final class CreateProductVM: ObservableObject {
     @Published var productCategory: String = ""
     @Published var productPrice: String = ""
     @Published var productDetail: String = ""
+    @Published var alertTitle = ""
     @Published var alertMessage = ""
     @Published var showAlert = false
     
@@ -24,7 +25,8 @@ final class CreateProductVM: ObservableObject {
                 print(error.localizedDescription)
             } else {
                 DispatchQueue.main.async {
-                    self.alertMessage = "Данные успешно сохранены"
+                    self.alertTitle = ""
+                    self.alertMessage = Localization.dataSavedSuccessfully
                     self.showAlert = true
                     self.clearFields()
                 }
@@ -42,7 +44,8 @@ final class CreateProductVM: ObservableObject {
     
     func createNewProduct() {
         guard !productName.isEmpty, !productCategory.isEmpty, !productPrice.isEmpty, productImage != nil else {
-            alertMessage = "Не все поля заполнены."
+            alertTitle = Localization.attention
+            alertMessage = Localization.notFilledIn
             showAlert = true
             return
         }
@@ -60,7 +63,7 @@ final class CreateProductVM: ObservableObject {
                         quantity: 1)
                     self?.createProduct(newProduct)
                 } else if let error = error {
-                    print("Ошибка при загрузке изображения:", error.localizedDescription)
+                    print(error.localizedDescription)
                 }
             }
         }

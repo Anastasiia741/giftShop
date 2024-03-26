@@ -73,7 +73,7 @@ struct CreateProductView: View {
             }
             .alert(isPresented: $viewModel.showAlert) {
                 Alert(
-                    title: Text("Внимание"),
+                    title: Text(viewModel.alertTitle),
                     message: Text(viewModel.alertMessage),
                     dismissButton: .default(Text(Localization.ok))
                 )

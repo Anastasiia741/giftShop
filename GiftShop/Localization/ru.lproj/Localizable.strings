@@ -104,7 +104,7 @@
 "error" = "Ошибка";
 "attention" = "Внимание";
 "congratulations" = "Поздравляем";
-
+"not_filled_in" = "Не все поля заполнены";
 
 
 
