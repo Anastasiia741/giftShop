@@ -7,6 +7,7 @@ import Foundation
 final class OrderDetailVM: ObservableObject {
     
     private let profileService = ProfileService()
+    private let dbOrderService = DBOrdersService()
     private let orderService = OrderService()
     @Published var selectedOrder: Order?
     @Published var userProfile: NewUser?
@@ -19,20 +20,11 @@ final class OrderDetailVM: ObservableObject {
                 self.userProfile = userProfile
             }
         } catch {
-            print("Ошибка при получении профиля пользователя: \(error.localizedDescription)")
+            print(error.localizedDescription)
         }
     }
     
-    func formatOrderItemsText(for order: Order) -> String {
-        var itemsText = ""
-        for position in order.positions {
-            let itemText = "\(position.product.name): \(position.count) \(Localization.amount)."
-            if itemsText.isEmpty {
-                itemsText = itemText
-            } else {
-                itemsText += "\n\(itemText)"
-            }
-        }
-        return itemsText
+    func updateOrderStatus(orderID: String, newStatus: String) {
+        dbOrderService.updateOrderStatus(orderID: orderID, newStatus: newStatus)
     }
 }

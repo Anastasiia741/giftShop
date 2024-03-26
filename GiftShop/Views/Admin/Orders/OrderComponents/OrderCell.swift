@@ -33,7 +33,6 @@ struct OrderCell: View {
                  await orderDetailVM.fetchUserProfile()
                 }
             }) {
-                
                 Text(Localization.moreDetails)
                     .font(.system(size: 14))
                     .fontWeight(.medium)

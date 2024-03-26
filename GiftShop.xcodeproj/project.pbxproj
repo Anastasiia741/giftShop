@@ -233,7 +233,6 @@
 				7110A8C02B8381B900457615 /* ProductsEdit */,
 				713A29002B91FD1000CE720D /* ProductDetailEditView */,
 				7110A8C32B8384FB00457615 /* CreateProduct */,
-				71AD03AC2B766CB3006231F9 /* AdminComponents */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -308,17 +307,18 @@
 			children = (
 				711ED96D2B504CD80052752F /* OrdersView.swift */,
 				71AD03A92B766BED006231F9 /* OrdersVM.swift */,
+				71AD03AC2B766CB3006231F9 /* OrderComponents */,
 				71AD03B12B768806006231F9 /* OrderDetail */,
 			);
 			path = Orders;
 			sourceTree = "<group>";
 		};
-		71AD03AC2B766CB3006231F9 /* AdminComponents */ = {
+		71AD03AC2B766CB3006231F9 /* OrderComponents */ = {
 			isa = PBXGroup;
 			children = (
 				71AD03AD2B766CD4006231F9 /* OrderCell.swift */,
 			);
-			path = AdminComponents;
+			path = OrderComponents;
 			sourceTree = "<group>";
 		};
 		71AD03B12B768806006231F9 /* OrderDetail */ = {

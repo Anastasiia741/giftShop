@@ -105,6 +105,7 @@
 "attention" = "Внимание";
 "congratulations" = "Поздравляем";
 "not_filled_in" = "Не все поля заполнены";
+"select_order_status" = "Выберите статус заказа";
 
 
 

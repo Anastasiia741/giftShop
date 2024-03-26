@@ -98,6 +98,7 @@ struct Localization {
     static let attention = "attention".localized
     static let congratulations = "congratulations".localized
     static let notFilledIn = "not_filled_in".localized
+    static let selectOrderStatus = "select_order_status".localized
 }
 
 private extension String {

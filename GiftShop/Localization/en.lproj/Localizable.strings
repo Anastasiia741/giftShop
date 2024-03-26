@@ -106,6 +106,7 @@
 "attention" = "Attention";
 "congratulations" = "Congratulations";
 "not_filled_in" = "Not all fields are filled inuu";
+"select_order_status" = "Select order status";
 
 
 
