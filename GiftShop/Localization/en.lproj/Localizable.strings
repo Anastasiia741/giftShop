@@ -105,6 +105,7 @@
 "error" = "Error";
 "attention" = "Attention";
 "congratulations" = "Congratulations";
+"not_filled_in" = "Not all fields are filled inuu";
 
 
 
