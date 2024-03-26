@@ -113,7 +113,6 @@ struct ProfileView: View {
                         await viewModel.fetchUserProfile()
                     }
                 }
-                //MARK: - Orders
                 if viewModel.orders.isEmpty {
                     Spacer()
                     VStack(alignment: .center, spacing: 16) {
@@ -183,17 +182,17 @@ struct ProfileView: View {
                     }
                 }
             )
-            //MARK: - Logout
-            .confirmationDialog(Localization.logOut, isPresented: $isQuitAlertPresenter) {
-                Button {
-                    isAuthViewPresenter.toggle()
-                } label: {
-                    Text(Localization.logOut)
-                }
-                Button(role: .cancel) {
-                } label: {
-                    Text(Localization.cancel)
-                }
+            .actionSheet(isPresented: $isQuitAlertPresenter) {
+                ActionSheet(
+                    title: Text(Localization.logOut),
+                    buttons: [
+                        .default(Text(Localization.yes)) {
+                            isAuthViewPresenter.toggle()
+                            viewModel.logout()
+                        },
+                        .cancel(Text(Localization.cancel))
+                    ]
+                )
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
                 AuthView()

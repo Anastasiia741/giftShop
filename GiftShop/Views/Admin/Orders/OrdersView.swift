@@ -49,18 +49,17 @@ struct OrdersView: View {
                     .imageScale(.small)
                     .foregroundColor(.black)
             })
- //           TASK: - fix title
-            .confirmationDialog(Localization.logOut, isPresented: $isQuitAlertPresenter) {
-                Button {
-                    isAuthViewPresenter.toggle()
-                    viewModel.logout()
-                } label: {
-                    Text(Localization.yes)
-                }
-                Button(role: .cancel) {
-                } label: {
-                    Text(Localization.cancel)
-                }
+            .actionSheet(isPresented: $isQuitAlertPresenter) {
+                ActionSheet(
+                    title: Text(Localization.logOut),
+                    buttons: [
+                        .default(Text(Localization.yes)) {
+                            isAuthViewPresenter.toggle()
+                            viewModel.logout()
+                        },
+                        .cancel(Text(Localization.cancel))
+                    ]
+                )
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
                 AuthView()
