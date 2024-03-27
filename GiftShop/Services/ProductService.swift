@@ -92,7 +92,7 @@ final class ProductService {
     func save(imageData: Data, nameImg: String, completion: @escaping (_ imageLink: String?) -> Void) {
         let storageRef = storage.reference(forURL: Accesses.storage).child(nameImg)
         storageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if let error = error {
+            if error != nil {
                 completion(nil)
             } else {
                 storageRef.downloadURL { (url, error) in
@@ -127,7 +127,7 @@ final class ProductService {
         let imageRef = Storage.storage().reference(forURL: imageURL)
         if let imageData = image.jpegData(compressionQuality: 0.8) {
             imageRef.putData(imageData, metadata: nil) { (_, error) in
-                if let error = error {
+                if error != nil {
                     completion(nil)
                 } else {
                     imageRef.downloadURL { (url, error) in
