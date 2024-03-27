@@ -7,9 +7,8 @@ import SwiftUI
 
 struct ProductDetailEditView: View {
     
-    @ObservedObject private var viewModel: ProductDetailEditVM
+    @ObservedObject var viewModel: ProductDetailEditVM
     @Environment(\.presentationMode) private var presentationMode
-    @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
     @State private var showImgAlert = false
@@ -87,11 +86,6 @@ struct ProductDetailEditView: View {
                 .background(Color.red)
                 .cornerRadius(20)
                 .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
-                .alert(isPresented: $showDeleteAlert) {
-                    Alert(title: Text(Localization.deleteProduct), primaryButton: .cancel(Text(Localization.yes)) {
-                        viewModel.deleteProduct()
-                    }, secondaryButton: .destructive(Text(Localization.no)))
-                }
                 Spacer().frame(width: 16)
                 Button(Localization.save) {
                     viewModel.saveEditedProduct()
@@ -123,13 +117,22 @@ struct ProductDetailEditView: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
                 title: Text(viewModel.alertTitle),
-                message: Text(""),
                 dismissButton: .default(Text(Localization.ok)){
                     presentationMode.wrappedValue.dismiss()
                 }
             )
         }
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text(Localization.deleteProduct),
+                primaryButton: .default(Text(Localization.yes)) {
+                    viewModel.deleteProduct()
+                },
+                secondaryButton: .cancel(Text(Localization.no))
+            )
+        }
     }
 }
+
 
 

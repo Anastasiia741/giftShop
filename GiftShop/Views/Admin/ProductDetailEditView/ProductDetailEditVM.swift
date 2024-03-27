@@ -59,7 +59,7 @@ final class ProductDetailEditVM: ObservableObject {
         }
     }
     
-    func deleteProduct()  {
+    func deleteProduct() {
         guard let product = selectedProduct else {
             return
         }
