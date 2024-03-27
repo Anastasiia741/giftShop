@@ -8,8 +8,9 @@ struct OrderDetail: View {
     
     @ObservedObject var viewModel = OrderDetailVM()
     @StateObject var statusColors = StatusColors()
+    private let order: Order
     @State private var isShowingStatusAlert = false
-    private var order: Order
+
     
     init(orderDetailVM: OrderDetailVM, order: Order) {
         self.viewModel = orderDetailVM
