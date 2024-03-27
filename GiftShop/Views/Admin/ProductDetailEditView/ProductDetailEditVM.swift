@@ -12,8 +12,9 @@ final class ProductDetailEditVM: ObservableObject {
     @Published var selectedProduct: Product?
     @Published var selectedImage: UIImage?
     @Published var imageURL: URL?
-    @Published var isImageChange = false
-
+    @Published var alertTitle = ""
+    @Published var showAlert = false
+    
     init(selectedProduct: Product) {
         self.selectedProduct = selectedProduct
     }
@@ -39,18 +40,20 @@ final class ProductDetailEditVM: ObservableObject {
         guard let selectedProduct = selectedProduct else { return }
         productsDB.update(product: selectedProduct) { error in
             if let error = error {
-                print("Ошибка при обновлении данных: \(error.localizedDescription)")
+                self.showAlert = true
+                self.alertTitle = Localization.error
             } else {
-                print("Данные сохранены: \(selectedProduct)")
-                if self.isImageChange == true {
-                    guard let selectedImage = self.selectedImage, let imageURL = selectedProduct.image else { return }
-                    self.productsDB.uploadImageToFirebase(selectedImage, imageURL) { imageURL in
-                        if let imageURL = imageURL {
-                            self.selectedProduct?.image = imageURL
-                        } else {
-                            print("Ошибка при загрузке изображения в Firebase Storage.")
-                        }
+                self.alertTitle = Localization.dataSavedSuccessfully
+                self.showAlert = true
+                guard let selectedImage = self.selectedImage, let imageURL = selectedProduct.image else { return }
+                self.productsDB.uploadImageToFirebase(selectedImage, imageURL) { imageURL in
+                    if let imageURL = imageURL {
+                        self.selectedProduct?.image = imageURL
+                        self.alertTitle = Localization.dataSavedSuccessfully
+                    } else {
+                        self.alertTitle = Localization.error
                     }
+                    self.showAlert = true
                 }
             }
         }
@@ -62,9 +65,13 @@ final class ProductDetailEditVM: ObservableObject {
         }
         productsDB.delete(product: product)  { error in
             if let error = error {
-                print("Ошибка удаления продукта: \(error.localizedDescription)")
+                print(error.localizedDescription)
+                self.alertTitle = Localization.error
+                self.showAlert = true
             } else {
                 print("Товар успешно удален")
+                self.alertTitle = "Товар успешно удален"
+                self.showAlert = true
             }
         }
     }
