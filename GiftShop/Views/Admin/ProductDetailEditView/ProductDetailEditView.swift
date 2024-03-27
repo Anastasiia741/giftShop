@@ -7,9 +7,8 @@ import SwiftUI
 
 struct ProductDetailEditView: View {
     
-    @ObservedObject var viewModel: ProductDetailEditVM
-    @Environment(\.presentationMode) var presentationMode
-
+    @ObservedObject private var viewModel: ProductDetailEditVM
+    @Environment(\.presentationMode) private var presentationMode
     @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false

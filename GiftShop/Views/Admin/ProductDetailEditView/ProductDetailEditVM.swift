@@ -49,7 +49,11 @@ final class ProductDetailEditVM: ObservableObject {
                 self.productsDB.uploadImageToFirebase(selectedImage, imageURL) { imageURL in
                     if let imageURL = imageURL {
                         self.selectedProduct?.image = imageURL
+                        self.alertTitle = Localization.dataSavedSuccessfully
+                    } else {
+                        self.alertTitle = Localization.error
                     }
+                    self.showAlert = true
                 }
             }
         }
