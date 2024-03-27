@@ -7,7 +7,8 @@ import Foundation
 final class OrdersVM: ObservableObject {
     
     private let dbOrdersService = DBOrdersService()
-    private let authService = AuthService.shared
+
+    private let authService = AuthService()
     private var selectOrder: Order?
     private var selectedStatus: OrderStatus = .all
     @Published var filteredOrders: [Order] = []
@@ -34,10 +35,9 @@ final class OrdersVM: ObservableObject {
     func logout()  {
         authService.signOut{ result in
             switch result {
-            case .success:
-                print("Аккаунт успешно удален")
+            case .success: break
             case .failure(let error):
-                print("Ошибка удаления аккаунта: \(error.localizedDescription)")
+                print("\(error.localizedDescription)")
             }
         }
     }

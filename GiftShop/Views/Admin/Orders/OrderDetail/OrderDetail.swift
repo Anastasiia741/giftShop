@@ -6,11 +6,13 @@ import SwiftUI
 
 struct OrderDetail: View {
     
-    @ObservedObject var orderDetailVM: OrderDetailVM
-    private let order: Order
+    @ObservedObject var viewModel = OrderDetailVM()
+    @StateObject var statusColors = StatusColors()
+    @State private var isShowingStatusAlert = false
+    private var order: Order
     
     init(orderDetailVM: OrderDetailVM, order: Order) {
-        self.orderDetailVM = orderDetailVM
+        self.viewModel = orderDetailVM
         self.order = order
     }
     
@@ -19,14 +21,18 @@ struct OrderDetail: View {
             Text(Localization.orderDetails)
                 .customTextStyle(TextStyle.avenirRegular, size: 22)
                 .fontWeight(.bold)
-                .padding(.top)
+                .padding([.top, .leading])
             VStack(alignment: .leading, spacing: 10) {
                 Text("\(Localization.orderDate) \(Extentions.shared.formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
-                Text("\(Localization.status) \(order.status)")
-                    .customTextStyle(TextStyle.avenirRegular, size: 18)
-                    .foregroundColor(Extentions.shared.statusColor(for: order.status))
-                Text("\(Localization.promoCode) \(order.promocode)")
+                HStack {
+                    Text(Localization.status)
+                        .customTextStyle(TextStyle.avenir, size: 18)
+                    Text(order.status)
+                        .customTextStyle(TextStyle.avenir, size: 18)
+                        .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                }
+                Text("\(Localization.promoCode): \(order.promocode)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
             }
             .padding(.horizontal)
@@ -36,37 +42,38 @@ struct OrderDetail: View {
                     .bold()
                 ForEach(order.positions) { position in
                     HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
-                                .customTextStyle(TextStyle.avenirRegular, size: 16)
-                        }
-                        .padding(.vertical, 5)
+                        Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
+                            .customTextStyle(TextStyle.avenirRegular, size: 16)
                     }
-                    .padding(.horizontal)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
-                    .padding(.vertical, 5)
                 }
             }
+            .padding()
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(10)
             .padding(.horizontal)
-            Text("\(Localization.sum) \(order.cost) \(Localization.som)")
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-                .padding(.top)
-            Text(Localization.name)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text(Localization.email)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text(Localization.deliveryAddress)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
-            Text(Localization.phoneNumber)
-                .customTextStyle(TextStyle.avenirRegular, size: 18)
+            .padding(.vertical, 5)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("\(Localization.name): \(viewModel.userProfile?.name ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.email) \(viewModel.userProfile?.email ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.deliveryAddress) \(viewModel.userProfile?.address ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.phoneNumber) \(viewModel.userProfile?.phone ?? "")")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                Text("\(Localization.sum) \(order.cost) \(Localization.som)")
+                    .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                    .padding(.top)
+            }
+            .padding(.leading)
             Spacer()
         }
         Button(action: {
+            isShowingStatusAlert = true
         }) {
-            Text("\(order.status)")
+            Text("\(viewModel.selectedOrder?.status ?? "")")
                 .font(.system(size: 18))
                 .fontWeight(.medium)
                 .frame(maxWidth: 130, minHeight: 50)
@@ -74,6 +81,29 @@ struct OrderDetail: View {
                 .background(Color(.green))
                 .cornerRadius(20)
                 .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
+        }
+        .actionSheet(isPresented: $isShowingStatusAlert) {
+            ActionSheet(
+                title: Text(Localization.selectOrderStatus),
+                buttons: [
+                    .default(Text(OrderStatus.new.rawValue)) {
+                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.new.rawValue)
+                    },
+                    .default(Text(OrderStatus.processing.rawValue)) {
+                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.processing.rawValue)
+                    },
+                    .default(Text(OrderStatus.shipped.rawValue)) {
+                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.shipped.rawValue)
+                    },
+                    .default(Text(OrderStatus.delivered.rawValue)) {
+                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.delivered.rawValue)
+                    },
+                    .default(Text(OrderStatus.cancelled.rawValue)) {
+                        viewModel.updateOrderStatus(orderID: order.id, newStatus:OrderStatus.cancelled.rawValue)
+                    },
+                    .cancel()
+                ]
+            )
         }
         .padding(.bottom, 22)
     }

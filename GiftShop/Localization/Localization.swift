@@ -95,6 +95,10 @@ struct Localization {
     static let logOut = "log_out".localized
     static let goOut = "go_out".localized
     static let error = "error".localized
+    static let attention = "attention".localized
+    static let congratulations = "congratulations".localized
+    static let notFilledIn = "not_filled_in".localized
+    static let selectOrderStatus = "select_order_status".localized
 }
 
 private extension String {

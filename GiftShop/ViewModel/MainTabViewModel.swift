@@ -7,9 +7,10 @@ import FirebaseAuth
 
 final class MainTabViewModel: ObservableObject {
     
-    @Published var user: User?
-    
-    init(user: User?) {
-        self.user = user
+    @Published var userID: String?
+    private let authService = AuthService()
+   
+    func fetchUserId() {
+        userID = authService.currentUser?.uid
     }
 }

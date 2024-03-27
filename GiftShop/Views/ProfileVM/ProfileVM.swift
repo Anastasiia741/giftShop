@@ -8,7 +8,7 @@ import FirebaseStorage
 
 final class ProfileVM: ObservableObject {
    
-    private let authService = AuthService.shared
+    private let authService = AuthService()
     private let dbOrdersService = DBOrdersService()
     @Published var orders: [Order] = []
     @Published var profile: NewUser?
