@@ -6,8 +6,8 @@ import SwiftUI
 
 struct CartView: View {
     
-    @StateObject private var viewModel = CartVM.shared
-    @StateObject var catalogVM = CatalogVM()
+    @StateObject private var viewModel = CartVM()
+    @StateObject private var catalogVM = CatalogVM()
     @State private var promo: String = ""
     @State private var isPromoCodeEntryPresented = false
     @State private var isPromoSheetVisible = false
@@ -19,10 +19,9 @@ struct CartView: View {
         NavigationView {
             VStack {
                 List {
-                    // MARK: - Order
                     Section {
                         if viewModel.orderProducts.isEmpty {
-                            Section {
+                            VStack {
                                 Text(Localization.emptyСart)
                                     .font(.headline)
                                     .foregroundColor(.gray)
@@ -50,9 +49,9 @@ struct CartView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             })
                             {
-                                VStack() {
+                                VStack {
                                     ForEach(viewModel.orderProducts) { product in
-                                        CartCell(viewModel: CartVM.shared, position: product)
+                                        CartCell(viewModel: viewModel, position: product)
                                             .padding(.bottom, 8)
                                     }
                                 }
@@ -60,11 +59,8 @@ struct CartView: View {
                             }
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
-                    }.onAppear {
-                        self.viewModel.fetchOrder()
                     }
-                    .padding(.bottom, 6)
-                    // MARK: - Popular product
+
                     Section(header: Text(Localization.addToOrder)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.gray)) {
@@ -79,14 +75,7 @@ struct CartView: View {
                                     }
                                 }
                             }.padding(.vertical, 8)
-                        }.onAppear {
-                            Task {
-                                do {
-                                    await self.catalogVM.fetchAllProducts()
-                                }
-                            }
                         }
-                    // MARK: - Promo Section
                     Section {
                         HStack(spacing: 24) {
                             Text(Localization.getDiscount).font(.system(size: 16, weight: .bold))
@@ -117,7 +106,6 @@ struct CartView: View {
                         }
                     }
                 }
-                // MARK: - Action Buttons Section
                 VStack {
                     HStack(spacing: 24) {
                         Text(Localization.total).fontWeight(.bold)
@@ -127,7 +115,7 @@ struct CartView: View {
                             if viewModel.orderProducts.isEmpty {
                                 isPresented.toggle()
                             } else {
-                                viewModel.orderButtonTapped(with: promo) // Оформляем заказ
+                                viewModel.orderButtonTapped(with: promo)
                             }
                         }) {
                             Text(Localization.order)
@@ -145,6 +133,8 @@ struct CartView: View {
                     }
                     .padding([.leading, .trailing, .bottom], 16)
                 }
+            }.onAppear {
+                viewModel.fetchOrder()
             }
         }
     }

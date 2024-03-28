@@ -6,8 +6,6 @@ import SwiftUI
 
 final class Extentions: ObservableObject {
     
-    static let shared = Extentions()
-    
     func formattedDate(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"

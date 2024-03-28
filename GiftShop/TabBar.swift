@@ -19,7 +19,7 @@ struct TabBar: View {
                                 Images.TabBar.order
                             }
                         }
-                    ProductsEditView(catalogVM: CatalogVM.shared)
+                    ProductsEditView(catalogVM: CatalogVM())
                         .tabItem {
                             VStack {
                                 Images.TabBar.productEdit

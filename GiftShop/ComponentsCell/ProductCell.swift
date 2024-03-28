@@ -1,13 +1,13 @@
-//  PopularProductCell.swift
+//  ProductCell.swift
 //  GiftShop
-//  Created by Анастасия Набатова on 26/1/24.
+//  Created by Анастасия Набатова on 5/1/24.
 
 import SwiftUI
 import FirebaseStorage
 import SDWebImageSwiftUI
 import SDWebImage
 
-struct PopularProductCell: View {
+struct ProductCell: View {
     
     let product: Product
     @State private var imageURL: URL?
@@ -17,9 +17,8 @@ struct PopularProductCell: View {
             if let imageURL = imageURL {
                 WebImage(url: imageURL)
                     .resizable()
-                    .padding(.top, 10)
-                    .frame(width: screen.width * 0.30, height: 130)
-                    .scaledToFit()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: screen.width * 0.45, height: 150)
                     .clipped()
                     .cornerRadius(16)
                     .padding(.top, -12)
@@ -27,17 +26,17 @@ struct PopularProductCell: View {
             VStack(spacing: 4) {
                 HStack{
                     Text(product.name)
-                        .customTextStyle(TextStyle.avenirRegular, size: 12)
+                        .customTextStyle(TextStyle.avenirRegular, size: 14)
                         .frame(height: 40)
                     Spacer()
                     Text("\(product.price) \(Localization.som)")
-                        .customTextStyle(TextStyle.avenirBold, size: 12)
+                        .customTextStyle(TextStyle.avenirBold, size: 14)
                 }
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
             }
         }
-        .frame(width: screen.width * 0.32, height:  screen.width * 0.4)
+        .frame(width: screen.width * 0.45, height:  screen.width * 0.5)
         .background(.white)
         .cornerRadius(16)
         .shadow(radius: 4)
@@ -58,3 +57,13 @@ struct PopularProductCell: View {
     }
 }
 
+struct ProductCell_Previews: PreviewProvider {
+    static var previews: some View {
+        ProductCell(product: Product(id: 1,
+                                     name: "Сумка",
+                                     category: "",
+                                     detail: "Большая сумка",
+                                     price: 100,
+                                     quantity: 1 ))
+    }
+}

@@ -15,7 +15,7 @@ struct OrderCell: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("\(Localization.dateOf) \(Extentions.shared.formattedDate(order.date))")
+                Text("\(Localization.dateOf) \(Extentions().formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenir, size: 18)
                 HStack {
                     Text(Localization.status)

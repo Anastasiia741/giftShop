@@ -6,7 +6,6 @@ import Foundation
 
 final class CartVM: ObservableObject {
     
-    static let shared = CartVM()
     private let orderService = OrderService()
     private let productsRepository = ProductsRepository()
     private let dbOrdersService = DBOrdersService()

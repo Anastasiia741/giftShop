@@ -8,7 +8,6 @@ import SDWebImageSwiftUI
 import SDWebImage
 
 struct PopularProductCell: View {
-    
     let product: Product
     @State private var imageURL: URL?
     
@@ -58,3 +57,11 @@ struct PopularProductCell: View {
     }
 }
 
+#Preview {
+    PopularProductCell(product: Product(id: 1,
+                                        name: "Сумка",
+                                        category: "",
+                                        detail: "Большая сумка",
+                                        price: 100,
+                                        quantity: 1 ))
+}
