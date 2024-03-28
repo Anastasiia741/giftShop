@@ -6,7 +6,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Order: Identifiable {
+class Order: Identifiable {
     var id: String = UUID().uuidString
     var userID: String
     var positions = [Position]()

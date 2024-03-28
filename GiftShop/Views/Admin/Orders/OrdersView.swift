@@ -38,7 +38,7 @@ struct OrdersView: View {
                 }
                 .padding()
                 List(viewModel.filteredOrders) { order in
-                    OrderCell(order: order)
+                    OrderCell(order: .constant(order))
                 }
             }
             .navigationBarItems(trailing:
