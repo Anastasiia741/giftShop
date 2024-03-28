@@ -8,10 +8,12 @@ import SDWebImageSwiftUI
 
 struct CartCell: View {
     
-    @StateObject var viewModel =  CartVM()
     @State private var count = 1
     @State private var imageURL: URL?
-    @State private(set) var position: Product
+    @StateObject var viewModel: CartVM
+    let orderService = OrderService()
+    let position: Product
+    var onProductChanged: ((Product, Int) -> Void)?
     
     var body: some View {
         HStack {
@@ -57,5 +59,11 @@ struct CartCell: View {
                 }
             }
         }
+    }
+}
+
+struct PositionCell_Previews: PreviewProvider {
+    static var previews: some View {
+        CartCell(viewModel: CartVM.shared, position: Product(id: 0, name: "", category: "", detail: "", price: 1, quantity: 1))
     }
 }

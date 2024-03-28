@@ -9,7 +9,6 @@ import SDWebImage
 
 final class CatalogVM: ObservableObject {
     
-    static let shared = CatalogVM()
     @Published var popularProducts: [Product] = []
     @Published var allProducts: [Product] = []
     private let productService = ProductService()

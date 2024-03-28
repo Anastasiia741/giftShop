@@ -24,7 +24,7 @@ struct OrderDetail: View {
                 .fontWeight(.bold)
                 .padding([.top, .leading])
             VStack(alignment: .leading, spacing: 10) {
-                Text("\(Localization.orderDate) \(Extentions.shared.formattedDate(order.date))")
+                Text("\(Localization.orderDate) \(Extentions().formattedDate(order.date))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                 HStack {
                     Text(Localization.status)
