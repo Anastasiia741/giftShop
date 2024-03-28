@@ -10,7 +10,7 @@ struct OrderCell: View {
     @StateObject var orderDetailVM: OrderDetailVM = OrderDetailVM()
     @StateObject var statusColors = StatusColors()
     @State private var isOrderDetailActive = false
-    let order: Order
+    @Binding var order: Order
     
     var body: some View {
         HStack {
@@ -44,7 +44,7 @@ struct OrderCell: View {
             }
             .buttonStyle(PlainButtonStyle())
             .sheet(isPresented: $isOrderDetailActive) {
-                OrderDetail(orderDetailVM: orderDetailVM, order: order)
+                OrderDetail(orderDetailVM: orderDetailVM)
             }
         }
     }
