@@ -15,7 +15,7 @@ final class ProductDetailEditVM: ObservableObject {
     @Published var alertTitle = ""
     @Published var showAlert = false
     
-    init(selectedProduct: Product) {
+    init(selectedProduct: Product ) {
         self.selectedProduct = selectedProduct
     }
     
@@ -39,9 +39,9 @@ final class ProductDetailEditVM: ObservableObject {
     func saveEditedProduct() {
         guard let selectedProduct = selectedProduct else { return }
         productsDB.update(product: selectedProduct) { error in
-            if let error = error {
-                self.showAlert = true
+            if error != nil {
                 self.alertTitle = Localization.error
+                self.showAlert = true
             } else {
                 self.alertTitle = Localization.dataSavedSuccessfully
                 self.showAlert = true
@@ -49,7 +49,6 @@ final class ProductDetailEditVM: ObservableObject {
                 self.productsDB.uploadImageToFirebase(selectedImage, imageURL) { imageURL in
                     if let imageURL = imageURL {
                         self.selectedProduct?.image = imageURL
-                        self.alertTitle = Localization.dataSavedSuccessfully
                     } else {
                         self.alertTitle = Localization.error
                     }
@@ -66,12 +65,9 @@ final class ProductDetailEditVM: ObservableObject {
         productsDB.delete(product: product)  { error in
             if let error = error {
                 print(error.localizedDescription)
-                self.alertTitle = Localization.error
-                self.showAlert = true
             } else {
                 print("Товар успешно удален")
-                self.alertTitle = "Товар успешно удален"
-                self.showAlert = true
+                self.objectWillChange.send()
             }
         }
     }
