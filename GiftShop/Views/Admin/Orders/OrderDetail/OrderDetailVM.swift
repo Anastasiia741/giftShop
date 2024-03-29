@@ -27,6 +27,7 @@ final class OrderDetailVM: ObservableObject {
     func updateOrderStatus(orderID: String, newStatus: String) {
         dbOrderService.updateOrderStatus(orderID: orderID, newStatus: newStatus) { [weak self] in
             self?.selectedOrder?.status = newStatus
+            self?.objectWillChange.send()
         }
     }
 }
