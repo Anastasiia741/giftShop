@@ -67,7 +67,6 @@ final class ProductDetailEditVM: ObservableObject {
                 print(error.localizedDescription)
             } else {
                 print("Товар успешно удален")
-                self.objectWillChange.send()
             }
         }
     }
