@@ -105,13 +105,13 @@ class DBOrdersService {
     }
     
     //MARK: - Change order status for admin
-    func updateOrderStatus(orderID: String, newStatus: String) {
+    func updateOrderStatus(orderID: String, newStatus: String, completion: @escaping ()->Void) {
         let orderRef = db.collection(Accesses.orders).document(orderID)
         orderRef.updateData(["status": newStatus]) { error in
             if let error = error {
                 print(error.localizedDescription)
             } else {
-                print("Статус заказа успешно обновлен")
+                completion()
             }
         }
     }

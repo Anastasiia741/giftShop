@@ -6,15 +6,12 @@ import SwiftUI
 
 struct OrderDetail: View {
     
-    @ObservedObject var viewModel = OrderDetailVM()
+    @ObservedObject var viewModel: OrderDetailVM
     @StateObject var statusColors = StatusColors()
-    private let order: Order
     @State private var isShowingStatusAlert = false
 
-    
-    init(orderDetailVM: OrderDetailVM, order: Order) {
+    init(orderDetailVM: OrderDetailVM) {
         self.viewModel = orderDetailVM
-        self.order = order
     }
     
     var body: some View {
@@ -24,16 +21,16 @@ struct OrderDetail: View {
                 .fontWeight(.bold)
                 .padding([.top, .leading])
             VStack(alignment: .leading, spacing: 10) {
-                Text("\(Localization.orderDate) \(Extentions().formattedDate(order.date))")
+                Text("\(Localization.orderDate) \(Extentions().formattedDate(viewModel.selectedOrder?.date ?? Date()))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                 HStack {
                     Text(Localization.status)
                         .customTextStyle(TextStyle.avenir, size: 18)
-                    Text(order.status)
+                    Text(viewModel.selectedOrder?.status ?? "")
                         .customTextStyle(TextStyle.avenir, size: 18)
-                        .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                        .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: viewModel.selectedOrder?.status ?? "") ?? .new))
                 }
-                Text("\(Localization.promoCode): \(order.promocode)")
+                Text("\(Localization.promoCode): \(viewModel.selectedOrder?.promocode ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
             }
             .padding(.horizontal)
@@ -41,7 +38,7 @@ struct OrderDetail: View {
                 Text(Localization.goods)
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .bold()
-                ForEach(order.positions) { position in
+                ForEach(viewModel.selectedOrder?.positions ?? []) { position in
                     HStack {
                         Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
                             .customTextStyle(TextStyle.avenirRegular, size: 16)
@@ -62,7 +59,7 @@ struct OrderDetail: View {
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                 Text("\(Localization.phoneNumber) \(viewModel.userProfile?.phone ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
-                Text("\(Localization.sum) \(order.cost) \(Localization.som)")
+                Text("\(Localization.sum) \(viewModel.selectedOrder?.cost ?? .zero) \(Localization.som)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
@@ -88,19 +85,19 @@ struct OrderDetail: View {
                 title: Text(Localization.selectOrderStatus),
                 buttons: [
                     .default(Text(OrderStatus.new.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.new.rawValue)
+                        viewModel.updateOrderStatus(orderID: viewModel.selectedOrder?.id ?? "", newStatus: OrderStatus.new.rawValue)
                     },
                     .default(Text(OrderStatus.processing.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.processing.rawValue)
+                        viewModel.updateOrderStatus(orderID: viewModel.selectedOrder?.id ?? "", newStatus: OrderStatus.processing.rawValue)
                     },
                     .default(Text(OrderStatus.shipped.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.shipped.rawValue)
+                        viewModel.updateOrderStatus(orderID: viewModel.selectedOrder?.id ?? "", newStatus: OrderStatus.shipped.rawValue)
                     },
                     .default(Text(OrderStatus.delivered.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: order.id, newStatus: OrderStatus.delivered.rawValue)
+                        viewModel.updateOrderStatus(orderID: viewModel.selectedOrder?.id ?? "", newStatus: OrderStatus.delivered.rawValue)
                     },
                     .default(Text(OrderStatus.cancelled.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: order.id, newStatus:OrderStatus.cancelled.rawValue)
+                        viewModel.updateOrderStatus(orderID: viewModel.selectedOrder?.id ?? "", newStatus:OrderStatus.cancelled.rawValue)
                     },
                     .cancel()
                 ]
