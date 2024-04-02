@@ -5,6 +5,12 @@
 import SDWebImageSwiftUI
 import SwiftUI
 
+enum AlertType: Identifiable {
+    var id: AlertType { self }
+    case delete
+    case save
+}
+
 struct ProductDetailEditView: View {
     
     @ObservedObject var viewModel: ProductDetailEditVM
@@ -12,9 +18,10 @@ struct ProductDetailEditView: View {
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
     @State private var showImgAlert = false
-    @State private var showDeleteAlert = false
+    @State private var alertType: AlertType? = nil
     
     var body: some View {
+        
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
                 WebImage(url: viewModel.imageURL)
@@ -77,7 +84,8 @@ struct ProductDetailEditView: View {
             }.padding([.leading, .trailing], 20)
             HStack(spacing: 16){
                 Button(Localization.delete) {
-                    showDeleteAlert = true
+                    viewModel.showAlert.toggle()
+                    alertType = .delete
                 }
                 .font(.system(size: 16))
                 .fontWeight(.medium)
@@ -88,6 +96,10 @@ struct ProductDetailEditView: View {
                 .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
                 Spacer().frame(width: 16)
                 Button(Localization.save) {
+                    withAnimation {
+                        viewModel.showAlert.toggle()
+                        alertType = .save
+                    }
                     viewModel.saveEditedProduct()
                 }
                 .font(.system(size: 16))
@@ -99,6 +111,7 @@ struct ProductDetailEditView: View {
                 .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
             }
             .padding(.bottom)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
         .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
             Button(Localization.gallery) {
@@ -114,22 +127,23 @@ struct ProductDetailEditView: View {
         .sheet(isPresented: $isShowingCameraPicker) {
             ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
-        .alert(isPresented: $viewModel.showAlert) {
-            Alert(
-                title: Text(viewModel.alertTitle),
-                dismissButton: .default(Text(Localization.ok)){
-                    presentationMode.wrappedValue.dismiss()
-                }
-            )
-        }
-        .alert(isPresented: $showDeleteAlert) {
-            Alert(
-                title: Text(Localization.deleteProduct),
-                primaryButton: .default(Text(Localization.yes)) {
+        .alert(item: $alertType) { alertType in
+            switch alertType {
+            case .delete:
+                return Alert(title: Text(Localization.attention),
+                             message: Text(Localization.deleteProduct),
+                             primaryButton: .default(Text(Localization.yes)) {
                     viewModel.deleteProduct()
+                    presentationMode.wrappedValue.dismiss()
                 },
-                secondaryButton: .cancel(Text(Localization.no))
-            )
+                             secondaryButton: .cancel(Text(Localization.no))
+                )
+            case .save:
+                return Alert(title: Text(viewModel.alertTitle),
+                             dismissButton: .default(Text(Localization.ok)) {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            }
         }
     }
 }
