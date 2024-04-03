@@ -14,7 +14,7 @@ final class CartVM: ObservableObject {
     @Published var productCountMessage: String = ""
     @Published var promoCode: String = ""
     @Published var promoResultText: String = ""
-    @Published var isPromoSheetVisible: Bool = false
+    @Published var isPromoSheetVisible = false
     
     init() {}
     
@@ -42,7 +42,7 @@ final class CartVM: ObservableObject {
     
     func orderButtonTapped(with promoCode: String?) {
         if let currentUser = authService.currentUser {
-            var order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: "new", promocode: promoCode ?? "")
+            let order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: promoCode ?? "")
             order.positions = orderProducts.map{ position in
                 return Position(id: UUID().uuidString, product: position, count: position.quantity)
             }

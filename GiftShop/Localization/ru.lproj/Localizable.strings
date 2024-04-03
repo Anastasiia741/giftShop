@@ -78,6 +78,7 @@
 "your_name" = "Ваше имя";
 "enter_your_name" = "Введите имя";
 "enter_phone_number" = "Введите номер телефона";
+"your_email" = "Ваш имейл";
 "your_delivery_address" = "Адрес доставки";
 "enter_your_delivery_address" = "Ваш адрес доставки";
 "your_future_orders" = "Ваши заказы будут тут";
@@ -106,7 +107,8 @@
 "congratulations" = "Поздравляем";
 "not_filled_in" = "Не все поля заполнены";
 "select_order_status" = "Выберите статус заказа";
-
+"delete_your_account" = "Хотите удалить аккаунт?";
+"account_deleted" = "Ваш аккаунт удален";
 
 
 

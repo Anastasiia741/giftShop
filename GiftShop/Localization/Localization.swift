@@ -73,6 +73,7 @@ struct Localization {
     static let yourName = "your_name".localized
     static let enterYourName = "enter_your_name".localized
     static let enterPhoneNumber = "enter_phone_number".localized
+    static let yourEmail = "your_email".localized
     static let yourDeliveryAddress = "your_delivery_address".localized
     static let enterYourDeliveryAddress = "your_delivery_address".localized
     static let yourFutureOrders = "your_future_orders".localized
@@ -99,6 +100,8 @@ struct Localization {
     static let congratulations = "congratulations".localized
     static let notFilledIn = "not_filled_in".localized
     static let selectOrderStatus = "select_order_status".localized
+    static let deleteYourAccount = "delete_your_account".localized
+    static let accountDeleted = "account_deleted".localized
 }
 
 private extension String {

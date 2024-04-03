@@ -28,11 +28,8 @@ final class ProductService {
         if !savedProducts.isEmpty {
             return savedProducts
         }
-        
         let querySnapshot = try await db.collection(Accesses.products).getDocuments()
-        
         var products: [Product] = []
-        
         for document in querySnapshot.documents {
             if let product = try? document.data(as: Product.self) {
                 products.append(product)
@@ -90,7 +87,7 @@ final class ProductService {
     
     //  MARK: - Save image in storage
     func save(imageData: Data, nameImg: String, completion: @escaping (_ imageLink: String?) -> Void) {
-        let storageRef = storage.reference(forURL: Accesses.storage).child(nameImg)
+        let storageRef = storage.reference(forURL: Accesses.storageProducts).child(nameImg)
         storageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if error != nil {
                 completion(nil)
@@ -149,11 +146,10 @@ final class ProductService {
             completion(nil, nil)
             return
         }
-        let uniqueImageURL = Accesses.uniqueImageURL
+        let uniqueImageURL = Accesses.storageProducts
         let storageRef = storage.reference(forURL: uniqueImageURL)
         storageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if let error = error {
-                print("Ошибка при загрузке нового изображения: ", error)
                 completion(nil, error)
             } else {
                 storageRef.downloadURL { (url, error) in
@@ -186,38 +182,9 @@ final class ProductService {
     
     //  MARK: - Delete image from storage
     func deleteImage(_ imageName: String, completion: @escaping (Error?) -> Void) {
-        let storageRef = storage.reference(forURL: Accesses.uniqueImageURL).child(imageName)
+        let storageRef = storage.reference(forURL: Accesses.storageProducts).child(imageName)
         storageRef.delete { error in
             completion(error)
         }
-    }
-    
-    //  MARK: - Data parser in firebase
-    func addAllProducts() {
-        //        if let fileURL = Bundle.main.url(forResource: "Products", withExtension: "json") {
-        //            do {
-        //                let jsonData = try Data(contentsOf: fileURL)
-        //                let products = try JSONDecoder().decode([Product].self, from: jsonData)
-        //
-        //                for product in products {
-        //                    do {
-        //                        try add(product: product) { error in
-        //                            if let error {
-        //                                print("Ошибка добавления Firestore: \(error)")
-        //                            } else {
-        //                                print("Добавлены продукты в Firestore: \(product.name)")
-        //                            }
-        //                        }
-        //                        sleep(1)
-        //
-        //                    } catch {
-        //                        print("Ошибка добавления Firestore: \(error)")
-        //                    }
-        //                }
-        //            } catch {
-        //                print("Ошибка парсинга JSON data: \(error)")
-        //            }
-        //        }
-        
     }
 }

@@ -54,8 +54,8 @@ final class ProfileService {
     }
 
     //MARK: - Save profile image
-    func save(imageData: Data, _ imageURL: String) async throws -> String {
-        let storageRef = storage.reference(forURL: "gs://giftshop-d7b5d.appspot.com").child("images/\(UUID().uuidString).jpg")
+    func save(imageData: Data, nameImg: String, _ imageLink: String?) async throws -> String {
+        let storageRef = storage.reference(forURL: Accesses.storageUsers).child(nameImg)
         do {
             storageRef.putData(imageData, metadata: nil)
             let downloadURL = try await storageRef.downloadURL()
@@ -74,7 +74,7 @@ final class ProfileService {
         }
         let fileName = UUID().uuidString + url + ".jpg"
         do {
-            let imageLink = try await save(imageData: imageData, fileName)
+            let imageLink = try await save(imageData: imageData, nameImg: url, fileName)
             return imageLink
         } catch {
             print("Ошибка при сохранении изображения:", error.localizedDescription)

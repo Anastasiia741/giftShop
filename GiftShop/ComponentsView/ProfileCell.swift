@@ -7,11 +7,6 @@ import SwiftUI
 struct ProfileCell: View {
     
     var order: Order
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        return formatter
-    }()
     @StateObject var statusColors = StatusColors()
     @StateObject var viewModel: ProfileVM
     
@@ -19,7 +14,7 @@ struct ProfileCell: View {
         VStack(alignment: .leading) {
             Text("\(Localization.sum) \(order.cost)")
                 .customTextStyle(TextStyle.avenirBold, size: 16)
-            Text("\(Localization.dateOf) \(dateFormatter.string(from: order.date))")
+            Text("\(Localization.dateOf) \(Extentions().formattedDate(order.date))")
                 .customTextStyle(TextStyle.avenir, size: 14)
             HStack {
                 Text(Localization.status)
@@ -32,12 +27,3 @@ struct ProfileCell: View {
     }
 }
 
-#Preview {
-    ProfileCell(order: Order(id: "",
-                             userID: "",
-                             positions: [Position](),
-                             date: Date(),
-                             status: "",
-                             promocode: ""),
-                viewModel: ProfileVM())
-}

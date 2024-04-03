@@ -11,23 +11,6 @@ final class Extentions: ObservableObject {
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter.string(from: date)
     }
-    
-    func statusColor(for status: String) -> Color {
-        switch status {
-        case OrderStatus.new.rawValue:
-            return .green
-        case OrderStatus.processing.rawValue:
-            return .blue
-        case OrderStatus.shipped.rawValue:
-            return .orange
-        case OrderStatus.delivered.rawValue:
-            return .green
-        case OrderStatus.cancelled.rawValue:
-            return .red
-        default:
-            return .primary
-        }
-    }
 }
 
 extension Text {

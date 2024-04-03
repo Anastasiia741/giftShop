@@ -9,16 +9,18 @@ import SDWebImageSwiftUI
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileVM()
+    @Environment(\.presentationMode) private var presentationMode
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
-    @State private var isAlertPresented = false
+    @State private var isImgAlertPresented = false
     @State private var isShowingCameraPicker = false
     @State private var isShowingGalleryPicker = false
     @State private var isQuitAlertPresenter = false
-    @State private var isRemoveAlertPresenter = false
     @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
-    @State private var isProfileSavedAlert = false
+    @State private var isNavigateToCatalog = false
+    @State private var alertType: AlertType? = nil
+    
     
     var body: some View {
         NavigationView {
@@ -30,7 +32,7 @@ struct ProfileView: View {
                             .clipShape(Circle())
                             .frame(width: 120, height: 120)
                             .onTapGesture {
-                                isAlertPresented = true
+                                isImgAlertPresented = true
                             }
                     } else {
                         Images.Profile.icon
@@ -38,14 +40,13 @@ struct ProfileView: View {
                             .clipShape(Circle())
                             .frame(width: 120, height: 120)
                             .onTapGesture {
-                                isAlertPresented = true
+                                isImgAlertPresented = true
                             }
                     }
                     VStack(alignment: .leading, spacing: 16) {
                         Text(Localization.yourName)
                             .padding(.leading, 20)
                             .font(.custom(TextStyle.avenirBold, size: 18))
-                        
                         TextField(Localization.enterYourName, text: $viewModel.name)
                             .font(.custom(TextStyle.avenirBold, size: 16))
                             .padding(.horizontal)
@@ -57,8 +58,7 @@ struct ProfileView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-                
-                .confirmationDialog(Localization.selectPhotoSource, isPresented: $isAlertPresented) {
+                .confirmationDialog(Localization.selectPhotoSource, isPresented: $isImgAlertPresented) {
                     Button(Localization.gallery) {
                         isShowingGalleryPicker = true
                     }
@@ -66,6 +66,7 @@ struct ProfileView: View {
                         isShowingCameraPicker = true
                     }
                 }
+                //TASK: - loadImage
                 .onAppear {
                     viewModel.loadImage(from: viewModel.imageURL)
                 }
@@ -77,6 +78,12 @@ struct ProfileView: View {
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 8) {
+                    Text(Localization.yourEmail)
+                        .padding(.leading, 20)
+                        .font(.custom(TextStyle.avenirBold, size: 16))
+                    Text(viewModel.email)
+                        .padding(.leading, 20)
+                        .font(.custom(TextStyle.avenirRegular, size: 16))
                     Text(Localization.yourDeliveryAddress)
                         .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 16))
@@ -86,7 +93,6 @@ struct ProfileView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }.padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
                 HStack{
                     Spacer()
                     Button {
@@ -96,21 +102,23 @@ struct ProfileView: View {
                                 viewModel.image = selectedImage
                                 await viewModel.saveProfileImage()
                             }
-                            isProfileSavedAlert.toggle()
+                            viewModel.showAlert.toggle()
+                            alertType = .save
                         }
                     } label: {
                         Text(Localization.save)
-                            .customTextStyle(TextStyle.avenirRegular, size: 12)
-                            .frame(width: 100, height: 25)
+                            .customTextStyle(TextStyle.avenirBold, size: 14)
+                            .frame(width: 100, height: 30)
                             .background(Colors.promo)
                             .cornerRadius(20)
                             .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
                             .foregroundColor(.white)
                             .padding(.trailing, 15)
                     }
-                }  .onAppear {
+                }.onAppear {
                     Task {
                         await viewModel.fetchUserProfile()
+                        viewModel.fetchOrderHistory()
                     }
                 }
                 if viewModel.orders.isEmpty {
@@ -136,10 +144,10 @@ struct ProfileView: View {
                         .listStyle(.plain)
                     }
                 }
-                //MARK: - Delete account
                 HStack(alignment: .center) {
                     Button{
-                        isRemoveAlertPresenter.toggle()
+                        viewModel.showAlert.toggle()
+                        alertType = .delete
                     } label: {
                         Text(Localization.deleteAccountName)
                             .font(.system(size: 12))
@@ -149,27 +157,30 @@ struct ProfileView: View {
                             .foregroundColor(.gray)
                             .cornerRadius(20)
                     }
-                    .alert(isPresented: $isRemoveAlertPresenter) {
-                        Alert(
-                            title: Text(Localization.deleteAccount),
-                            primaryButton: .destructive(Text(Localization.yes)) {
+                    .alert(item: $alertType) { alertType in
+                        switch alertType {
+                        case .delete:
+                            return Alert(title: Text(Localization.attention),
+                                         message: Text(Localization.deleteYourAccount),
+                                         primaryButton: .default(Text(Localization.yes)) {
                                 viewModel.deleteAccount()
                                 viewModel.logout()
-                                isAuthViewPresenter = true
+                                isNavigateToCatalog = true
                             },
-                            secondaryButton: .cancel(Text(Localization.no))
-                        )
+                                         secondaryButton: .cancel(Text(Localization.no))
+                            )
+                        case .save:
+                            return Alert(title: Text(viewModel.alertTitle),
+                                         dismissButton: .default(Text(Localization.ok)) {
+                            })
+                        }
+                    }
+                    .fullScreenCover(isPresented: $isNavigateToCatalog) {
+                        TabBar(viewModel: MainTabViewModel())
                     }
                 }
             }
             .padding()
-            .alert(isPresented: $isProfileSavedAlert) {
-                Alert(title: Text(Localization.dataSuccessfullySaved), dismissButton: .default(Text(Localization.ok)))
-            }
-            .onAppear {
-                viewModel.fetchOrderHistory()
-            }
-            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 trailing: HStack(spacing: 20) {
                     Button(action: {
