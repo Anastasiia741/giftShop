@@ -142,7 +142,7 @@ final class ProfileVM: ObservableObject {
             case .success:
                 print("Пользователь разлогинен!")
             case .failure(let error):
-                print("Ошибка при выходе: \(error.localizedDescription)")
+                print(error.localizedDescription)
             }
         }
     }
