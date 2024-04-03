@@ -56,14 +56,3 @@ struct ProductCell: View {
         }
     }
 }
-
-struct ProductCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductCell(product: Product(id: 1,
-                                     name: "Сумка",
-                                     category: "",
-                                     detail: "Большая сумка",
-                                     price: 100,
-                                     quantity: 1 ))
-    }
-}

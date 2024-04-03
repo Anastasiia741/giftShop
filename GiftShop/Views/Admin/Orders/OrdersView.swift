@@ -62,7 +62,7 @@ struct OrdersView: View {
                 )
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
-                AuthView()
+                TabBar(viewModel: MainTabViewModel())
             }
             .onAppear {
                 viewModel.fetchUserOrders()

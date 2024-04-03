@@ -5,12 +5,6 @@
 import SDWebImageSwiftUI
 import SwiftUI
 
-enum AlertType: Identifiable {
-    var id: AlertType { self }
-    case delete
-    case save
-}
-
 struct ProductDetailEditView: View {
     
     @ObservedObject var viewModel: ProductDetailEditVM

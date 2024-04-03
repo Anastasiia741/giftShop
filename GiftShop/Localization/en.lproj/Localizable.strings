@@ -79,6 +79,7 @@
 "your_name" = "Your name";
 "enter_your_name" = "Enter your name";
 "enter_phone_number" = "Enter phone number";
+"your_email" = "Your email";
 "your_delivery_address" = "Delivery address";
 "enter_your_delivery_address" = "Your delivery address";
 "your_future_orders" = "Your orders will be here";
@@ -107,6 +108,7 @@
 "congratulations" = "Congratulations";
 "not_filled_in" = "Not all fields are filled inuu";
 "select_order_status" = "Select order status";
-
+"delete_your_account" = "Do you want to delete your account?";
+"account_deleted" = "Your account has been deleted";
 
 

@@ -6,7 +6,7 @@ import Foundation
 
 enum TextMessage {    
     enum Menu {
-        static let porularProducts = "барсетка"
+        static let porularProducts = "популярное"
     }
 }
 
@@ -15,3 +15,4 @@ enum TextStyle {
     static let avenirRegular = "AvenirNext-regular"
     static let avenirBold = "AvenirNext-bold"
 }
+

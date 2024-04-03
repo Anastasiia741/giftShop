@@ -7,16 +7,20 @@ import SwiftUI
 import FirebaseStorage
 
 final class ProfileVM: ObservableObject {
-   
+    
     private let authService = AuthService()
     private let dbOrdersService = DBOrdersService()
     @Published var orders: [Order] = []
     @Published var profile: NewUser?
+    @Published var image: UIImage?
     @Published var name = ""
     @Published var phoneNumber = ""
+    @Published var email = ""
     @Published var address = ""
     @Published var imageURL = ""
-    @Published var image: UIImage?
+    @Published var alertTitle = ""
+    @Published var showAlert = false
+    
     
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else {
@@ -29,13 +33,14 @@ final class ProfileVM: ObservableObject {
                 self.profile = user
                 self.name = user.name
                 self.phoneNumber = user.phone
+                self.email = user.email
                 self.address = user.address
             }
             if let imageURL = user.image {
                 loadImage(from: imageURL)
             }
         } catch {
-            print("Ошибка при получении данных пользователя: \(error.localizedDescription)")
+            print("Ошибка получения данных пользователя: \(error.localizedDescription)")
         }
     }
     
@@ -61,7 +66,6 @@ final class ProfileVM: ObservableObject {
         guard var updatedProfile = profile else {
             return
         }
-        
         updatedProfile.name = name
         updatedProfile.phone = phoneNumber
         updatedProfile.address = address
@@ -71,8 +75,12 @@ final class ProfileVM: ObservableObject {
             switch result {
             case .success(let updatedProfile):
                 print("Профиль успешно сохранен:", updatedProfile)
+                self.alertTitle = Localization.dataSuccessfullySaved
+                self.showAlert = true
             case .failure(let error):
                 print("Ошибка при сохранении профиля:", error.localizedDescription)
+                self.alertTitle = Localization.error
+                self.showAlert = true
             }
         }
     }
@@ -97,7 +105,7 @@ final class ProfileVM: ObservableObject {
         let imageName = UUID().uuidString
         
         do {
-            let imageLink = try await ProfileService.shared.save(imageData: imageData, imageName)
+            let imageLink = try await ProfileService.shared.save(imageData: imageData, nameImg: imageURL, imageName)
             self.imageURL = imageLink
             
             if var updatedProfile = self.profile {
@@ -143,8 +151,12 @@ final class ProfileVM: ObservableObject {
         authService.deleteAccount { result in
             switch result {
             case .success:
+                self.alertTitle = Localization.accountDeleted
+                self.showAlert = true
                 print("Аккаунт успешно удален")
             case .failure(let error):
+                self.alertTitle = Localization.error
+                self.showAlert = true
                 print("Ошибка удаления аккаунта: \(error.localizedDescription)")
             }
         }

@@ -366,7 +366,7 @@
 				71E45F9B2B48568F00941CE7 /* GiftShopApp.swift */,
 				71E45FA92B4868A000941CE7 /* TabBar.swift */,
 				71E45FB22B48712A00941CE7 /* Views */,
-				71E45FB52B48723200941CE7 /* Components */,
+				71E45FB52B48723200941CE7 /* ComponentsView */,
 				71E45FBB2B48777200941CE7 /* ViewModel */,
 				71E45FB82B48774C00941CE7 /* Model */,
 				711ED8EB2B5008D00052752F /* Services */,
@@ -401,7 +401,7 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		71E45FB52B48723200941CE7 /* Components */ = {
+		71E45FB52B48723200941CE7 /* ComponentsView */ = {
 			isa = PBXGroup;
 			children = (
 				71E45FB62B48725B00941CE7 /* ProductCell.swift */,
@@ -409,7 +409,7 @@
 				710082C32B4C6975007831F5 /* CartCell.swift */,
 				71353CD52B6D16FE008A7868 /* ProfileCell.swift */,
 			);
-			path = Components;
+			path = ComponentsView;
 			sourceTree = "<group>";
 		};
 		71E45FB82B48774C00941CE7 /* Model */ = {

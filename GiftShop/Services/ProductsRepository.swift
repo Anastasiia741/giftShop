@@ -8,7 +8,7 @@ final class ProductsRepository {
     
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
-    private let key = "Products"
+    private let key = Accesses.key
     
     //MARK: - Public methods
     func save(_ products: [Product]) {

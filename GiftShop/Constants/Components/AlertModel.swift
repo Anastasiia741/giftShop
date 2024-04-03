@@ -4,6 +4,13 @@
 
 import SwiftUI
 
+enum AlertType: Identifiable {
+    var id: AlertType { self }
+    case delete
+    case save
+}
+
+
 struct AlertModel: Identifiable {
     @Binding var isShow: Bool
     let title: String?

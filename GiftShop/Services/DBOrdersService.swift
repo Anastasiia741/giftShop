@@ -97,8 +97,6 @@ class DBOrdersService {
                             print(error.localizedDescription)
                         }
                     }
-                } else {
-                    print("Ошибка при извлечении данных из документа")
                 }
             }
         }
@@ -149,7 +147,7 @@ class DBOrdersService {
                 var orders = [Order]()
                 var orderCount = 0
                 for document in querySnapshot.documents {
-                    if var order = Order(doc: document) {
+                    if let order = Order(doc: document) {
                         self.fetchPositionsForOrder(by: order.id) { result in
                             switch result {
                             case .success(let positions):
@@ -179,7 +177,7 @@ class DBOrdersService {
                 var orders = [Order]()
                 var orderCount = 0
                 for document in querySnapshot.documents {
-                    if var order = Order(doc: document) {
+                    if let order = Order(doc: document) {
                         self.fetchPositionsForOrder(by: order.id) { result in
                             switch result {
                             case .success(let positions):
