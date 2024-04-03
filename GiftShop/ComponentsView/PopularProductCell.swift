@@ -17,9 +17,8 @@ struct PopularProductCell: View {
             if let imageURL = imageURL {
                 WebImage(url: imageURL)
                     .resizable()
-                    .padding(.top, 10)
-                    .frame(width: screen.width * 0.30, height: 130)
-                    .scaledToFit()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: screen.width * 0.35, height: 120)
                     .clipped()
                     .cornerRadius(16)
                     .padding(.top, -12)

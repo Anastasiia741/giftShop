@@ -25,13 +25,13 @@ struct CatalogView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: layoutForPopular, spacing: 16) {
+                        LazyHGrid(rows: layoutForPopular, spacing: 6) {
                             ForEach(viewModel.popularProducts, id: \.id) { item in
                                 NavigationLink {
                                     let viewModel = ProductDetailVM(product: item)
                                     ProductDetailView(viewModel: viewModel)
                                 } label: {
-                                    ProductCell(product: item)
+                                    PopularProductCell(product: item)
                                         .foregroundColor(.black)
                                 }
                             }
