@@ -50,6 +50,7 @@ struct Localization {
     static let quantity = "quantity".localized
     static let add = "add".localized
     //MARK: - CartView
+    static let cart = "cart".localized
     static let emptyСart = "empty_cart".localized
     static let addItemsToCart = "add_items_to_cart".localized
     static let addToOrder = "add_to_order".localized
@@ -70,6 +71,7 @@ struct Localization {
     static let discount30 = "30%_discount".localized
     static let codeDoesNotExist = "code_does_not_exist".localized
     //MARK: - ProfileView
+    static let profile = "profile".localized
     static let yourName = "your_name".localized
     static let enterYourName = "enter_your_name".localized
     static let enterPhoneNumber = "enter_phone_number".localized

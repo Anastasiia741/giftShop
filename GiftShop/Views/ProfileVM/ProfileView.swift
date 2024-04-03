@@ -181,6 +181,17 @@ struct ProfileView: View {
                 }
             }
             .padding()
+            .navigationBarItems(leading: HStack {
+                Text(Localization.profile)
+                    .font(.title3.bold())
+                    .foregroundColor(.black)
+                    .padding(.leading, 20)
+                    .fixedSize()
+                Images.Menu.popular
+                    .resizable()
+                    .frame(width: 30, height: 35)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            })
             .navigationBarItems(
                 trailing: HStack(spacing: 20) {
                     Button(action: {
@@ -206,7 +217,7 @@ struct ProfileView: View {
                 )
             }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
-                AuthView()
+               TabBar(viewModel: MainTabViewModel())
             }
         }
     }

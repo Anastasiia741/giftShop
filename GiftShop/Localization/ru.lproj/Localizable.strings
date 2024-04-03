@@ -56,6 +56,7 @@
 "add" = "добавить";
 
 //MARK: - CartView
+"cart" = "Корзина";
 "empty_cart" = "Ваша корзина пока пуста";
 "order_sent_successfully" = "Заказ успешно отправлен. Сумма заказа:";
 "your_cart_is_empty" = "Ваша корзина пока пуста";
@@ -75,6 +76,7 @@
 "code_does_not_exist" = "Такого кода не существует";
 
 //MARK: - ProfileView
+"profile" = "Профиль";
 "your_name" = "Ваше имя";
 "enter_your_name" = "Введите имя";
 "enter_phone_number" = "Введите номер телефона";
