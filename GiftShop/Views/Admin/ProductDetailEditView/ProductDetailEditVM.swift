@@ -38,21 +38,21 @@ final class ProductDetailEditVM: ObservableObject {
     
     func saveEditedProduct() {
         guard let selectedProduct = selectedProduct else { return }
-        productsDB.update(product: selectedProduct) { error in
+        productsDB.update(product: selectedProduct) { [weak self] error in
             if error != nil {
-                self.alertTitle = Localization.error
-                self.showAlert = true
+                self?.alertTitle = Localization.error
+                self?.showAlert = true
             } else {
-                self.alertTitle = Localization.dataSavedSuccessfully
-                self.showAlert = true
-                guard let selectedImage = self.selectedImage, let imageURL = selectedProduct.image else { return }
-                self.productsDB.uploadImageToFirebase(selectedImage, imageURL) { imageURL in
+                self?.alertTitle = Localization.dataSavedSuccessfully
+                self?.showAlert = true
+                guard let selectedImage = self?.selectedImage, let imageURL = selectedProduct.image else { return }
+                self?.productsDB.uploadImageToFirebase(selectedImage, imageURL) { [weak self] imageURL in
                     if let imageURL = imageURL {
-                        self.selectedProduct?.image = imageURL
+                        self?.selectedProduct?.image = imageURL
                     } else {
-                        self.alertTitle = Localization.error
+                        self?.alertTitle = Localization.error
                     }
-                    self.showAlert = true
+                    self?.showAlert = true
                 }
             }
         }
@@ -62,7 +62,7 @@ final class ProductDetailEditVM: ObservableObject {
         guard let product = selectedProduct else {
             return
         }
-        productsDB.delete(product: product)  { error in
+        productsDB.delete(product: product)  { [weak self] error in
             if let error = error {
                 print(error.localizedDescription)
             } else {

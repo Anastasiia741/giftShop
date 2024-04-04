@@ -60,6 +60,7 @@
 "empty_cart" = "Your cart is currently empty";
 "order_sent_successfully" = "Order sent successfully. Order amount:";
 "your_cart_is_empty" = "Your cart is currently empty";
+"thanksForOrder" = "Thanks for your order!";
 "we_preparing_order" = "We are already preparing your order. Please wait 🌺";
 "add_items_to_cart" = "Add items to cart to start shopping!";
 "add_to_order" = "Add to order?";

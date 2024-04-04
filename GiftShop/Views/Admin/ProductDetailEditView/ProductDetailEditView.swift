@@ -15,7 +15,6 @@ struct ProductDetailEditView: View {
     @State private var alertType: AlertType? = nil
     
     var body: some View {
-        
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
                 WebImage(url: viewModel.imageURL)
@@ -53,6 +52,7 @@ struct ProductDetailEditView: View {
                     }
                 ))
                 .keyboardType(.alphabet)
+                .autocapitalization(.none)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))

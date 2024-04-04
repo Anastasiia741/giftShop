@@ -13,10 +13,10 @@ struct CartView: View {
     @State private var orderPlaced = false
     @State private var isPromoSheetVisible = false
     @State private var isPromoCodeEntryPresented = false
-   
     @State private var navigateToCatalog = false
+    
     @State private var isAuthViewPresented = false
-
+    
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
     
     var body: some View {
@@ -26,13 +26,16 @@ struct CartView: View {
                     Section {
                         if viewModel.orderProducts.isEmpty {
                             VStack {
-                                //Task: - fix
                                 if orderPlaced {
-                                    Text("Спасибо за заказ")
-                                        .font(.headline)
-                                        .foregroundColor(.gray)
+                                    VStack {
+                                        Text(Localization.thanksForOrder)
+                                            .font(.headline)
+                                            .foregroundColor(.gray)
+                                        Text(Localization.cardOrder)
+                                            .font(.headline)
+                                            .foregroundColor(.gray)
+                                    }
                                 } else {
-                                    
                                     Text(Localization.emptyСart)
                                         .font(.headline)
                                         .foregroundColor(.gray)
@@ -123,38 +126,39 @@ struct CartView: View {
                         Spacer()
                         Text("\(viewModel.productCountMessage) \(Localization.som)").fontWeight(.bold)
                         Button(action: {
-                            
                             //TASK: - fix
                             if viewModel.orderProducts.isEmpty {
                                 navigateToCatalog = true
                             } else {
-                                if (MainTabViewModel().userID != nil) {
-                                    viewModel.orderButtonTapped(with: promo)
-                                } else {
-                                    isPresented = true
-                                }
+                                //                                if let userID = MainTabViewModel().userID {
+                                viewModel.orderButtonTapped(with: promo)
+                                orderPlaced = true
+                                //                                }
+                                //                                else {
+                                //                                    isPresented = true
+                                //                                }
                             }
                         }) {
-                                Text(Localization.order)
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: 120)
-                                    .background(Colors.buy)
-                                    .cornerRadius(23)
-                                    .shadow(color: Colors.buy.opacity(0.5), radius: 5, x: 0, y: 5)
+                            Text(Localization.order)
+                                .font(.body)
+                                .fontWeight(.bold)
+                                .padding()
+                                .foregroundColor(.white)
+                                .frame(maxWidth: 120)
+                                .background(Colors.buy)
+                                .cornerRadius(23)
+                                .shadow(color: Colors.buy.opacity(0.5), radius: 5, x: 0, y: 5)
                         }
                         
                     }
                     .padding([.leading, .trailing, .bottom], 16)
                 }
                 .fullScreenCover(isPresented: $navigateToCatalog, onDismiss: nil) {
-                   TabBar(viewModel: MainTabViewModel())
+                    TabBar(viewModel: MainTabViewModel())
                 }
-//                .sheet(isPresented: $isPresented) {
-//                   AuthView()
-//                }
+                //                .sheet(isPresented: $isPresented) {
+                //                   AuthView()
+                //                }
             }.navigationBarItems(leading: HStack {
                 Text(Localization.cart)
                     .font(.title3.bold())

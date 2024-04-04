@@ -16,7 +16,7 @@ final class CatalogVM: ObservableObject {
     func fetchAllProducts() async {
         do {
             let result = try await productService.fetchAllProducts()
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { 
                 self.allProducts = result
                 self.popularProducts = result.filter { $0.category.lowercased() == TextMessage.Menu.porularProducts }
             }
