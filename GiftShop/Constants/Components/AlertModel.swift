@@ -12,11 +12,11 @@ enum AlertType: Identifiable {
 
 
 struct AlertModel: Identifiable {
-    @Binding var isShow: Bool
     let title: String?
     let message: String?
     let primaryButtonAction: (()->Void)?
     let secondaryButtonAction: (()->Void)?
+    @Binding var isShow: Bool
     
     init(isShow: Binding<Bool>, title: String?, message: String? = nil, primaryButtonAction: (() -> Void)? = nil, secondaryButtonAction: (() -> Void)? = nil) {
         self._isShow = isShow
