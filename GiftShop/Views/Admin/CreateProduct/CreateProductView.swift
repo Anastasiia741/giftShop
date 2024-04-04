@@ -34,6 +34,7 @@ struct CreateProductView: View {
                         TextField(Localization.productName, text: $viewModel.productName)
                         TextField(Localization.category, text: $viewModel.productCategory)
                             .keyboardType(.alphabet)
+                            .autocapitalization(.none)
                         TextField(Localization.price, text: $viewModel.productPrice)
                             .keyboardType(.decimalPad)
                     }

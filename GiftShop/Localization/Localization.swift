@@ -58,6 +58,7 @@ struct Localization {
     static let cardMessage = "order_sent_successfully".localized
     static let cardEmpty = "your_cart_is_empty".localized
     static let cardOrder = "we_preparing_order".localized
+    static let thanksForOrder = "thanksForOrder".localized
     //
     static let getDiscount = "get_discount".localized
     static let total = "total".localized
