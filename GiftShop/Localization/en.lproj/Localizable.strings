@@ -60,7 +60,7 @@
 "empty_cart" = "Your cart is currently empty";
 "order_sent_successfully" = "Order sent successfully. Order amount:";
 "your_cart_is_empty" = "Your cart is currently empty";
-"thanksForOrder" = "Thanks for your order!";
+"thanks_for_order" = "Thanks for your order!";
 "we_preparing_order" = "We are already preparing your order. Please wait 🌺";
 "add_items_to_cart" = "Add items to cart to start shopping!";
 "add_to_order" = "Add to order?";
@@ -94,6 +94,7 @@
 "registration_error" = "Registration error";
 "password_mismatch" = "Password mismatch";
 "delete_product" = "Delete product?";
+"product_removed" = "The product has been removed";
 "yes" = "Yes";
 "no" = "No";
 "data_saved_successfully" = "Data saved successfully";
@@ -113,5 +114,8 @@
 "select_order_status" = "Select order status";
 "delete_your_account" = "Do you want to delete your account?";
 "account_deleted" = "Your account has been deleted";
+"error_retrieving_user_data" = "Error retrieving user data";
+"failed_download_image" = "Failed to download image URL";
+"error_retrieving_order_history" = "Error when retrieving order history";
 
 

@@ -17,7 +17,18 @@ final class CreateProductVM: ObservableObject {
     @Published var productDetail: String = ""
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-    @Published var showAlert = false
+    @Published var alertModel: AlertModel?
+    
+    private func configureAlertModel(with title: String, message: String?) -> AlertModel {
+        AlertModel(
+            title: title,
+            message: message,
+            buttons: [
+                AlertButtonModel(title: Localization.ok, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ])
+    }
     
     private func createProduct(_ product: Product) {
         productService.create(product: product) { [weak self] error in
@@ -26,9 +37,7 @@ final class CreateProductVM: ObservableObject {
                 print(error.localizedDescription)
             } else {
                 DispatchQueue.main.async {
-                    self.alertTitle = ""
-                    self.alertMessage = Localization.dataSavedSuccessfully
-                    self.showAlert = true
+                    self.alertModel = self.configureAlertModel(with: Localization.dataSavedSuccessfully, message: nil)
                     self.clearFields()
                 }
             }
@@ -45,12 +54,10 @@ final class CreateProductVM: ObservableObject {
     
     func createNewProduct() {
         guard !productName.isEmpty, !productCategory.isEmpty, !productPrice.isEmpty, let selectedImage = productImage else {
-            alertTitle = Localization.attention
-            alertMessage = Localization.notFilledIn
-            showAlert = true
+            self.alertModel = configureAlertModel(with: Localization.attention, message: Localization.notFilledIn)
             return
         }
-        productService.upload(image: selectedImage, url: productName) {[weak self] uploadedImageURL, error in
+        productService.upload(image: selectedImage, url: productName) { [weak self] uploadedImageURL, error in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if let uploadedImageURL = uploadedImageURL {
@@ -64,7 +71,7 @@ final class CreateProductVM: ObservableObject {
                         quantity: 1)
                     self.createProduct(newProduct)
                 } else if let error = error {
-                    print(error.localizedDescription)
+                    self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
                 }
             }
         }

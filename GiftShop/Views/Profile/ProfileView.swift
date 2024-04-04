@@ -9,18 +9,16 @@ import SDWebImageSwiftUI
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileVM()
-    @Environment(\.presentationMode) private var presentationMode
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
+    
     @State private var isImgAlertPresented = false
     @State private var isShowingCameraPicker = false
     @State private var isShowingGalleryPicker = false
+    
     @State private var isQuitAlertPresenter = false
     @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
-    @State private var isNavigateToCatalog = false
-    @State private var alertType: AlertType? = nil
-    
     
     var body: some View {
         NavigationView {
@@ -58,23 +56,9 @@ struct ProfileView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-                .confirmationDialog(Localization.selectPhotoSource, isPresented: $isImgAlertPresented) {
-                    Button(Localization.gallery) {
-                        isShowingGalleryPicker = true
-                    }
-                    Button(Localization.camera) {
-                        isShowingCameraPicker = true
-                    }
-                }
                 //TASK: - loadImage
                 .onAppear {
                     viewModel.loadImage(from: viewModel.imageURL)
-                }
-                .sheet(isPresented: $isShowingGalleryPicker) {
-                    ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage, isPresented: $isShowingGalleryPicker)
-                }
-                .sheet(isPresented: $isShowingCameraPicker) {
-                    ImagePicker(sourceType: .camera, selectedImage: $selectedImage, isPresented: $isShowingGalleryPicker)
                 }
                 Spacer()
                 VStack(alignment: .leading, spacing: 8) {
@@ -98,12 +82,10 @@ struct ProfileView: View {
                     Button {
                         Task {
                             await viewModel.saveProfile()
-                            if let selectedImage = selectedImage {
-                                viewModel.image = selectedImage
-                                await viewModel.saveProfileImage()
-                            }
-                            viewModel.showAlert.toggle()
-                            alertType = .save
+                            //                            if let selectedImage = selectedImage {
+                            //                                viewModel.image = selectedImage
+                            //                                await viewModel.saveProfileImage()
+                            //                            }
                         }
                     } label: {
                         Text(Localization.save)
@@ -146,8 +128,10 @@ struct ProfileView: View {
                 }
                 HStack(alignment: .center) {
                     Button{
-                        viewModel.showAlert.toggle()
-                        alertType = .delete
+                        viewModel.showDeleteConfirmationAlert {
+                            viewModel.logout()
+                            isAuthViewPresenter.toggle()
+                        }
                     } label: {
                         Text(Localization.deleteAccountName)
                             .font(.system(size: 12))
@@ -156,27 +140,6 @@ struct ProfileView: View {
                             .frame(height: 20)
                             .foregroundColor(.gray)
                             .cornerRadius(20)
-                    }
-                    .alert(item: $alertType) { alertType in
-                        switch alertType {
-                        case .delete:
-                            return Alert(title: Text(Localization.attention),
-                                         message: Text(Localization.deleteYourAccount),
-                                         primaryButton: .default(Text(Localization.yes)) {
-                                viewModel.deleteAccount()
-                                viewModel.logout()
-                                isNavigateToCatalog = true
-                            },
-                                         secondaryButton: .cancel(Text(Localization.no))
-                            )
-                        case .save:
-                            return Alert(title: Text(viewModel.alertTitle),
-                                         dismissButton: .default(Text(Localization.ok)) {
-                            })
-                        }
-                    }
-                    .fullScreenCover(isPresented: $isNavigateToCatalog) {
-                        TabBar(viewModel: MainTabViewModel())
                     }
                 }
             }
@@ -196,7 +159,6 @@ struct ProfileView: View {
                 trailing: HStack(spacing: 20) {
                     Button(action: {
                         isQuitAlertPresenter.toggle()
-                        viewModel.logout()
                     }) {
                         Images.Profile.exit
                             .imageScale(.small)
@@ -216,8 +178,38 @@ struct ProfileView: View {
                     ]
                 )
             }
+            .confirmationDialog(Localization.selectPhotoSource, isPresented: $isImgAlertPresented) {
+                Button(Localization.gallery) {
+                    isShowingGalleryPicker = true
+                }
+                Button(Localization.camera) {
+                    isShowingCameraPicker = true
+                }
+            }
+            .sheet(isPresented: $isShowingGalleryPicker) {
+                ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage, isPresented: $isShowingGalleryPicker)
+            }
+            .sheet(isPresented: $isShowingCameraPicker) {
+                ImagePicker(sourceType: .camera, selectedImage: $selectedImage, isPresented: $isShowingGalleryPicker)
+            }
+            .alert(item: $viewModel.alertModel) { alertModel in
+                if alertModel.buttons.count > 1 {
+                    return Alert(
+                        title: Text(alertModel.title ?? ""),
+                        message: Text(alertModel.message ?? ""),
+                        primaryButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action),
+                        secondaryButton: .default(Text(alertModel.buttons.last?.title ?? ""), action: alertModel.buttons.last?.action)
+                    )
+                } else {
+                    return Alert(
+                        title: Text(alertModel.title ?? ""),
+                        message: Text(alertModel.message ?? ""),
+                        dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
+                    )
+                }
+            }
             .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
-               TabBar(viewModel: MainTabViewModel())
+                TabBar(viewModel: MainTabViewModel())
             }
         }
     }

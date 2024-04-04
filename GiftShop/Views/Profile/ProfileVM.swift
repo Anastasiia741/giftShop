@@ -19,8 +19,19 @@ final class ProfileVM: ObservableObject {
     @Published var address = ""
     @Published var imageURL = ""
     @Published var alertTitle = ""
-    @Published var showAlert = false
+    @Published var alertMessage = ""
+    @Published var alertModel: AlertModel?
     
+    private func configureAlertModel(with title: String, message: String?) -> AlertModel {
+        AlertModel(
+            title: title,
+            message: message,
+            buttons: [
+                AlertButtonModel(title: Localization.ok, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ])
+    }
     
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else {
@@ -40,7 +51,7 @@ final class ProfileVM: ObservableObject {
                 loadImage(from: imageURL)
             }
         } catch {
-            print("Ошибка получения данных пользователя: \(error.localizedDescription)")
+            alertModel = configureAlertModel(with: Localization.errorRetrievingUserData, message: error.localizedDescription)
         }
     }
     
@@ -51,13 +62,13 @@ final class ProfileVM: ObservableObject {
         let imageRef = Storage.storage().reference(forURL: profileImageURL)
         imageRef.downloadURL { downloadedURL, error in
             if let error = error {
-                print("Error downloading image URL: \(error.localizedDescription)")
+                self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
             } else if let downloadedURL = downloadedURL {
                 DispatchQueue.main.async {
                     self.imageURL = downloadedURL.absoluteString
                 }
             } else {
-                print("Failed to download image URL.")
+                self.alertModel = self.configureAlertModel(with: Localization.failedDownloadImage, message: nil)
             }
         }
     }
@@ -75,12 +86,9 @@ final class ProfileVM: ObservableObject {
             switch result {
             case .success(let updatedProfile):
                 print("Профиль успешно сохранен:", updatedProfile)
-                self.alertTitle = Localization.dataSuccessfullySaved
-                self.showAlert = true
+                self.alertModel = self.configureAlertModel(with: Localization.dataSuccessfullySaved, message: nil)
             case .failure(let error):
-                print("Ошибка при сохранении профиля:", error.localizedDescription)
-                self.alertTitle = Localization.error
-                self.showAlert = true
+                self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
             }
         }
     }
@@ -93,7 +101,7 @@ final class ProfileVM: ObservableObject {
                     print("Данные профиля успешно обновлены", updatedProfile.image ?? "")
                     completion(.success(updatedProfile))
                 case .failure(let error):
-                    print("Ошибка при сохранении данных профиля: \(error.localizedDescription)")
+                    self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
                     completion(.failure(error))
                 }
             }
@@ -115,12 +123,12 @@ final class ProfileVM: ObservableObject {
                     case .success(let updatedProfile):
                         print("Профиль успешно сохранен:", updatedProfile)
                     case .failure(let error):
-                        print("Ошибка при сохранении профиля:", error.localizedDescription)
+                        self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
                     }
                 }
             }
         } catch {
-            print("Ошибка при сохранении изображения профиля: \(error.localizedDescription)")
+            alertModel = configureAlertModel(with: Localization.error, message: error.localizedDescription)
         }
     }
     
@@ -131,7 +139,7 @@ final class ProfileVM: ObservableObject {
                 self?.orders = orderHistory
                 self?.orders.sort { $0.date > $1.date }
             case .failure(let error):
-                print("Ошибка при получении истории заказов: \(error.localizedDescription)")
+                self?.alertModel = self?.configureAlertModel(with: Localization.errorRetrievingOrderHistory, message: error.localizedDescription)
             }
         }
     }
@@ -147,18 +155,33 @@ final class ProfileVM: ObservableObject {
         }
     }
     
-    func deleteAccount() {
-        authService.deleteAccount { result in
+    func showDeleteConfirmationAlert(onDelete: @escaping ()->Void) {
+        alertModel = AlertModel(
+            title: Localization.deleteAccount,
+            buttons: [
+                AlertButtonModel(title: Localization.yes, action: { [weak self] in
+                    self?.deleteAccount(onDelete: onDelete)
+                }),
+                AlertButtonModel(title: Localization.no, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ]
+        )
+    }
+    
+    func deleteAccount(onDelete: @escaping () -> Void) {
+        authService.deleteAccount { [weak self] result in
             switch result {
             case .success:
-                self.alertTitle = Localization.accountDeleted
-                self.showAlert = true
-                print("Аккаунт успешно удален")
-            case .failure(let error):
-                self.alertTitle = Localization.error
-                self.showAlert = true
-                print("Ошибка удаления аккаунта: \(error.localizedDescription)")
+                self?.alertModel = AlertModel(title: Localization.accountDeleted, message: nil, buttons: [
+                    AlertButtonModel(title: Localization.ok, action: {
+                        onDelete()
+                    })
+                ])
+            case .failure(_):
+                self?.alertModel = self?.configureAlertModel(with: Localization.error, message: nil)
             }
         }
     }
 }
+

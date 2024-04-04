@@ -72,19 +72,13 @@ struct CreateProductView: View {
             .sheet(isPresented: $isShowingCameraPicker) {
                 ImagePicker(sourceType: .camera, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
             }
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(
-                    title: Text(viewModel.alertTitle),
-                    message: Text(viewModel.alertMessage),
-                    dismissButton: .default(Text(Localization.ok))
+            .alert(item: $viewModel.alertModel) { alertModel in
+                return Alert(
+                    title: Text(alertModel.title ?? ""),
+                    message: Text(alertModel.message ?? ""),
+                    dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
                 )
             }
         }
-    }
-}
-
-struct CreateProductView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateProductView()
     }
 }

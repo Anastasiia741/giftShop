@@ -58,7 +58,7 @@ struct Localization {
     static let cardMessage = "order_sent_successfully".localized
     static let cardEmpty = "your_cart_is_empty".localized
     static let cardOrder = "we_preparing_order".localized
-    static let thanksForOrder = "thanksForOrder".localized
+    static let thanksForOrder = "thanks_for_order".localized
     //
     static let getDiscount = "get_discount".localized
     static let total = "total".localized
@@ -87,6 +87,7 @@ struct Localization {
     static let registrationError = "registration_error".localized
     static let passwordMismatch = "password_mismatch".localized
     static let deleteProduct = "delete_product".localized
+    static let productRemoved = "productRemoved".localized
     static let yes = "yes".localized
     static let no = "no".localized
     static let dataSavedSuccessfully = "data_saved_successfully".localized
@@ -105,6 +106,9 @@ struct Localization {
     static let selectOrderStatus = "select_order_status".localized
     static let deleteYourAccount = "delete_your_account".localized
     static let accountDeleted = "account_deleted".localized
+    static let errorRetrievingUserData = "error_retrieving_user_data".localized
+    static let failedDownloadImage = "failed_download_image".localized
+    static let errorRetrievingOrderHistory = "error_retrieving_order_history".localized
 }
 
 private extension String {
