@@ -13,8 +13,8 @@ final class AuthVM: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
-    @Published var isAuth = true
     @Published var isTabViewShow = false
+    @Published var isAuth = true
     
     private func configureAlertModel(with title: String, message: String?) -> AlertModel {
         AlertModel(
