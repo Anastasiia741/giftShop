@@ -251,13 +251,13 @@
 			path = Constants/Components;
 			sourceTree = "<group>";
 		};
-		71353CD42B696707008A7868 /* ProfileVM */ = {
+		71353CD42B696707008A7868 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				71E45FAF2B486C8000941CE7 /* ProfileView.swift */,
 				711ED9752B504EAF0052752F /* ProfileVM.swift */,
 			);
-			path = ProfileVM;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		713A29002B91FD1000CE720D /* ProductDetailEditView */ = {
@@ -396,7 +396,7 @@
 				717D0FC72B5AAF0E001F2E6E /* Menu */,
 				714F76BE2B62A69B00931C2A /* ProductDetail */,
 				714F76BB2B601A4900931C2A /* Card */,
-				71353CD42B696707008A7868 /* ProfileVM */,
+				71353CD42B696707008A7868 /* Profile */,
 			);
 			path = Views;
 			sourceTree = "<group>";

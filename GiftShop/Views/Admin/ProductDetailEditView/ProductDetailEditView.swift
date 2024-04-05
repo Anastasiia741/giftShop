@@ -12,7 +12,6 @@ struct ProductDetailEditView: View {
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
     @State private var showImgAlert = false
-    @State private var alertType: AlertType? = nil
     
     var body: some View {
         VStack(spacing: 16) {
@@ -78,8 +77,9 @@ struct ProductDetailEditView: View {
             }.padding([.leading, .trailing], 20)
             HStack(spacing: 16){
                 Button(Localization.delete) {
-                    viewModel.showAlert.toggle()
-                    alertType = .delete
+                    viewModel.showDeleteConfirmationAlert {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 .font(.system(size: 16))
                 .fontWeight(.medium)
@@ -90,10 +90,6 @@ struct ProductDetailEditView: View {
                 .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
                 Spacer().frame(width: 16)
                 Button(Localization.save) {
-                    withAnimation {
-                        viewModel.showAlert.toggle()
-                        alertType = .save
-                    }
                     viewModel.saveEditedProduct()
                 }
                 .font(.system(size: 16))
@@ -121,22 +117,20 @@ struct ProductDetailEditView: View {
         .sheet(isPresented: $isShowingCameraPicker) {
             ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
-        .alert(item: $alertType) { alertType in
-            switch alertType {
-            case .delete:
-                return Alert(title: Text(Localization.attention),
-                             message: Text(Localization.deleteProduct),
-                             primaryButton: .default(Text(Localization.yes)) {
-                    viewModel.deleteProduct()
-                    presentationMode.wrappedValue.dismiss()
-                },
-                             secondaryButton: .cancel(Text(Localization.no))
+        .alert(item: $viewModel.alertModel) { alertModel in
+            if alertModel.buttons.count > 1 {
+                return Alert(
+                    title: Text(alertModel.title ?? ""),
+                    message: Text(alertModel.message ?? ""),
+                    primaryButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action),
+                    secondaryButton: .default(Text(alertModel.buttons.last?.title ?? ""), action: alertModel.buttons.last?.action)
                 )
-            case .save:
-                return Alert(title: Text(viewModel.alertTitle),
-                             dismissButton: .default(Text(Localization.ok)) {
-                    presentationMode.wrappedValue.dismiss()
-                })
+            } else {
+                return Alert(
+                    title: Text(alertModel.title ?? ""),
+                    message: Text(alertModel.message ?? ""),
+                    dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
+                )
             }
         }
     }

@@ -9,54 +9,65 @@ import FirebaseAuth
 final class AuthVM: ObservableObject {
     
     private let authService = AuthService()
+    @Published var alertModel: AlertModel?
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
-    @Published var isAuth: Bool = true
-}
-
-extension AuthVM {
+    @Published var isAuth = true
+    @Published var isTabViewShow = false
     
-    func loginTapped() async {
-        if isAuth {
-            authService.signIn(email: email, password: password) { result in
-                switch result {
-                case .success(let user):
-                    print("Аутентификация прошла успешно: \(user)")
-                case .failure(let error):
-                    print("Ошибка аутентификации: \(error.localizedDescription)")
-                }
+    private func configureAlertModel(with title: String, message: String?) -> AlertModel {
+        AlertModel(
+            title: title,
+            message: message,
+            buttons: [
+                AlertButtonModel(title: Localization.ok, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ])
+    }
+    
+    func signIn() async {
+        authService.signIn(email: email, password: password) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.isTabViewShow.toggle()
+            case .failure(let error):
+                self?.alertModel = self?.configureAlertModel(with: Localization.registrationError, message: error.localizedDescription)
             }
-        } else {
-            registerUser()
         }
     }
     
-    func toggleAuthButtonTapped() {
-        isAuth.toggle()
-    }
-    
-    func disclaimerLabelTapped() {
-        if let url = URL(string: Accesses.policy) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-    }
-    
-    private func registerUser() {
+    func signUp() {
         guard !confirmPassword.isEmpty else {
-            return
+            return alertModel = configureAlertModel(with: Localization.attention, message: Localization.enterPasswordConfirmation)
         }
         
         guard password == confirmPassword else {
-            return
+            return alertModel = configureAlertModel(with: Localization.attention, message: Localization.passwordMismatch)
         }
-        authService.signUp(email: email, password: password) { result in
+        
+        AuthService().signUp(email: email, password: password) { [weak self] result in
             switch result {
-            case .success(let user):
-                print("Registration succeeded: \(user)")
+            case .success(_):
+                self?.email = ""
+                self?.password = ""
+                self?.confirmPassword = ""
+                self?.alertModel = self?.configureAlertModel(with: Localization.congratulations, message: Localization.dataSavedSuccessfully)
+                self?.isAuth.toggle()
             case .failure(let error):
-                print("Registration Error: \(error.localizedDescription)")
+                self?.alertModel = self?.configureAlertModel(with: Localization.registrationError, message: error.localizedDescription)
             }
+        }
+    }
+    
+    func toggleAuthButton() {
+        isAuth.toggle()
+    }
+    
+    func disclaimerTapped() {
+        if let url = URL(string: Accesses.policy) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 }

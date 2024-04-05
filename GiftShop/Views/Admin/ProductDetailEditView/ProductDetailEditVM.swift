@@ -13,10 +13,20 @@ final class ProductDetailEditVM: ObservableObject {
     @Published var selectedImage: UIImage?
     @Published var imageURL: URL?
     @Published var alertTitle = ""
-    @Published var showAlert = false
+    @Published var alertModel: AlertModel?
     
     init(selectedProduct: Product ) {
         self.selectedProduct = selectedProduct
+    }
+    
+    private func configureAlertModel(with title: String) -> AlertModel {
+        AlertModel(
+            title: title,
+            buttons: [
+                AlertButtonModel(title: Localization.ok, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ])
     }
     
     func updateImageDetail() {
@@ -40,33 +50,48 @@ final class ProductDetailEditVM: ObservableObject {
         guard let selectedProduct = selectedProduct else { return }
         productsDB.update(product: selectedProduct) { [weak self] error in
             if error != nil {
-                self?.alertTitle = Localization.error
-                self?.showAlert = true
+                self?.alertModel = self?.configureAlertModel(with: Localization.error)
             } else {
-                self?.alertTitle = Localization.dataSavedSuccessfully
-                self?.showAlert = true
+                self?.alertModel = self?.configureAlertModel(with: Localization.dataSavedSuccessfully)
                 guard let selectedImage = self?.selectedImage, let imageURL = selectedProduct.image else { return }
                 self?.productsDB.uploadImageToFirebase(selectedImage, imageURL) { [weak self] imageURL in
                     if let imageURL = imageURL {
                         self?.selectedProduct?.image = imageURL
                     } else {
-                        self?.alertTitle = Localization.error
+                        self?.alertModel = self?.configureAlertModel(with: Localization.error)
                     }
-                    self?.showAlert = true
                 }
             }
         }
     }
     
-    func deleteProduct() {
+    func showDeleteConfirmationAlert(onDelete: @escaping ()->Void) {
+        alertModel = AlertModel(
+            title: Localization.deleteProduct,
+            buttons: [
+                AlertButtonModel(title: Localization.yes, action: { [weak self] in
+                    self?.deleteProduct(onDelete: onDelete)
+                }),
+                AlertButtonModel(title: Localization.no, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ]
+        )
+    }
+    
+    func deleteProduct(onDelete: @escaping () -> Void) {
         guard let product = selectedProduct else {
             return
         }
-        productsDB.delete(product: product)  { [weak self] error in
-            if let error = error {
-                print(error.localizedDescription)
+        productsDB.delete(product: product) { [weak self] error in
+            if error != nil {
+                self?.alertModel = self?.configureAlertModel(with: Localization.error)
             } else {
-                print("Товар успешно удален")
+                self?.alertModel = AlertModel(title: Localization.productRemoved, message: nil, buttons: [
+                    AlertButtonModel(title: Localization.ok, action: {
+                        onDelete()
+                    })
+                ])
             }
         }
     }
