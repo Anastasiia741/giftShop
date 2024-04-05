@@ -12,6 +12,7 @@
 "authorization" = "Войти";
 "registration" = "Регистрация";
 "already_have_an_account" = "Уже есть аккаунт";
+"privacy_policy" = "Политика Конфиденциальности";
 
 //MARK: - OrderDetail
 "order_details" = "Детали заказа";
@@ -92,6 +93,7 @@
 //MARK: - Alerts
 "registration_error" = "Ошибка регистрации";
 "password_mismatch" = "Пароли не совпадают";
+"enter_password_confirmation" = "Пожалуйста, введите подтверждение пароля";
 "delete_product" = "Удалить товар?";
 "product_removed" = "Товар был удален";
 "yes" = "Да";

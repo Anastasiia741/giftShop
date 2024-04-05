@@ -12,6 +12,7 @@
 "authorization" = "Sign in";
 "registration" = "Registration";
 "already_have_an_account" = "Have an account";
+"privacy_policy" = "Privacy Policy";
 
 //MARK: - OrderDetail
 "order_details" = "Order details";
@@ -93,6 +94,7 @@
 //MARK: - Alerts
 "registration_error" = "Registration error";
 "password_mismatch" = "Password mismatch";
+"enter_password_confirmation" = "Please enter password confirmation";
 "delete_product" = "Delete product?";
 "product_removed" = "The product has been removed";
 "yes" = "Yes";

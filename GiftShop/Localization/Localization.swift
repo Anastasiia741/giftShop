@@ -13,6 +13,7 @@ struct Localization {
     static let authorization = "authorization".localized
     static let registration = "registration".localized
     static let alreadyHaveAccount = "already_have_an_account".localized
+    static let privacyPolicy = "privacy_policy".localized
     //MARK: - OrderDetail
     static let orderDetails = "order_details".localized
     static let orderDate = "order_date".localized
@@ -86,6 +87,7 @@ struct Localization {
     //MARK: - Alerts
     static let registrationError = "registration_error".localized
     static let passwordMismatch = "password_mismatch".localized
+    static let enterPasswordConfirmation = "enter_password_confirmation".localized
     static let deleteProduct = "delete_product".localized
     static let productRemoved = "productRemoved".localized
     static let yes = "yes".localized
