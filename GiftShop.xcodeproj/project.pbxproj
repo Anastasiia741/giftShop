@@ -49,6 +49,8 @@
 		7127168D2BA35BAC00460FB1 /* Accesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127168C2BA35BAC00460FB1 /* Accesses.swift */; };
 		7127168F2BA35CF300460FB1 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127168E2BA35CF300460FB1 /* Images.swift */; };
 		712716912BA35FB000460FB1 /* Colors .swift in Sources */ = {isa = PBXBuildFile; fileRef = 712716902BA35FB000460FB1 /* Colors .swift */; };
+		712CAF6D2BC0591900484370 /* GiftShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712CAF6C2BC0591900484370 /* GiftShopTests.swift */; };
+		712CAF742BC0596500484370 /* CartTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712CAF732BC0596500484370 /* CartTest.swift */; };
 		71353CD62B6D16FE008A7868 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71353CD52B6D16FE008A7868 /* ProfileCell.swift */; };
 		71353CD82B6D5770008A7868 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71353CD72B6D5770008A7868 /* ImagePicker.swift */; };
 		713A29022B91FD5100CE720D /* ProductDetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713A29012B91FD5100CE720D /* ProductDetailEditView.swift */; };
@@ -84,6 +86,16 @@
 		71FF92102B5EDCD500180598 /* DBOrdersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FF920F2B5EDCD500180598 /* DBOrdersService.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		712CAF6E2BC0591900484370 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 71E45F902B48568F00941CE7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71E45F972B48568F00941CE7;
+			remoteInfo = GiftShop;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		51EA9A0E1F65AD52C0CE210C /* Pods-GiftShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiftShop.release.xcconfig"; path = "Target Support Files/Pods-GiftShop/Pods-GiftShop.release.xcconfig"; sourceTree = "<group>"; };
 		5811559A5B9260F571E67C59 /* Pods-GiftShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiftShop.debug.xcconfig"; path = "Target Support Files/Pods-GiftShop/Pods-GiftShop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -107,6 +119,9 @@
 		7127168C2BA35BAC00460FB1 /* Accesses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accesses.swift; sourceTree = "<group>"; };
 		7127168E2BA35CF300460FB1 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		712716902BA35FB000460FB1 /* Colors .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors .swift"; sourceTree = "<group>"; };
+		712CAF6A2BC0591900484370 /* GiftShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GiftShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		712CAF6C2BC0591900484370 /* GiftShopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftShopTests.swift; sourceTree = "<group>"; };
+		712CAF732BC0596500484370 /* CartTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTest.swift; sourceTree = "<group>"; };
 		71353CD52B6D16FE008A7868 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		71353CD72B6D5770008A7868 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		713A29012B91FD5100CE720D /* ProductDetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailEditView.swift; sourceTree = "<group>"; };
@@ -145,6 +160,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		712CAF672BC0591900484370 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		71E45F952B48568F00941CE7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,6 +273,15 @@
 			path = Constants/Components;
 			sourceTree = "<group>";
 		};
+		712CAF6B2BC0591900484370 /* GiftShopTests */ = {
+			isa = PBXGroup;
+			children = (
+				712CAF6C2BC0591900484370 /* GiftShopTests.swift */,
+				712CAF732BC0596500484370 /* CartTest.swift */,
+			);
+			path = GiftShopTests;
+			sourceTree = "<group>";
+		};
 		71353CD42B696707008A7868 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,13 +300,13 @@
 			path = ProductDetailEditView;
 			sourceTree = "<group>";
 		};
-		714F76BB2B601A4900931C2A /* Card */ = {
+		714F76BB2B601A4900931C2A /* Cart */ = {
 			isa = PBXGroup;
 			children = (
 				71E45FAD2B486C6D00941CE7 /* CartView.swift */,
 				710082BF2B4C61D1007831F5 /* CartVM.swift */,
 			);
-			path = Card;
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		714F76BE2B62A69B00931C2A /* ProductDetail */ = {
@@ -346,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				71E45F9A2B48568F00941CE7 /* GiftShop */,
+				712CAF6B2BC0591900484370 /* GiftShopTests */,
 				71E45F992B48568F00941CE7 /* Products */,
 				ED176DA6A259E0EFED3D184B /* Pods */,
 				534DCC2B2D8A1773BE8AF9D3 /* Frameworks */,
@@ -356,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				71E45F982B48568F00941CE7 /* GiftShop.app */,
+				712CAF6A2BC0591900484370 /* GiftShopTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -395,7 +428,7 @@
 				711ED96C2B504CCD0052752F /* Admin */,
 				717D0FC72B5AAF0E001F2E6E /* Menu */,
 				714F76BE2B62A69B00931C2A /* ProductDetail */,
-				714F76BB2B601A4900931C2A /* Card */,
+				714F76BB2B601A4900931C2A /* Cart */,
 				71353CD42B696707008A7868 /* Profile */,
 			);
 			path = Views;
@@ -444,6 +477,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		712CAF692BC0591900484370 /* GiftShopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 712CAF722BC0591900484370 /* Build configuration list for PBXNativeTarget "GiftShopTests" */;
+			buildPhases = (
+				712CAF662BC0591900484370 /* Sources */,
+				712CAF672BC0591900484370 /* Frameworks */,
+				712CAF682BC0591900484370 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				712CAF6F2BC0591900484370 /* PBXTargetDependency */,
+			);
+			name = GiftShopTests;
+			productName = GiftShopTests;
+			productReference = 712CAF6A2BC0591900484370 /* GiftShopTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		71E45F972B48568F00941CE7 /* GiftShop */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 71E45FA62B48569000941CE7 /* Build configuration list for PBXNativeTarget "GiftShop" */;
@@ -493,9 +544,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
+					712CAF692BC0591900484370 = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 71E45F972B48568F00941CE7;
+					};
 					71E45F972B48568F00941CE7 = {
 						CreatedOnToolsVersion = 15.1;
 					};
@@ -520,11 +575,19 @@
 			projectRoot = "";
 			targets = (
 				71E45F972B48568F00941CE7 /* GiftShop */,
+				712CAF692BC0591900484370 /* GiftShopTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		712CAF682BC0591900484370 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		71E45F962B48568F00941CE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -564,6 +627,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		712CAF662BC0591900484370 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				712CAF6D2BC0591900484370 /* GiftShopTests.swift in Sources */,
+				712CAF742BC0596500484370 /* CartTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		71E45F942B48568F00941CE7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -621,6 +693,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		712CAF6F2BC0591900484370 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71E45F972B48568F00941CE7 /* GiftShop */;
+			targetProxy = 712CAF6E2BC0591900484370 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		71BE6A902BA85A1E0004ED32 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -634,6 +714,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		712CAF702BC0591900484370 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stasy.GiftShopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiftShop.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GiftShop";
+			};
+			name = Debug;
+		};
+		712CAF712BC0591900484370 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stasy.GiftShopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GiftShop.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GiftShop";
+			};
+			name = Release;
+		};
 		71E45FA42B48569000941CE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -827,6 +943,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		712CAF722BC0591900484370 /* Build configuration list for PBXNativeTarget "GiftShopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				712CAF702BC0591900484370 /* Debug */,
+				712CAF712BC0591900484370 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		71E45F932B48568F00941CE7 /* Build configuration list for PBXProject "GiftShop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
