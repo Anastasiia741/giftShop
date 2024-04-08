@@ -10,8 +10,11 @@ enum CodingKeys: String, CodingKey {
     case id, name, category, detail, price, image, imageUrl, quantity
 }
 
-final class Product: Codable, Identifiable {
- 
+final class Product: Codable, Identifiable, Equatable {
+    static func == (lhs: Product, rhs: Product) -> Bool {
+          return lhs.id == rhs.id && lhs.name == rhs.name && lhs.price == rhs.price && lhs.quantity == rhs.quantity
+      }
+    
     @DocumentID var documentID: String?
     var id = UUID().hashValue
     var name: String

@@ -12,7 +12,7 @@ struct NewUser: Identifiable {
     var phone: String
     var address: String
     var email: String
-    var image: String?
+    var imageURL: String?
   
     var representation: [String: Any] {
         var repres = [String: Any]()
@@ -21,7 +21,7 @@ struct NewUser: Identifiable {
         repres["phone"] = self.phone
         repres["address"] = self.address
         repres["email"] = self.email
-        repres["image"] = self.image
+        repres["imageURL"] = self.imageURL
         return repres
     }
 }

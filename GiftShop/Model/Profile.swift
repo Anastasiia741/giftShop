@@ -12,6 +12,6 @@ class Profile: ObservableObject {
     
     init(profile: NewUser, imageURL: String? = nil) {
         self.profile = profile
-        self.profile.image = imageURL
+        self.profile.imageURL = imageURL
     }
 }

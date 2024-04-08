@@ -47,7 +47,7 @@ final class ProfileVM: ObservableObject {
                 self.email = user.email
                 self.address = user.address
             }
-            if let imageURL = user.image {
+            if let imageURL = user.imageURL {
                 loadImage(from: imageURL)
             }
         } catch {
@@ -56,7 +56,7 @@ final class ProfileVM: ObservableObject {
     }
     
     func loadImage(from url: String) {
-        guard let profileImageURL = profile?.image else {
+        guard let profileImageURL = profile?.imageURL else {
             return
         }
         let imageRef = Storage.storage().reference(forURL: profileImageURL)
@@ -80,7 +80,7 @@ final class ProfileVM: ObservableObject {
         updatedProfile.name = name
         updatedProfile.phone = phoneNumber
         updatedProfile.address = address
-        updatedProfile.image = imageURL
+        updatedProfile.imageURL = imageURL
         
         saveProfileToFirebase(updatedProfile) { result in
             switch result {
@@ -98,7 +98,7 @@ final class ProfileVM: ObservableObject {
             ProfileService.shared.setProfile(user: profile, email: email) { result in
                 switch result {
                 case .success(let updatedProfile):
-                    print("Данные профиля успешно обновлены", updatedProfile.image ?? "")
+                    print("Данные профиля успешно обновлены", updatedProfile.imageURL ?? "")
                     completion(.success(updatedProfile))
                 case .failure(let error):
                     self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
@@ -117,7 +117,7 @@ final class ProfileVM: ObservableObject {
             self.imageURL = imageLink
             
             if var updatedProfile = self.profile {
-                updatedProfile.image = imageLink
+                updatedProfile.imageURL = imageLink
                 saveProfileToFirebase(updatedProfile) { result in
                     switch result {
                     case .success(let updatedProfile):
