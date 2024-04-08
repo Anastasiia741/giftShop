@@ -15,33 +15,40 @@ struct OrderDetail: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(spacing: 10) {
             Text(Localization.orderDetails)
                 .customTextStyle(TextStyle.avenirRegular, size: 22)
                 .fontWeight(.bold)
                 .padding([.top, .leading])
-            VStack(alignment: .leading, spacing: 10) {
+                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack( spacing: 10) {
                 Text("\(Localization.orderDate) \(Extentions().formattedDate(viewModel.selectedOrder?.date ?? Date()))")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 HStack {
                     Text(Localization.status)
                         .customTextStyle(TextStyle.avenir, size: 18)
+                    
                     Text(viewModel.selectedOrder?.status ?? "")
                         .customTextStyle(TextStyle.avenir, size: 18)
                         .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: viewModel.selectedOrder?.status ?? "") ?? .new))
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Text("\(Localization.promoCode): \(viewModel.selectedOrder?.promocode ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal)
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(spacing: 10) {
                 Text(Localization.goods)
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 ForEach(viewModel.selectedOrder?.positions ?? []) { position in
                     HStack {
                         Text("\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).")
                             .customTextStyle(TextStyle.avenirRegular, size: 16)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -50,20 +57,25 @@ struct OrderDetail: View {
             .cornerRadius(10)
             .padding(.horizontal)
             .padding(.vertical, 5)
-            VStack(alignment: .leading, spacing: 10) {
+            VStack( spacing: 10) {
                 Text("\(Localization.name): \(viewModel.userProfile?.name ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(Localization.email) \(viewModel.userProfile?.email ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(Localization.deliveryAddress) \(viewModel.userProfile?.address ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(Localization.phoneNumber) \(viewModel.userProfile?.phone ?? "")")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(Localization.sum) \(viewModel.selectedOrder?.cost ?? .zero) \(Localization.som)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .padding(.top)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.leading)
             Spacer()
