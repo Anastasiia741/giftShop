@@ -43,7 +43,7 @@ struct TabBar: View {
                             }
                         }
                         .tag(0)
-                    CartView(currentTab: $curentTab, currentUserId: userID)
+                    CartView(currentUserId: userID, currentTab: $curentTab)
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
@@ -66,7 +66,7 @@ struct TabBar: View {
                         }
                     }
                     .tag(0)
-                CartView(currentTab: $curentTab, currentUserId: "")
+                CartView(currentUserId: "", currentTab: $curentTab)
                     .tabItem {
                         VStack {
                             Images.TabBar.cart

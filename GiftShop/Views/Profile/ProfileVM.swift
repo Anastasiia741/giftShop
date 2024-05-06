@@ -12,12 +12,10 @@ final class ProfileVM: ObservableObject {
     private let dbOrdersService = DBOrdersService()
     @Published var orders: [Order] = []
     @Published var profile: NewUser?
-    @Published var image: UIImage?
     @Published var name = ""
     @Published var phoneNumber = ""
     @Published var email = ""
     @Published var address = ""
-    @Published var imageURL = ""
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     @Published var alertModel: AlertModel?
@@ -47,29 +45,8 @@ final class ProfileVM: ObservableObject {
                 self.email = user.email
                 self.address = user.address
             }
-            if let imageURL = user.imageURL {
-                loadImage(from: imageURL)
-            }
         } catch {
             alertModel = configureAlertModel(with: Localization.errorRetrievingUserData, message: error.localizedDescription)
-        }
-    }
-    
-    func loadImage(from url: String) {
-        guard let profileImageURL = profile?.imageURL else {
-            return
-        }
-        let imageRef = Storage.storage().reference(forURL: profileImageURL)
-        imageRef.downloadURL { downloadedURL, error in
-            if let error = error {
-                self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
-            } else if let downloadedURL = downloadedURL {
-                DispatchQueue.main.async {
-                    self.imageURL = downloadedURL.absoluteString
-                }
-            } else {
-                self.alertModel = self.configureAlertModel(with: Localization.failedDownloadImage, message: nil)
-            }
         }
     }
     
@@ -80,7 +57,6 @@ final class ProfileVM: ObservableObject {
         updatedProfile.name = name
         updatedProfile.phone = phoneNumber
         updatedProfile.address = address
-        updatedProfile.imageURL = imageURL
         
         saveProfileToFirebase(updatedProfile) { result in
             switch result {
@@ -98,37 +74,12 @@ final class ProfileVM: ObservableObject {
             ProfileService.shared.setProfile(user: profile, email: email) { result in
                 switch result {
                 case .success(let updatedProfile):
-                    print("Данные профиля успешно обновлены", updatedProfile.imageURL ?? "")
                     completion(.success(updatedProfile))
                 case .failure(let error):
                     self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
                     completion(.failure(error))
                 }
             }
-        }
-    }
-    
-    func saveProfileImage() async {
-        guard let imageData = image?.jpegData(compressionQuality: 0.5) else { return }
-        let imageName = UUID().uuidString
-        
-        do {
-            let imageLink = try await ProfileService.shared.save(imageData: imageData, nameImg: imageURL, imageName)
-            self.imageURL = imageLink
-            
-            if var updatedProfile = self.profile {
-                updatedProfile.imageURL = imageLink
-                saveProfileToFirebase(updatedProfile) { result in
-                    switch result {
-                    case .success(let updatedProfile):
-                        print("Профиль успешно сохранен:", updatedProfile)
-                    case .failure(let error):
-                        self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
-                    }
-                }
-            }
-        } catch {
-            alertModel = configureAlertModel(with: Localization.error, message: error.localizedDescription)
         }
     }
     

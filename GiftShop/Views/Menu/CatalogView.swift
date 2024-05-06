@@ -76,6 +76,3 @@ struct CatalogView_Previews: PreviewProvider {
         CatalogView()
     }
 }
-
-
-// 0x60000000dfd0 

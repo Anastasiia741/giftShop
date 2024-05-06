@@ -68,6 +68,7 @@
 		71AD03B02B768663006231F9 /* StatusColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03AF2B768663006231F9 /* StatusColors.swift */; };
 		71AD03B32B76881A006231F9 /* OrderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03B22B76881A006231F9 /* OrderDetail.swift */; };
 		71AD03B52B768A00006231F9 /* OrderDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03B42B768A00006231F9 /* OrderDetailVM.swift */; };
+		71AE76972BE8DF4100E4E3A3 /* PromoCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */; };
 		71BE6A922BA85A1E0004ED32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 71BE6A902BA85A1E0004ED32 /* Localizable.strings */; };
 		71BE6A982BA9A34E0004ED32 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE6A972BA9A34E0004ED32 /* Localization.swift */; };
 		71DCC3212B9A20BE00442C32 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCC3202B9A20BE00442C32 /* Extentions.swift */; };
@@ -138,6 +139,7 @@
 		71AD03AF2B768663006231F9 /* StatusColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusColors.swift; sourceTree = "<group>"; };
 		71AD03B22B76881A006231F9 /* OrderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetail.swift; sourceTree = "<group>"; };
 		71AD03B42B768A00006231F9 /* OrderDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailVM.swift; sourceTree = "<group>"; };
+		71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeView.swift; sourceTree = "<group>"; };
 		71BE6A912BA85A1E0004ED32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71BE6A932BA85D520004ED32 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71BE6A972BA9A34E0004ED32 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				71E45FAD2B486C6D00941CE7 /* CartView.swift */,
+				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
 				710082BF2B4C61D1007831F5 /* CartVM.swift */,
 			);
 			path = Cart;
@@ -651,6 +654,7 @@
 				71E45FAA2B4868A000941CE7 /* TabBar.swift in Sources */,
 				71E45F9E2B48568F00941CE7 /* AuthView.swift in Sources */,
 				711ED96E2B504CD80052752F /* OrdersView.swift in Sources */,
+				71AE76972BE8DF4100E4E3A3 /* PromoCodeView.swift in Sources */,
 				71AD03AA2B766BED006231F9 /* OrdersVM.swift in Sources */,
 				71353CD62B6D16FE008A7868 /* ProfileCell.swift in Sources */,
 				7110A8C52B83850D00457615 /* CreateProductVM.swift in Sources */,

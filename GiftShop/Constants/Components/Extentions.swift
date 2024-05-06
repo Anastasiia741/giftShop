@@ -18,4 +18,3 @@ extension Text {
         font(.custom(style, size: size))
     }
 }
-
