@@ -118,3 +118,4 @@
 "error_retrieving_user_data" = "Ошибка получения данных пользователя";
 "failed_download_image" = "Не удалось загрузить URL-адрес изображения";
 "error_retrieving_order_history" = "Ошибка при получении истории заказов";
+"product_removed" = "Товар удален";

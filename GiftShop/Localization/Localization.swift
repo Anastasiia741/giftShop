@@ -89,7 +89,7 @@ struct Localization {
     static let passwordMismatch = "password_mismatch".localized
     static let enterPasswordConfirmation = "enter_password_confirmation".localized
     static let deleteProduct = "delete_product".localized
-    static let productRemoved = "productRemoved".localized
+    static let productRemoved = "product_removed".localized
     static let yes = "yes".localized
     static let no = "no".localized
     static let dataSavedSuccessfully = "data_saved_successfully".localized

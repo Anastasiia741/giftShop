@@ -6,7 +6,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ProductDetailView: View {
-   
+    
     @ObservedObject var viewModel: ProductDetailVM
     @Environment(\.presentationMode) var presentationMode
     @State var count = 1
@@ -72,10 +72,3 @@ struct ProductDetailView: View {
     }
 }
 
-#Preview {
-    ProductDetailView(viewModel: ProductDetailVM(product: Product(id: 1,
-                                                                  name:  "Сумка", category: "",
-                                                                  detail: "Большая сумка",
-                                                                  price: 100,
-                                                                  quantity: 1)))
-}

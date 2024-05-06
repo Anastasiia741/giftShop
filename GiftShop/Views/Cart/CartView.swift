@@ -15,6 +15,9 @@ struct CartView: View {
     @State private var isPromoCodeEntryPresented = false
     @State private var navigateToCatalog = false
     
+    @Binding var currentTab: Int
+    let currentUserId: String
+    
     @State private var isAuthViewPresented = false
     
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
@@ -90,6 +93,8 @@ struct CartView: View {
                             }
                         }.padding(.vertical, 8)
                     }
+                    
+                    
                     Section {
                         HStack(spacing: 24) {
                             Text(Localization.getDiscount).font(.system(size: 16, weight: .bold))
@@ -120,6 +125,12 @@ struct CartView: View {
                         }
                     }
                 }
+               
+                
+                
+                
+                
+                
                 VStack {
                     HStack(spacing: 24) {
                         Text(Localization.total).fontWeight(.bold)
@@ -130,13 +141,11 @@ struct CartView: View {
                             if viewModel.orderProducts.isEmpty {
                                 navigateToCatalog = true
                             } else {
-                                //                                if let userID = MainTabViewModel().userID {
-                                viewModel.orderButtonTapped(with: promo)
-                                orderPlaced = true
-                                //                                }
-                                //                                else {
-                                //                                    isPresented = true
-                                //                                }
+                                if !currentUserId.isEmpty {
+                                    viewModel.orderButtonTapped(with: promo)
+                                } else {
+                                    currentTab = 2
+                                }
                             }
                         }) {
                             Text(Localization.order)
@@ -156,9 +165,7 @@ struct CartView: View {
                 .fullScreenCover(isPresented: $navigateToCatalog, onDismiss: nil) {
                     TabBar(viewModel: MainTabViewModel())
                 }
-                //                .sheet(isPresented: $isPresented) {
-                //                   AuthView()
-                //                }
+            
             }.navigationBarItems(leading: HStack {
                 Text(Localization.cart)
                     .font(.title3.bold())
@@ -175,6 +182,9 @@ struct CartView: View {
             )
             .onAppear {
                 viewModel.fetchOrder()
+                Task {
+                    await catalogVM.fetchAllProducts()
+                }
             }
         }
     }

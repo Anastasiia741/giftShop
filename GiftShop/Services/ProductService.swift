@@ -22,7 +22,7 @@ final class ProductService {
             completion(error)
         }
     }
-    
+
     //  MARK: - Fetch and monitor changes of products from firebase
     func fetchAllProducts() async throws -> [Product] {
         if !savedProducts.isEmpty {
@@ -40,7 +40,8 @@ final class ProductService {
     }
     
     deinit {
-        listenerRegistation?.remove()
+//        listenerRegistation?.remove()
+        print("listenerRegistation ->")
     }
     
     //  MARK: - create new product

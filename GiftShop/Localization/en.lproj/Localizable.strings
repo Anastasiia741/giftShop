@@ -119,5 +119,5 @@
 "error_retrieving_user_data" = "Error retrieving user data";
 "failed_download_image" = "Failed to download image URL";
 "error_retrieving_order_history" = "Error when retrieving order history";
-
+"product_removed" = "product Removed";
 

@@ -8,9 +8,10 @@ struct TabBar: View {
     
     @StateObject var viewModel: MainTabViewModel
     @State private var tabColor: Color = .black
+    @State private var curentTab: Int = 0
     
     var body: some View {
-        TabView {
+        TabView(selection: $curentTab) {
             if let userID = viewModel.userID {
                 if userID == Accesses.adminUser {
                     OrdersView()
@@ -19,18 +20,21 @@ struct TabBar: View {
                                 Images.TabBar.order
                             }
                         }
+                        .tag(0)
                     ProductsEditView(catalogVM: CatalogVM())
                         .tabItem {
                             VStack {
                                 Images.TabBar.productEdit
                             }
                         }
+                        .tag(1)
                     CreateProductView()
                         .tabItem {
                             VStack {
                                 Images.TabBar.createProduct
                             }
                         }
+                        .tag(2)
                 } else {
                     CatalogView()
                         .tabItem {
@@ -38,18 +42,21 @@ struct TabBar: View {
                                 Images.TabBar.menu
                             }
                         }
-                    CartView()
+                        .tag(0)
+                    CartView(currentTab: $curentTab, currentUserId: userID)
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
                             }
                         }
+                        .tag(1)
                     ProfileView()
                         .tabItem {
                             VStack {
                                 Images.TabBar.profile
                             }
                         }
+                        .tag(2)
                 }
             } else {
                 CatalogView()
@@ -58,18 +65,21 @@ struct TabBar: View {
                             Images.TabBar.menu
                         }
                     }
-                CartView()
+                    .tag(0)
+                CartView(currentTab: $curentTab, currentUserId: "")
                     .tabItem {
                         VStack {
                             Images.TabBar.cart
                         }
                     }
+                    .tag(1)
                 AuthView()
                     .tabItem {
                         VStack {
                             Images.TabBar.profile
                         }
                     }
+                    .tag(2)
             }
         }
         .accentColor(tabColor)
@@ -81,3 +91,6 @@ struct TabBar: View {
 
 
 
+//enum TabType: Int {
+//    case home, theory, tasks, favorite, profile
+//}
