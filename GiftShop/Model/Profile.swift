@@ -10,8 +10,7 @@ class Profile: ObservableObject {
     public var profile: NewUser
     public var orders: [Order] = [Order]()
     
-    init(profile: NewUser, imageURL: String? = nil) {
+    init(profile: NewUser) {
         self.profile = profile
-        self.profile.imageURL = imageURL
     }
 }

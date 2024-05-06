@@ -11,11 +11,6 @@ struct ProfileView: View {
     @StateObject private var viewModel = ProfileVM()
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
-    
-    @State private var isImgAlertPresented = false
-    @State private var isShowingCameraPicker = false
-    @State private var isShowingGalleryPicker = false
-    
     @State private var isQuitAlertPresenter = false
     @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
@@ -23,45 +18,19 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .center, spacing: 18) {
-                HStack(spacing: 12) {
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 120, height: 120)
-                            .onTapGesture {
-                                isImgAlertPresented = true
-                            }
-                    } else {
-                        Images.Profile.icon
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 120, height: 120)
-                            .onTapGesture {
-                                isImgAlertPresented = true
-                            }
-                    }
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text(Localization.yourName)
-                            .padding(.leading, 20)
-                            .font(.custom(TextStyle.avenirBold, size: 18))
-                        TextField(Localization.enterYourName, text: $viewModel.name)
-                            .font(.custom(TextStyle.avenirBold, size: 16))
-                            .padding(.horizontal)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        TextField(Localization.enterPhoneNumber, text: $viewModel.phoneNumber)
-                            .keyboardType(.numberPad)
-                            .font(.custom(TextStyle.avenirRegular, size: 16))
-                            .padding(.horizontal)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                //TASK: - loadImage
-                .onAppear {
-                    viewModel.loadImage(from: viewModel.imageURL)
-                }
-                Spacer()
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(Localization.yourName)
+                        .padding(.leading, 20)
+                        .font(.custom(TextStyle.avenirBold, size: 18))
+                    TextField(Localization.enterYourName, text: $viewModel.name)
+                        .font(.custom(TextStyle.avenirBold, size: 16))
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    TextField(Localization.enterPhoneNumber, text: $viewModel.phoneNumber)
+                        .keyboardType(.numberPad)
+                        .font(.custom(TextStyle.avenirRegular, size: 16))
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     Text(Localization.yourEmail)
                         .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 16))
@@ -75,17 +44,14 @@ struct ProfileView: View {
                         .font(.custom(TextStyle.avenirRegular, size: 16))
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }.padding(.horizontal)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 HStack{
                     Spacer()
                     Button {
                         Task {
                             await viewModel.saveProfile()
-                            //                            if let selectedImage = selectedImage {
-                            //                                viewModel.image = selectedImage
-                            //                                await viewModel.saveProfileImage()
-                            //                            }
                         }
                     } label: {
                         Text(Localization.save)
@@ -178,20 +144,6 @@ struct ProfileView: View {
                     ]
                 )
             }
-            .confirmationDialog(Localization.selectPhotoSource, isPresented: $isImgAlertPresented) {
-                Button(Localization.gallery) {
-                    isShowingGalleryPicker = true
-                }
-                Button(Localization.camera) {
-                    isShowingCameraPicker = true
-                }
-            }
-            .sheet(isPresented: $isShowingGalleryPicker) {
-                ImagePicker(sourceType: .photoLibrary, selectedImage: $selectedImage, isPresented: $isShowingGalleryPicker)
-            }
-            .sheet(isPresented: $isShowingCameraPicker) {
-                ImagePicker(sourceType: .camera, selectedImage: $selectedImage, isPresented: $isShowingGalleryPicker)
-            }
             .alert(item: $viewModel.alertModel) { alertModel in
                 if alertModel.buttons.count > 1 {
                     return Alert(
@@ -212,11 +164,5 @@ struct ProfileView: View {
                 TabBar(viewModel: MainTabViewModel())
             }
         }
-    }
-}
-
-struct ProfileCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
     }
 }

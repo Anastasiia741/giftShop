@@ -9,17 +9,14 @@ struct CartView: View {
     @StateObject private var viewModel = CartVM()
     @StateObject private var catalogVM = CatalogVM()
     @State private var promo: String = ""
+    let currentUserId: String
     @State private var isPresented = false
     @State private var orderPlaced = false
     @State private var isPromoSheetVisible = false
     @State private var isPromoCodeEntryPresented = false
     @State private var navigateToCatalog = false
-    
-    @Binding var currentTab: Int
-    let currentUserId: String
-    
     @State private var isAuthViewPresented = false
-    
+    @Binding var currentTab: Int
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
     
     var body: some View {
@@ -78,7 +75,6 @@ struct CartView: View {
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
                     }
-                    //Task: - fix fetch product
                     Text(Localization.addToOrder)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.gray)
@@ -93,8 +89,6 @@ struct CartView: View {
                             }
                         }.padding(.vertical, 8)
                     }
-                    
-                    
                     Section {
                         HStack(spacing: 24) {
                             Text(Localization.getDiscount).font(.system(size: 16, weight: .bold))
@@ -114,7 +108,7 @@ struct CartView: View {
                                     .cornerRadius(20)
                                     .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
                                     .sheet(isPresented: $isPromoSheetVisible, content: {
-                                        promoCodeView
+                                        PromoCodeView(promo: $promo, isPromoSheetVisible: $isPromoSheetVisible)
                                             .presentationDetents([.fraction(0.30)])
                                             .presentationDragIndicator(.visible)
                                             .onDisappear {
@@ -125,24 +119,18 @@ struct CartView: View {
                         }
                     }
                 }
-               
-                
-                
-                
-                
-                
                 VStack {
                     HStack(spacing: 24) {
                         Text(Localization.total).fontWeight(.bold)
                         Spacer()
                         Text("\(viewModel.productCountMessage) \(Localization.som)").fontWeight(.bold)
                         Button(action: {
-                            //TASK: - fix
                             if viewModel.orderProducts.isEmpty {
                                 navigateToCatalog = true
                             } else {
                                 if !currentUserId.isEmpty {
                                     viewModel.orderButtonTapped(with: promo)
+                                    orderPlaced = true
                                 } else {
                                     currentTab = 2
                                 }
@@ -165,7 +153,6 @@ struct CartView: View {
                 .fullScreenCover(isPresented: $navigateToCatalog, onDismiss: nil) {
                     TabBar(viewModel: MainTabViewModel())
                 }
-            
             }.navigationBarItems(leading: HStack {
                 Text(Localization.cart)
                     .font(.title3.bold())
@@ -188,71 +175,5 @@ struct CartView: View {
             }
         }
     }
-    
-    var promoCodeView: some View {
-        ZStack(alignment: .top)  {
-            Images.Cart.background6
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-                .frame(height: 30)
-            VStack(spacing: 8) {
-                Spacer()
-                if viewModel.promoResultText.isEmpty {
-                    Text(Localization.unlockExclusiveDiscount)
-                        .customTextStyle(TextStyle.avenirRegular, size: 20)
-                        .multilineTextAlignment(.center)
-                        .multilineTextAlignment(.center)
-                        .fontWeight(.semibold)
-                        .padding([.top], 20)
-                } else {
-                    Text(viewModel.promoResultText)
-                        .customTextStyle(TextStyle.avenirRegular, size: 20)
-                        .multilineTextAlignment(.center)
-                        .fontWeight(.semibold)
-                        .padding([.top], 20)
-                }
-                TextField(Localization.enterPromoCode, text: $promo)
-                    .padding()
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .font(.body)
-                
-                HStack(spacing: 16) {
-                    Button(action: {
-                        isPromoSheetVisible = false
-                    }) {
-                        Text(Localization.cancel)
-                            .fontWeight(.semibold)
-                            .padding()
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .background(Colors.promoCancel)
-                            .cornerRadius(20)
-                            .shadow(color: Colors.promoCancel.opacity(0.5), radius: 5, x: 10, y: 5)
-                    }
-                    Button(action: {
-                        viewModel.promoCode = promo
-                        viewModel.applyPromoCode()
-                    }) {
-                        Text(Localization.apply)
-                            .fontWeight(.semibold)
-                            .padding()
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .background(Colors.promoApply)
-                            .cornerRadius(20)
-                            .shadow(color: Colors.promoApply.opacity(0.5), radius: 5, x: 10, y: 5)
-                    }
-                }
-                .padding()
-            }
-            .padding()
-            .cornerRadius(10)
-            .shadow(radius: 4)
-        }.onAppear {
-            viewModel.promoCode = ""
-        }
-    }
 }
-
 
