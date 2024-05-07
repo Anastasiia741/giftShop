@@ -60,7 +60,7 @@ struct ProfileView: View {
                             .background(Colors.promo)
                             .cornerRadius(20)
                             .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                             .padding(.trailing, 15)
                     }
                 }.onAppear {
@@ -113,7 +113,7 @@ struct ProfileView: View {
             .navigationBarItems(leading: HStack {
                 Text(Localization.profile)
                     .font(.title3.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.themeText)
                     .padding(.leading, 20)
                     .fixedSize()
                 Images.Menu.popular
@@ -128,7 +128,7 @@ struct ProfileView: View {
                     }) {
                         Images.Profile.exit
                             .imageScale(.small)
-                            .foregroundColor(.black)
+                            .tint(.themeText)
                     }
                 }
             )

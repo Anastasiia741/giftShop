@@ -16,16 +16,16 @@ struct PromoCodeView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
-                .frame(height: 30)
+                .frame(height: 20)
+                .padding(.bottom, 20)
             VStack(spacing: 8) {
                 Spacer()
                 if viewModel.promoResultText.isEmpty {
                     Text(Localization.unlockExclusiveDiscount)
                         .customTextStyle(TextStyle.avenirRegular, size: 20)
                         .multilineTextAlignment(.center)
-                        .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
-                        .padding([.top], 20)
+                        .padding(.top, 20)
                 } else {
                     Text(viewModel.promoResultText)
                         .customTextStyle(TextStyle.avenirRegular, size: 20)
@@ -37,7 +37,6 @@ struct PromoCodeView: View {
                     .padding()
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .font(.body)
-                
                 HStack(spacing: 16) {
                     Button(action: {
                         isPromoSheetVisible = false
@@ -45,7 +44,7 @@ struct PromoCodeView: View {
                         Text(Localization.cancel)
                             .fontWeight(.semibold)
                             .padding()
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                             .frame(maxWidth: .infinity)
                             .background(Colors.promoCancel)
                             .cornerRadius(20)
@@ -58,7 +57,7 @@ struct PromoCodeView: View {
                         Text(Localization.apply)
                             .fontWeight(.semibold)
                             .padding()
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                             .frame(maxWidth: .infinity)
                             .background(Colors.promoApply)
                             .cornerRadius(20)

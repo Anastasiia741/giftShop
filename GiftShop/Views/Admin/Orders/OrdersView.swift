@@ -27,8 +27,8 @@ struct OrdersView: View {
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 35)
                                     .padding(.horizontal, 20)
-                                    .foregroundColor(selectedStatus == status ? .white : .black)
-                                    .background(selectedStatus == status ? Color.black : Color.gray)
+                                    .foregroundColor(selectedStatus == status ? .themeBackground : .black)
+                                    .background(selectedStatus == status ? Color.themeText : Color.gray)
                                     .cornerRadius(20)
                                     .shadow(color: Color.black.opacity(0.5), radius: 5, x: 10, y: 5)
                             }
@@ -47,7 +47,7 @@ struct OrdersView: View {
             }) {
                 Images.Profile.exit
                     .imageScale(.small)
-                    .foregroundColor(.black)
+                    .foregroundColor(.themeText)
             })
             .actionSheet(isPresented: $isQuitAlertPresenter) {
                 ActionSheet(
@@ -71,6 +71,3 @@ struct OrdersView: View {
     }
 }
 
-#Preview {
-    OrdersView()
-}

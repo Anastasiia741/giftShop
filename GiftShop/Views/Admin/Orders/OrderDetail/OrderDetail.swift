@@ -73,7 +73,7 @@ struct OrderDetail: View {
                 Text("\(Localization.sum) \(viewModel.selectedOrder?.cost ?? .zero) \(Localization.som)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .fontWeight(.bold)
-                    .foregroundColor(.black)
+                    .foregroundColor(.themeText)
                     .padding(.top)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }

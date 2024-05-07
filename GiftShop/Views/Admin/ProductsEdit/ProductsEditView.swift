@@ -17,7 +17,7 @@ struct ProductsEditView: View {
                     HStack(alignment: .center, spacing: 10) {
                         Text(Localization.popular)
                             .font(.title3.bold())
-                            .foregroundColor(.black)
+                            .foregroundColor(.themeText)
                             .padding(.leading, 20)
                         Images.Menu.popular
                             .resizable()
@@ -32,7 +32,7 @@ struct ProductsEditView: View {
                                     ProductDetailEditView(viewModel: viewModel)
                                 } label: {
                                     ProductCell(product: item)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(.themeText)
                                 }
                             }
                         }.padding()
@@ -42,7 +42,7 @@ struct ProductsEditView: View {
                     HStack(alignment: .center, spacing: 10) {
                         Text(Localization.products)
                             .font(.title3.bold())
-                            .foregroundColor(.black)
+                            .foregroundColor(.themeText)
                         Images.Menu.popular
                             .resizable()
                             .frame(width: 30, height: 35)
@@ -56,7 +56,7 @@ struct ProductsEditView: View {
                                     ProductDetailEditView(viewModel: viewModel)
                                 } label: {
                                     ProductCell(product: item)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(.themeText)
                                 }
                             }
                         }.padding()

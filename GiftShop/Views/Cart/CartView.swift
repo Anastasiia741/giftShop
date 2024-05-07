@@ -82,7 +82,7 @@ struct CartView: View {
                         LazyHGrid(rows: layoutForPopular, spacing: 16) {
                             ForEach(catalogVM.popularProducts, id: \.id) { item in
                                 PopularProductCell(product: item)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.themeText)
                                     .onTapGesture {
                                         viewModel.addPromoProductToOrder(for: item)
                                     }
@@ -146,7 +146,6 @@ struct CartView: View {
                                 .cornerRadius(23)
                                 .shadow(color: Colors.buy.opacity(0.5), radius: 5, x: 0, y: 5)
                         }
-                        
                     }
                     .padding([.leading, .trailing, .bottom], 16)
                 }
@@ -156,7 +155,7 @@ struct CartView: View {
             }.navigationBarItems(leading: HStack {
                 Text(Localization.cart)
                     .font(.title3.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.themeText)
                     .padding(.leading, 20)
                     .fixedSize()
                 Images.Menu.popular
@@ -164,9 +163,7 @@ struct CartView: View {
                     .frame(width: 30, height: 35)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.trailing, 20)
-            }.background(Color.white)
-                .cornerRadius(10)
-            )
+            })
             .onAppear {
                 viewModel.fetchOrder()
                 Task {

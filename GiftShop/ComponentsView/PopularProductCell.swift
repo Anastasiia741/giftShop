@@ -37,7 +37,7 @@ struct PopularProductCell: View {
             }
         }
         .frame(width: screen.width * 0.32, height:  screen.width * 0.4)
-        .background(.white)
+        .background(Color.bg)
         .cornerRadius(16)
         .shadow(radius: 4)
         .onAppear {

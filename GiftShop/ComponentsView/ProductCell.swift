@@ -8,7 +8,6 @@ import SDWebImageSwiftUI
 import SDWebImage
 
 struct ProductCell: View {
-    
     let product: Product
     @State private var imageURL: URL?
     
@@ -37,7 +36,7 @@ struct ProductCell: View {
             }
         }
         .frame(width: screen.width * 0.45, height:  screen.width * 0.5)
-        .background(.white)
+        .background(Color.bg)
         .cornerRadius(16)
         .shadow(radius: 4)
         .onAppear {

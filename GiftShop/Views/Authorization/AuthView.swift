@@ -58,7 +58,7 @@ struct AuthView: View {
                     .padding(8)
                     .padding(.horizontal, 12)
                     .font(.title3.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.themeText)
             }
                 Button {
                     viewModel.toggleAuthButton()
@@ -80,7 +80,7 @@ struct AuthView: View {
                         .padding(6)
                         .padding(.horizontal, 12)
                         .font(.caption2.bold())
-                        .foregroundColor(.black)
+                        .foregroundColor(.themeText)
                 }
             }
             .padding()
