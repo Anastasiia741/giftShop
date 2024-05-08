@@ -9,6 +9,7 @@ struct CatalogView: View {
     @StateObject private var viewModel = CatalogVM()
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
+    @Environment(\.colorScheme) var colorScheme
     @State private var isLoading = false
     
     var body: some View {
@@ -26,11 +27,12 @@ struct CatalogView: View {
                             HStack(alignment: .center, spacing: 10) {
                                 Text(Localization.popular)
                                     .font(.title3.bold())
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.themeText)
                                     .padding(.leading, 20)
-                                Images.Menu.popular
+                                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                                     .resizable()
-                                    .frame(width: 30, height: 35)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 45, height: 50)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             ScrollView(.horizontal, showsIndicators: false) {
@@ -41,7 +43,7 @@ struct CatalogView: View {
                                             ProductDetailView(viewModel: viewModel)
                                         } label: {
                                             PopularProductCell(product: item)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.themeText)
                                         }
                                     }
                                 }.padding()
@@ -51,10 +53,11 @@ struct CatalogView: View {
                             HStack(alignment: .center, spacing: 10) {
                                 Text(Localization.products)
                                     .font(.title3.bold())
-                                    .foregroundColor(.black)
-                                Images.Menu.popular
+                                    .foregroundColor(.themeText)
+                                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                                     .resizable()
-                                    .frame(width: 30, height: 35)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 45, height: 50)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }.padding(.horizontal, 20)
                             ScrollView(.vertical, showsIndicators: false) {
@@ -65,7 +68,7 @@ struct CatalogView: View {
                                             ProductDetailView(viewModel: viewModel)
                                         } label: {
                                             ProductCell(product: item)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.themeText)
                                         }
                                     }
                                 }.padding()

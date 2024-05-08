@@ -8,6 +8,7 @@ import FirebaseAuth
 struct AuthView: View {
     
     @ObservedObject private var viewModel = AuthVM()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(spacing: 20) {
@@ -58,7 +59,7 @@ struct AuthView: View {
                     .padding(8)
                     .padding(.horizontal, 12)
                     .font(.title3.bold())
-                    .foregroundColor(.black)
+                    .foregroundColor(.themeText)
             }
                 Button {
                     viewModel.toggleAuthButton()
@@ -80,7 +81,7 @@ struct AuthView: View {
                         .padding(6)
                         .padding(.horizontal, 12)
                         .font(.caption2.bold())
-                        .foregroundColor(.black)
+                        .foregroundColor(.themeText)
                 }
             }
             .padding()
@@ -88,7 +89,7 @@ struct AuthView: View {
             .background(Colors.whiteAlfa)
             .cornerRadius(24)
             .padding(viewModel.isAuth ? 30 : 12)
-            Images.Auth.background
+            Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Auth.background2 : Images.Auth.background1) ?? UIImage())
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

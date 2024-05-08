@@ -7,7 +7,7 @@ import SwiftUI
 struct TabBar: View {
     
     @StateObject var viewModel: MainTabViewModel
-    @State private var tabColor: Color = .black
+    @State private var tabColor: Color = .themeText
     @State private var curentTab: Int = 0
     
     var body: some View {

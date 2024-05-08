@@ -18,3 +18,23 @@ extension Text {
         font(.custom(style, size: size))
     }
 }
+
+extension Color {
+    static var themeText: Color {
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            return .white
+        } else {
+            return .black
+        }
+    }
+}
+
+extension Color {
+    static var themeBackground: Color {
+        if UITraitCollection.current.userInterfaceStyle == .light {
+            return .white
+        } else {
+            return .black
+        }
+    }
+}

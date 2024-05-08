@@ -15,7 +15,7 @@ struct CreateProductView: View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text(Localization.image).foregroundColor(.black)) {
+                    Section(header: Text(Localization.image).foregroundColor(.themeText)) {
                         VStack {
                             Image(uiImage: (viewModel.productImage ?? Images.CreateProduct.image ?? UIImage()))
                                 .resizable()
@@ -30,7 +30,7 @@ struct CreateProductView: View {
                                 }
                         }
                     }
-                    Section(header: Text(Localization.description).foregroundColor(.black)) {
+                    Section(header: Text(Localization.description).foregroundColor(.themeText)) {
                         TextField(Localization.productName, text: $viewModel.productName)
                         TextField(Localization.category, text: $viewModel.productCategory)
                             .keyboardType(.alphabet)
@@ -38,7 +38,7 @@ struct CreateProductView: View {
                         TextField(Localization.price, text: $viewModel.productPrice)
                             .keyboardType(.decimalPad)
                     }
-                    Section(header: Text(Localization.detailedProductDescrip).foregroundColor(.black)) {
+                    Section(header: Text(Localization.detailedProductDescrip).foregroundColor(.themeText)) {
                         TextEditor(text: $viewModel.productDetail)
                             .frame(height: 100)
                             .padding(.horizontal)
