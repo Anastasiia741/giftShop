@@ -8,6 +8,7 @@ import FirebaseAuth
 struct AuthView: View {
     
     @ObservedObject private var viewModel = AuthVM()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(spacing: 20) {
@@ -88,7 +89,7 @@ struct AuthView: View {
             .background(Colors.whiteAlfa)
             .cornerRadius(24)
             .padding(viewModel.isAuth ? 30 : 12)
-            Images.Auth.background
+            Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Auth.background2 : Images.Auth.background1) ?? UIImage())
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

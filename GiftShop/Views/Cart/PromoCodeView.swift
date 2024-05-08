@@ -17,6 +17,7 @@ struct PromoCodeView: View {
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
                 .frame(height: 20)
+                .padding(.top, 10)
                 .padding(.bottom, 20)
             VStack(spacing: 8) {
                 Spacer()
@@ -31,7 +32,7 @@ struct PromoCodeView: View {
                         .customTextStyle(TextStyle.avenirRegular, size: 20)
                         .multilineTextAlignment(.center)
                         .fontWeight(.semibold)
-                        .padding([.top], 20)
+                        .padding(.top, 20)
                 }
                 TextField(Localization.enterPromoCode, text: $promo)
                     .padding()

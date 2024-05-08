@@ -39,7 +39,7 @@
 		384D609779A9034EFF575E32275B4D48 /* Pods-GiftShop-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-GiftShop-umbrella.h"; sourceTree = "<group>"; };
 		440F08BD31C937076850DF5D47B141D8 /* Pods-GiftShop-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-GiftShop-dummy.m"; sourceTree = "<group>"; };
 		5B4E410428C90738BE2984251517F262 /* Pods-GiftShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-GiftShop.debug.xcconfig"; sourceTree = "<group>"; };
-		6A4D9A9571FBBD66170D098337AB9A64 /* Pods-GiftShop */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-GiftShop"; path = Pods_GiftShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A4D9A9571FBBD66170D098337AB9A64 /* Pods_GiftShop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GiftShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		8EE2835A2B9E26D306D69B61450F35FF /* Periphery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Periphery.debug.xcconfig; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -82,7 +82,7 @@
 		68E3C7F30CF9E537F225A9D4E5754BE6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6A4D9A9571FBBD66170D098337AB9A64 /* Pods-GiftShop */,
+				6A4D9A9571FBBD66170D098337AB9A64 /* Pods_GiftShop.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,7 +178,7 @@
 			);
 			name = "Pods-GiftShop";
 			productName = Pods_GiftShop;
-			productReference = 6A4D9A9571FBBD66170D098337AB9A64 /* Pods-GiftShop */;
+			productReference = 6A4D9A9571FBBD66170D098337AB9A64 /* Pods_GiftShop.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -419,6 +419,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -456,6 +460,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

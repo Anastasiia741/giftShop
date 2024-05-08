@@ -21,7 +21,9 @@ enum Images {
     }
     
     enum Menu {
-        static let popular = Image("background2")
+        static let popular1 = "popular1"
+        static let popular2 = "popular2"
+
     }
 
     enum CreateProduct {
@@ -30,17 +32,18 @@ enum Images {
     
     enum Cart {
         static let emptyCart = Image("emptyCartImage")
+        static let happyCart = Image("happyCart")
         static let background4 = Image("background4")
         static let background6 = Image("background6")
     }
     
     enum Profile {
-        static let icon = Image("profile")
         static let emptyList = Image("emptyOrdersImage")
         static let exit = Image(systemName: "rectangle.portrait.and.arrow.forward")
     }
     
     enum Auth {
-        static let background = Image("authScreen")
+        static let background1 = "authScreen1"
+        static let background2 = "authScreen2"
     }
 }

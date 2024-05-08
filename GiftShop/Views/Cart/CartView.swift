@@ -18,6 +18,8 @@ struct CartView: View {
     @State private var isAuthViewPresented = false
     @Binding var currentTab: Int
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
+    @Environment(\.colorScheme) var colorScheme
+    
     
     var body: some View {
         NavigationView {
@@ -31,6 +33,12 @@ struct CartView: View {
                                         Text(Localization.thanksForOrder)
                                             .font(.headline)
                                             .foregroundColor(.gray)
+                                        Images.Cart.happyCart
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 130)
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color.clear)
                                         Text(Localization.cardOrder)
                                             .font(.headline)
                                             .foregroundColor(.gray)
@@ -158,9 +166,10 @@ struct CartView: View {
                     .foregroundColor(.themeText)
                     .padding(.leading, 20)
                     .fixedSize()
-                Images.Menu.popular
+                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                     .resizable()
-                    .frame(width: 30, height: 35)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 45, height: 50)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.trailing, 20)
             })

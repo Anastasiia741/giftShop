@@ -11,6 +11,7 @@ struct ProfileView: View {
     @StateObject private var viewModel = ProfileVM()
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
+    @Environment(\.colorScheme) var colorScheme
     @State private var isQuitAlertPresenter = false
     @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
@@ -60,7 +61,7 @@ struct ProfileView: View {
                             .background(Colors.promo)
                             .cornerRadius(20)
                             .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
-                            .foregroundColor(.themeText)
+                            .foregroundColor(.white)
                             .padding(.trailing, 15)
                     }
                 }.onAppear {
@@ -116,9 +117,10 @@ struct ProfileView: View {
                     .foregroundColor(.themeText)
                     .padding(.leading, 20)
                     .fixedSize()
-                Images.Menu.popular
+                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                     .resizable()
-                    .frame(width: 30, height: 35)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 45, height: 50)
                     .frame(maxWidth: .infinity, alignment: .leading)
             })
             .navigationBarItems(
