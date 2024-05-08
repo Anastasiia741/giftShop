@@ -38,3 +38,7 @@ extension Color {
         }
     }
 }
+
+enum TabType: Int {
+    case catalog, cart, profile, productsEdit, createProduct, orders
+}
