@@ -7,8 +7,8 @@ import SwiftUI
 struct TabBar: View {
     
     @StateObject var viewModel: MainTabViewModel
-    @State private var tabColor: Color = .themeText
     @State private var curentTab: Int = 0
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         TabView(selection: $curentTab) {
@@ -82,14 +82,10 @@ struct TabBar: View {
                     .tag(TabType.profile)
             }
         }
-        .accentColor(tabColor)
+        .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
             viewModel.fetchUserId()
         }
     }
 }
 
-
-//enum TabType: Int {
-//    case home, theory, tasks, favorite, profile
-//}
