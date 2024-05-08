@@ -24,7 +24,7 @@ struct ProfileView: View {
                         .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 18))
                     TextField(Localization.enterYourName, text: $viewModel.name)
-                        .font(.custom(TextStyle.avenirBold, size: 16))
+                        .font(.custom(TextStyle.avenirRegular, size: 16))
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     TextField(Localization.enterPhoneNumber, text: $viewModel.phoneNumber)

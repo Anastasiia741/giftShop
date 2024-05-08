@@ -20,21 +20,21 @@ struct TabBar: View {
                                 Images.TabBar.order
                             }
                         }
-                        .tag(0)
+                        .tag(TabType.orders)
                     ProductsEditView(catalogVM: CatalogVM())
                         .tabItem {
                             VStack {
                                 Images.TabBar.productEdit
                             }
                         }
-                        .tag(1)
+                        .tag(TabType.productsEdit)
                     CreateProductView()
                         .tabItem {
                             VStack {
                                 Images.TabBar.createProduct
                             }
                         }
-                        .tag(2)
+                        .tag(TabType.createProduct)
                 } else {
                     CatalogView()
                         .tabItem {
@@ -42,21 +42,21 @@ struct TabBar: View {
                                 Images.TabBar.menu
                             }
                         }
-                        .tag(0)
+                        .tag(TabType.catalog)
                     CartView(currentUserId: userID, currentTab: $curentTab)
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
                             }
                         }
-                        .tag(1)
+                        .tag(TabType.cart)
                     ProfileView()
                         .tabItem {
                             VStack {
                                 Images.TabBar.profile
                             }
                         }
-                        .tag(2)
+                        .tag(TabType.profile)
                 }
             } else {
                 CatalogView()
@@ -65,21 +65,21 @@ struct TabBar: View {
                             Images.TabBar.menu
                         }
                     }
-                    .tag(0)
+                    .tag(TabType.catalog)
                 CartView(currentUserId: "", currentTab: $curentTab)
                     .tabItem {
                         VStack {
                             Images.TabBar.cart
                         }
                     }
-                    .tag(1)
+                    .tag(TabType.cart)
                 AuthView()
                     .tabItem {
                         VStack {
                             Images.TabBar.profile
                         }
                     }
-                    .tag(2)
+                    .tag(TabType.profile)
             }
         }
         .accentColor(tabColor)
@@ -88,7 +88,6 @@ struct TabBar: View {
         }
     }
 }
-
 
 
 //enum TabType: Int {
