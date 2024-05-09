@@ -67,10 +67,10 @@ struct CreateProductView: View {
                 }
             }
             .sheet(isPresented: $isShowingGalleryPicker) {
-                ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
+                ImagePicker(sourceType: .photoLibrary, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
             }
             .sheet(isPresented: $isShowingCameraPicker) {
-                ImagePicker(sourceType: .camera, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
+                ImagePicker(sourceType: .camera, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
             }
             .alert(item: $viewModel.alertModel) { alertModel in
                 return Alert(

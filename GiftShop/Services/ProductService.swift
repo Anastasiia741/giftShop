@@ -76,7 +76,6 @@ final class ProductService {
                     if let error = error {
                         completion(error)
                     } else {
-                        print("Документ успешно обновлен. ID: \(productID)")
                         completion(nil)
                     }
                 }
