@@ -17,8 +17,8 @@ struct ProductDetailEditView: View {
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
-                if let image = selectedImage {
-                    Image(uiImage: image)
+                if let selectedImage = selectedImage {
+                    Image(uiImage: selectedImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(maxWidth: .infinity, maxHeight: 260)
@@ -90,7 +90,6 @@ struct ProductDetailEditView: View {
                 .padding(.bottom, 5)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             }.padding([.leading, .trailing], 20)
-            
             HStack(spacing: 16){
                 Button(Localization.delete) {
                     viewModel.showDeleteConfirmationAlert {
