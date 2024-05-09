@@ -13,7 +13,7 @@ struct TabBar: View {
     var body: some View {
         TabView(selection: $curentTab) {
             if let userID = viewModel.userID {
-                if userID == Accesses.adminUser {
+                if userID == Accesses.adminUser || userID == Accesses.adminKiyiz {
                     OrdersView()
                         .tabItem {
                             VStack {
