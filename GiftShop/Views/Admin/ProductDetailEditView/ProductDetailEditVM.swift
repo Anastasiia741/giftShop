@@ -14,6 +14,7 @@ final class ProductDetailEditVM: ObservableObject {
     @Published var imageURL: URL?
     @Published var alertTitle = ""
     @Published var alertModel: AlertModel?
+    var onSaveCompletion: (() -> Void)?
     
     init(selectedProduct: Product ) {
         self.selectedProduct = selectedProduct
@@ -25,6 +26,8 @@ final class ProductDetailEditVM: ObservableObject {
             buttons: [
                 AlertButtonModel(title: Localization.ok, action: { [weak self] in
                     self?.alertModel = nil
+                    self?.onSaveCompletion?()
+                    
                 })
             ])
     }
@@ -57,10 +60,10 @@ final class ProductDetailEditVM: ObservableObject {
                 self?.productsDB.uploadImageToFirebase(selectedImage, imageURL) { [weak self] imageURL in
                     if let imageURL = imageURL {
                         self?.selectedProduct?.image = imageURL
-                        
                     } else {
                         self?.alertModel = self?.configureAlertModel(with: Localization.error)
                     }
+                    
                 }
             }
         }

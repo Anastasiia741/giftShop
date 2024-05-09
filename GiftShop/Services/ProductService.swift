@@ -40,8 +40,7 @@ final class ProductService {
     }
     
     deinit {
-//        listenerRegistation?.remove()
-        print("listenerRegistation ->")
+        listenerRegistation?.remove()
     }
     
     //  MARK: - create new product

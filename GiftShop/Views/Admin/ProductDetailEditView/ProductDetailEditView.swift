@@ -9,6 +9,7 @@ struct ProductDetailEditView: View {
     
     @ObservedObject var viewModel: ProductDetailEditVM
     @Environment(\.presentationMode) private var presentationMode
+    @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
     @State private var showImgAlert = false
@@ -16,20 +17,34 @@ struct ProductDetailEditView: View {
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
-                WebImage(url: viewModel.imageURL)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: 260)
-                    .clipped()
-                    .border(Color.gray, width: 2)
-                    .cornerRadius(10)
-                    .padding(.vertical, 8)
-                    .onAppear {
-                        viewModel.updateImageDetail()
-                    }
-                    .onTapGesture {
-                        showImgAlert = true
-                    }
+                if let image = selectedImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: .infinity, maxHeight: 260)
+                        .clipped()
+                        .border(Color.gray, width: 2)
+                        .cornerRadius(10)
+                        .padding(.vertical, 8)
+                        .onTapGesture {
+                            showImgAlert = true
+                        }
+                } else {
+                    WebImage(url: viewModel.imageURL)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: .infinity, maxHeight: 260)
+                        .clipped()
+                        .border(Color.gray, width: 2)
+                        .cornerRadius(10)
+                        .padding(.vertical, 8)
+                        .onAppear {
+                            viewModel.updateImageDetail()
+                        }
+                        .onTapGesture {
+                            showImgAlert = true
+                        }
+                }
             }
             .padding([.leading, .trailing], 20)
             VStack(alignment: .leading, spacing: 8) {
@@ -75,6 +90,7 @@ struct ProductDetailEditView: View {
                 .padding(.bottom, 5)
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             }.padding([.leading, .trailing], 20)
+            
             HStack(spacing: 16){
                 Button(Localization.delete) {
                     viewModel.showDeleteConfirmationAlert {
@@ -91,6 +107,9 @@ struct ProductDetailEditView: View {
                 Spacer().frame(width: 16)
                 Button(Localization.save) {
                     viewModel.saveEditedProduct()
+                    viewModel.onSaveCompletion = {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 .font(.system(size: 16))
                 .fontWeight(.medium)
@@ -112,10 +131,10 @@ struct ProductDetailEditView: View {
             }
         }
         .sheet(isPresented: $isShowingGalleryPicker) {
-            ImagePicker(sourceType: .photoLibrary, onSelected: {viewModel.updateImageDetail()}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
+            ImagePicker(sourceType: .photoLibrary, onSelected: {selectedImage = viewModel.selectedImage}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
         .sheet(isPresented: $isShowingCameraPicker) {
-            ImagePicker(sourceType: .camera, onSelected: {viewModel.updateImageDetail()}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
+            ImagePicker(sourceType: .camera, onSelected: {selectedImage = viewModel.selectedImage }, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
         .alert(item: $viewModel.alertModel) { alertModel in
             if alertModel.buttons.count > 1 {
