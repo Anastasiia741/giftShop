@@ -62,7 +62,7 @@ struct CatalogView: View {
                             }.padding(.horizontal, 20)
                             ScrollView(.vertical, showsIndicators: false) {
                                 LazyVGrid(columns: layoutForProducts) {
-                                    ForEach(viewModel.allProducts, id: \.id) { item in
+                                    ForEach(viewModel.allProducts) { item in
                                         NavigationLink {
                                             let viewModel = ProductDetailVM(product: item)
                                             ProductDetailView(viewModel: viewModel)

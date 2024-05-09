@@ -9,6 +9,7 @@ import UIKit
 struct ImagePicker: UIViewControllerRepresentable {
    
     var sourceType: UIImagePickerController.SourceType
+    var onSelected: ()->Void
     @Binding var selectedImage: UIImage?
     @Binding var isPresented: Bool
     
@@ -36,6 +37,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             if let image = info[.originalImage] as? UIImage {
                 parent.selectedImage = image
                 parent.isPresented = false
+                parent.onSelected()
             }
         }
     }

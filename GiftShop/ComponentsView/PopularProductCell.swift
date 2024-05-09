@@ -18,7 +18,7 @@ struct PopularProductCell: View {
                 WebImage(url: imageURL)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: screen.width * 0.35, height: 120)
+                    .frame(width: screen.width * 0.40, height: 120)
                     .clipped()
                     .cornerRadius(16)
                     .padding(.top, -12)
@@ -36,7 +36,7 @@ struct PopularProductCell: View {
                 .padding(.bottom, 8)
             }
         }
-        .frame(width: screen.width * 0.32, height:  screen.width * 0.4)
+        .frame(width: screen.width * 0.40, height:  screen.width * 0.4)
         .background(Color.bg)
         .cornerRadius(16)
         .shadow(radius: 4)

@@ -20,7 +20,7 @@ struct ProductsEditView: View {
                             .font(.title3.bold())
                             .foregroundColor(.themeText)
                             .padding(.leading, 20)
-                        Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular2) ?? UIImage())
+                        Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 45, height: 50)
@@ -28,7 +28,7 @@ struct ProductsEditView: View {
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: layoutForPopular, spacing: 16) {
-                            ForEach(catalogVM.popularProducts, id: \.id) { item in
+                            ForEach(catalogVM.popularProducts) { item in
                                 NavigationLink {
                                     let viewModel = ProductDetailEditVM(selectedProduct: item)
                                     ProductDetailEditView(viewModel: viewModel)
@@ -45,7 +45,7 @@ struct ProductsEditView: View {
                         Text(Localization.products)
                             .font(.title3.bold())
                             .foregroundColor(.themeText)
-                        Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular2) ?? UIImage())
+                        Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 45, height: 50)
@@ -53,7 +53,7 @@ struct ProductsEditView: View {
                     }.padding(.horizontal, 20)
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: layoutForProducts) {
-                            ForEach(catalogVM.allProducts, id: \.id) { item in
+                            ForEach(catalogVM.allProducts) { item in
                                 NavigationLink {
                                     let viewModel = ProductDetailEditVM(selectedProduct: item)
                                     ProductDetailEditView(viewModel: viewModel)
@@ -71,11 +71,5 @@ struct ProductsEditView: View {
                 }
             }
         }
-    }
-}
-
-struct ProductEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        CatalogView()
     }
 }

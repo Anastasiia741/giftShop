@@ -112,10 +112,10 @@ struct ProductDetailEditView: View {
             }
         }
         .sheet(isPresented: $isShowingGalleryPicker) {
-            ImagePicker(sourceType: .photoLibrary, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
+            ImagePicker(sourceType: .photoLibrary, onSelected: {viewModel.updateImageDetail()}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
         .sheet(isPresented: $isShowingCameraPicker) {
-            ImagePicker(sourceType: .camera, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
+            ImagePicker(sourceType: .camera, onSelected: {viewModel.updateImageDetail()}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
         }
         .alert(item: $viewModel.alertModel) { alertModel in
             if alertModel.buttons.count > 1 {

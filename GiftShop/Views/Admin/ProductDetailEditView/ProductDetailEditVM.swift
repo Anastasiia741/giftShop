@@ -57,6 +57,7 @@ final class ProductDetailEditVM: ObservableObject {
                 self?.productsDB.uploadImageToFirebase(selectedImage, imageURL) { [weak self] imageURL in
                     if let imageURL = imageURL {
                         self?.selectedProduct?.image = imageURL
+                        
                     } else {
                         self?.alertModel = self?.configureAlertModel(with: Localization.error)
                     }
