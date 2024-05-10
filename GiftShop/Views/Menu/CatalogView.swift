@@ -37,7 +37,7 @@ struct CatalogView: View {
                             }
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: layoutForPopular, spacing: 6) {
-                                    ForEach(viewModel.popularProducts, id: \.id) { item in
+                                    ForEach(viewModel.popularProducts) { item in
                                         NavigationLink {
                                             let viewModel = ProductDetailVM(product: item)
                                             ProductDetailView(viewModel: viewModel)
@@ -76,12 +76,10 @@ struct CatalogView: View {
                         }
                     }
                 }
-            }.onAppear {
+            }.task {
                 isLoading = true
-                Task {
-                    await self.viewModel.fetchAllProducts()
-                    isLoading = false
-                }
+                await self.viewModel.fetchAllProducts()
+                isLoading = false
             }
         }
     }
