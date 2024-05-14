@@ -19,8 +19,8 @@ final class CartTest: XCTestCase {
     }
     
     func testSaveAndRetrieveProducts() {
-        let products: [Product] = [Product(id: 1, name: "Product 1", category: "сумка", detail: "", price: 100, quantity: 1),
-                                   Product(id: 2, name: "Product 2", category: "сумка", detail: "", price: 100, quantity: 1)]
+        let products: [Product] = [Product(id: 1, name: "Product 1", category: "сумка", detail: "", price: 100, image: "gs://giftshop-d7b5d.appspot.com/productImages/pic121.png", quantity: 1),
+                                   Product(id: 2, name: "Product 2", category: "сумка", detail: "", price: 100, image: "gs://giftshop-d7b5d.appspot.com/productImages/pic121.png", quantity: 1)]
         repository.save(products)
         let retrievedProducts = repository.retrieve()
         

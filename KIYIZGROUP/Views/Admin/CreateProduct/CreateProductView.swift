@@ -58,6 +58,9 @@ struct CreateProductView: View {
                 .shadow(color: Color(.orange).opacity(0.5), radius: 5, x: 0, y: 5)
                 .padding(.bottom)
             }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
             .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
                 Button(Localization.gallery) {
                     isShowingGalleryPicker = true
@@ -70,7 +73,7 @@ struct CreateProductView: View {
                 ImagePicker(sourceType: .photoLibrary, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
             }
             .sheet(isPresented: $isShowingCameraPicker) {
-                ImagePicker(sourceType: .camera, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
+                ImagePicker(sourceType: .camera, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingCameraPicker)
             }
             .alert(item: $viewModel.alertModel) { alertModel in
                 return Alert(
