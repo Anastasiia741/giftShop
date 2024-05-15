@@ -59,7 +59,7 @@ struct OrdersView: View {
                     ]
                 )
             }
-            .fullScreenCover(isPresented: $viewModel.isQuitPresenter) {
+            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
                 TabBar(viewModel: MainTabViewModel())
             }
             .onAppear {

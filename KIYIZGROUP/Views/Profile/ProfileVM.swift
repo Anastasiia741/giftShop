@@ -19,7 +19,7 @@ final class ProfileVM: ObservableObject {
     @Published var address = ""
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-    @Published var isQuitPresenter = false
+    @Published var showQuitPresenter = false
 
     
     private func configureAlertModel(with title: String, message: String?) -> AlertModel {
@@ -101,7 +101,7 @@ final class ProfileVM: ObservableObject {
             switch result {
             case .success:
                 print("Пользователь разлогинен!")
-                self.isQuitPresenter = true
+                self.showQuitPresenter = true
             case .failure(let error):
                 print(error.localizedDescription)
             }

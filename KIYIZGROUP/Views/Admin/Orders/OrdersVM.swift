@@ -12,7 +12,7 @@ final class OrdersVM: ObservableObject {
     private var selectedStatus: OrderStatus = .all
     @Published var filteredOrders: [Order] = []
     @Published var orders: [Order] = []
-    @Published var isQuitPresenter = false
+    @Published var showQuitPresenter = false
 
     
     func fetchUserOrders() {
@@ -37,7 +37,7 @@ final class OrdersVM: ObservableObject {
         authService.signOut{ result in
             switch result {
             case .success:
-                self.isQuitPresenter = true
+                self.showQuitPresenter = true
             case .failure(let error):
                 print("\(error.localizedDescription)")
             }
