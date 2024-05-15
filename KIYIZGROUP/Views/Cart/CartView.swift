@@ -5,21 +5,19 @@
 import SwiftUI
 
 struct CartView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = CartVM()
     @StateObject private var catalogVM = CatalogVM()
     @State private var promo: String = ""
+    @Binding var currentTab: Int
     let currentUserId: String
+    private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
     @State private var isPresented = false
     @State private var orderPlaced = false
     @State private var isPromoSheetVisible = false
     @State private var isPromoCodeEntryPresented = false
     @State private var navigateToCatalog = false
     @State private var isAuthViewPresented = false
-    @Binding var currentTab: Int
-    private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
-    @Environment(\.colorScheme) var colorScheme
-    
     
     var body: some View {
         NavigationView {
@@ -90,7 +88,7 @@ struct CartView: View {
                         LazyHGrid(rows: layoutForPopular, spacing: 16) {
                             ForEach(catalogVM.popularProducts, id: \.id) { item in
                                 PopularProductCell(product: item)
-                                    .foregroundColor(.themeText)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                                     .onTapGesture {
                                         viewModel.addPromoProductToOrder(for: item)
                                     }
@@ -163,7 +161,7 @@ struct CartView: View {
             }.navigationBarItems(leading: HStack {
                 Text(Localization.cart)
                     .font(.title3.bold())
-                    .foregroundColor(.themeText)
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                     .padding(.leading, 20)
                     .fixedSize()
                 Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())

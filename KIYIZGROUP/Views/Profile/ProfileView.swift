@@ -7,11 +7,10 @@ import PhotosUI
 import SDWebImageSwiftUI
 
 struct ProfileView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = ProfileVM()
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
-    @Environment(\.colorScheme) var colorScheme
     @State private var isQuitAlertPresenter = false
     @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
@@ -114,7 +113,7 @@ struct ProfileView: View {
             .navigationBarItems(leading: HStack {
                 Text(Localization.profile)
                     .font(.title3.bold())
-                    .foregroundColor(.themeText)
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                     .padding(.leading, 20)
                     .fixedSize()
                 Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
@@ -130,7 +129,7 @@ struct ProfileView: View {
                     }) {
                         Images.Profile.exit
                             .imageScale(.small)
-                            .tint(.themeText)
+                            .tint(colorScheme == .dark ? .white : .black)
                     }
                 }
             )

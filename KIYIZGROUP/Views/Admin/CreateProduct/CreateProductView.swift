@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct CreateProductView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = CreateProductVM()
     @State private var showImgAlert = false
     @State private var isShowingGalleryPicker = false
@@ -15,7 +15,7 @@ struct CreateProductView: View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text(Localization.image).foregroundColor(.themeText)) {
+                    Section(header: Text(Localization.image)) {
                         VStack {
                             Image(uiImage: (viewModel.productImage ?? Images.CreateProduct.image ?? UIImage()))
                                 .resizable()
@@ -30,7 +30,7 @@ struct CreateProductView: View {
                                 }
                         }
                     }
-                    Section(header: Text(Localization.description).foregroundColor(.themeText)) {
+                    Section(header: Text(Localization.description).foregroundColor(colorScheme == .dark ? .white : .black)) {
                         TextField(Localization.productName, text: $viewModel.productName)
                         TextField(Localization.category, text: $viewModel.productCategory)
                             .keyboardType(.alphabet)
@@ -38,7 +38,7 @@ struct CreateProductView: View {
                         TextField(Localization.price, text: $viewModel.productPrice)
                             .keyboardType(.decimalPad)
                     }
-                    Section(header: Text(Localization.detailedProductDescrip).foregroundColor(.themeText)) {
+                    Section(header: Text(Localization.detailedProductDescrip).foregroundColor(colorScheme == .dark ? .white : .black)) {
                         TextEditor(text: $viewModel.productDetail)
                             .frame(height: 100)
                             .padding(.horizontal)

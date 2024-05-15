@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct PromoCodeView: View {
-    
     @StateObject private var viewModel = CartVM()
     @Binding var promo: String
     @Binding var isPromoSheetVisible: Bool
@@ -75,3 +74,4 @@ struct PromoCodeView: View {
         }
     }
 }
+

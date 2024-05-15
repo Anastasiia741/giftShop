@@ -5,11 +5,11 @@
 import SwiftUI
 
 struct OrderDetail: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: OrderDetailVM
     @StateObject var statusColors = StatusColors()
     @State private var isShowingStatusAlert = false
-
+    
     init(orderDetailVM: OrderDetailVM) {
         self.viewModel = orderDetailVM
     }
@@ -73,7 +73,7 @@ struct OrderDetail: View {
                 Text("\(Localization.sum) \(viewModel.selectedOrder?.cost ?? .zero) \(Localization.som)")
                     .customTextStyle(TextStyle.avenirRegular, size: 18)
                     .fontWeight(.bold)
-                    .foregroundColor(.themeText)
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                     .padding(.top)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }

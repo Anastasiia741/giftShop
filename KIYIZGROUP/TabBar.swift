@@ -5,10 +5,9 @@
 import SwiftUI
 
 struct TabBar: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: MainTabViewModel
     @State private var curentTab: Int = 0
-    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         TabView(selection: $curentTab) {
@@ -43,7 +42,7 @@ struct TabBar: View {
                             }
                         }
                         .tag(TabType.catalog.rawValue)
-                    CartView(currentUserId: userID, currentTab: $curentTab)
+                    CartView(currentTab: $curentTab, currentUserId: userID)
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
@@ -66,7 +65,7 @@ struct TabBar: View {
                         }
                     }
                     .tag(TabType.catalog.rawValue)
-                CartView(currentUserId: "", currentTab: $curentTab)
+                CartView(currentTab: $curentTab, currentUserId: "")
                     .tabItem {
                         VStack {
                             Images.TabBar.cart

@@ -6,9 +6,8 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct ProductDetailEditView: View {
-    
-    @ObservedObject var viewModel: ProductDetailEditVM
     @Environment(\.presentationMode) private var presentationMode
+    @ObservedObject var viewModel: ProductDetailEditVM
     @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false

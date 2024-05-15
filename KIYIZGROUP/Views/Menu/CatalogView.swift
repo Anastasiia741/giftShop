@@ -5,11 +5,10 @@
 import SwiftUI
 
 struct CatalogView: View {
-    
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = CatalogVM()
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
-    @Environment(\.colorScheme) var colorScheme
     @State private var isLoading = false
     
     var body: some View {
@@ -27,7 +26,7 @@ struct CatalogView: View {
                             HStack(alignment: .center, spacing: 10) {
                                 Text(Localization.popular)
                                     .font(.title3.bold())
-                                    .foregroundColor(.themeText)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                                     .padding(.leading, 20)
                                 Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                                     .resizable()
@@ -43,7 +42,7 @@ struct CatalogView: View {
                                             ProductDetailView(viewModel: viewModel)
                                         } label: {
                                             PopularProductCell(product: item)
-                                                .foregroundColor(.themeText)
+                                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                         }
                                     }
                                 }.padding()
@@ -53,7 +52,7 @@ struct CatalogView: View {
                             HStack(alignment: .center, spacing: 10) {
                                 Text(Localization.products)
                                     .font(.title3.bold())
-                                    .foregroundColor(.themeText)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                                 Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -68,7 +67,7 @@ struct CatalogView: View {
                                             ProductDetailView(viewModel: viewModel)
                                         } label: {
                                             ProductCell(product: item)
-                                                .foregroundColor(.themeText)
+                                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                         }
                                     }
                                 }.padding()

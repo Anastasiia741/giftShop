@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct ProfileCell: View {
-    
     var order: Order
     @StateObject var statusColors = StatusColors()
     @StateObject var viewModel: ProfileVM

@@ -5,11 +5,10 @@
 import SwiftUI
 
 struct ProductsEditView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject var catalogVM: CatalogVM
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
-    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
@@ -18,7 +17,7 @@ struct ProductsEditView: View {
                     HStack(alignment: .center, spacing: 10) {
                         Text(Localization.popular)
                             .font(.title3.bold())
-                            .foregroundColor(.themeText)
+                            .foregroundColor(colorScheme == .dark ? .white : .black)
                             .padding(.leading, 20)
                         Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                             .resizable()
@@ -34,7 +33,7 @@ struct ProductsEditView: View {
                                     ProductDetailEditView(viewModel: viewModel)
                                 } label: {
                                     ProductCell(product: item)
-                                        .foregroundColor(.themeText)
+                                        .foregroundColor(colorScheme == .dark ? .white : .black)
                                 }
                             }
                         }.padding()
@@ -44,7 +43,7 @@ struct ProductsEditView: View {
                     HStack(alignment: .center, spacing: 10) {
                         Text(Localization.products)
                             .font(.title3.bold())
-                            .foregroundColor(.themeText)
+                            .foregroundColor(colorScheme == .dark ? .white : .black)
                         Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -59,7 +58,7 @@ struct ProductsEditView: View {
                                     ProductDetailEditView(viewModel: viewModel)
                                 } label: {
                                     ProductCell(product: item)
-                                        .foregroundColor(.themeText)
+                                        .foregroundColor(colorScheme == .dark ? .white : .black)
                                 }
                             }
                         }.padding()

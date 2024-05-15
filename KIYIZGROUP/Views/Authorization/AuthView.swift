@@ -6,10 +6,9 @@ import SwiftUI
 import FirebaseAuth
 
 struct AuthView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject private var viewModel = AuthVM()
-    @Environment(\.colorScheme) var colorScheme
-    
+   
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -59,7 +58,7 @@ struct AuthView: View {
                     .padding(8)
                     .padding(.horizontal, 12)
                     .font(.title3.bold())
-                    .foregroundColor(.themeText)
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
             }
                 Button {
                     viewModel.toggleAuthButton()
@@ -81,7 +80,7 @@ struct AuthView: View {
                         .padding(6)
                         .padding(.horizontal, 12)
                         .font(.caption2.bold())
-                        .foregroundColor(.themeText)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                 }
             }
             .padding()
