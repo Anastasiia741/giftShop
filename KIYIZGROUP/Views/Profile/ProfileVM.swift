@@ -12,13 +12,15 @@ final class ProfileVM: ObservableObject {
     private let dbOrdersService = DBOrdersService()
     @Published var orders: [Order] = []
     @Published var profile: NewUser?
+    @Published var alertModel: AlertModel?
     @Published var name = ""
     @Published var phoneNumber = ""
     @Published var email = ""
     @Published var address = ""
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-    @Published var alertModel: AlertModel?
+    @Published var showQuitPresenter = false
+
     
     private func configureAlertModel(with title: String, message: String?) -> AlertModel {
         AlertModel(
@@ -60,8 +62,7 @@ final class ProfileVM: ObservableObject {
         
         saveProfileToFirebase(updatedProfile) { result in
             switch result {
-            case .success(let updatedProfile):
-                print("Профиль успешно сохранен:", updatedProfile)
+            case .success(_):
                 self.alertModel = self.configureAlertModel(with: Localization.dataSuccessfullySaved, message: nil)
             case .failure(let error):
                 self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
@@ -100,6 +101,7 @@ final class ProfileVM: ObservableObject {
             switch result {
             case .success:
                 print("Пользователь разлогинен!")
+                self.showQuitPresenter = true
             case .failure(let error):
                 print(error.localizedDescription)
             }

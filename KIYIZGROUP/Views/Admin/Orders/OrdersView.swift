@@ -8,8 +8,7 @@ struct OrdersView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel = OrdersVM()
     @State private var selectedStatus: OrderStatus = .all
-    @State private var isQuitAlertPresenter = false
-    @State private var isAuthViewPresenter = false
+    @State private var isAlertPresenter = false
     
     var body: some View {
         NavigationView {
@@ -43,25 +42,24 @@ struct OrdersView: View {
             }
             .navigationBarItems(trailing:
                                     Button(action: {
-                isQuitAlertPresenter = true
+                isAlertPresenter = true
             }) {
                 Images.Profile.exit
                     .imageScale(.small)
                     .foregroundColor(colorScheme == .dark ? .white : .black)
             })
-            .actionSheet(isPresented: $isQuitAlertPresenter) {
+            .actionSheet(isPresented: $isAlertPresenter) {
                 ActionSheet(
                     title: Text(Localization.logOut),
                     buttons: [
                         .default(Text(Localization.yes)) {
-                            isAuthViewPresenter.toggle()
                             viewModel.logout()
                         },
                         .cancel(Text(Localization.cancel))
                     ]
                 )
             }
-            .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
+            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
                 TabBar(viewModel: MainTabViewModel())
             }
             .onAppear {

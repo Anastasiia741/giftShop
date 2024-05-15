@@ -7,12 +7,13 @@ import Foundation
 final class OrdersVM: ObservableObject {
     
     private let dbOrdersService = DBOrdersService()
-
     private let authService = AuthService()
     private var selectOrder: Order?
     private var selectedStatus: OrderStatus = .all
     @Published var filteredOrders: [Order] = []
     @Published var orders: [Order] = []
+    @Published var showQuitPresenter = false
+
     
     func fetchUserOrders() {
         dbOrdersService.fetchUserOrders { [weak self] orders  in
@@ -35,7 +36,8 @@ final class OrdersVM: ObservableObject {
     func logout()  {
         authService.signOut{ result in
             switch result {
-            case .success: break
+            case .success:
+                self.showQuitPresenter = true
             case .failure(let error):
                 print("\(error.localizedDescription)")
             }

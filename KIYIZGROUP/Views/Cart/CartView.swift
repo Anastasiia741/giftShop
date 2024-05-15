@@ -155,7 +155,7 @@ struct CartView: View {
                     }
                     .padding([.leading, .trailing, .bottom], 16)
                 }
-                .fullScreenCover(isPresented: $navigateToCatalog, onDismiss: nil) {
+                .fullScreenCover(isPresented: $navigateToCatalog) {
                     TabBar(viewModel: MainTabViewModel())
                 }
             }.navigationBarItems(leading: HStack {

@@ -12,8 +12,8 @@ struct ProfileView: View {
     @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
     @State private var isQuitAlertPresenter = false
-    @State private var isAuthViewPresenter = false
     @State private var isAccountDeletedAlert = false
+    
     
     var body: some View {
         NavigationView {
@@ -96,7 +96,6 @@ struct ProfileView: View {
                     Button{
                         viewModel.showDeleteConfirmationAlert {
                             viewModel.logout()
-                            isAuthViewPresenter.toggle()
                         }
                     } label: {
                         Text(Localization.deleteAccountName)
@@ -138,7 +137,6 @@ struct ProfileView: View {
                     title: Text(Localization.logOut),
                     buttons: [
                         .default(Text(Localization.yes)) {
-                            isAuthViewPresenter.toggle()
                             viewModel.logout()
                         },
                         .cancel(Text(Localization.cancel))
@@ -161,7 +159,7 @@ struct ProfileView: View {
                     )
                 }
             }
-            .fullScreenCover(isPresented: $isAuthViewPresenter, onDismiss: nil) {
+            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
                 TabBar(viewModel: MainTabViewModel())
             }
         }
