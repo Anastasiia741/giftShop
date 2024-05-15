@@ -18,8 +18,8 @@ struct ProductDetailEditView: View {
         ScrollView{
             VStack(spacing: 16) {
                 VStack(alignment: .leading) {
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
+                    if let image = selectedImage {
+                        Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(maxWidth: .infinity, maxHeight: 260)

@@ -35,7 +35,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "712CAF692BC0591900484370"
+               BlueprintIdentifier = "7130318B2BF39E7D00605DD6"
                BuildableName = "KIYIZGROUPTests.xctest"
                BlueprintName = "KIYIZGROUPTests"
                ReferencedContainer = "container:KIYIZGROUP.xcodeproj">
