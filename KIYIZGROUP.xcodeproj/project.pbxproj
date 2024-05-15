@@ -50,6 +50,7 @@
 		712716912BA35FB000460FB1 /* Colors .swift in Sources */ = {isa = PBXBuildFile; fileRef = 712716902BA35FB000460FB1 /* Colors .swift */; };
 		7130318F2BF39E7D00605DD6 /* KIYIZGROUPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7130318E2BF39E7D00605DD6 /* KIYIZGROUPTests.swift */; };
 		713031962BF39EB700605DD6 /* CartTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713031952BF39EB700605DD6 /* CartTest.swift */; };
+		713031982BF3A9E500605DD6 /* ProductServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713031972BF3A9E500605DD6 /* ProductServiceTests.swift */; };
 		71353CD62B6D16FE008A7868 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71353CD52B6D16FE008A7868 /* ProfileCell.swift */; };
 		71353CD82B6D5770008A7868 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71353CD72B6D5770008A7868 /* ImagePicker.swift */; };
 		713A29022B91FD5100CE720D /* ProductDetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713A29012B91FD5100CE720D /* ProductDetailEditView.swift */; };
@@ -120,6 +121,7 @@
 		7130318C2BF39E7D00605DD6 /* KIYIZGROUPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KIYIZGROUPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7130318E2BF39E7D00605DD6 /* KIYIZGROUPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KIYIZGROUPTests.swift; sourceTree = "<group>"; };
 		713031952BF39EB700605DD6 /* CartTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTest.swift; sourceTree = "<group>"; };
+		713031972BF3A9E500605DD6 /* ProductServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductServiceTests.swift; sourceTree = "<group>"; };
 		71353CD52B6D16FE008A7868 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		71353CD72B6D5770008A7868 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		713A29012B91FD5100CE720D /* ProductDetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailEditView.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			children = (
 				7130318E2BF39E7D00605DD6 /* KIYIZGROUPTests.swift */,
 				713031952BF39EB700605DD6 /* CartTest.swift */,
+				713031972BF3A9E500605DD6 /* ProductServiceTests.swift */,
 			);
 			path = KIYIZGROUPTests;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				713031982BF3A9E500605DD6 /* ProductServiceTests.swift in Sources */,
 				713031962BF39EB700605DD6 /* CartTest.swift in Sources */,
 				7130318F2BF39E7D00605DD6 /* KIYIZGROUPTests.swift in Sources */,
 			);
