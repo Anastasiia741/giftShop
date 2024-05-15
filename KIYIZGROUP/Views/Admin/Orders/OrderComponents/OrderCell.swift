@@ -7,10 +7,10 @@ import SwiftUI
 struct OrderCell: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @Binding var order: Order
     @StateObject var orderDetailVM: OrderDetailVM = OrderDetailVM()
     @StateObject var statusColors = StatusColors()
     @State private var isOrderDetailActive = false
-    @Binding var order: Order
     
     var body: some View {
         HStack {
@@ -30,7 +30,7 @@ struct OrderCell: View {
                 isOrderDetailActive = true
                 orderDetailVM.selectedOrder = order
                 Task {
-                 await orderDetailVM.fetchUserProfile()
+                    await orderDetailVM.fetchUserProfile()
                 }
             }) {
                 Text(Localization.moreDetails)

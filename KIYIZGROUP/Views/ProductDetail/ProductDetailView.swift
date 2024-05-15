@@ -6,11 +6,10 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ProductDetailView: View {
-    
-    @ObservedObject var viewModel: ProductDetailVM
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel: ProductDetailVM
     @State var count = 1
-    
+
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading) {
