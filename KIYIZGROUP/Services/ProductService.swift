@@ -10,7 +10,6 @@ final class ProductService {
     
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
-    private var savedProducts: [Product] = []
     private var listenerRegistation: ListenerRegistration?
     private lazy var productCollection = Firestore.firestore().collection(Accesses.products)
     
@@ -22,12 +21,9 @@ final class ProductService {
             completion(error)
         }
     }
-
+    
     //  MARK: - Fetch and monitor changes of products from firebase
     func fetchAllProducts() async throws -> [Product] {
-        if !savedProducts.isEmpty {
-            return savedProducts
-        }
         let querySnapshot = try await db.collection(Accesses.products).getDocuments()
         var products: [Product] = []
         for document in querySnapshot.documents {
@@ -35,7 +31,6 @@ final class ProductService {
                 products.append(product)
             }
         }
-        self.savedProducts = products
         return products
     }
     
@@ -88,16 +83,16 @@ final class ProductService {
     func save(imageData: Data, nameImg: String, completion: @escaping (_ imageLink: String?) -> Void) {
         let storageRef = storage.reference(forURL: Accesses.storageProducts).child(nameImg)
         storageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if error != nil {
+            guard let _ = metadata else {
                 completion(nil)
-            } else {
-                storageRef.downloadURL { (url, error) in
-                    if let downloadURL = url {
-                        completion(downloadURL.absoluteString)
-                    } else {
-                        completion(nil)
-                    }
+                return
+            }
+            storageRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    completion(nil)
+                    return
                 }
+                completion(downloadURL.absoluteString)
             }
         }
     }

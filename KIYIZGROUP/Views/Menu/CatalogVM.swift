@@ -8,7 +8,6 @@ import FirebaseFirestore
 import SDWebImage
 
 final class CatalogVM: ObservableObject {
-    
     @Published var popularProducts: [Product] = []
     @Published var allProducts: [Product] = []
     private let productService = ProductService()

@@ -76,7 +76,8 @@ struct CatalogView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
+//            .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
             .task {
                 isLoading = true
                 await self.viewModel.fetchAllProducts()

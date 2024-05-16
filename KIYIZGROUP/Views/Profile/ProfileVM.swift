@@ -100,7 +100,6 @@ final class ProfileVM: ObservableObject {
         authService.signOut { result in
             switch result {
             case .success:
-                print("Пользователь разлогинен!")
                 self.showQuitPresenter = true
             case .failure(let error):
                 print(error.localizedDescription)
