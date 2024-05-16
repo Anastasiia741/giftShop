@@ -160,8 +160,12 @@ struct ProfileView: View {
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
-                TabBar(viewModel: MainTabViewModel())
+                NavigationView {
+                    TabBar(viewModel: MainTabViewModel())
+                }
             }
         }
     }
 }
+
+//test@test.com

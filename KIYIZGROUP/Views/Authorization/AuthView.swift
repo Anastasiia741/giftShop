@@ -99,10 +99,9 @@ struct AuthView: View {
         .fullScreenCover(isPresented: $viewModel.isTabViewShow) {
             if AuthService().currentUser?.uid == Accesses.adminUser {
                 TabBar(viewModel: MainTabViewModel())
-                    .navigationBarTitleDisplayMode(.inline)
             } else {
                 let mainTabBarVM = MainTabViewModel()
-                TabBar(viewModel: mainTabBarVM).navigationBarTitleDisplayMode(.inline)
+                TabBar(viewModel: mainTabBarVM)
             }
         }
         .alert(item: $viewModel.alertModel) { alertModel in

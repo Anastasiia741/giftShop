@@ -60,7 +60,9 @@ struct OrdersView: View {
                 )
             }
             .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
-                TabBar(viewModel: MainTabViewModel())
+                NavigationView {
+                    TabBar(viewModel: MainTabViewModel())
+                }
             }
             .onAppear {
                 viewModel.fetchUserOrders()

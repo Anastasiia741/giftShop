@@ -76,7 +76,6 @@ struct CatalogView: View {
                     }
                 }
             }
-//            .navigationBarHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 isLoading = true
