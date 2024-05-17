@@ -116,7 +116,7 @@ struct ProductDetailEditView: View {
                     .fontWeight(.medium)
                     .frame(maxWidth: 120, minHeight: 40)
                     .foregroundColor(.white)
-                    .background(Color(.green))
+                    .background(Color(StatusColor.greenButtom))
                     .cornerRadius(20)
                     .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
                 }

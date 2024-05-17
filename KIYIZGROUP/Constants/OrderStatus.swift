@@ -19,4 +19,5 @@ enum StatusColor {
     static let sended = "SendedStatusColor"
     static let delivered = "DeliveredStatusColor"
     static let cancelled = "CancelledStatusColor"
+    static let greenButtom = "GreenButton"
 }

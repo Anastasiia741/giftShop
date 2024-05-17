@@ -88,9 +88,9 @@ struct OrderDetail: View {
                 .fontWeight(.medium)
                 .frame(maxWidth: 130, minHeight: 50)
                 .foregroundColor(.white)
-                .background(Color(.green))
+                .background(Color(StatusColor.new))
                 .cornerRadius(20)
-                .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
+                .shadow(color: Color(StatusColor.new).opacity(0.5), radius: 5, x: 0, y: 5)
         }
         .actionSheet(isPresented: $isShowingStatusAlert) {
             ActionSheet(

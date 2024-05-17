@@ -38,9 +38,9 @@ struct OrderCell: View {
                     .fontWeight(.medium)
                     .frame(maxWidth: 100, minHeight: 30)
                     .foregroundColor(.white)
-                    .background(Color(.green))
+                    .background(Color(StatusColor.new))
                     .cornerRadius(20)
-                    .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
+                    .shadow(color: Color(StatusColor.new).opacity(0.5), radius: 5, x: 0, y: 5)
             }
             .buttonStyle(PlainButtonStyle())
             .sheet(isPresented: $isOrderDetailActive) {
