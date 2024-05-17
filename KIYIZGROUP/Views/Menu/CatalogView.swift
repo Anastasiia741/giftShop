@@ -76,7 +76,6 @@ struct CatalogView: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .task {
                 isLoading = true
                 await self.viewModel.fetchAllProducts()
