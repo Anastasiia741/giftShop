@@ -6,7 +6,7 @@ import SwiftUI
 
 struct TabBar: View {
     @Environment(\.colorScheme) private var colorScheme
-    @StateObject var viewModel: MainTabViewModel
+    @StateObject var viewModel: MainTabVM
     @State private var curentTab: Int = 0
     
     var body: some View {

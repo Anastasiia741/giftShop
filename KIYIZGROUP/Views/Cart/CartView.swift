@@ -156,7 +156,7 @@ struct CartView: View {
                     .padding([.leading, .trailing, .bottom], 16)
                 }
                 .fullScreenCover(isPresented: $navigateToCatalog) {
-                    TabBar(viewModel: MainTabViewModel())
+                    TabBar(viewModel: MainTabVM())
                 }
             }.navigationBarItems(leading: HStack {
                 Text(Localization.cart)

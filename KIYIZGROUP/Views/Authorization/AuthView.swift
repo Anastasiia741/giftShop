@@ -98,9 +98,9 @@ struct AuthView: View {
         .animation(.easeInOut(duration: 0.3), value: viewModel.isAuth)
         .fullScreenCover(isPresented: $viewModel.isTabViewShow) {
             if AuthService().currentUser?.uid == Accesses.adminUser {
-                TabBar(viewModel: MainTabViewModel())
+                TabBar(viewModel: MainTabVM())
             } else {
-                let mainTabBarVM = MainTabViewModel()
+                let mainTabBarVM = MainTabVM()
                 TabBar(viewModel: mainTabBarVM)
             }
         }

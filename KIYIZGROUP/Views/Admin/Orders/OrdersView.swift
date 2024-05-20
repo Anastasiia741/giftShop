@@ -61,7 +61,7 @@ struct OrdersView: View {
             }
             .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
                 NavigationView {
-                    TabBar(viewModel: MainTabViewModel())
+                    TabBar(viewModel: MainTabVM())
                 }
             }
             .onAppear {

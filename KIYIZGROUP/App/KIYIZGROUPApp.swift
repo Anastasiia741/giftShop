@@ -14,7 +14,7 @@ struct KIYIZGROUPApp: App {
     
     var body: some Scene {
         WindowGroup {
-            let viewModel = MainTabViewModel()
+            let viewModel = MainTabVM()
             TabBar(viewModel: viewModel)
         }
     }
