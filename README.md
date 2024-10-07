@@ -8,8 +8,9 @@ You can download the app here: [Download the app here](https://apps.apple.com/pt
   
   Explore a wide range of products through a convenient mobile interface.
   
-![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDM4ZnV6MWI0NmhuNzBoZjZxdXhub3Vwd2JoYWRncWFxYWR5MGYxcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qVs20vPT4EDkp0Qm0k/giphy.gif)
-
+<p align="left">
+  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDM4ZnV6MWI0NmhuNzBoZjZxdXhub3Vwd2JoYWRncWFxYWR5MGYxcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qVs20vPT4EDkp0Qm0k/giphy.gif" alt="Alt Text">
+</p>
 
 
 - **Registration:**
