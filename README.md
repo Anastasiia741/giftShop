@@ -12,7 +12,6 @@ You can download the app here: [Download the app here](https://apps.apple.com/pt
   <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDM4ZnV6MWI0NmhuNzBoZjZxdXhub3Vwd2JoYWRncWFxYWR5MGYxcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qVs20vPT4EDkp0Qm0k/giphy.gif" alt="Alt Text">
 </p>
 
-
 - **Registration:**
 
 Fast and convenient registration via email will allow you to quickly place your order.
@@ -23,7 +22,8 @@ Fast and convenient registration via email will allow you to quickly place your 
   
 Easily and quickly place orders for the products you like directly from the application, minimizing the effort of searching and purchasing.
 
-![Alt Text](https://giphy.com/gifs/pee1KS8bh7BAu7w52D/giphy.gif)
+![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjd1dnh3aDB1Mm82c3NiZDkyaGFhZWVuN3BlMjQxbTh2NDZ2ZXY2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pee1KS8bh7BAu7w52D/giphy.gif)
+
 
 - **User information:**
 
