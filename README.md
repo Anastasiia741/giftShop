@@ -4,7 +4,7 @@ This mobile application provides a convenient way to browse, order, and manage i
 You can download the app here: [Download the app here](https://apps.apple.com/pt/app/kiyizgroup/id6502351648)
 
 ## Key Features:
-- **Catalog Browsing:**
+ **Catalog Browsing:**
   
   Explore a wide range of products through a convenient mobile interface.
   
