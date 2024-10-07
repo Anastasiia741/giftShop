@@ -16,26 +16,27 @@ You can download the app here: [Download the app here](https://apps.apple.com/pt
 
 Fast and convenient registration via email will allow you to quickly place your order.
 
-![Alt Text](https://giphy.com/gifs/HrDf9L8ldIxb2U5WaW/giphy.gif)
+![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjhiNDMwNTIyZzBscDlscXh0Zjg3enRvMmFybXdic3d3NTM2bHAxYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HrDf9L8ldIxb2U5WaW/giphy.gif)
 
 - **Order Placement:**
   
 Easily and quickly place orders for the products you like directly from the application, minimizing the effort of searching and purchasing.
 
-![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjd1dnh3aDB1Mm82c3NiZDkyaGFhZWVuN3BlMjQxbTh2NDZ2ZXY2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pee1KS8bh7BAu7w52D/giphy.gif)
+![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGJ2OGtycTYxeXhvcDFjdWp2dnN0cGZiaGx3MDN4ZnNicjJiYjZ6dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pee1KS8bh7BAu7w52D/giphy.gif)
 
 
 - **User information:**
 
 Track your order history in your profile.
 
-![Alt Text](/giphy.gif)
+![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHZpb3Jia2RtYTNkZTBreDg2ZnFoemkyNzk0ejZubTNndGxiNmo5ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xoy6q3oqGG8Uu26DNz/giphy.gif)
+
 
 - **Order Management (for administrators):**
   
   Administrators have a dedicated application for efficient order management and adding new products to the inventory.
 
-![Alt Text](https://giphy.com/gifs/HV9B40aah5WUcDk3io/giphy.gif)
+![Alt Text](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2kxbG92c2prbThkanczc2F5YnB1cm14bGFtNmdlYWppaHl1M2Y5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HV9B40aah5WUcDk3io/giphy.gif)
 
 ## Requirements
 - **iOS Platform:** iOS 14.0 
