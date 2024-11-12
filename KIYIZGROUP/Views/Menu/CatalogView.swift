@@ -48,6 +48,8 @@ struct CatalogView: View {
                                 }.padding()
                             }
                         }
+                        
+                       
                         Section {
                             HStack(alignment: .center, spacing: 10) {
                                 Text(Localization.products)
@@ -59,9 +61,37 @@ struct CatalogView: View {
                                     .frame(width: 45, height: 50)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }.padding(.horizontal, 20)
+                            
+                            
+                            Section {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    
+                                    HStack {
+                                        ForEach(viewModel.categories, id: \.self) { category in
+                                            Button(action: {
+                                                viewModel.selectedCategory = category
+                                                viewModel.filterProducts(by: category)
+                                            }) {
+                                                Text(category)
+                                                    .fontWeight(.bold)
+                                                    .padding(.vertical, 8)
+                                                    .padding(.horizontal, 16)
+                                                    .foregroundColor(.white)
+                                                    .background(viewModel.selectedCategory == category ? Colors.yellow : Colors.whiteAlfa)
+                                                    .cornerRadius(20)
+                                                    .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
+                                            }
+                                        }
+                                        
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 10)
+                                }
+                            }
+                            
                             ScrollView(.vertical, showsIndicators: false) {
                                 LazyVGrid(columns: layoutForProducts) {
-                                    ForEach(viewModel.allProducts) { item in
+                                    ForEach(viewModel.filteredProducts) { item in
                                         NavigationLink {
                                             let viewModel = ProductDetailVM(product: item)
                                             ProductDetailView(viewModel: viewModel)

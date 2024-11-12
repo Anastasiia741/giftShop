@@ -7,7 +7,6 @@ import UIKit
 import FirebaseAuth
 
 final class AuthVM: ObservableObject {
-    
     private let authService = AuthService()
     @Published var alertModel: AlertModel?
     @Published var email: String = ""

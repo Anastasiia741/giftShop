@@ -122,7 +122,7 @@ struct CartView: View {
                                             }
                                     })
                             }
-                        }
+                        }.padding(.top, 10)
                     }
                 }
                 VStack {

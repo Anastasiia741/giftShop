@@ -125,7 +125,7 @@ struct ProductDetailEditView: View {
             }
         }
         .onTapGesture {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            self.hideKeyboard()
         }
         .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
             Button(Localization.gallery) {

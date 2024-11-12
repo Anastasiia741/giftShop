@@ -47,6 +47,8 @@ struct AuthView: View {
                         }
                     } else {
                         viewModel.signUp()
+                        print("Регистрация с email: \(viewModel.email) и паролем: \(viewModel.password)")
+
                     }
                 }
             label: {
@@ -110,6 +112,9 @@ struct AuthView: View {
                 message: Text(alertModel.message ?? ""),
                 dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
             )
+        }
+        .onTapGesture {
+            self.hideKeyboard()
         }
     }
 }

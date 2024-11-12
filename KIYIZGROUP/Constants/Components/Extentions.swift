@@ -4,6 +4,10 @@
 
 import SwiftUI
 
+enum TabType: Int {
+    case catalog, cart, profile, productsEdit, createProduct, orders
+}
+
 final class Extentions: ObservableObject {
     
     func formattedDate(_ date: Date) -> String {
@@ -19,6 +23,8 @@ extension Text {
     }
 }
 
-enum TabType: Int {
-    case catalog, cart, profile, productsEdit, createProduct, orders
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }

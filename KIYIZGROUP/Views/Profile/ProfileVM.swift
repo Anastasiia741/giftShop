@@ -88,8 +88,10 @@ final class ProfileVM: ObservableObject {
         dbOrdersService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
             switch result {
             case .success(let orderHistory):
-                self?.orders = orderHistory
-                self?.orders.sort { $0.date > $1.date }
+                DispatchQueue.main.async {
+                    self?.orders = orderHistory
+                    self?.orders.sort { $0.date > $1.date }
+                }
             case .failure(let error):
                 self?.alertModel = self?.configureAlertModel(with: Localization.errorRetrievingOrderHistory, message: error.localizedDescription)
             }

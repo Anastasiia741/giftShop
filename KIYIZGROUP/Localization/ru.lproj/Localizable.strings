@@ -51,6 +51,7 @@
 //MARK: - CatalogView
 "popular" = "Популярное";
 "products" = "Товары";
+"all_categories" = "Все";
 
 //MARK: - ProductDetailView
 "quantity" = "Количество: ";
