@@ -6,7 +6,6 @@ import Foundation
 import FirebaseStorage
 import FirebaseFirestore
 
-
 final class ProductService {
     
     private let db = Firestore.firestore()

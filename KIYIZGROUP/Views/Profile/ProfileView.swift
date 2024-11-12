@@ -9,40 +9,36 @@ import SDWebImageSwiftUI
 struct ProfileView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = ProfileVM()
-    @State private var orders: [Order] = []
     @State private var selectedImage: UIImage?
     @State private var isQuitAlertPresenter = false
     @State private var isAccountDeletedAlert = false
+    @State private var keyboardOffset: CGFloat = 0
+    
+    
+    
     
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .center, spacing: 18) {
-                VStack(alignment: .leading, spacing: 16) {
+            VStack {
+                VStack(alignment: .leading, spacing: 12) {
                     Text(Localization.yourName)
-                        .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 18))
                     TextField(Localization.enterYourName, text: $viewModel.name)
                         .font(.custom(TextStyle.avenirRegular, size: 16))
-                        .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     TextField(Localization.enterPhoneNumber, text: $viewModel.phoneNumber)
                         .keyboardType(.numberPad)
                         .font(.custom(TextStyle.avenirRegular, size: 16))
-                        .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Text(Localization.yourEmail)
-                        .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 16))
                     Text(viewModel.email)
-                        .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirRegular, size: 16))
                     Text(Localization.yourDeliveryAddress)
-                        .padding(.leading, 20)
                         .font(.custom(TextStyle.avenirBold, size: 16))
                     TextField(Localization.enterYourDeliveryAddress, text: $viewModel.address)
                         .font(.custom(TextStyle.avenirRegular, size: 16))
-                        .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.horizontal)
@@ -63,33 +59,38 @@ struct ProfileView: View {
                             .foregroundColor(.white)
                             .padding(.trailing, 15)
                     }
-                }.onAppear {
+                }
+                .onAppear {
                     Task {
                         await viewModel.fetchUserProfile()
                         viewModel.fetchOrderHistory()
                     }
                 }
-                if viewModel.orders.isEmpty {
-                    Spacer()
-                    VStack(alignment: .center, spacing: 16) {
-                        Text(Localization.yourOrders)
-                            .customTextStyle(TextStyle.avenirBold, size: 16)
-                        Images.Profile.emptyList
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 150)
-                        Text(Localization.noOrdersYet)
-                            .customTextStyle(TextStyle.avenirBold, size: 16)
+                VStack(alignment: .leading, spacing: 18) {
+                    Text(Localization.yourOrders).customTextStyle(TextStyle.avenirBold, size: 16)
+                    
+                    if viewModel.orders.isEmpty {
                         Spacer()
-                    }
-                } else {
-                    List {
-                        Section(header: Text(Localization.yourOrders).customTextStyle(TextStyle.avenirBold, size: 16)) {
-                            ForEach(viewModel.orders, id: \.id) { order in
-                                ProfileCell(order: order, viewModel: viewModel)
-                            }
+                        VStack(alignment: .center, spacing: 18) {
+                            Text(Localization.yourOrders)
+                                .customTextStyle(TextStyle.avenirBold, size: 16)
+                            Images.Profile.emptyList
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 150)
+                            Text(Localization.noOrdersYet)
+                                .customTextStyle(TextStyle.avenirBold, size: 16)
+                            Spacer()
                         }
-                        .listStyle(.plain)
+                    } else {
+                        List {
+                            Section(header: EmptyView() ) {
+                                ForEach(viewModel.orders, id: \.id) { order in
+                                    ProfileCell(order: order, viewModel: viewModel)
+                                }
+                            }
+                            .listStyle(.plain)
+                        }
                     }
                 }
                 HStack(alignment: .center) {
@@ -109,6 +110,7 @@ struct ProfileView: View {
                 }
             }
             .padding()
+            .offset(y: -keyboardOffset)
             .navigationBarItems(leading: HStack {
                 Text(Localization.profile)
                     .font(.title3.bold())
@@ -164,6 +166,12 @@ struct ProfileView: View {
                     TabBar(viewModel: MainTabVM())
                 }
             }
+            
+        }
+        .onTapGesture {
+            self.hideKeyboard()
         }
     }
 }
+
+

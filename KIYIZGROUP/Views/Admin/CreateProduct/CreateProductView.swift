@@ -59,7 +59,7 @@ struct CreateProductView: View {
                 .padding(.bottom)
             }
             .onTapGesture {
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                self.hideKeyboard()
             }
             .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
                 Button(Localization.gallery) {

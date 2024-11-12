@@ -51,6 +51,7 @@
 //MARK: - CatalogView
 "popular" = "Popular";
 "products" = "Products";
+"all_categories" = "all";
 
 //MARK: - ProductDetailView
 "quantity" = "Quantity:";
@@ -121,3 +122,97 @@
 "error_retrieving_order_history" = "Error when retrieving order history";
 "product_removed" = "product Removed";
 
+
+
+
+
+
+//MainView
+"hello!" = "Hello!";
+"let_have_a_math" = "Let's have a math quiz today";
+"enter_your_name" = "Enter your name";
+"select_a_topic" = "Select a topic";
+"please_select_a_topic" = "Please select a topic";
+"start_quiz" = "Start quiz";
+"game_history" = "Game history";
+
+//SettingsView
+"settings_title" = "Settings";
+"sounds_toggle" = "Sounds";
+"push_notification_toggle" = "Push notification";
+"close_button" = "Close";
+
+//TopicsView
+"select_topic_title" = "Select a topic";
+
+//GameView
+"topic_title" = "Topic";
+"completed_text" = "Quiz Completed!";
+
+//InfoView
+"no_description" = "No description";
+"close_button" = "Close";
+
+//GameCompletedView
+"game_over" = "GAME OVER";
+"thats_a_wrap" = "THAT'S A WRAP";
+"correct_answers" = "Correct Answers: %@";
+"incorrect_answers" = "Incorrect Answers: %@";
+"score" = "Score: ";
+"play_again" = "Play Again";
+
+//HistoryView
+"game_history" = "Game History";
+"delete_result" = "Delete Result";
+"delete_confirmation" = "Are you sure you want to delete this result?";
+"delete" = "Delete";
+"cancel" = "Cancel";
+
+//EmptyHistoryView
+"no_games_yet" = "No games yet";
+
+
+
+//MainView
+"hello!" = "Привет!";
+"let_have_a_math" = "Давай пройдем викторину по математике";
+"enter_your_name" = "Введите ваше имя";
+"select_a_topic" = "Выберите тему";
+"please_select_a_topic" = "Пожалуйста, выберите тему";
+"start_quiz" = "Начать викторину";
+"game_history" = "История игр";
+
+//SettingsView
+"settings_title" = "Настройки";
+"sounds_toggle" = "Звуки";
+"push_notification_toggle" = "Push уведомления";
+"close_button" = "Закрыть";
+
+//TopicsView
+"select_topic_title" = "Выберите тему";
+
+//GameView
+"topic_title" = "Тема";
+"completed_text" = "Викторина завершена!";
+
+//InfoView
+"no_description" = "Описание отсутствует";
+"close_button" = "Закрыть";
+
+//GameCompletedView
+"game_over" = "ИГРА ОКОНЧЕНА";
+"thats_a_wrap" = "ВСЕ ГОТОВО";
+"correct_answers" = "Правильные ответы: %@";
+"incorrect_answers" = "Неправильные ответы: %@";
+"score" = "Очки: ";
+"play_again" = "Играть снова";
+
+//HistoryView
+"game_history" = "История игр";
+"delete_result" = "Удалить результат";
+"delete_confirmation" = "Вы уверены, что хотите удалить этот результат?";
+"delete" = "Удалить";
+"cancel" = "Отмена";
+
+//EmptyHistoryView
+"no_games_yet" = "Игры еще не сыграны";

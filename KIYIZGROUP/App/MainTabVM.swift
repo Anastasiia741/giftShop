@@ -6,7 +6,6 @@ import Foundation
 import FirebaseAuth
 
 final class MainTabVM: ObservableObject {
-    
     @Published var userID: String?
     private let authService = AuthService()
    

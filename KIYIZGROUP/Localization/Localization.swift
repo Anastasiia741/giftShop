@@ -47,6 +47,7 @@ struct Localization {
     //MARK: - CatalogView
     static let popular = "popular".localized
     static let products = "products".localized
+    static let allCategories = "all_categories".localized
     //MARK: - ProductDetailView
     static let quantity = "quantity".localized
     static let add = "add".localized
@@ -55,12 +56,10 @@ struct Localization {
     static let emptyСart = "empty_cart".localized
     static let addItemsToCart = "add_items_to_cart".localized
     static let addToOrder = "add_to_order".localized
-    //TASK: - add messages
     static let cardMessage = "order_sent_successfully".localized
     static let cardEmpty = "your_cart_is_empty".localized
     static let cardOrder = "we_preparing_order".localized
     static let thanksForOrder = "thanks_for_order".localized
-    //
     static let getDiscount = "get_discount".localized
     static let total = "total".localized
     static let order = "order".localized
