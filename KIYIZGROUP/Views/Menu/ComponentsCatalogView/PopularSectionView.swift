@@ -19,7 +19,7 @@ struct  PopularSectionView: View {
                     ForEach(products) { item in
                         NavigationLink {
                             let viewModel = ProductDetailVM(product: item)
-                            ProductDetailView(viewModel: viewModel)
+                            ProductDetailView(viewModel: viewModel, currentUserId: "")
                         } label: {
                             PopularProductCell(product: item)
                                 .foregroundColor(colorScheme == .dark ? .white : .black)

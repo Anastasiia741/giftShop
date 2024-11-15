@@ -7,67 +7,93 @@ import SDWebImageSwiftUI
 
 struct ProductDetailView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: ProductDetailVM
+    private let textComponent = TextComponent()
+    private let buttonComponent = ButtonComponents()
     @State var count = 1
-
+    let currentUserId: String
+    @State private var isShowCart = false
+    @State private var isAddedToCart = false
+    
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(alignment: .leading) {
+        VStack {
+            VStack {
                 WebImage(url: viewModel.imageURL )
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: 280)
+                    .aspectRatio(contentMode: .fit)
                     .clipped()
-                    .border(Color.gray, width: 2)
-                    .cornerRadius(10)
-                    .padding(.vertical, 8)
-                    .onAppear {
-                        viewModel.updateImageDetail()
-                    }
-            }
-            .padding()
-            VStack {
-                HStack{
-                    Text("\(viewModel.product.name)")
-                        .font(.title.bold())
-                    Spacer()
-                    Text("\(viewModel.product.price) \(Localization.som)")
-                        .font(.title)
-                        .customTextStyle(TextStyle.avenirBold, size: 16)
-                }.padding(.horizontal)
-                
-                ScrollView {
-                    Text("\(viewModel.product.detail)")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading)
+                    .cornerRadius(24)
+                    .frame(maxWidth: .infinity, maxHeight: 445)
+                HStack() {
+                    textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, color: .white)
+                    
+                    textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .colorYellow).strikethrough()
                 }
-                HStack{
-                    Stepper(value: $count, in: 1...100) {
-                        Text("\(Localization.quantity) \(self.count)")
-                    }
-                }.padding([.horizontal, .bottom], 12)
-                Button {
-                    let product = Product(id: viewModel.product.id,
-                                          name: viewModel.product.name,
-                                          category: viewModel.product.category,
-                                          detail: viewModel.product.detail,
-                                          price: viewModel.product.price,
-                                          image: viewModel.product.image,
-                                          quantity: self.count)
-                    viewModel.addProductToCart(product)
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text(Localization.add)
-                        .padding()
-                        .padding(.horizontal, 60)
-                        .foregroundColor(Colors.brown)
-                        .font(.title3.bold())
-                        .background(LinearGradient(colors: [Colors.lightYellow, Colors.orange], startPoint: .leading, endPoint: .trailing))
-                        .cornerRadius(30)
-                }.padding(.bottom)
-                Spacer()
+                .padding([.top, .bottom])
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .ignoresSafeArea()
+            .frame(maxWidth: .infinity, maxHeight: 572)
+            .background(Color.colorDarkBrown)
+            .cornerRadius(24)
+            .padding()
+            
+            
+            ProductInfoView(productDetail: viewModel.product.detail)
+                .padding(.top, 30)
+                .padding(.bottom, 30)
+            
+            VStack {
+                Spacer()
+                HStack(spacing: 16) {
+                    
+                    buttonComponent.createWhiteButton(
+                        text: "Купить сейчас",
+                        isAddedToCart: $isAddedToCart) {
+                            let product = Product(
+                                id: viewModel.product.id,
+                                name: viewModel.product.name,
+                                category: viewModel.product.category,
+                                detail: viewModel.product.detail,
+                                price: viewModel.product.price,
+                                image: viewModel.product.image,
+                                quantity: count
+                            )
+                            viewModel.addProductToCart(product)
+//                            currentTab = TabType.cart.rawValue
+
+                        }
+                        .background(colorScheme == .dark ? Color("ColorDarkBrown") : .white)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                        .cornerRadius(40)
+                    
+                    buttonComponent.createGreenButton(
+                        text: "Добавить в корзину",
+                        count: $count,
+                        isAddedToCart: $isAddedToCart) {
+                            let product = Product(
+                                id: viewModel.product.id,
+                                name: viewModel.product.name,
+                                category: viewModel.product.category,
+                                detail: viewModel.product.detail,
+                                price: viewModel.product.price,
+                                image: viewModel.product.image,
+                                quantity: count
+                            )
+                            viewModel.addProductToCart(product)
+                        }
+                }
+                .padding()
+                .background(.clear)
+            }
+        }
+        .onAppear {
+            viewModel.updateImageDetail()
         }
     }
 }
+
+
 
