@@ -5,16 +5,12 @@
 import SwiftUI
 
 struct TextComponent {
-    
+
     func createText(text: String, fontSize: CGFloat, fontWeight: Font.Weight, color: Color) -> some View {
         Text(text)
             .font(.custom("Inter", size: fontSize))
             .fontWeight(fontWeight)
             .foregroundColor(color)
     }
-    
-    
-    
-    
 }
 
