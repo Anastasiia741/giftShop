@@ -8,41 +8,38 @@ import SDWebImageSwiftUI
 import SDWebImage
 
 struct ProductCell: View {
-    let product: Product
+    @Environment(\.colorScheme) var colorScheme
+    private let textComponent = TextComponent()
     @State private var imageURL: URL?
     @State private var name: String?
     @State private var category: String?
     @State private var price: Int?
     @State private var detail: String?
-
+    let product: Product
+    
     var body: some View {
-        VStack(spacing: 8) {
+        VStack() {
             if let imageURL = imageURL {
                 WebImage(url: imageURL)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: screen.width * 0.45, height: 150)
                     .clipped()
-                    .cornerRadius(16)
-                    .padding(.top, -12)
+                    .cornerRadius(24)
             }
-            VStack(spacing: 4) {
-                HStack{
-                    Text(name ?? "")
-                        .customTextStyle(TextStyle.avenirRegular, size: 14)
-                        .frame(height: 40)
-                    Spacer()
-                    Text("\(price ?? 0) \(Localization.som)")
-                        .customTextStyle(TextStyle.avenirBold, size: 14)
+            VStack(alignment: .leading, spacing: 4) {
+                textComponent.createText(text: name ?? "", fontSize: 12, fontWeight: .medium, color: colorScheme == .dark ? .white : .black)
+                HStack {
+                    textComponent.createText(text: "\(price ?? 0) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .gray).strikethrough()
                 }
-                .padding(.horizontal, 6)
-                .padding(.bottom, 8)
             }
+            .padding(.top, 6)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(width: screen.width * 0.45, height:  screen.width * 0.5)
-        .background(Color.bg)
-        .cornerRadius(16)
-        .shadow(radius: 4)
+        .padding(.horizontal, 30)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .cornerRadius(24)
         .onAppear {
             if let productImage = product.image {
                 let imageRef = Storage.storage().reference(forURL: productImage)

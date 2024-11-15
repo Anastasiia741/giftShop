@@ -21,6 +21,7 @@ enum Images {
     }
     
     enum Menu {
+        static let chevron = Image(systemName: "chevron.right")
         static let popular1 = "popular1"
         static let popular2 = "popular2"
 
