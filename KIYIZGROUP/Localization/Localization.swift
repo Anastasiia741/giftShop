@@ -47,6 +47,8 @@ struct Localization {
     //MARK: - CatalogView
     static let popular = "popular".localized
     static let products = "products".localized
+    static let customDesign = "custom_design".localized
+    static let makeCustomOrder = "make_custom_order".localized
     static let allCategories = "all_categories".localized
     //MARK: - ProductDetailView
     static let quantity = "quantity".localized

@@ -49,8 +49,10 @@
 "more_details" = "Подробнее";
 
 //MARK: - CatalogView
-"popular" = "Популярное";
-"products" = "Товары";
+"popular" = "Предложения дня";
+"custom_design" = "Индивидуальный дизайн";
+"make_custom_order" = "Сделать индивидуальный заказ";
+"products" = "Категории";
 "all_categories" = "Все";
 
 //MARK: - ProductDetailView
