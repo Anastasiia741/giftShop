@@ -8,6 +8,7 @@ struct CatalogView: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = CatalogVM()
     @State private var isLoading = false
+    @Binding var currentTab: Int
     
     var body: some View {
         NavigationView {
@@ -27,7 +28,7 @@ struct CatalogView: View {
                             viewModel.filterProducts(by: category)
                         }, categories: viewModel.categories)
                         
-                        ProductSectionView(filteredProducts: viewModel.filteredProducts)
+                        ProductSectionView(filteredProducts: viewModel.filteredProducts, currentTab: $currentTab)
                             .padding(.horizontal, 30)
                     }
                 }

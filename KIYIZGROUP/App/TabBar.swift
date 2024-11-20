@@ -35,7 +35,7 @@ struct TabBar: View {
                         }
                         .tag(TabType.createProduct.rawValue)
                 } else {
-                    CatalogView()
+                    CatalogView(currentTab: $curentTab)
                         .tabItem {
                             VStack {
                                 Images.TabBar.menu
@@ -58,7 +58,7 @@ struct TabBar: View {
                         .tag(TabType.profile.rawValue)
                 }
             } else {
-                CatalogView()
+                CatalogView(currentTab: $curentTab)
                     .tabItem {
                         VStack {
                             Images.TabBar.menu

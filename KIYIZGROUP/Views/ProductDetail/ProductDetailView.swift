@@ -13,6 +13,7 @@ struct ProductDetailView: View {
     private let buttonComponent = ButtonComponents()
     @State var count = 1
     let currentUserId: String
+    @Binding var currentTab: Int
     @State private var isShowCart = false
     @State private var isAddedToCart = false
     
@@ -62,8 +63,10 @@ struct ProductDetailView: View {
                                 quantity: count
                             )
                             viewModel.addProductToCart(product)
-//                            currentTab = TabType.cart.rawValue
-
+                            DispatchQueue.main.async {
+                                currentTab = TabType.cart.rawValue
+                            }
+                            
                         }
                         .background(colorScheme == .dark ? Color("ColorDarkBrown") : .white)
                         .foregroundColor(colorScheme == .dark ? .white : .black)

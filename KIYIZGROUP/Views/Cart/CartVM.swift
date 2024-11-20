@@ -5,11 +5,11 @@
 import Foundation
 
 final class CartVM: ObservableObject {
-    
     private let orderService = OrderService()
     private let productsRepository = ProductsRepository()
     private let dbOrdersService = DBOrdersService()
     private let authService = AuthService()
+    @Published var alertModel: AlertModel?
     @Published var orderProducts: [Product] = []
     @Published var productCountMessage: String = ""
     @Published var promoCode: String = ""

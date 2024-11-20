@@ -35,11 +35,9 @@ struct ButtonComponents {
                             action()
                         }
                         else {
-                                                // If the count is 1 and we press "-", we remove the item from the cart
-                                                isAddedToCart.wrappedValue = false
-                                                count.wrappedValue = 1 // Reset count when removing
-                                                // Optionally: Add logic to remove the product from the cart
-                                            }
+                            isAddedToCart.wrappedValue = false
+                            count.wrappedValue = 1
+                        }
                     }) {
                         Image(systemName: "minus")
                             .font(.system(size: 18, weight: .regular))
@@ -82,5 +80,76 @@ struct ButtonComponents {
                 }
             }
         }
+    }
+    
+    
+    
+    func createCustomStepper(position: Product, count: Binding<Int>, range: ClosedRange<Int>, action: @escaping () -> Void) -> some View {
+        HStack {
+            Button(action: {
+                if count.wrappedValue > range.lowerBound {
+                    count.wrappedValue -= 1
+                    action()
+                }
+            }) {
+                Image(systemName: "minus")
+                    .foregroundColor(count.wrappedValue > range.lowerBound ? .black : .gray)
+                    .frame(width: 22, height: 22)
+                    .background(Color.clear)
+            }
+            .disabled(count.wrappedValue <= range.lowerBound)
+            
+            textComponent.createText(text: "\(count.wrappedValue)", fontSize: 16, fontWeight: .regular, color: .black)
+                .frame(maxWidth: .infinity, alignment: .center)
+
+            Button(action: {
+                if count.wrappedValue < range.upperBound {
+                    count.wrappedValue += 1
+                    action()
+                }
+            }) {
+                Image(systemName: "plus")
+                    .foregroundColor(count.wrappedValue < range.upperBound ? .black : .gray)
+                    .frame(width: 24, height: 24)
+                    .background(Color.clear)
+            }
+            .disabled(count.wrappedValue >= range.upperBound)
+        }
+        .padding()
+        .frame(width: 200, height: 40)
+        .overlay(
+            RoundedRectangle(cornerRadius: 37)
+                .stroke(Color.gray, lineWidth: 1)
+        )
+    }
+
+    func createOrderButton(amount: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                textComponent.createText(text: "Оформить заказ", fontSize: 16, fontWeight: .regular, color: .white)
+                    
+                textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, color: .white)
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.colorGreen)
+            .cornerRadius(40)
+        }
+        .padding(.horizontal, 16)
+    }
+    
+    func createOrdersButton(amount: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                textComponent.createText(text: "Заказать", fontSize: 16, fontWeight: .regular, color: .white)
+                    
+                textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, color: .white)
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.colorGreen)
+            .cornerRadius(40)
+        }
+        .padding(.horizontal, 16)
     }
 }
