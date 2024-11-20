@@ -8,10 +8,11 @@ struct CartView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = CartVM()
     @StateObject private var catalogVM = CatalogVM()
-    @State private var promo: String = ""
     @Binding var currentTab: Int
-    let currentUserId: String
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 1.8))]
+    private let buttonComponents = ButtonComponents()
+    let currentUserId: String
+    @State private var promo: String = ""
     @State private var isPresented = false
     @State private var orderPlaced = false
     @State private var isPromoSheetVisible = false
@@ -20,164 +21,148 @@ struct CartView: View {
     @State private var isAuthViewPresented = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                List {
-                    Section {
-                        if viewModel.orderProducts.isEmpty {
+                if viewModel.orderProducts.isEmpty {
+                    VStack {
+                        if orderPlaced {
                             VStack {
-                                if orderPlaced {
-                                    VStack {
-                                        Text(Localization.thanksForOrder)
-                                            .font(.headline)
-                                            .foregroundColor(.gray)
-                                        Images.Cart.happyCart
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 130)
-                                            .frame(maxWidth: .infinity)
-                                            .background(Color.clear)
-                                        Text(Localization.cardOrder)
-                                            .font(.headline)
-                                            .foregroundColor(.gray)
-                                    }
-                                } else {
-                                    Text(Localization.emptyСart)
-                                        .font(.headline)
-                                        .foregroundColor(.gray)
-                                    Images.Cart.emptyCart
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 130)
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color.clear)
-                                    Text(Localization.addItemsToCart)
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
+                                Text(Localization.thanksForOrder)
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                Images.Cart.happyCart
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 130)
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.clear)
+                                Text(Localization.cardOrder)
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
                             }
                         } else {
-                            Section(header:
-                                        HStack(alignment: .center, spacing: 10) {
-                                Text(Localization.products)
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(.gray)
-                                    .padding(.top, 6)
-                                    .padding(.leading, 12)
-                                Images.Cart.background4
-                                    .resizable()
-                                    .frame(width: 30, height: 35)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            })
-                            {
-                                VStack {
-                                    ForEach(viewModel.orderProducts) { product in
-                                        CartCell(viewModel: viewModel, position: product)
-                                            .padding(.bottom, 8)
-                                    }
-                                }
-                                .padding(.vertical, 8)
-                            }
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            Text(Localization.emptyСart)
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                            Images.Cart.emptyCart
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 130)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.clear)
+                            Text(Localization.addItemsToCart)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
                         }
                     }
-                    Text(Localization.addToOrder)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.gray)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: layoutForPopular, spacing: 16) {
-                            ForEach(catalogVM.popularProducts, id: \.id) { item in
-                                PopularProductCell(product: item)
-                                    .foregroundColor(colorScheme == .dark ? .white : .black)
-                                    .onTapGesture {
-                                        viewModel.addPromoProductToOrder(for: item)
-                                    }
+                } else {
+                    ScrollView {
+                        VStack {
+                            ForEach(viewModel.orderProducts) { product in
+                                CartCell(viewModel: viewModel, position: product)
                             }
-                        }.padding(.vertical, 8)
-                    }
-                    Section {
-                        HStack(spacing: 24) {
-                            Text(Localization.getDiscount).font(.system(size: 16, weight: .bold))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                                .truncationMode(.tail)
-                            Spacer()
-                            Button(action: {
-                                isPromoSheetVisible.toggle()
-                            }) {
-                                Text(Localization.promoCode)
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                    .frame(maxWidth: 130, minHeight: 35)
-                                    .foregroundColor(.white)
-                                    .background(Colors.promo)
-                                    .cornerRadius(20)
-                                    .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
-                                    .sheet(isPresented: $isPromoSheetVisible, content: {
-                                        PromoCodeView(promo: $promo, isPromoSheetVisible: $isPromoSheetVisible)
-                                            .presentationDetents([.fraction(0.30)])
-                                            .presentationDragIndicator(.visible)
-                                            .onDisappear {
-                                                viewModel.isPromoSheetVisible = true
-                                            }
-                                    })
-                            }
-                        }.padding(.top, 10)
-                    }
-                }
-                VStack {
-                    HStack(spacing: 24) {
-                        Text(Localization.total).fontWeight(.bold)
-                        Spacer()
-                        Text("\(viewModel.productCountMessage) \(Localization.som)").fontWeight(.bold)
-                        Button(action: {
-                            if viewModel.orderProducts.isEmpty {
-                                navigateToCatalog = true
-                            } else {
-                                if !currentUserId.isEmpty {
-                                    viewModel.orderButtonTapped(with: promo)
-                                    orderPlaced = true
-                                } else {
-                                    currentTab = 2
-                                }
-                            }
-                        }) {
-                            Text(Localization.order)
-                                .font(.body)
-                                .fontWeight(.bold)
-                                .padding()
-                                .foregroundColor(.white)
-                                .frame(maxWidth: 120)
-                                .background(Colors.buy)
-                                .cornerRadius(23)
-                                .shadow(color: Colors.buy.opacity(0.5), radius: 5, x: 0, y: 5)
                         }
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 40)
                     }
-                    .padding([.leading, .trailing, .bottom], 16)
+                    
+                    buttonComponents.createOrderButton(amount: "\(viewModel.productCountMessage)") {
+                        navigateToCatalog = true
+                    }
+                    
+                    
+                    .padding(.bottom, 12)
                 }
-                .fullScreenCover(isPresented: $navigateToCatalog) {
-                    TabBar(viewModel: MainTabVM())
-                }
-            }.navigationBarItems(leading: HStack {
-                Text(Localization.cart)
-                    .font(.title3.bold())
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
-                    .padding(.leading, 20)
-                    .fixedSize()
-                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 45, height: 50)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.trailing, 20)
-            })
-            .onAppear {
-                viewModel.fetchOrder()
-                Task {
-                    await catalogVM.fetchAllProducts()
-                }
+            }
+            
+            .navigationTitle(Localization.cart)
+            
+            .navigationBarTitleDisplayMode(.inline)
+            
+            .navigationDestination(isPresented: $navigateToCatalog) {
+                CartOrdersView()
+            }
+        }
+        .onAppear {
+            viewModel.fetchOrder()
+            Task {
+                await catalogVM.fetchAllProducts()
             }
         }
     }
 }
 
+
+
+
+
+
+//                        if viewModel.orderProducts.isEmpty {
+//                            navigateToCatalog = true
+//                        } else {
+//                            if !currentUserId.isEmpty {
+//                                viewModel.orderButtonTapped(with: promo)
+//                                orderPlaced = true
+//                            } else {
+//                                currentTab = 2
+//                            }
+//                        }
+
+
+
+
+//                    Text(Localization.addToOrder)
+//                        .font(.system(size: 14, weight: .bold))
+//                        .foregroundColor(.gray)
+//                    ScrollView(.horizontal, showsIndicators: false) {
+//                        LazyHGrid(rows: layoutForPopular, spacing: 16) {
+//                            ForEach(catalogVM.popularProducts, id: \.id) { item in
+//                                PopularProductCell(product: item)
+//                                    .foregroundColor(colorScheme == .dark ? .white : .black)
+//                                    .onTapGesture {
+//                                        viewModel.addPromoProductToOrder(for: item)
+//                                    }
+//                            }
+//                        }.padding(.vertical, 8)
+//                    }
+
+
+
+
+
+
+//                    Section {
+//                        HStack(spacing: 24) {
+//                            Text(Localization.getDiscount).font(.system(size: 16, weight: .bold))
+//                                .lineLimit(1)
+//                                .minimumScaleFactor(0.7)
+//                                .truncationMode(.tail)
+//                            Spacer()
+//                            Button(action: {
+//                                isPromoSheetVisible.toggle()
+//                            }) {
+//                                Text(Localization.promoCode)
+//                                    .font(.body)
+//                                    .fontWeight(.bold)
+//                                    .frame(maxWidth: 130, minHeight: 35)
+//                                    .foregroundColor(.white)
+//                                    .background(Colors.promo)
+//                                    .cornerRadius(20)
+//                                    .shadow(color: Colors.promo.opacity(0.5), radius: 5, x: 0, y: 5)
+//                                    .sheet(isPresented: $isPromoSheetVisible, content: {
+//                                        PromoCodeView(promo: $promo, isPromoSheetVisible: $isPromoSheetVisible)
+//                                            .presentationDetents([.fraction(0.30)])
+//                                            .presentationDragIndicator(.visible)
+//                                            .onDisappear {
+//                                                viewModel.isPromoSheetVisible = true
+//                                            }
+//                                    })
+//                            }
+//                        }.padding(.top, 10)
+//                    }
+
+
+
+//            .fullScreenCover(isPresented: $navigateToCatalog) {
+//                TabBar(viewModel: MainTabVM())
+//            }

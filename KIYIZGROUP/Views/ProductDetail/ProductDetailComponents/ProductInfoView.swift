@@ -8,7 +8,7 @@ struct ProductInfoView: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     let productDetail: String
-
+    
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 8) {

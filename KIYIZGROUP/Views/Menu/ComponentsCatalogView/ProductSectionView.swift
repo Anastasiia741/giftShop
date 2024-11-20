@@ -8,6 +8,8 @@ struct ProductSectionView: View {
     @Environment(\.colorScheme) var colorScheme
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
     let filteredProducts: [Product]
+    @Binding var currentTab: Int
+
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -15,7 +17,7 @@ struct ProductSectionView: View {
                 ForEach(filteredProducts) { item in
                     NavigationLink {
                         let viewModel = ProductDetailVM(product: item)
-                        ProductDetailView(viewModel: viewModel, currentUserId: "")
+                        ProductDetailView(viewModel: viewModel, currentUserId: "", currentTab: $currentTab)
                     } label: {
                         ProductCell(product: item)
                             .foregroundColor(colorScheme == .dark ? .white : .black)

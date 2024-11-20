@@ -9,6 +9,8 @@ struct  PopularSectionView: View {
     private let textComponent = TextComponent()
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
     let products: [Product]
+    @State var currentTab = 0
+
 
     var body: some View {
         VStack(alignment: .leading ) {
@@ -19,7 +21,7 @@ struct  PopularSectionView: View {
                     ForEach(products) { item in
                         NavigationLink {
                             let viewModel = ProductDetailVM(product: item)
-                            ProductDetailView(viewModel: viewModel, currentUserId: "")
+                            ProductDetailView(viewModel: viewModel, currentUserId: "", currentTab: $currentTab)
                         } label: {
                             PopularProductCell(product: item)
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
