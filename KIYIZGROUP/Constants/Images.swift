@@ -6,6 +6,7 @@ import Foundation
 import SwiftUI
 
 enum Images {
+    static let chevronLeft = "chevron.left"
     
     enum TabBar {
         static let order = Image(systemName: "list.bullet")
@@ -22,8 +23,8 @@ enum Images {
     
     enum Menu {
         static let chevron = Image(systemName: "chevron.right")
-        static let popular1 = "popular1"
-        static let popular2 = "popular2"
+       
+
 
     }
 

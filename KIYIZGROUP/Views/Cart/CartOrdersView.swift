@@ -37,8 +37,8 @@ struct CartOrdersView: View {
         .onAppear {
             viewModel.fetchOrder()
         }
-        
-        
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: CustomBackButton())
     }
 }
 
@@ -47,42 +47,5 @@ struct CartOrdersView: View {
 }
 
 
-
-
-struct PromoCodeSection: View {
-    @ObservedObject var cartVM: CartVM
-    private let textFieldComponent = TextFieldComponent()
-    
-    @State private var promoCode: String = ""
-    @State private var alertMessage: String = ""
-    @State private var showAlert: Bool = false
-    
-    var body: some View {
-        
-        VStack(alignment: .leading, spacing: 12) {
-            
-            textFieldComponent.createTextField(placeholder: "Ввести промокод", text: $promoCode)
-            Button(action: {
-                cartVM.promoCode = promoCode
-                cartVM.applyPromoCode()
-                
-                alertMessage = cartVM.promoResultText
-                showAlert = true
-                promoCode = ""
-            }) {
-                
-            }
-        }
-        .alert(item: $cartVM.alertModel) { model in
-            Alert(
-                title: Text(model.title ?? ""),
-                message: Text(model.message ?? ""),
-                dismissButton: .default(Text(model.buttons.first?.title ?? "OK")) {
-                    model.buttons.first?.action?()
-                }
-            )
-        }
-    }
-}
 
 

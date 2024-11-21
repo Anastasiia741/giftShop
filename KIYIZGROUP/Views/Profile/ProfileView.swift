@@ -117,11 +117,11 @@ struct ProfileView: View {
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                     .padding(.leading, 20)
                     .fixedSize()
-                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 45, height: 50)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+//                Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: 45, height: 50)
+//                    .frame(maxWidth: .infinity, alignment: .leading)
             })
             .navigationBarItems(
                 trailing: HStack(spacing: 20) {

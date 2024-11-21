@@ -40,8 +40,7 @@ struct OrdersView: View {
                     OrderCell(order: .constant(order))
                 }
             }
-            .navigationBarItems(trailing:
-                                    Button(action: {
+            .navigationBarItems(trailing: Button(action: {
                 isAlertPresenter = true
             }) {
                 Images.Profile.exit

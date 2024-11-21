@@ -19,6 +19,12 @@ struct ProductDetailView: View {
     
     var body: some View {
         VStack {
+            HStack {
+                CustomBackButton() 
+                Spacer()
+            }
+            .padding([.leading, .top], 16)
+            
             VStack {
                 WebImage(url: viewModel.imageURL )
                     .resizable()
@@ -95,6 +101,7 @@ struct ProductDetailView: View {
         .onAppear {
             viewModel.updateImageDetail()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

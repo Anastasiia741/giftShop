@@ -46,11 +46,11 @@ struct AddressInputView: View {
             .padding()
             .navigationTitle("Адрес доставки")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: CustomBackButton())
         }
     }
 }
-
-
 
 struct Dropdown: View {
     let placeholder: String
