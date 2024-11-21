@@ -14,7 +14,6 @@ struct CartOrdersCell: View {
     @StateObject var viewModel =  CartVM()
     private let textComponent = TextComponent()
     private let buttonComponents = ButtonComponents()
- 
     @State private var count = 1
     @State private var imageURL: URL?
     @State private(set) var position: Product
@@ -29,12 +28,11 @@ struct CartOrdersCell: View {
                         .clipped()
                         .cornerRadius(24)
                         .shadow(radius: 4)
-    
             textComponent.createText(text: position.name, fontSize: 12, fontWeight: .thin, color: colorScheme == .dark ? .white : .black)
                     .padding(.bottom, 20)
             }
-               
         }
+        .padding(.vertical)
         .frame(width: 120, height: 134)
         .onAppear {
             count = position.quantity

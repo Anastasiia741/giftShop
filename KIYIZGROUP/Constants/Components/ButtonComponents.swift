@@ -153,3 +153,19 @@ struct ButtonComponents {
         .padding(.horizontal, 16)
     }
 }
+
+struct CustomBackButton: View {
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }) {
+            HStack {
+                Image(systemName: Images.chevronLeft)
+                    .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+            }
+        }
+    }
+}

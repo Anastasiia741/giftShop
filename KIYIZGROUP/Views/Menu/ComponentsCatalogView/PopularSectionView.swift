@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct  PopularSectionView: View {
+struct PopularSectionView: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]

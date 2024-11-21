@@ -6,6 +6,7 @@ import SwiftUI
 
 struct HeaderView: View {
     @Environment(\.colorScheme) var colorScheme
+    @State private var selectedProduct: Product?
     private let textComponent = TextComponent()
     let orderProducts: [Product]
     
@@ -26,7 +27,13 @@ struct HeaderView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack() {
                     ForEach(orderProducts) { product in
-                        CartOrdersCell(position: product)
+                        NavigationLink(destination: ProductDetailView(
+                            viewModel: ProductDetailVM(product: product),
+                            currentUserId: "",
+                            currentTab: .constant(0)
+                        )) {
+                            CartOrdersCell(position: product)
+                        }
                     }
                 }
             }
