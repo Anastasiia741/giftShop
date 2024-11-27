@@ -2,12 +2,10 @@
 //  GiftShop
 //  Created by Анастасия Набатова on 11/1/24.
 
-import Foundation
 import SwiftUI
 import FirebaseStorage
 
 final class ProfileVM: ObservableObject {
-    
     private let authService = AuthService()
     private let dbOrdersService = DBOrdersService()
     @Published var orders: [Order] = []

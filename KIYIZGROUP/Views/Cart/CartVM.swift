@@ -40,19 +40,50 @@ final class CartVM: ObservableObject {
         }
     }
     
-    func orderButtonTapped(with promoCode: String?) {
+//    func orderButtonTapped(with promoCode: String?) {
+//        if let currentUser = authService.currentUser {
+//            let order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: promoCode ?? "")
+//            order.positions = orderProducts.map{ position in
+//                return Position(id: UUID().uuidString, product: position, count: position.quantity)
+//            }
+//            if order.positions.isEmpty {
+//            } else {
+//                dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+//                    switch result {
+//                    case .success(_):
+//                        self?.orderProducts.removeAll()
+//                        self?.productsRepository.save(self?.orderProducts ?? [Product]())
+//                    case .failure(let error):
+//                        print(error.localizedDescription)
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    
+    func orderButtonTapped(with promoCode: String?, completion: @escaping (Order) -> Void) {
         if let currentUser = authService.currentUser {
-            let order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: promoCode ?? "")
-            order.positions = orderProducts.map{ position in
+            let order = Order(
+                id: UUID().uuidString,
+                userID: currentUser.uid,
+                positions: [],
+                date: Date(),
+                status: OrderStatus.new.rawValue,
+                promocode: promoCode ?? ""
+            )
+            order.positions = orderProducts.map { position in
                 return Position(id: UUID().uuidString, product: position, count: position.quantity)
             }
             if order.positions.isEmpty {
+                alertModel = AlertModel(title: "Ошибка", message: "Корзина пуста", buttons: [])
             } else {
                 dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
                     switch result {
-                    case .success(_):
-                        self?.orderProducts.removeAll()
-                        self?.productsRepository.save(self?.orderProducts ?? [Product]())
+                    case .success:
+                        DispatchQueue.main.async {
+                            completion(order) // Передаём созданный заказ
+                        }
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
@@ -60,6 +91,7 @@ final class CartVM: ObservableObject {
             }
         }
     }
+
     
     func applyPromoCode() {
         if promoCode.lowercased() == "promo 10" {
