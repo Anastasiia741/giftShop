@@ -68,7 +68,6 @@ struct CartOrdersView: View {
                     }
             }
         }
-        .ignoresSafeArea()
         .animation(.easeInOut, value: isLoading)
         .animation(.easeInOut, value: orderPlaced)
     }
@@ -90,9 +89,6 @@ struct CartOrdersView: View {
     }
 }
 
-
-
-//
 #Preview {
     CartOrdersView()
 }
