@@ -3,16 +3,26 @@
 //  Created by Анастасия Набатова on 18/1/24.
 
 import Foundation
-import UIKit
 import FirebaseAuth
+import UIKit
 
-final class AuthVM: ObservableObject {
-    private let authService = AuthService()
+enum ErrorType {
+    case email
+    case password
+    case general
+}
+
+final class MainAuthVM: ObservableObject {
+    private var authService = AuthService()
     @Published var alertModel: AlertModel?
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
-    @Published var isAuth = true
+    @Published var errorMessage: String = ""
+    @Published var errorType: ErrorType? = nil
+    
+    @Published var emailNotFound = false
+    @Published var navigateToPasswordView = false
     @Published var isTabViewShow = false
     
     private func configureAlertModel(with title: String, message: String?) -> AlertModel {
@@ -27,13 +37,47 @@ final class AuthVM: ObservableObject {
     }
     
     func signIn() async {
+        DispatchQueue.main.async {
+            self.errorMessage = ""
+            self.errorType = nil
+        }
+        
+        guard !email.isEmpty else {
+            DispatchQueue.main.async {
+                self.errorMessage = Localization.enterEmail
+                self.errorType = .email
+            }
+            return
+        }
+        
+        guard !password.isEmpty else {
+            DispatchQueue.main.async {
+                self.errorMessage = Localization.enterPassword
+                self.errorType = .password
+            }
+            return
+        }
+        
         authService.signIn(email: email, password: password) { [weak self] result in
             switch result {
             case .success(_):
                 self?.isTabViewShow.toggle()
             case .failure(let error):
-                self?.alertModel = self?.configureAlertModel(with: Localization.registrationError, message: error.localizedDescription)
-            }
+                if error.localizedDescription.contains("password") {
+                    self?.errorMessage = "invalid password"
+                    self?.errorType = .password
+                } else if error.localizedDescription.contains("email") {
+                    self?.errorMessage = "invalid email"
+                    self?.errorType = .email
+                } else {
+                    if error.localizedDescription.contains("password") || error.localizedDescription.contains("email") {
+                        self?.errorMessage = "Invalid login or password. Please try again."
+                        self?.errorType = .general
+                    } else {
+                        self?.errorMessage = error.localizedDescription
+                        self?.errorType = .general
+                    }
+                }}
         }
     }
     
@@ -53,15 +97,10 @@ final class AuthVM: ObservableObject {
                 self?.password = ""
                 self?.confirmPassword = ""
                 self?.alertModel = self?.configureAlertModel(with: Localization.congratulations, message: Localization.dataSavedSuccessfully)
-                self?.isAuth.toggle()
             case .failure(let error):
                 self?.alertModel = self?.configureAlertModel(with: Localization.registrationError, message: error.localizedDescription)
             }
         }
-    }
-    
-    func toggleAuthButton() {
-        isAuth.toggle()
     }
     
     func disclaimerTapped() {

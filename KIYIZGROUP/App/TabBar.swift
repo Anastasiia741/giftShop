@@ -10,6 +10,11 @@ struct TabBar: View {
     @State private var curentTab: Int = 0
     
     var body: some View {
+        
+        
+        
+        
+        
         TabView(selection: $curentTab) {
             if let userID = viewModel.userID {
                 if userID == Accesses.adminUser || userID == Accesses.adminKiyiz {
@@ -72,7 +77,9 @@ struct TabBar: View {
                         }
                     }
                     .tag(TabType.cart.rawValue)
-                AuthView()
+                MainAuthView { userId in
+                           viewModel.setUserId(userId)
+                       }
                     .tabItem {
                         VStack {
                             Images.TabBar.profile

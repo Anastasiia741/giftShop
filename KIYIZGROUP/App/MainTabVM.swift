@@ -8,8 +8,12 @@ import FirebaseAuth
 final class MainTabVM: ObservableObject {
     @Published var userID: String?
     private let authService = AuthService()
-   
+    
     func fetchUserId() {
         userID = authService.currentUser?.uid
+    }
+    
+    func setUserId(_ id: String) {
+        userID = id
     }
 }
