@@ -4,7 +4,6 @@
 
 import Foundation
 import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 struct Position: Identifiable {
     

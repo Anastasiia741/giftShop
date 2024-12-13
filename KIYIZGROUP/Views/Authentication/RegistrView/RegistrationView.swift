@@ -4,19 +4,21 @@
 
 import SwiftUI
 
-struct RegistrView: View {
+struct RegistrationView: View {
+    @ObservedObject private var viewModel = AuthenticationVM()
+    var onRegistrationSuccess: () -> Void
+
     var body: some View {
         VStack{
             Spacer()
             AnimatedImagesView()
             Spacer()
+            RegistrationFieldsView(onAuthenticationSuccess: { _ in
+                onRegistrationSuccess()
+            })
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
-
     }
 }
 
-#Preview {
-    RegistrView()
-}

@@ -6,10 +6,10 @@ import SwiftUI
 
 struct ImageGridAuthView: View {
     let imageNames: [String]
-    private let gridItems = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+    private let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
     
     var body: some View {
-        LazyVGrid(columns: gridItems, spacing: 8) {
+        LazyVGrid(columns: gridItems) {
             ForEach(imageNames, id: \.self) { imageName in
                 Image(imageName)
                     .resizable()

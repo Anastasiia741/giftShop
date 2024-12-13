@@ -4,7 +4,6 @@
 
 import Foundation
 import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 enum CodingKeys: String, CodingKey {
     case id, name, category, detail, price, image, imageUrl, quantity

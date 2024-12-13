@@ -4,16 +4,16 @@
 
 import SwiftUI
 
-struct AuthView: View {
-    @ObservedObject var viewModel = MainAuthVM()
-    var onAuthenticationSuccess: ((String) -> Void)
+struct AuthorizationView: View {
+    @ObservedObject var viewModel = AuthenticationVM()
+    var onAuthenticationSuccess: (String) -> Void
     
     var body: some View {
         VStack {
             Spacer()
             AnimatedImagesView()
             Spacer()
-            AuthFieldsView(onAuthenticationSuccess: onAuthenticationSuccess)
+            AuthorizationFieldsView(onAuthenticationSuccess: onAuthenticationSuccess) 
                 .padding(.horizontal)
                 .padding(.bottom, 16)
         }

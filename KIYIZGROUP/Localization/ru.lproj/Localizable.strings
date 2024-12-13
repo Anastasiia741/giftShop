@@ -4,13 +4,16 @@
   Created by Анастасия Набатова on 18/3/24.
 */
 
-//MARK: - Auth
+//MARK: - Authentication
 "empty_string" = "";
-"enter_email" = "Введите email";
-"enter_password" = "Введите пароль";
-"repeat_password" = "Повторите пароль";
-"authorization" = "Войти";
+"authorization" = "Авторизация";
 "registration" = "Регистрация";
+//"enter_email" = "Введите email";
+"enter_password" = "Введите пароль";
+"create_a_password" = "Придумайте пароль";
+//"repeat_password" = "Повторите пароль";
+"sign_in" = "Войти";
+"registr" = "Зарегистрироваться";
 "already_have_an_account" = "Уже есть аккаунт";
 "privacy_policy" = "Политика Конфиденциальности";
 
