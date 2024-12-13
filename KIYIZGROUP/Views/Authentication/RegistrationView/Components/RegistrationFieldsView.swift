@@ -13,7 +13,7 @@ struct RegistrationFieldsView: View {
     @State private var isPasswordVisible = false
     
     var body: some View {
-        ZStack {
+        NavigationStack {
             VStack(spacing: 16) {
                 textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black
                 )

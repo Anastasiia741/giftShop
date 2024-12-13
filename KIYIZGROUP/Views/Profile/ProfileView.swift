@@ -13,12 +13,14 @@ struct ProfileView: View {
     private let textComponent = TextComponent()
 
     @State private var selectedImage: UIImage?
+    @State private var isShowEditProfileView = false
+
     @State private var isQuitAlertPresenter = false
     @State private var isAccountDeletedAlert = false
     @State private var keyboardOffset: CGFloat = 0
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 0) {
                     ProfileHeaderView(name: viewModel.name, email: viewModel.email)
@@ -29,16 +31,14 @@ struct ProfileView: View {
                     
                     SupportInfoView()
                 }
-//                Spacer()
             }
             .padding(.horizontal)
             .frame(maxWidth: .infinity, alignment: .topLeading) 
-            .navigationTitle(Localization.profile)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 trailing: HStack(spacing: 20) {
                     Button(action: {
-                        isQuitAlertPresenter.toggle()
+                        isShowEditProfileView.toggle()
                     }) {
                         Image("lucide")
                             .resizable()
@@ -46,6 +46,9 @@ struct ProfileView: View {
                     }
                 }
             )
+            .navigationDestination(isPresented: $isShowEditProfileView) {
+                EditProfileView(viewModel: viewModel)
+            }
             .onAppear {
                 Task {
                     await viewModel.fetchUserProfile()
@@ -55,42 +58,41 @@ struct ProfileView: View {
             .onTapGesture {
                 self.hideKeyboard()
             }
-            .actionSheet(isPresented: $isQuitAlertPresenter) {
-                ActionSheet(
-                    title: Text(Localization.logOut),
-                    buttons: [
-                        .default(Text(Localization.yes)) {
-                            viewModel.logout()
-                        },
-                        .cancel(Text(Localization.cancel))
-                    ]
-                )
-            }
-            .alert(item: $viewModel.alertModel) { alertModel in
-                if alertModel.buttons.count > 1 {
-                    return Alert(
-                        title: Text(alertModel.title ?? ""),
-                        message: Text(alertModel.message ?? ""),
-                        primaryButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action),
-                        secondaryButton: .default(Text(alertModel.buttons.last?.title ?? ""), action: alertModel.buttons.last?.action)
-                    )
-                } else {
-                    return Alert(
-                        title: Text(alertModel.title ?? ""),
-                        message: Text(alertModel.message ?? ""),
-                        dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
-                    )
-                }
-            }
-            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
-                NavigationView {
-                    TabBar(viewModel: MainTabVM())
-                }
-            }
         }
     }
 
 }
+
+
+
+
+//    .actionSheet(isPresented: $isQuitAlertPresenter) {
+//        ActionSheet(
+//            title: Text(Localization.logOut),
+//            buttons: [
+//                .default(Text(Localization.yes)) {
+//                    viewModel.logout()
+//                },
+//                .cancel(Text(Localization.cancel))
+//            ]
+//        )
+//    }
+//    .alert(item: $viewModel.alertModel) { alertModel in
+//        if alertModel.buttons.count > 1 {
+//            return Alert(
+//                title: Text(alertModel.title ?? ""),
+//                message: Text(alertModel.message ?? ""),
+//                primaryButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action),
+//                secondaryButton: .default(Text(alertModel.buttons.last?.title ?? ""), action: alertModel.buttons.last?.action)
+//            )
+//        } else {
+//            return Alert(
+//                title: Text(alertModel.title ?? ""),
+//                message: Text(alertModel.message ?? ""),
+//                dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
+//            )
+//        }
+//    }
 
 
 

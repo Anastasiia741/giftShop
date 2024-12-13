@@ -46,8 +46,6 @@ struct ProductDetailView: View {
             .background(Color.colorDarkBrown)
             .cornerRadius(24)
             .padding()
-            
-            
             ProductInfoView(productDetail: viewModel.product.detail)
                 .padding(.top, 30)
                 .padding(.bottom, 30)

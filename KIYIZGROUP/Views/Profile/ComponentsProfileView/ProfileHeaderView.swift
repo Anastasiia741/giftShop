@@ -17,9 +17,7 @@ struct ProfileHeaderView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
-            
             textComponent.createText(text: name.isEmpty ? "Имя пользователя" : name, fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
-            
             textComponent.createText(text: email, fontSize: 16, fontWeight: .bold, color: .gray)
         }
         .frame(maxWidth: .infinity)
