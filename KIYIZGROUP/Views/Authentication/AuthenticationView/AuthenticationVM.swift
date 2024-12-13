@@ -31,7 +31,6 @@ final class AuthenticationVM: ObservableObject {
         
         updateError(message: nil, type: nil)
         
-        
         authService.signIn(email: email, password: password) { [weak self] result in
             switch result {
             case .success(_):
@@ -59,14 +58,13 @@ final class AuthenticationVM: ObservableObject {
         if let errorMessage = validateFields() {
             updateError(message: errorMessage, type: .general)
             isFinalRegistration = false
-
+            
             return
         }
         
         updateError(message: nil, type: nil)
         
         authService.signUp(email: email, password: password) { [weak self] result in
-    
             switch result {
             case .success(_):
                 self?.email = ""
