@@ -25,7 +25,6 @@ struct ProductInfoView: View {
         .padding(.horizontal)
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, alignment: .leading)
-        //        .frame(height: 450)
         .overlay(RoundedRectangle(cornerRadius: 40)
             .stroke(Color.gray, lineWidth: 1.5)
         )
