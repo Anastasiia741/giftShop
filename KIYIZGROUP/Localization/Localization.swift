@@ -5,13 +5,16 @@
 import Foundation
 
 struct Localization {
-    //MARK: - Auth
+    //MARK: - Authentication
     static let emptyString = "empty_string".localized
-    static let enterEmail = "enter_email".localized
-    static let enterPassword = "enter_password".localized
-    static let repeatPassword = "repeat_password".localized
     static let authorization = "authorization".localized
     static let registration = "registration".localized
+//    static let enterEmail = "enter_email".localized
+    static let enterPassword = "enter_password".localized
+    static let createPassword = "create_a_password".localized
+//    static let repeatPassword = "repeat_password".localized
+    static let signIn = "sign_in".localized
+    static let registr = "registr".localized
     static let alreadyHaveAccount = "already_have_an_account".localized
     static let privacyPolicy = "privacy_policy".localized
     //MARK: - OrderDetail

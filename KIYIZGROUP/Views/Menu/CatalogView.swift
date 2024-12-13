@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct CatalogView: View {
-    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = CatalogVM()
     @State private var isLoading = false
     @Binding var currentTab: Int

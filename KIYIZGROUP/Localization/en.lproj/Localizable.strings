@@ -4,14 +4,15 @@
   Created by Анастасия Набатова on 18/3/24.
 */
 
-//MARK: - Auth
+//MARK: - Authentication
 "empty_string" = "";
-"enter_email" = "Enter email";
-"enter_password" = "Enter password";
-"repeat_password" = "Repeat password";
-"authorization" = "Sign in";
+"authorization" = "Authorization";
 "registration" = "Registration";
-"already_have_an_account" = "Have an account";
+"enter_password" = "Enter password";
+"create_a_password" = "Create a password";
+"sign_in" = "Sign in";
+"registr" = "Registration";
+//"already_have_an_account" = "Have an account";
 "privacy_policy" = "Privacy Policy";
 
 //MARK: - OrderDetail
@@ -25,7 +26,7 @@
 "sum" = "Sum:";
 "som" = "som";
 "name" = "Name";
-"email" = "Email:";
+"email" = "Email";
 "delivery_address" = "Delivery address:";
 "phone_number" = "Phone number:";
 

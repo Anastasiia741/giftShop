@@ -5,16 +5,22 @@
 import SwiftUI
 import FirebaseAuth
 
-struct AuthFieldsView: View {
-    @ObservedObject private var viewModel = MainAuthVM()
-    var onAuthenticationSuccess: ((String) -> Void)
+struct AuthorizationFieldsView: View {
+    @Environment(\.colorScheme) var colorScheme
+    @ObservedObject private var viewModel = AuthenticationVM()
+    private let textComponent = TextComponent()
+    var onAuthenticationSuccess: (String) -> Void
     @State private var isButtonPressed = false
     @State private var isPasswordVisible = false
     
     var body: some View {
         NavigationView {
             VStack(spacing: 8) {
-                TextField("Email", text: $viewModel.email)
+                textComponent.createText(text: Localization.authorization, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading)
+                TextField(Localization.email, text: $viewModel.email)
                     .padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 40)
@@ -26,10 +32,10 @@ struct AuthFieldsView: View {
                 HStack(spacing: 8) {
                     HStack {
                         if isPasswordVisible {
-                            TextField("Введите пароль", text: $viewModel.password)
+                            TextField(Localization.enterPassword, text: $viewModel.password)
                                 .padding()
                         } else {
-                            SecureField("Введите пароль", text: $viewModel.password)
+                            SecureField(Localization.enterPassword, text: $viewModel.password)
                                 .padding()
                         }
                         Button(action: {
@@ -38,7 +44,6 @@ struct AuthFieldsView: View {
                             Image(isPasswordVisible ? "eye" : "eye.slash")
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                            
                         }
                         .padding(.trailing, 16)
                     }
@@ -67,9 +72,7 @@ struct AuthFieldsView: View {
                     }
                 }
                 if viewModel.errorType == .password || viewModel.errorType == .general || viewModel.errorType == .email {
-                    Text(viewModel.errorMessage)
-                        .font(.caption)
-                        .foregroundColor(.red)
+                    textComponent.createText(text: viewModel.errorMessage, fontSize: 12, fontWeight: .regular, color: Color.red)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 8)
                 }
