@@ -5,9 +5,11 @@
 import SwiftUI
 
 struct HeaderAuthView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         VStack(spacing: 8) {
-            Image("logoLight")
+            Image(colorScheme == .light ? "logoLight" : "logoDark")
                 .resizable()
                 .scaledToFit()
         }

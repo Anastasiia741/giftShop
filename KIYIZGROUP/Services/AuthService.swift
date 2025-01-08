@@ -32,8 +32,8 @@ final class AuthService {
                 let newUser = NewUser(id: result.user.uid,
                                       name: "",
                                       phone: "",
-                                      address: "",
-                                      email: email)
+                                      email: email,
+                                      address: "")
                 ProfileService.shared.setProfile(user: newUser, email: email) { resultDB in
                     switch resultDB {
                     case .success(_):
@@ -55,6 +55,32 @@ final class AuthService {
             completion(.success(()))
         } catch {
             completion(.failure(error))
+        }
+    }
+    
+    //  MARK: - Change password
+    func reauthenticateUser(currentPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let email = Auth.auth().currentUser?.email else {
+            completion(.failure(NSError(domain: "No email found", code: 0)))
+            return
+        }
+        let credential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
+        Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func updatePassword(newPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
         }
     }
     

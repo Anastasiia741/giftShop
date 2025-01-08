@@ -157,15 +157,20 @@ struct ButtonComponents {
 struct CustomBackButton: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    var onBack: (() -> Void)? = nil
     
     var body: some View {
         Button(action: {
-            presentationMode.wrappedValue.dismiss()
-        }) {
-            HStack {
-                Image(systemName: Images.chevronLeft)
-                    .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-            }
-        }
-    }
+                   if let onBack = onBack {
+                       onBack() 
+                   } else {
+                       presentationMode.wrappedValue.dismiss() // Используем стандартное поведение
+                   }
+               }) {
+                   HStack {
+                       Image(systemName: Images.chevronLeft)
+                           .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                   }
+               }
+           }
 }

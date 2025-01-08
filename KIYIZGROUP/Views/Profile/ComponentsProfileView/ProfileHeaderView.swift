@@ -6,19 +6,22 @@ import SwiftUI
 
 struct ProfileHeaderView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @StateObject private var viewModel = ProfileVM()
+    @StateObject var viewModel: ProfileVM
     private let textComponent = TextComponent()
-    let name: String
-    let email: String
-    
+
     var body: some View {
         VStack(spacing: 8) {
             Image("profile")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
-            textComponent.createText(text: name.isEmpty ? "Имя пользователя" : name, fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
-            textComponent.createText(text: email, fontSize: 16, fontWeight: .bold, color: .gray)
+            textComponent.createText(text: viewModel.name.isEmpty ? "Имя пользователя" : viewModel.name, fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: viewModel.email, fontSize: 16, fontWeight: .bold, color: .gray)
+        }
+        .onAppear {
+            Task {
+                await viewModel.fetchUserProfile()
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical)

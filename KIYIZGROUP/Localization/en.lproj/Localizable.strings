@@ -93,7 +93,7 @@
 "your_future_orders" = "Your orders will be here";
 "no_orders_yet" = "No orders yet";
 "your_orders" = "Your orders";
-"delete_account_name" = "Delete account";
+"delete_account_name" = "Are you sure you want to delete your account? This action is irreversible.";
 
 //MARK: - Alerts
 "registration_error" = "Registration error";

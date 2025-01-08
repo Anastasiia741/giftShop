@@ -7,7 +7,6 @@ import FirebaseStorage
 import FirebaseFirestore
 
 final class ProductService {
-    
     private let db = Firestore.firestore()
     private let storage = Storage.storage()
     private var listenerRegistation: ListenerRegistration?

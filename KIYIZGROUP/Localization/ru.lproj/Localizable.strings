@@ -94,7 +94,7 @@
 "your_future_orders" = "Ваши заказы будут тут";
 "no_orders_yet" = "Заказов пока нет";
 "your_orders" = "Ваши заказы";
-"delete_account_name" = "Удалить аккаунт";
+"delete_account_name" = "Вы действительно хотите удалить аккаунт? Это действие необратимо.";
 
 //MARK: - Alerts
 "registration_error" = "Ошибка регистрации";

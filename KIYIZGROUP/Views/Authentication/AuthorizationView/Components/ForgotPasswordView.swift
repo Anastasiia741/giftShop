@@ -15,8 +15,9 @@ struct ForgotPasswordView: View {
                 textComponent.createText(text: "Забыл пароль?", fontSize: 16, fontWeight: .regular, color: Color.colorLightBrown)
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 16)
+        .padding(.horizontal, 20)
     }
 }
 

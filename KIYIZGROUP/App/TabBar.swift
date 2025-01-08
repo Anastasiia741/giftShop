@@ -74,12 +74,12 @@ struct TabBar: View {
                     }
                     .tag(TabType.cart.rawValue)
                 AuthenticationView(
-                    onAuthenticationSuccess: { userId in
-                        viewModel.setUserId(userId)
-                    },
-                    onRegistrationSuccess: {
-                        isRegistering = true
-                    }
+//                    onAuthenticationSuccess: { userId in
+//                        viewModel.setUserId(userId)
+//                    },
+//                    onRegistrationSuccess: {
+//                        isRegistering = true
+//                    }
                 )
                 .tabItem {
                     VStack {
