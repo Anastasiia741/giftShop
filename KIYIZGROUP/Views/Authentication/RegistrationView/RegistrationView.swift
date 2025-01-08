@@ -6,19 +6,33 @@ import SwiftUI
 
 struct RegistrationView: View {
     @ObservedObject private var viewModel = AuthenticationVM()
-    var onRegistrationSuccess: () -> Void
-
+    var onBack: () -> Void
+    
     var body: some View {
         VStack{
             Spacer()
             AnimatedImagesView()
             Spacer()
             RegistrationFieldsView(onAuthenticationSuccess: { _ in
-                onRegistrationSuccess()
             })
+            Spacer()
+
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: CustomBackButton())
+        .overlay(
+            HStack {
+                CustomBackButton(onBack: onBack)
+                    .padding(.horizontal)
+                Spacer()
+                
+            }
+                .padding()
+                .frame(maxHeight: 44),
+            alignment: .top
+        )
+        .onTapGesture {
+            self.hideKeyboard()
+            UIApplication.shared.endEditing()
+        }
     }
 }
 

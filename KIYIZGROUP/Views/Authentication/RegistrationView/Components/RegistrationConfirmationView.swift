@@ -18,9 +18,11 @@ struct RegistrationConfirmationView: View {
                 Spacer()
                 VStack(spacing: 16) {
                     textComponent.createText(text: "Поздравляем! Вы успешно зарегистрировались.", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
-        
+                        .padding()
                     textComponent.createText(text: "Завершите авторизацию, чтобы получить доступ к вашему аккаунту.", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                        .padding()
                 }
+                .padding(.horizontal)
                 Spacer()
                 VStack(spacing: 16) {
                     Button(action: {
@@ -38,8 +40,8 @@ struct RegistrationConfirmationView: View {
                 .padding(.bottom, 32)
             }
             .navigationDestination(isPresented: $navigateToAuthView) {
-                AuthorizationView(onAuthenticationSuccess: onAuthenticationSuccess)
-                    .navigationBarBackButtonHidden(true)
+//                AuthorizationView(onBack: () -> Void, onAuthenticationSuccess: onAuthenticationSuccess)
+//                    .navigationBarBackButtonHidden(true)
             }
         }
     }

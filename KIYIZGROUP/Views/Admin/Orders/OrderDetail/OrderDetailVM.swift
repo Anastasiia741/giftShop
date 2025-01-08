@@ -5,7 +5,6 @@
 import Foundation
 
 final class OrderDetailVM: ObservableObject {
-    
     private let profileService = ProfileService()
     private let dbOrderService = DBOrdersService()
     private let orderService = OrderService()

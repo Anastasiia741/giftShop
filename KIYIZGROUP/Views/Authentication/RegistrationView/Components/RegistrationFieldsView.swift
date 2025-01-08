@@ -13,12 +13,11 @@ struct RegistrationFieldsView: View {
     @State private var isPasswordVisible = false
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 16) {
-                textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black
-                )
+            VStack(spacing: 8) {
+                textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+                .padding(.leading)
                 TextField(Localization.email, text: $viewModel.email)
                     .padding()
                     .overlay(
@@ -26,6 +25,8 @@ struct RegistrationFieldsView: View {
                             .stroke(viewModel.errorType == .email ? Color.red : Color.colorDarkBrown, lineWidth: 1.3)
                     )
                     .frame(height: 50)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical)
                 
                 HStack {
                     if isPasswordVisible {
@@ -49,7 +50,7 @@ struct RegistrationFieldsView: View {
                         .stroke(viewModel.errorType == .password ? Color.red : Color.colorDarkBrown, lineWidth: 1.3)
                 )
                 .frame(height: 50)
-                
+                .padding(.horizontal, 8)
                 if !viewModel.errorMessage.isEmpty {
                     Text(viewModel.errorMessage)
                         .foregroundColor(.red)
@@ -67,13 +68,10 @@ struct RegistrationFieldsView: View {
                         }
                     }
                 }) {
-                    textComponent.createText(
-                        text: Localization.registr,
-                        fontSize: 16,
-                        fontWeight: .regular,
-                        color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white
-                    )
-                    .frame(maxWidth: .infinity, minHeight: 50)
+                    textComponent.createText(text: Localization.registr, fontSize: 16, fontWeight: .regular, color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .padding(.leading, 8)
                     .background(viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : Color.colorGreen)
                     .cornerRadius(25)
                     .overlay(
@@ -81,10 +79,11 @@ struct RegistrationFieldsView: View {
                             .stroke(viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.gray : Color.colorGreen, lineWidth: 1.3)
                     )
                 }
+                .frame(maxWidth: .infinity)
+                .padding([.horizontal, .vertical], 8)
                 .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
             }
             .padding(.horizontal)
-        }
         .fullScreenCover(isPresented: $viewModel.isFinalRegistration) {
             RegistrationConfirmationView(
                 email: viewModel.email,
@@ -94,11 +93,3 @@ struct RegistrationFieldsView: View {
     }
 }
 
-//
-//if viewModel.isFinalRegistration {
-//    RegistrationConfirmationView(
-//        email: viewModel.email,
-//        onAuthenticationSuccess: onAuthenticationSuccess
-//    )
-//    .transition(.move(edge: .trailing))
-//}

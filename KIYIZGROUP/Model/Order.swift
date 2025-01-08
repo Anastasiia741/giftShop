@@ -21,6 +21,10 @@ class Order: Identifiable {
         return sum
     }
     
+    var totalItems: Int {
+        positions.reduce(0) { $0 + $1.count }
+     }
+    
     var representation: [String: Any] {
         var repres = [String: Any]()
         repres["id"] = id

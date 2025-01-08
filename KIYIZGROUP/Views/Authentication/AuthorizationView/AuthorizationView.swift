@@ -6,20 +6,30 @@ import SwiftUI
 
 struct AuthorizationView: View {
     @ObservedObject var viewModel = AuthenticationVM()
-    var onAuthenticationSuccess: (String) -> Void
-    
+    var onBack: () -> Void
+
     var body: some View {
         VStack {
             Spacer()
             AnimatedImagesView()
             Spacer()
-            AuthorizationFieldsView(onAuthenticationSuccess: onAuthenticationSuccess) 
+            AuthorizationFieldsView()
+                .padding(.horizontal)
+            ForgotPasswordView()
                 .padding(.horizontal)
                 .padding(.bottom, 16)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(trailing: ForgotPasswordView())
-        .navigationBarItems(leading: CustomBackButton())
+        .overlay(
+            HStack {
+                CustomBackButton(onBack: onBack)
+                    .padding(.horizontal)
+                Spacer()
+                
+            }
+                .padding()
+                .frame(maxHeight: 44),
+            alignment: .top
+        )
         .onTapGesture {
             self.hideKeyboard()
             UIApplication.shared.endEditing()

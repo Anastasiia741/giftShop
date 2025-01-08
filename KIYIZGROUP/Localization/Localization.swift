@@ -101,7 +101,7 @@ struct Localization {
     static let selectPhotoSource = "select_photo_source".localized
     static let gallery = "gallery".localized
     static let camera = "camera".localized
-    static let deleteAccount = "delete_account".localized
+    static let deleteAccount = "delete_account_name".localized
     static let dataSuccessfullySaved = "data_successfully_saved".localized
     static let logOut = "log_out".localized
     static let goOut = "go_out".localized

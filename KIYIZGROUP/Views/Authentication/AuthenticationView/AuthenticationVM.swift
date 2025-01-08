@@ -23,14 +23,11 @@ final class AuthenticationVM: ObservableObject {
     @Published var isFinalRegistration = false
     
     func signIn() async {
-        
         if let errorMessage = validateFields() {
             updateError(message: errorMessage, type: .general)
             return
         }
-        
         updateError(message: nil, type: nil)
-        
         authService.signIn(email: email, password: password) { [weak self] result in
             switch result {
             case .success(_):
@@ -61,9 +58,7 @@ final class AuthenticationVM: ObservableObject {
             
             return
         }
-        
         updateError(message: nil, type: nil)
-        
         authService.signUp(email: email, password: password) { [weak self] result in
             switch result {
             case .success(_):
@@ -101,7 +96,7 @@ final class AuthenticationVM: ObservableObject {
         if !isValidPassword(password) {
             return "Password must be at least 6 characters."
         }
-        
+    
         return nil
     }
     
