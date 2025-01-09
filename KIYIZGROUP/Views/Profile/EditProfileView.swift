@@ -31,10 +31,9 @@ struct EditProfileView: View {
                                 }
                             }
                         }
-                    NavigationLink(destination: ChangePasswordView(viewModel: viewModel)) {
+                    NavigationLink(destination: ChangePasswordView()) {
                         RoundedPasswordButton(title: "Сменить пароль")
                     }
-                    
                     SectionHeader(title: "Адрес доставки")
                     RoundedField(placeholder: "Адрес", text: $viewModel.address)
                         .onChange(of: viewModel.address) { oldValue, newValue in

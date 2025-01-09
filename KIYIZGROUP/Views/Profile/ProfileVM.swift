@@ -22,15 +22,7 @@ final class ProfileVM: ObservableObject {
     @Published var address = ""
     @Published var appartment = ""
     @Published var floor = ""
-    
-    
-    @Published var currentPassword: String = ""
-    @Published var newPassword: String = ""
-    @Published var errorMessage: String? = nil
-    @Published var successMessage: String? = nil
-    @Published var isLoading: Bool = false
-    
-    
+
     @Published var noPendingDeliveries: Bool = false
 
     @Published var alertTitle = ""
@@ -123,42 +115,6 @@ final class ProfileVM: ObservableObject {
         }
     }
     
-    func changePassword() {
-        guard !currentPassword.isEmpty else {
-            errorMessage = "Current password is required"
-            return
-        }
-        guard !newPassword.isEmpty else {
-            errorMessage = "New password cannot be empty"
-            return
-        }
-        isLoading = true
-        errorMessage = nil
-        successMessage = nil
-        authService.reauthenticateUser(currentPassword: currentPassword) { [weak self] result in
-            switch result {
-            case .success:
-                self?.authService.updatePassword(newPassword: self?.newPassword ?? "") { updateResult in
-                    DispatchQueue.main.async {
-                        self?.isLoading = false
-                        switch updateResult {
-                        case .success:
-                            self?.successMessage = "Password updated successfully!"
-                            self?.resetPasswordFields()
-                        case .failure(let error):
-                            self?.errorMessage = "Failed to update password: \(error.localizedDescription)"
-                        }
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.isLoading = false
-                    self?.errorMessage = "Reauthentication failed: \(error.localizedDescription)"
-                }
-            }
-        }
-    }
-    
     func fetchOrderHistory() {
         dbOrdersService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
             DispatchQueue.main.async {
@@ -167,30 +123,15 @@ final class ProfileVM: ObservableObject {
                 case .success(let orders):
                     self.orders = orders
                     self.orders.sort { $0.date > $1.date }
-                    self.lastOrder = orders.first
+                    self.lastOrder = self.orders.first
                     self.noPendingDeliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
+                    print("Orders after sorting: \(self.orders.map { $0.date })")
                 case .failure(let error):
                     print("Failed to fetch order history: \(error.localizedDescription)")
                 }
             }
         }
     }
-    
-//    func fetchOrderHistory() {
-//        dbOrdersService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
-//            switch result {
-//            case .success(let orderHistory):
-//                DispatchQueue.main.async {
-//                    self?.orders = orderHistory
-//                    self?.orders.sort { $0.date > $1.date }
-//                    self?.lastOrder = orders.first
-//                    self?.noPendingDeliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
-//                }
-//            case .failure(let error):
-//                self?.alertModel = self?.configureAlertModel(with: Localization.errorRetrievingOrderHistory, message: error.localizedDescription)
-//            }
-//        }
-//    }
     
     func showLogoutConfirmationAlert() {
         alertModel = AlertModel(title: "Вы действительно хотите выйти из аккаунта?", buttons: [
@@ -242,12 +183,6 @@ final class ProfileVM: ObservableObject {
                 print(error.localizedDescription)
             }
         }
-    }
-
-    private func resetPasswordFields() {
-        currentPassword = ""
-        newPassword = ""
-        errorMessage = nil
     }
 
     private func configureAlertModel(with title: String, message: String?) -> AlertModel {
