@@ -1,0 +1,42 @@
+//  DeliveryView.swift
+//  KIYIZGROUP
+//  Created by Анастасия Набатова on 8/1/25.
+
+import SwiftUI
+
+struct DeliveryView: View {
+    @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var viewModel: ProfileVM
+    @StateObject private var statusColors = StatusColors()
+    @State private var selectedOrder: Order?
+    private let textComponent = TextComponent()
+    
+    var body: some View {
+        VStack {
+            textComponent.createText(text: "Детали", fontSize: 26, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+            List(viewModel.orders) { order in
+                OrderRow(order: order, colorScheme: colorScheme, statusColors: statusColors, textComponent: textComponent)
+                    .onTapGesture {
+                        selectedOrder = order
+                    }
+                    .listRowSeparator(.hidden)
+            }
+            .listStyle(PlainListStyle())
+            .onAppear {
+                Task {
+                    await viewModel.fetchUserProfile()
+                }
+            }
+        }
+        .sheet(item: $selectedOrder) { order in
+            OrderItems(order: order)
+                .presentationDetents([.height(300)])
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: CustomBackButton())
+    }
+}
+

@@ -15,7 +15,7 @@ struct CartCell: View {
     @State private var count = 1
     @State private var imageURL: URL?
     @State private(set) var position: Product
-    
+
     var body: some View {
         VStack {
             HStack {

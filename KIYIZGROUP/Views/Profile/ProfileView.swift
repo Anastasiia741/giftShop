@@ -19,11 +19,8 @@ struct ProfileView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ProfileHeaderView(viewModel: viewModel)
-                    
                     ProfileActionsView()
-                    
                     ProfileInfoView()
-                    
                     SupportInfoView()
                 }
             }
@@ -44,7 +41,6 @@ struct ProfileView: View {
             .navigationDestination(isPresented: $isShowEditProfileView) {
                 EditProfileView(viewModel: viewModel)
             }
-            
             .onAppear {
                 Task {
                     await viewModel.fetchUserProfile()
@@ -58,55 +54,3 @@ struct ProfileView: View {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-//VStack(alignment: .leading, spacing: 18) {
-//    Text(Localization.yourOrders).customTextStyle(TextStyle.avenirBold, size: 16)
-//    
-//    if viewModel.orders.isEmpty {
-//        Spacer()
-//        VStack(alignment: .center, spacing: 18) {
-//            Text(Localization.yourOrders)
-//                .customTextStyle(TextStyle.avenirBold, size: 16)
-//            Images.Profile.emptyList
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(height: 150)
-//            Text(Localization.noOrdersYet)
-//                .customTextStyle(TextStyle.avenirBold, size: 16)
-//            Spacer()
-//        }
-//    } else {
-//        List {
-//            Section(header: EmptyView() ) {
-//                ForEach(viewModel.orders, id: \.id) { order in
-//                    ProfileCell(order: order, viewModel: viewModel)
-//                }
-//            }
-//            .listStyle(.plain)
-//        }
-//    }
-//}
-//HStack(alignment: .center) {
-//    Button{
-//        viewModel.showDeleteConfirmationAlert {
-//            viewModel.logout()
-//        }
-//    } label: {
-//        Text(Localization.deleteAccountName)
-//            .font(.system(size: 12))
-//            .padding()
-//            .padding(.horizontal, 20)
-//            .frame(height: 20)
-//            .foregroundColor(.gray)
-//            .cornerRadius(20)
-//    }
-//}

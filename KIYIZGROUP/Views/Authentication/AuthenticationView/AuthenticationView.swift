@@ -16,10 +16,10 @@ struct AuthenticationView: View {
         ZStack {
             VStack {
                 Spacer()
+                ImageGridAuthView(imageNames: ["Frame 59", "Frame 60", "Frame 61", "Frame 62", "Frame 63", "Frame 64", "Frame 65", "Frame 66", "Frame 67"])
+                Spacer()
                 HeaderAuthView()
-                Spacer()
-                ImageGridAuthView(imageNames: ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9"])
-                Spacer()
+                .padding()
                 ButtonsAuthView(onButtonTap: { screen in
                     withAnimation {
                         activeScreen = screen

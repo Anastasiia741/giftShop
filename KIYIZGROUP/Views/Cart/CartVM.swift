@@ -71,9 +71,10 @@ final class CartVM: ObservableObject {
                 date: Date(),
                 status: OrderStatus.new.rawValue,
                 promocode: promoCode ?? ""
+                
             )
             order.positions = orderProducts.map { position in
-                return Position(id: UUID().uuidString, product: position, count: position.quantity)
+                return Position(id: UUID().uuidString, product: position, count: position.quantity, image: position.image ?? "")
             }
             if order.positions.isEmpty {
                 alertModel = AlertModel(title: "Ошибка", message: "Корзина пуста", buttons: [])
