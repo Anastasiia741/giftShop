@@ -4,8 +4,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ImageGridAuthView: View {
     let imageNames: [String]
     private let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
@@ -21,7 +19,7 @@ struct ImageGridAuthView: View {
                     .scaledToFit()
                     .frame(width: 105, height: 105)
                     .cornerRadius(8)
-                    .rotation3DEffect(.degrees(rotationAngles[safe: index] ?? 0), axis: (x: 1, y: 0, z: 0))
+                    .rotationEffect(.degrees(rotationAngles[safe: index] ?? 0))
                     .animation(.easeInOut(duration: 0.8), value: rotationAngles[safe: index] ?? 0)
             }
         }
@@ -44,13 +42,10 @@ struct ImageGridAuthView: View {
                     rotationAngles[index] += 360
                 }
             } else {
-                // Переворот одного элемента
                 if let randomIndex = imageNames.indices.randomElement() {
                     rotationAngles[randomIndex] += 360
                 }
             }
-            
-            // Переключение флага
             simultaneousAnimations.toggle()
         }
     }

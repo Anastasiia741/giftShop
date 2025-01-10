@@ -13,31 +13,37 @@ struct ProfileView: View {
     private let textComponent = TextComponent()
     @State private var selectedImage: UIImage?
     @State private var isShowEditProfileView = false
-        
+    
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 0) {
-                    ProfileHeaderView(viewModel: viewModel)
-                    ProfileActionsView()
-                    ProfileInfoView()
-                    SupportInfoView()
+            ZStack(alignment: .top) {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ProfileHeaderView(viewModel: viewModel)
+                        ProfileActionsView()
+                        ProfileInfoView()
+                        SupportInfoView()
+                    }
+                    .padding(.top, 70)
                 }
-            }
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity, alignment: .topLeading) 
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                trailing: HStack(spacing: 20) {
+                HStack {
+                    Spacer()
                     Button(action: {
                         isShowEditProfileView.toggle()
                     }) {
                         Image("lucide")
                             .resizable()
-                            .imageScale(.small)
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(colorScheme == .dark ? .white : .black)
                     }
                 }
-            )
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(
+                    Color.white.opacity(0.9)
+                        .edgesIgnoringSafeArea(.top)
+                )
+            }
             .navigationDestination(isPresented: $isShowEditProfileView) {
                 EditProfileView(viewModel: viewModel)
             }
@@ -49,8 +55,7 @@ struct ProfileView: View {
             .onTapGesture {
                 self.hideKeyboard()
             }
-            .scrollIndicators(.hidden) 
+            .scrollIndicators(.hidden)
         }
     }
 }
-

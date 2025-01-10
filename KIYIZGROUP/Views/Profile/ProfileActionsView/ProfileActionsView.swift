@@ -21,7 +21,11 @@ struct ProfileActionsView: View {
                 .background(Color.white.opacity(0.5))
                 .padding(.horizontal, 16)
             
-            NavigationLink(destination: CustomOrdersView()) {
+            if viewModel.lastIndOrder {
+                NavigationLink(destination: CustomOrdersView(viewModel: viewModel)) {
+                    ProfileActionRow(title: "Индивидуальные заказы", subtitle: "Название товара",textComponent: textComponent)
+                }
+            } else {
                 ProfileActionRow(title: "Индивидуальные заказы", subtitle: "Заказы отсутствуют",textComponent: textComponent)
             }
             
@@ -33,8 +37,8 @@ struct ProfileActionsView: View {
             Divider()
                 .background(Color.white.opacity(0.5))
                 .padding(.horizontal, 16)
-            NavigationLink(destination: AddressView()) {
-                ProfileActionRow(title: "Адрес доставки", subtitle: "2 товара на сумму 4700 сом", textComponent: textComponent)
+            NavigationLink(destination: EditProfileView(viewModel: viewModel)) {
+                ProfileActionRow(title: "Адрес доставки", subtitle: viewModel.address.isEmpty ? "Не указан" : viewModel.address, textComponent: textComponent)
             }
         }
         .background(
@@ -43,6 +47,9 @@ struct ProfileActionsView: View {
         )
         .padding()
         .onAppear {
+            Task {
+                await viewModel.fetchUserProfile()
+            }
             viewModel.fetchOrderHistory()
         }
     }

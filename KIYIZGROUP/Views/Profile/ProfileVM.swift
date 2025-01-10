@@ -24,7 +24,8 @@ final class ProfileVM: ObservableObject {
     @Published var floor = ""
 
     @Published var noPendingDeliveries: Bool = false
-
+    @Published var lastIndOrder = true
+    
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     @Published var showQuitPresenter = false

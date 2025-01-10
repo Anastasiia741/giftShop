@@ -1,6 +1,6 @@
 //  SupportInfoView.swift
 //  KIYIZGROUP
-//  Created by Анастасия Набатова on 27/11/24.
+//  Created by Анастасия Набатова on 10/1/25.
 
 import SwiftUI
 
@@ -12,27 +12,10 @@ struct SupportInfoView: View {
     var body: some View {
         VStack(spacing: 0) {
             Button(action: {
-                print("Политика конфиденциальности нажато")
+                UIApplication.openWebsite("https://mobimint.kg/")
             }) {
                 HStack {
                     textComponent.createText(text: "Политика конфиденциальности", fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.gray)
-                }
-                .padding()
-            }
-            .background(Color.clear)
-            
-            Divider()
-                .padding(.horizontal)
-                .background(Color.gray.opacity(0.5))
-            
-            Button(action: {
-                print("Служба поддержки нажато")
-            }) {
-                HStack {
-                    textComponent.createText(text: "Служба поддержки", fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
@@ -47,8 +30,4 @@ struct SupportInfoView: View {
         )
         .padding()
     }
-}
-
-#Preview {
-    SupportInfoView()
 }
