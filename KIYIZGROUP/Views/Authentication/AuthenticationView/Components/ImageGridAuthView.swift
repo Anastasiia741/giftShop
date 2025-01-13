@@ -7,13 +7,9 @@ import SwiftUI
 struct ImageGridAuthView: View {
     let imageNames: [String]
     private let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
-    
     @State private var rotationAngles: [Double] = []
     @State private var animationIndexOrder: [Int] = []
     @State private var currentIndex = 0
-  
-//    @State private var simultaneousAnimations = false
-    
     
     var body: some View {
         LazyVGrid(columns: gridItems) {
@@ -40,19 +36,17 @@ struct ImageGridAuthView: View {
     }
     
     private func setupAnimationOrder() {
-          animationIndexOrder = Array(imageNames.indices).shuffled() // Случайный порядок
-      }
-      
-      private func startAnimation() {
-          Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-              guard !animationIndexOrder.isEmpty else { return }
-              
-              let currentIndexInOrder = animationIndexOrder[currentIndex]
-              rotationAngles[currentIndexInOrder] += 180
-              
-              currentIndex = (currentIndex + 1) % animationIndexOrder.count
-          }
-      }
+        animationIndexOrder = Array(imageNames.indices).shuffled()
+    }
+    
+    private func startAnimation() {
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+            guard !animationIndexOrder.isEmpty else { return }
+            let currentIndexInOrder = animationIndexOrder[currentIndex]
+            rotationAngles[currentIndexInOrder] += 180
+            currentIndex = (currentIndex + 1) % animationIndexOrder.count
+        }
+    }
 }
 
 extension Array {
