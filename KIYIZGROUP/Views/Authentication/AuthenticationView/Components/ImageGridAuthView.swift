@@ -7,9 +7,9 @@ import SwiftUI
 struct ImageGridAuthView: View {
     let imageNames: [String]
     private let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
-    
     @State private var rotationAngles: [Double] = []
-    @State private var simultaneousAnimations = false
+    @State private var animationIndexOrder: [Int] = []
+    @State private var currentIndex = 0
     
     var body: some View {
         LazyVGrid(columns: gridItems) {
@@ -20,12 +20,13 @@ struct ImageGridAuthView: View {
                     .frame(width: 105, height: 105)
                     .cornerRadius(8)
                     .rotationEffect(.degrees(rotationAngles[safe: index] ?? 0))
-                    .animation(.easeInOut(duration: 0.8), value: rotationAngles[safe: index] ?? 0)
+                    .animation(.easeInOut(duration: 1), value: rotationAngles[safe: index] ?? 0)
             }
         }
         .padding(.horizontal, 8)
         .onAppear {
             initializeRotationAngles()
+            setupAnimationOrder()
             startAnimation()
         }
     }
@@ -34,25 +35,17 @@ struct ImageGridAuthView: View {
         rotationAngles = Array(repeating: 0, count: imageNames.count)
     }
     
-    private func startAnimation() {
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
-            if simultaneousAnimations {
-                let indices = randomUniqueIndices(count: min(3, imageNames.count))
-                for index in indices {
-                    rotationAngles[index] += 360
-                }
-            } else {
-                if let randomIndex = imageNames.indices.randomElement() {
-                    rotationAngles[randomIndex] += 360
-                }
-            }
-            simultaneousAnimations.toggle()
-        }
+    private func setupAnimationOrder() {
+        animationIndexOrder = Array(imageNames.indices).shuffled()
     }
-
-    private func randomUniqueIndices(count: Int) -> [Int] {
-        let indices = Array(imageNames.indices).shuffled()
-        return Array(indices.prefix(count))
+    
+    private func startAnimation() {
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+            guard !animationIndexOrder.isEmpty else { return }
+            let currentIndexInOrder = animationIndexOrder[currentIndex]
+            rotationAngles[currentIndexInOrder] += 180
+            currentIndex = (currentIndex + 1) % animationIndexOrder.count
+        }
     }
 }
 
