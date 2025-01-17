@@ -8,7 +8,6 @@ struct TabBar: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: MainTabVM
     @State private var curentTab: Int = 0
-    @State private var isRegistering = false
     
     var body: some View {
         TabView(selection: $curentTab) {
@@ -73,14 +72,7 @@ struct TabBar: View {
                         }
                     }
                     .tag(TabType.cart.rawValue)
-                AuthenticationView(
-//                    onAuthenticationSuccess: { userId in
-//                        viewModel.setUserId(userId)
-//                    },
-//                    onRegistrationSuccess: {
-//                        isRegistering = true
-//                    }
-                )
+                AuthenticationView()
                 .tabItem {
                     VStack {
                         Images.TabBar.profile
@@ -92,6 +84,7 @@ struct TabBar: View {
         .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
             viewModel.fetchUserId()
+//            curentTab = 0
         }
     }
 }

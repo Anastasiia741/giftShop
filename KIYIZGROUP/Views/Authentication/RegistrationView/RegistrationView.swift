@@ -5,34 +5,48 @@
 import SwiftUI
 
 struct RegistrationView: View {
-    @ObservedObject private var viewModel = AuthenticationVM()
-    var onBack: () -> Void
-    
-    var body: some View {
-        VStack{
-            Spacer()
-            AnimatedImagesView()
-            Spacer()
-            RegistrationFieldsView(onAuthenticationSuccess: { _ in
-            })
-            Spacer()
+    @Environment(\.colorScheme) var colorScheme
+    @ObservedObject private var viewModel = RegistrationVM()
+    private let textComponent = TextComponent()
+    private let customButton = CustomButton()
+    private let simpleButton = MinimalButton()
 
-        }
-        .overlay(
-            HStack {
-                CustomBackButton(onBack: onBack)
-                    .padding(.horizontal)
-                Spacer()
-                
+    @State private var isNavigatingToConfirmation = false
+
+    var body: some View {
+        CustomNavigationView(
+            isActive: $isNavigatingToConfirmation,
+            destination: {
+                RegistrationConfirmationView(customButton: customButton)
+            },
+            content: {
+                VStack {
+                    Spacer()
+                    AnimatedImagesView()
+                    Spacer()
+                    RegistrationFieldsView(customButton: customButton, onAuthenticationSuccess: { email in
+                        withAnimation {
+                            isNavigatingToConfirmation = true
+                        }
+                    })
+                    HStack(spacing: 4) { 
+                        textComponent.createText(text: Localization.pressPolicy, fontSize: 12, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                        
+                        simpleButton.createMinimalButton(text: Localization.privacyPolicy, fontSize: 12, fontWeight: .regular, color: colorScheme == .dark ? .white : .black) {
+                            viewModel.disclaimerTapped()
+                        }.underline()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(height: 20)
+                    .padding(.leading, 26)
+                    Spacer()
+                }
+                .onTapGesture {
+                    self.hideKeyboard()
+                    UIApplication.shared.endEditing()
+                }
             }
-                .padding()
-                .frame(maxHeight: 44),
-            alignment: .top
         )
-        .onTapGesture {
-            self.hideKeyboard()
-            UIApplication.shared.endEditing()
-        }
     }
 }
 

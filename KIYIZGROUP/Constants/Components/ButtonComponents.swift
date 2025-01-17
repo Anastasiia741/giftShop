@@ -5,6 +5,171 @@
 import Foundation
 import SwiftUI
 
+struct CustomButton {
+    private let textComponent = TextComponent()
+    
+    func createButton(text: String, fontSize: CGFloat, fontWeight: Font.Weight, color: Color, backgroundColor: Color, borderColor: Color, cornerRadius: CGFloat = 25, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, color: color)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .background(backgroundColor)
+                .cornerRadius(cornerRadius)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(borderColor, lineWidth: 1.3)
+                )
+        }
+    }
+}
+
+struct CustomButtonLogIn {
+    func createButton(foregroundColor: Color, backgroundColor: Color, borderColor: Color, isEnabled: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: {
+            if isEnabled {
+                action()
+            }
+        }) {
+            Image(systemName: "chevron.right")
+                .foregroundColor(isEnabled ? foregroundColor : .gray)
+                .frame(width: 54, height: 54)
+                .background(
+                    Circle()
+                        .fill(isEnabled ? backgroundColor : .clear)
+                        .overlay(
+                            Circle()
+                                .stroke(borderColor, lineWidth: 1)
+                        )
+                )
+        }
+        .disabled(!isEnabled)
+    }
+}
+
+struct ForgotPasswordButton {
+    private let textComponent = TextComponent()
+    
+    func createButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            textComponent.createText(text: "Забыл пароль?", fontSize: 16, fontWeight: .regular, color: Color.colorLightBrown)
+                .padding()
+        }
+    }
+}
+
+struct MinimalButton {
+    private let textComponent = TextComponent()
+    
+    func createMinimalButton(text: String, fontSize: CGFloat, fontWeight: Font.Weight, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, color: color)
+        }
+    }
+}
+
+
+//Profile
+
+struct RoundedPasswordButton: View {
+    @Environment(\.colorScheme) var colorScheme
+    private let textComponent = TextComponent()
+    let title: String
+    
+    var body: some View {
+        HStack{
+            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .foregroundColor(colorScheme == .dark ? .white : .gray)
+        }
+        .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+        .padding(.horizontal)
+        .overlay(
+            RoundedRectangle(cornerRadius: 40)
+                .stroke(Color.gray, lineWidth: 1.3)
+        )
+    }
+    
+}
+
+struct RoundedButton: View {
+    @Environment(\.colorScheme) var colorScheme
+    private let textComponent = TextComponent()
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+                .padding(.horizontal)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 40)
+                        .stroke(Color.gray, lineWidth: 1.3)
+                )
+        }
+    }
+}
+
+struct RoundedRedButton: View {
+    private let textComponent = TextComponent()
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, color: .r)
+                .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+                .padding(.horizontal)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 40)
+                        .stroke(Color.gray, lineWidth: 1.3)
+                )
+        }
+    }
+}
+
+
+struct SectionHeader: View {
+    private let textComponent = TextComponent()
+    let title: String
+    let showButton: Bool
+    let action: (() -> Void)?
+    
+    var body: some View {
+        HStack {
+            textComponent.createText(text: title.uppercased(), fontSize: 14, fontWeight: .regular, color: .gray)
+            Spacer()
+            if showButton, let action = action {
+                Button(action: action) {
+                    textComponent.createText(text: "Save".uppercased(), fontSize: 14, fontWeight: .regular, color: .colorLightBrown)
+                }
+            }
+        }
+        .padding(.top, 10)
+        .padding(.horizontal)
+    }
+}
+
+
+
+struct RoundedField: View {
+    let placeholder: String
+    @Binding var text: String
+    
+    var body: some View {
+        TextField(placeholder, text: $text)
+            .padding()
+            .overlay(
+                RoundedRectangle(cornerRadius: 40)
+                    .stroke(Color.gray, lineWidth: 1.3)
+            )
+            .frame(height: 50)
+    }
+}
+
+//------------------
+
+
 struct ButtonComponents {
     private let textComponent = TextComponent()
     
@@ -101,7 +266,7 @@ struct ButtonComponents {
             
             textComponent.createText(text: "\(count.wrappedValue)", fontSize: 16, fontWeight: .regular, color: .black)
                 .frame(maxWidth: .infinity, alignment: .center)
-
+            
             Button(action: {
                 if count.wrappedValue < range.upperBound {
                     count.wrappedValue += 1
@@ -122,12 +287,12 @@ struct ButtonComponents {
                 .stroke(Color.gray, lineWidth: 1)
         )
     }
-
+    
     func createOrderButton(amount: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
                 textComponent.createText(text: "Оформить заказ", fontSize: 16, fontWeight: .regular, color: .white)
-                    
+                
                 textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, color: .white)
             }
             .padding()
@@ -142,7 +307,7 @@ struct ButtonComponents {
         Button(action: action) {
             HStack {
                 textComponent.createText(text: "Заказать", fontSize: 16, fontWeight: .regular, color: .white)
-                    
+                
                 textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, color: .white)
             }
             .padding()
@@ -154,23 +319,3 @@ struct ButtonComponents {
     }
 }
 
-struct CustomBackButton: View {
-    @Environment(\.presentationMode) var presentationMode
-    @Environment(\.colorScheme) var colorScheme
-    var onBack: (() -> Void)? = nil
-    
-    var body: some View {
-        Button(action: {
-                   if let onBack = onBack {
-                       onBack() 
-                   } else {
-                       presentationMode.wrappedValue.dismiss() // Используем стандартное поведение
-                   }
-               }) {
-                   HStack {
-                       Image(systemName: Images.chevronLeft)
-                           .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                   }
-               }
-           }
-}

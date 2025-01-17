@@ -6,35 +6,44 @@ import SwiftUI
 import Combine
 import FirebaseStorage
 
+enum ErrorTypeProfile: Identifiable {
+    case dataSuccessfullySaved
+    case profileFetchFailed
+    case profileSaveFailed
+    case profileNotLoaded
+    case orderFetchFailed
+    case accountDeletionFailed
+    case logoutFailed
+    
+    var id: String {
+        String(describing: self)
+    }
+}
+
 @MainActor
 final class ProfileVM: ObservableObject {
     private let authService = AuthService()
     private let profileService = ProfileService()
     private let dbOrdersService = DBOrdersService()
+    private var cancellables = Set<AnyCancellable>()
+    @Published var profile: NewUser?
+    @Published var errorType: ErrorTypeProfile? = nil
     @Published var orders: [Order] = []
     @Published var lastOrder: Order?
-
-    @Published var profile: NewUser?
-    @Published var alertModel: AlertModel?
     @Published var name = ""
-    @Published var phoneNumber = ""
     @Published var email = ""
+    @Published var phoneNumber = ""
     @Published var address = ""
-    @Published var appartment = ""
+    @Published var appatment = ""
     @Published var floor = ""
-
-    @Published var noPendingDeliveries: Bool = false
+    @Published var noPendingDeliveries = false
     @Published var lastIndOrder = true
-    
-    @Published var alertTitle = ""
-    @Published var alertMessage = ""
     @Published var showQuitPresenter = false
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    init() {
-        setupBindings()
-    }
+    @Published var isSaving: Bool = false
+}
+
+
+extension ProfileVM {
     
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else { return }
@@ -47,71 +56,47 @@ final class ProfileVM: ObservableObject {
                 self.email = user.email
                 self.phoneNumber = user.phone
                 self.address = user.address
-                self.appartment = user.appatment ?? ""
+                self.appatment = user.appatment ?? ""
                 self.floor = user.floor ?? ""
+                self.profile = user
             }
-        } catch let error as NSError {
-            print("Ошибка загрузки профиля: \(error.localizedDescription)")
+        } catch _ as NSError {
+            DispatchQueue.main.async {
+                self.errorType = .profileFetchFailed
+            }
         }
-    }
-    
-    private func setupBindings() {
-        $name
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-            .sink { [weak self] _ in
-                Task { await self?.saveProfile() }
-            }
-            .store(in: &cancellables)
-        
-        $phoneNumber
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                Task { await self?.saveProfile() }
-            }
-            .store(in: &cancellables)
-        
-        $address
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                Task { await self?.saveProfile() }
-            }
-            .store(in: &cancellables)
-        
-        $appartment
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                Task { await self?.saveProfile() }
-            }
-            .store(in: &cancellables)
-        
-        $floor
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                Task { await self?.saveProfile() }
-            }
-            .store(in: &cancellables)
     }
     
     func saveProfile() async {
         guard var updatedProfile = profile else {
+            DispatchQueue.main.async {
+                self.errorType = .profileNotLoaded
+            }
             return
         }
         updatedProfile.name = name
         updatedProfile.phone = phoneNumber
         updatedProfile.address = address
-        updatedProfile.appatment = appartment
+        updatedProfile.appatment = appatment
         updatedProfile.floor = floor
         
+        DispatchQueue.main.async {
+            self.isSaving = true
+        }
+        
+        let startTime = Date()
+        
         profileService.saveProfileToFirebase(updatedProfile) { result in
-            switch result {
-            case .success(_):
-                self.alertModel = self.configureAlertModel(with: Localization.dataSuccessfullySaved, message: nil)
-            case .failure(let error):
-                self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
+            let elapsedTime = Date().timeIntervalSince(startTime)
+            let remainingTime = max(1.0 - elapsedTime, 0)
+            DispatchQueue.main.asyncAfter(deadline: .now() + remainingTime) {
+                self.isSaving = false
+                switch result {
+                case .success:
+                    self.errorType = .dataSuccessfullySaved
+                case .failure:
+                    self.errorType = .profileSaveFailed
+                }
             }
         }
     }
@@ -126,56 +111,26 @@ final class ProfileVM: ObservableObject {
                     self.orders.sort { $0.date > $1.date }
                     self.lastOrder = self.orders.first
                     self.noPendingDeliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
-                    print("Orders after sorting: \(self.orders.map { $0.date })")
                 case .failure(let error):
-                    print("Failed to fetch order history: \(error.localizedDescription)")
+                    self.errorType = .orderFetchFailed
                 }
             }
         }
     }
     
-    func showLogoutConfirmationAlert() {
-        alertModel = AlertModel(title: "Вы действительно хотите выйти из аккаунта?", buttons: [
-            AlertButtonModel(title: Localization.yes, action: { [weak self] in
-                self?.logout()
-            }),
-            AlertButtonModel(title: Localization.no, action: { [weak self] in
-                self?.alertModel = nil
-            })
-        ]
-        )
-    }
-    
-    func showDeleteConfirmationAlert() {
-        alertModel = AlertModel(title: Localization.deleteAccount, buttons: [
-            AlertButtonModel(title: Localization.yes, action: { [weak self] in
-                self?.deleteAccount {
-                    self?.logout()
-                }
-            }),
-            AlertButtonModel(title: Localization.no, action: { [weak self] in
-                self?.alertModel = nil
-            })
-        ]
-        )
-    }
-    
-    private func deleteAccount(onDelete: @escaping () -> Void) {
+    func deleteAccount(onDelete: @escaping () -> Void) {
         authService.deleteAccount { [weak self] result in
             switch result {
             case .success:
-                self?.alertModel = AlertModel(title: Localization.accountDeleted, message: nil, buttons: [
-                    AlertButtonModel(title: Localization.ok, action: {
-                        onDelete()
-                    })
-                ])
+                self?.logout()
+                onDelete()
             case .failure(let error):
-                self?.alertModel = self?.configureAlertModel(with: error.localizedDescription, message: nil)
+                print("Ошибка удаления аккаунта: \(error.localizedDescription)")
             }
         }
     }
     
-    private func logout() {
+    func logout() {
         authService.signOut { result in
             switch result {
             case .success:
@@ -184,14 +139,6 @@ final class ProfileVM: ObservableObject {
                 print(error.localizedDescription)
             }
         }
-    }
-
-    private func configureAlertModel(with title: String, message: String?) -> AlertModel {
-        AlertModel(title: title, message: message, buttons: [
-            AlertButtonModel(title: Localization.ok, action: { [weak self] in
-                self?.alertModel = nil
-            })
-        ])
     }
 }
 

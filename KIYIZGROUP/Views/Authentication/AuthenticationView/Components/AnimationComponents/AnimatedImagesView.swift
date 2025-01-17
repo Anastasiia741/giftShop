@@ -10,8 +10,8 @@ struct AnimatedImagesView: View {
     
     var body: some View {
         ZStack {
-            ImageLayer(imageName: "vector-1", offset: $offset1, animationSpeed: 23, direction: .left)
-            ImageLayer(imageName: "vector", offset: $offset2, animationSpeed: 23, direction: .right, yOffset: 40)
+            ImageLayer(imageName: "vector-1", offset: $offset1, animationSpeed: 35, direction: .left)
+            ImageLayer(imageName: "vector", offset: $offset2, animationSpeed: 35, direction: .right, yOffset: 40)
         }
         .frame(height: 300)
         .clipped()

@@ -6,45 +6,54 @@ import SwiftUI
 
 struct RegistrationConfirmationView: View {
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject private var viewModel = AuthenticationVM()
+    @ObservedObject private var viewModel = RegistrationVM()
     private let textComponent = TextComponent()
-    var email: String
-    var onAuthenticationSuccess: (String) -> Void
+    let customButton: CustomButton
     @State private var navigateToAuthView = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Spacer()
-                VStack(spacing: 16) {
+        CustomNavigationView(
+            isActive: $navigateToAuthView,
+            destination: {
+                AuthorizationView()
+            },
+            content: {
+                VStack {
+                    Spacer()
                     textComponent.createText(text: "Поздравляем! Вы успешно зарегистрировались.", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding()
+                    
                     textComponent.createText(text: "Завершите авторизацию, чтобы получить доступ к вашему аккаунту.", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                        .frame(maxWidth: .infinity)
                         .padding()
-                }
-                .padding(.horizontal)
-                Spacer()
-                VStack(spacing: 16) {
-                    Button(action: {
-                        navigateToAuthView = true
-                    }) {
-                        textComponent.createText(text: "Войти", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
-                            .frame(maxWidth: .infinity, minHeight: 50)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.colorLightBrown, lineWidth: 1.3)
-                            )
+                    
+                    Spacer()
+                    VStack(spacing: 16) {
+                        customButton.createButton(text: "Войти", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black, backgroundColor: .clear, borderColor: .colorDarkBrown,action: {
+                            navigateToAuthView = true
+                        })
+                        .padding(.horizontal, 32)
                     }
-                    .padding(.horizontal, 32)
                 }
-                .padding(.bottom, 32)
             }
-            .navigationDestination(isPresented: $navigateToAuthView) {
-//                AuthorizationView(onBack: () -> Void, onAuthenticationSuccess: onAuthenticationSuccess)
-//                    .navigationBarBackButtonHidden(true)
-            }
-        }
+        )
     }
 }
 
-
+struct RegistrationConfirmationView_Previews: PreviewProvider {
+    static var previews: some View {
+        RegistrationConfirmationView(
+            customButton: CustomButton()
+            
+        )
+        .environment(\.colorScheme, .light)
+        .previewDisplayName("Light Mode")
+        
+        RegistrationConfirmationView(
+            customButton: CustomButton()
+        )
+        .environment(\.colorScheme, .dark)
+        .previewDisplayName("Dark Mode")
+    }
+}

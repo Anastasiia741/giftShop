@@ -16,6 +16,7 @@ struct ChangePasswordView: View {
     var body: some View {
         VStack(spacing: 16) {
             textComponent.createText(text: "Change Password", fontSize: 20, fontWeight: .heavy, color:  colorScheme == .dark ? .white : .black)
+                .padding(.top, 20)
             textComponent.createText(text: "You will be signed out upon changing your password and required to sign back into the app.", fontSize: 18, fontWeight: .regular, color: .gray)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 20)

@@ -5,21 +5,38 @@
 import SwiftUI
 import FirebaseAuth
 
-
 struct AuthenticationView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var selectedLanguage = "EN"
-    private let availableLanguages = ["EN", "KG", "РУ"]
     @State private var activeScreen: ActiveScreen? = nil
     
     var body: some View {
-        ZStack {
+        CustomNavigation(isActive: Binding(
+            get: { activeScreen != nil },
+            set: { newValue in
+                if !newValue {
+                    activeScreen = nil
+                }
+            }
+        ),
+                         showBackButton: true,
+                         destination: {
+            switch activeScreen {
+            case .registration:
+                RegistrationView()
+            case .authorization:
+                AuthorizationView()
+            case .none:
+                EmptyView()
+            }
+        },
+                         content: {
             VStack {
                 Spacer()
-                ImageGridAuthView(imageNames: ["Frame 59", "Frame 60", "Frame 61", "Frame 62", "Frame 63", "Frame 64", "Frame 65", "Frame 66", "Frame 67"])
+                ImageGridAuthView(imageNames: AuthImages.imageNames)
                 Spacer()
                 HeaderAuthView()
-                .padding()
+                    .padding()
                 ButtonsAuthView(onButtonTap: { screen in
                     withAnimation {
                         activeScreen = screen
@@ -27,37 +44,16 @@ struct AuthenticationView: View {
                 })
                 .padding(.vertical)
             }
-            .onTapGesture {
-                self.hideKeyboard()
-                UIApplication.shared.endEditing()
+            .overlay(HStack {
+                Spacer()
+                LanguageToggleAuthView(availableLanguages: LanguageOptions.available, selectedLanguage: $selectedLanguage)
+                    .padding(.horizontal)
             }
-            .overlay(
-                HStack {
-                    Spacer()
-                    LanguageToggleAuthView(availableLanguages: availableLanguages, selectedLanguage: $selectedLanguage)
-                        .padding(.horizontal)
-                }
-                    .padding()
-                    .frame(maxHeight: 44),
-                alignment: .topTrailing
+                .padding()
+                .frame(maxHeight: 44),
+                     alignment: .topTrailing
             )
-            if activeScreen == .registration {
-                RegistrationView(onBack: {
-                    withAnimation {
-                        activeScreen = nil
-                    }
-                })
-                .customTransition(isPresented: $activeScreen)
-            }
-            if activeScreen == .authorization {
-                AuthorizationView(onBack: {
-                    withAnimation {
-                        activeScreen = nil
-                    }
-                })
-                .customTransition(isPresented: $activeScreen)
-            }
-            
         }
+        )
     }
 }

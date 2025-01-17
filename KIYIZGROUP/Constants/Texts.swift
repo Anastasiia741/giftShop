@@ -4,7 +4,14 @@
 
 import Foundation
 
-enum TextMessage {    
+struct LanguageOptions {
+    static let available = ["EN", "KG", "РУ"]
+}
+
+//--------------- 
+
+
+enum TextMessage {
     enum Menu {
         static let porularProducts = "популярное"
     }

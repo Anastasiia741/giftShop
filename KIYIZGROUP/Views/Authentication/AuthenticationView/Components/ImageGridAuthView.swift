@@ -40,7 +40,7 @@ struct ImageGridAuthView: View {
     }
     
     private func startAnimation() {
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
             guard !animationIndexOrder.isEmpty else { return }
             let currentIndexInOrder = animationIndexOrder[currentIndex]
             rotationAngles[currentIndexInOrder] += 180
