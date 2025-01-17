@@ -12,8 +12,4 @@ final class MainTabVM: ObservableObject {
     func fetchUserId() {
         userID = authService.currentUser?.uid
     }
-    
-//    func setUserId(_ id: String) {
-//        userID = id
-//    }
 }

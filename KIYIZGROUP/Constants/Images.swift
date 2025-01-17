@@ -5,6 +5,12 @@
 import Foundation
 import SwiftUI
 
+enum AuthImages {
+    static let imageNames: [String] = [
+        "Frame 59", "Frame 60", "Frame 61", "Frame 62", "Frame 63", "Frame 64", "Frame 65", "Frame 66", "Frame 67"]
+}
+
+// ----------
 enum Images {
     static let chevronLeft = "chevron.left"
     

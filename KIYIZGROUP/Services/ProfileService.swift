@@ -58,7 +58,7 @@ final class ProfileService {
                 throw NSError(domain: "", code: 500, userInfo: nil)
             }
             
-            let appartment = data["appartment"] as? String ?? ""
+            let appartment = data["appatment"] as? String ?? ""
             let floor = data["floor"] as? String ?? ""
             
             let user = NewUser(id: id, name: userName, phone: phone, email: email, address: address, appatment: appartment, floor: floor)

@@ -6,90 +6,48 @@ import SwiftUI
 
 struct RegistrationFieldsView: View {
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject private var viewModel = AuthenticationVM()
+    @ObservedObject private var viewModel = RegistrationVM()
     private let textComponent = TextComponent()
+    private let customTextField = CustomTextField()
+    private let customSecureField = CustomSecureField()
+    let customButton: CustomButton
     var onAuthenticationSuccess: (String) -> Void
-    @State private var isButtonPressed = false
     @State private var isPasswordVisible = false
     
     var body: some View {
-            VStack(spacing: 8) {
-                textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
-                .multilineTextAlignment(.leading)
+        VStack(spacing: 8) {
+            textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
-                TextField(Localization.email, text: $viewModel.email)
+                .padding()
+            
+            customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email,
+                                            color: colorScheme == .dark ? .white : .black,
+                                            borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
+            .padding(6)
+            
+            customSecureField.createSecureField(placeholder: Localization.createPassword, text: $viewModel.password,
+                                                isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
+            .padding(6)
+            
+            if !viewModel.errorMessage.isEmpty {
+                textComponent.createText(text: viewModel.errorMessage, fontSize: 14, fontWeight: .regular,color: .red)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 40)
-                            .stroke(viewModel.errorType == .email ? Color.red : Color.colorDarkBrown, lineWidth: 1.3)
-                    )
-                    .frame(height: 50)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical)
-                
-                HStack {
-                    if isPasswordVisible {
-                        TextField(Localization.createPassword, text: $viewModel.password)
-                            .padding()
-                    } else {
-                        SecureField(Localization.createPassword, text: $viewModel.password)
-                            .padding()
-                    }
-                    Button(action: {
-                        isPasswordVisible.toggle()
-                    }) {
-                        Image(isPasswordVisible ? "eye" : "eye.slash")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
-                    .padding(.trailing, 16)
-                }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 40)
-                        .stroke(viewModel.errorType == .password ? Color.red : Color.colorDarkBrown, lineWidth: 1.3)
-                )
-                .frame(height: 50)
-                .padding(.horizontal, 8)
-                if !viewModel.errorMessage.isEmpty {
-                    Text(viewModel.errorMessage)
-                        .foregroundColor(.red)
-                        .font(.system(size: 14))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                
-                Button(action: {
-                    if let errorMessage = viewModel.validateFields() {
-                        viewModel.updateError(message: errorMessage, type: .general)
-                    } else {
-                        viewModel.signUp()
-                        if viewModel.errorMessage.isEmpty {
-                            isButtonPressed = true
-                        }
-                    }
-                }) {
-                    textComponent.createText(text: Localization.registr, fontSize: 16, fontWeight: .regular, color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-                    .padding(.leading, 8)
-                    .background(viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : Color.colorGreen)
-                    .cornerRadius(25)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 40)
-                            .stroke(viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.gray : Color.colorGreen, lineWidth: 1.3)
-                    )
-                }
-                .frame(maxWidth: .infinity)
-                .padding([.horizontal, .vertical], 8)
-                .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
             }
-            .padding(.horizontal)
-        .fullScreenCover(isPresented: $viewModel.isFinalRegistration) {
-            RegistrationConfirmationView(
-                email: viewModel.email,
-                onAuthenticationSuccess: onAuthenticationSuccess
-            )
+            
+            customButton.createButton(text: Localization.registr, fontSize: 16, fontWeight: .regular,
+                                      color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white,
+                                      backgroundColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : Color.colorGreen,
+                                      borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen){
+                viewModel.signUp()
+                if viewModel.isTabViewShow {
+                    onAuthenticationSuccess(viewModel.email)
+                }
+            }
+            .padding(6)
+            .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
         }
+        .padding(.horizontal)
     }
 }
 

@@ -16,6 +16,7 @@ struct Localization {
     static let signIn = "sign_in".localized
     static let registr = "registr".localized
     static let alreadyHaveAccount = "already_have_an_account".localized
+    static let pressPolicy = "press_policy".localized
     static let privacyPolicy = "privacy_policy".localized
     //MARK: - OrderDetail
     static let orderDetails = "order_details".localized

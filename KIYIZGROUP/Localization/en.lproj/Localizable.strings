@@ -13,6 +13,7 @@
 "sign_in" = "Sign in";
 "registr" = "Registration";
 //"already_have_an_account" = "Have an account";
+"press_policy" = "By registering you confirm that you agree to";
 "privacy_policy" = "Privacy Policy";
 
 //MARK: - OrderDetail
