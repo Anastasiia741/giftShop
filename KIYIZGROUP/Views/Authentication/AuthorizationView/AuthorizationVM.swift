@@ -8,19 +8,46 @@ import FirebaseAuth
 final class AuthorizationVM: AuthBaseVM {
     private var authService = AuthService()
     @Published var isTabViewShow = false
+    @Published var isEmailSent: Bool = false
+    @Published var isLoading: Bool = false
     
     func signIn() async {
-        if let errorMessage = validateFields() {
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
             updateError(message: errorMessage, type: .general)
             return
         }
         updateError(message: nil, type: nil)
-        authService.signIn(email: email, password: password) { [weak self] result in
+        
+        authService.signIn(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
             switch result {
             case .success(_):
                 self?.isTabViewShow.toggle()
             case .failure(let error):
                 self?.handleError(error)
+            }
+        }
+    }
+    
+    func sendPasswordResetEmail(completion: @escaping (Bool, String?) -> Void) {
+        guard !email.isEmpty else {
+            completion(false, "Email cannot be empty.")
+            return
+        }
+        
+        isLoading = true
+        Auth.auth().sendPasswordReset(withEmail: email.trimmingCharacters(in: .whitespacesAndNewlines)) { [weak self] error in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                if let error = error {
+                    self?.handleError(error)
+                    completion(false, error.localizedDescription)
+                } else {
+                    self?.isEmailSent = true
+                    completion(true, nil)
+                }
             }
         }
     }

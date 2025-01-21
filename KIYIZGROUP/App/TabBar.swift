@@ -80,12 +80,16 @@ struct TabBar: View {
                 }
                 .tag(TabType.profile.rawValue)
             }
+            
         }
+        
         .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
             viewModel.fetchUserId()
 //            curentTab = 0
         }
+
     }
 }
+
 

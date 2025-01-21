@@ -10,7 +10,6 @@ struct RegistrationView: View {
     private let textComponent = TextComponent()
     private let customButton = CustomButton()
     private let simpleButton = MinimalButton()
-
     @State private var isNavigatingToConfirmation = false
 
     var body: some View {

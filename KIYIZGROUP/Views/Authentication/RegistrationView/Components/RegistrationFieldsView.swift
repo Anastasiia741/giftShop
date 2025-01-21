@@ -28,9 +28,9 @@ struct RegistrationFieldsView: View {
             customSecureField.createSecureField(placeholder: Localization.createPassword, text: $viewModel.password,
                                                 isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
             .padding(6)
-            
-            if !viewModel.errorMessage.isEmpty {
-                textComponent.createText(text: viewModel.errorMessage, fontSize: 14, fontWeight: .regular,color: .red)
+
+            if let errorMessage = viewModel.errorMessage, !errorMessage.isEmpty {
+                textComponent.createText(text: errorMessage, fontSize: 14, fontWeight: .regular, color: .r)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
             }

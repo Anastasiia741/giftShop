@@ -11,12 +11,12 @@ enum ErrorType {
 }
 
 class AuthBaseVM: ObservableObject {
-    @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var errorMessage: String = ""
+    @Published var email = ""
+    @Published var password = ""
+    @Published var errorMessage: String?
     @Published var errorType: ErrorType? = nil
-
-    func validateFields() -> String? {
+    
+    func validateFieldsForReg(email: String, password: String) -> String? {
         if email.isEmpty {
             return "Email cannot be empty"
         }
@@ -31,6 +31,20 @@ class AuthBaseVM: ObservableObject {
         }
         return nil
     }
+    
+    
+     func validateFieldsForAuth(email: String, password: String) -> String? {
+          if email.isEmpty {
+              return "Email cannot be empty."
+          }
+          if !isValidEmail(email) {
+              return "Invalid email format."
+          }
+          if password.isEmpty {
+              return "Password cannot be empty."
+          }
+          return nil
+      }
     
     func updateError(message: String?, type: ErrorType?) {
         DispatchQueue.main.async {
@@ -51,11 +65,11 @@ class AuthBaseVM: ObservableObject {
     
     func handleError(_ error: Error) {
         if error.localizedDescription.contains("password") {
-            updateError(message: "Invalid password", type: .password)
+            updateError(message: "Неверный password", type: .password)
         } else if error.localizedDescription.contains("email") {
-            updateError(message: "Invalid email", type: .email)
+            updateError(message: "Email не найден", type: .email)
         } else {
-            updateError(message: "Operation failed: \(error.localizedDescription)", type: .general)
+            updateError(message: "Ошибка операции: \(error.localizedDescription)", type: .general)
         }
     }
 }
