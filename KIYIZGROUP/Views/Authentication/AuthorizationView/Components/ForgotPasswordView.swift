@@ -5,19 +5,16 @@
 import SwiftUI
 
 struct ForgotPasswordView: View, InfoDialogHandling {
-    var isOpenView: Binding<Bool>
-    
-    func sendEmail() {
-        //
-    }
-    
     @Environment(\.colorScheme) var colorScheme
+    @StateObject private var viewModel = AuthorizationVM()
     private let textComponent = TextComponent()
     private let customTextField = CustomTextField()
     let customButton = CustomButton()
     var description: String? = nil
-    @State private var email: String = ""
+    @State private var title = "Восстановление пароля"
+    @State private var email = ""
     @State private var offset: CGFloat = 1000
+    var isOpenView: Binding<Bool>
     
     var body: some View {
         ZStack {
@@ -28,18 +25,20 @@ struct ForgotPasswordView: View, InfoDialogHandling {
                 }
             VStack {
                 Spacer()
-                textComponent.createText(text: "Восстановление пароля", fontSize: 18, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: title, fontSize: 18, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .padding()
-                    .padding(.vertical)
+                    .padding([.vertical, .horizontal])
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                 customTextField.createTextField(placeholder: "Введите ваш email", text: $email, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
-                    .padding(.horizontal)
-                    .padding(.vertical)
+                    .padding([.vertical, .horizontal])
+                
                 customButton.createButton(text: email.isEmpty ? "Закрыть" : "Отправить", fontSize: 18, fontWeight: .medium, color: .black, backgroundColor: colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2), borderColor: .clear, cornerRadius: 100, action: {
                     if email.isEmpty {
-                        closeInfoDialog()
+                        closeDialog()
                     } else {
-                        sendEmail()
+                        handlePasswordReset()
                     }
                 })
                 .frame(width: 273, height: 60)
@@ -62,11 +61,36 @@ struct ForgotPasswordView: View, InfoDialogHandling {
     }
 }
 
+extension ForgotPasswordView {
+    
+    private func closeDialog() {
+        withAnimation(.spring()) {
+            offset = 1000
+        }
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            closeInfoDialog()
+        }
+    }
+    
+    private func handlePasswordReset() {
+        viewModel.email = email
+        viewModel.sendPasswordResetEmail { success, errorMessage in
+            if success {
+                title = "Пароль был отправлен на \(email)"
+                email = ""
+            } else if let errorMessage = errorMessage {
+                title = errorMessage
+                email = ""
+            }
+        }
+    }
+}
 
 protocol InfoDialogHandling {
     var isOpenView: Binding<Bool> { get }
     func closeInfoDialog()
-    func sendEmail(email: String)
 }
 
 extension InfoDialogHandling {
@@ -76,11 +100,6 @@ extension InfoDialogHandling {
                 isOpenView.wrappedValue = false
             }
         }
-    }
-    
-    func sendEmail(email: String) {
-        print("Отправить на email: \(email)")
-        closeInfoDialog()
     }
 }
 

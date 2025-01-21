@@ -38,7 +38,7 @@ struct AuthorizationFieldsView: View {
                 }
                 .padding(6)
                 if viewModel.errorType == .password || viewModel.errorType == .general || viewModel.errorType == .email {
-                    textComponent.createText(text: viewModel.errorMessage, fontSize: 12, fontWeight: .regular, color: Color.r)
+                    textComponent.createText(text: viewModel.errorMessage ?? "", fontSize: 12, fontWeight: .regular, color: Color.r)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 8)
                 }

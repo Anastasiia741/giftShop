@@ -11,16 +11,18 @@ final class RegistrationVM: AuthBaseVM {
     @Published var isTabViewShow = false
     
     func signUp() {
-        if let errorMessage = validateFields() {
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
             updateError(message: errorMessage, type: .general)
             return
         }
         updateError(message: nil, type: nil)
-        authService.signUp(email: email, password: password) { [weak self] result in
+        authService.signUp(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
             switch result {
             case .success(_):
                 self?.resetFields()
-                self?.isTabViewShow = true
             case .failure(let error):
                 self?.updateError(message: "Registration failed: \(error.localizedDescription)", type: .general)
             }
