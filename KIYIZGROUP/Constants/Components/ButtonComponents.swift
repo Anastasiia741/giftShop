@@ -66,6 +66,34 @@ struct MinimalButton {
     }
 }
 
+//Cart
+struct FlashingCircleButton: View {
+    @State private var isFlashing: Bool = false
+    
+    var body: some View {
+        
+        ZStack {
+            Circle()
+                .stroke(Color.colorDarkBrown, lineWidth: 2)
+                .scaleEffect(isFlashing ? 1.2 : 1.0)
+                .opacity(isFlashing ? 0.5 : 1.0)
+            
+            Circle()
+                .fill(Color.colorDarkBrown)
+                .padding(4)
+        }
+        .frame(width: 22, height: 22)
+        .onTapGesture {
+            withAnimation(Animation.easeInOut(duration: 0.2).repeatCount(3, autoreverses: true)) {
+                isFlashing = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                isFlashing = false
+            }
+        }
+    }
+}
+
 
 //Profile
 
@@ -154,14 +182,16 @@ struct SectionHeader: View {
 
 struct RoundedField: View {
     let placeholder: String
+    let borderColor: Color
     @Binding var text: String
+    
     
     var body: some View {
         TextField(placeholder, text: $text)
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.gray, lineWidth: 1.3)
+                    .stroke(borderColor, lineWidth: 1.3)
             )
             .frame(height: 50)
     }
@@ -303,7 +333,7 @@ struct ButtonComponents {
         .padding(.horizontal, 16)
     }
     
-    func createOrdersButton(amount: String, action: @escaping () -> Void) -> some View {
+    func createOrdersButton(amount: String, isDisabled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
                 textComponent.createText(text: "Заказать", fontSize: 16, fontWeight: .regular, color: .white)
@@ -312,10 +342,11 @@ struct ButtonComponents {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color.colorGreen)
+            .background(isDisabled ? .gray.opacity(0.5) : .colorGreen)
             .cornerRadius(40)
         }
         .padding(.horizontal, 16)
+        .disabled(isDisabled)
     }
 }
 

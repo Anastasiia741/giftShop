@@ -11,9 +11,11 @@ struct NewUser: Identifiable {
     var phone: String
     var email: String
     var address: String
+    var city: String
     var appatment: String?
     var floor: String?
-  
+    var comments: String?
+    
     var representation: [String: Any] {
         var repres = [String: Any]()
         repres["id"] = self.id
@@ -21,8 +23,11 @@ struct NewUser: Identifiable {
         repres["phone"] = self.phone
         repres["email"] = self.email
         repres["address"] = self.address
+        repres["city"] = self.city
         repres["appatment"] = self.appatment
         repres["floor"] = self.floor
+        repres["comments"] = self.comments
+
         return repres
     }
 }

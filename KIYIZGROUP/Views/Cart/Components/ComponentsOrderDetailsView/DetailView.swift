@@ -46,7 +46,7 @@ struct DetailView: View {
                 HStack {
                     textComponent.createText(text: "Телефон", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()
-                    textComponent.createText(text: "\(viewModel.phoneNumber)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(viewModel.phone)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                 }
                 .padding(.top)
                 Divider()

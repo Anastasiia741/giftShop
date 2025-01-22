@@ -32,7 +32,7 @@ struct OrderSummaryView: View {
                 .padding()
                 Divider()
                     .padding(.horizontal)
-                    .background(Color.gray.opacity(0.5))
+                    .background(.gray)
                 HStack {
                     textComponent.createText(text: "Общая сумма", fontSize: 16, fontWeight: .bold, style: .headline , color: colorScheme == .dark ? .white : .black)
                     Spacer()
@@ -42,7 +42,7 @@ struct OrderSummaryView: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                    .stroke(.gray, lineWidth: 1)
             )
         }
     }

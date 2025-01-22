@@ -20,7 +20,6 @@ struct OrderDetailsView: View {
             }
             
             VStack(alignment: .leading, spacing: 16) {
-                
                 DetailView(viewModel: profileVM, order: order)
             }
             Spacer()
