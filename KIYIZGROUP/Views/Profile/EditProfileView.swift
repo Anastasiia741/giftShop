@@ -11,6 +11,8 @@ struct EditProfileView: View {
     @State private var isNavigatingToChangePassword = false
     @State private var isShowAuthView = false
     @State private var isShowDeleteView = false
+    @State private var showDropdown = false
+
     
     var body: some View {
         CustomNavigationView (
@@ -34,10 +36,11 @@ struct EditProfileView: View {
                                             await viewModel.saveProfile()
                                         }
                                     })
-                                    RoundedField(placeholder: "Имя", text: $viewModel.name)
-                                    RoundedField(placeholder: "Email", text: $viewModel.email)
+                                    
+                                    RoundedField(placeholder: "Имя", borderColor: .gray, text: $viewModel.name)
+                                    RoundedField(placeholder: "Email", borderColor: .gray, text: $viewModel.email)
                                         .disabled(true)
-                                    RoundedField(placeholder: "Номер телефона", text: $viewModel.phoneNumber)
+                                    RoundedField(placeholder: "Номер телефона", borderColor: .gray, text: $viewModel.phone)
                                     Button(action: {
                                         withAnimation {
                                             isNavigatingToChangePassword = true
@@ -46,13 +49,13 @@ struct EditProfileView: View {
                                         RoundedPasswordButton(title: "Сменить пароль")
                                     }
                                     SectionHeader(title: "Адрес доставки", showButton: false, action: nil)
-                                    RoundedField(placeholder: "Адрес", text: $viewModel.address)
-                                    RoundedField(placeholder: "Номер квартиры", text: $viewModel.appatment)
-                                    RoundedField(placeholder: "Этаж", text: $viewModel.floor)
+                                    Dropdown(placeholder: viewModel.selectedCity.isEmpty ? "Выберите город" : viewModel.selectedCity, options: viewModel.cities, selectedOption: $viewModel.selectedCity, isExpanded: $showDropdown)
+
+                                    RoundedField(placeholder: "Адрес", borderColor: .gray, text: $viewModel.address)
+                                    RoundedField(placeholder: "Номер квартиры", borderColor: .gray, text: $viewModel.appatment)
+                                    RoundedField(placeholder: "Этаж", borderColor: .gray, text: $viewModel.floor)
                                     SectionHeader(title: "Аккаунт", showButton: false, action: nil)
-                                    RoundedButton(
-                                        title: "Выйти из аккаунта"
-                                    ) {
+                                    RoundedButton(title: "Выйти из аккаунта") {
                                         isShowAuthView.toggle()
                                     }
                                     RoundedRedButton(title: "Удалить аккаунт") {

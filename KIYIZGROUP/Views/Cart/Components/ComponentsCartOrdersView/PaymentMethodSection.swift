@@ -21,22 +21,23 @@ struct PaymentMethodSection: View {
                 FlashingCircleButton()
             }
             .padding()
-            .background(RoundedRectangle(cornerRadius: 24).stroke(Color.gray.opacity(0.5)))
+            .background(RoundedRectangle(cornerRadius: 24).stroke(.gray, lineWidth: 1))
             Button(action: {
                 withAnimation {
                     showDropdown.toggle()
                 }
             }) {
                 HStack {
-                    Text("Все способы оплаты")
-                        .foregroundColor(.gray)
+                    textComponent.createText(text: "Все способы оплаты", fontSize: 16, fontWeight: .regular, color: .gray)
                     Spacer()
                     Image(systemName: "chevron.down")
                         .rotationEffect(.degrees(showDropdown ? 180 : 0))
-                        .foregroundColor(Color.gray.opacity(0.5))
+                        .foregroundColor(.gray)
                 }
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 24).stroke(Color.gray.opacity(0.5)))
+//                .background(RoundedRectangle(cornerRadius: 24).stroke(.gray, lineWidth: 1))
+                .background(UnifiedRoundedRectangle())
+
             }
             
             
@@ -64,37 +65,12 @@ struct PaymentMethodSection: View {
                         }
                     }
                 }
-                .background(
-                    RoundedRectangle(cornerRadius: 24).stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                )
+                .padding(8)
+//                .background(RoundedRectangle(cornerRadius: 24).stroke(.gray, lineWidth: 1))
+                .background(UnifiedRoundedRectangle())
+
             }
         }
     }
 }
 
-struct FlashingCircleButton: View {
-    @State private var isFlashing: Bool = false
-    
-    var body: some View {
-        
-        ZStack {
-            Circle()
-                .stroke(Color.colorDarkBrown, lineWidth: 2)
-                .scaleEffect(isFlashing ? 1.2 : 1.0)
-                .opacity(isFlashing ? 0.5 : 1.0)
-            
-            Circle()
-                .fill(Color.colorDarkBrown)
-                .padding(4)
-        }
-        .frame(width: 22, height: 22)
-        .onTapGesture {
-            withAnimation(Animation.easeInOut(duration: 0.2).repeatCount(3, autoreverses: true)) {
-                isFlashing = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                isFlashing = false
-            }
-        }
-    }
-}

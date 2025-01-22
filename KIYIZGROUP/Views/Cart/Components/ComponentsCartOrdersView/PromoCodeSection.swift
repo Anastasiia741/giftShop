@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-
 struct PromoCodeSection: View {
     @ObservedObject var cartVM: CartVM
     private let textFieldComponent = TextFieldComponent()
@@ -22,6 +21,8 @@ struct PromoCodeSection: View {
             PromoCodeView(promo: $cartVM.promoResultText, isPromoSheetVisible: $showPromoCodeView)
                 .presentationDetents([.height(200)])
         }
+        .background(UnifiedRoundedRectangle())
+
     }
     
     private func applyPromoCode() {

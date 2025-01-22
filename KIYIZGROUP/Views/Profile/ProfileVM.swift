@@ -6,6 +6,20 @@ import SwiftUI
 import Combine
 import FirebaseStorage
 
+//enum ErrorTypeProfile: Identifiable {
+//    case dataSuccessfullySaved
+//    case profileFetchFailed
+//    case profileSaveFailed
+//    case profileNotLoaded
+//    case orderFetchFailed
+//    case accountDeletionFailed
+//    case logoutFailed
+//    
+//    var id: String {
+//        String(describing: self)
+//    }
+//}
+
 enum ErrorTypeProfile: Identifiable {
     case dataSuccessfullySaved
     case profileFetchFailed
@@ -14,11 +28,31 @@ enum ErrorTypeProfile: Identifiable {
     case orderFetchFailed
     case accountDeletionFailed
     case logoutFailed
-    
+
     var id: String {
         String(describing: self)
     }
+
+    var message: String {
+        switch self {
+        case .dataSuccessfullySaved:
+            return "Данные успешно сохранены."
+        case .profileFetchFailed:
+            return "Не удалось загрузить профиль."
+        case .profileSaveFailed:
+            return "Не удалось сохранить профиль."
+        case .profileNotLoaded:
+            return "Профиль не загружен."
+        case .orderFetchFailed:
+            return "Ошибка при загрузке заказов."
+        case .accountDeletionFailed:
+            return "Ошибка при удалении аккаунта."
+        case .logoutFailed:
+            return "Не удалось выйти из системы."
+        }
+    }
 }
+
 
 @MainActor
 final class ProfileVM: ObservableObject {
@@ -30,12 +64,24 @@ final class ProfileVM: ObservableObject {
     @Published var errorType: ErrorTypeProfile? = nil
     @Published var orders: [Order] = []
     @Published var lastOrder: Order?
+    
+    
+
+
+    
     @Published var name = ""
     @Published var email = ""
-    @Published var phoneNumber = ""
+    @Published var phone: String = ""
+
+    
+    @Published var cities = ["Бишкек", "Ош", "Нарын", "Талас", "Баткен"]
+    @Published var selectedCity: String = ""
     @Published var address = ""
     @Published var appatment = ""
     @Published var floor = ""
+    @Published var comments = ""
+
+    
     @Published var noPendingDeliveries = false
     @Published var lastIndOrder = true
     @Published var showQuitPresenter = false
@@ -54,11 +100,14 @@ extension ProfileVM {
             DispatchQueue.main.async {
                 self.name = user.name
                 self.email = user.email
-                self.phoneNumber = user.phone
+                self.phone = user.phone
+                self.selectedCity = user.city 
                 self.address = user.address
                 self.appatment = user.appatment ?? ""
                 self.floor = user.floor ?? ""
+                self.comments = user.comments ?? ""
                 self.profile = user
+
             }
         } catch _ as NSError {
             DispatchQueue.main.async {
@@ -75,10 +124,12 @@ extension ProfileVM {
             return
         }
         updatedProfile.name = name
-        updatedProfile.phone = phoneNumber
+        updatedProfile.phone = phone
+        updatedProfile.city = selectedCity
         updatedProfile.address = address
         updatedProfile.appatment = appatment
         updatedProfile.floor = floor
+        updatedProfile.comments = comments
         
         DispatchQueue.main.async {
             self.isSaving = true
@@ -93,6 +144,9 @@ extension ProfileVM {
                 self.isSaving = false
                 switch result {
                 case .success:
+//
+                    self.profile = updatedProfile
+
                     self.errorType = .dataSuccessfullySaved
                 case .failure:
                     self.errorType = .profileSaveFailed

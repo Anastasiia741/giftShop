@@ -6,42 +6,43 @@ import SwiftUI
 
 struct AddressInputView: View {
     @Environment(\.dismiss) var dismiss
+    @ObservedObject var viewModel: ProfileVM
     private let textComponent = TextComponent()
     private let textFieldComponent = TextFieldComponent()
-    let cities = ["Бишкек", "Ош", "Нарын", "Талас", "Баткен"]
-    @State private var selectedCity: String = ""
-    @State private var street: String = ""
-    @State private var house: String = ""
-    @State private var entrance: String = ""
-    @State private var showDropdown: Bool = false
+    private let customButton = CustomButton()
+    @State private var showDropdown = false
+    @State private var isSaving = false
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Dropdown( placeholder: "Выберите город*", options: cities,selectedOption: $selectedCity, isExpanded: $showDropdown, borderColor: Color.gray.opacity(0.5))
+                    Dropdown(borderColor: isSaving && viewModel.selectedCity.isEmpty ? .red : .gray, placeholder: viewModel.selectedCity.isEmpty ? "Выберите город*" : viewModel.selectedCity, options: viewModel.cities, selectedOption: $viewModel.selectedCity, isExpanded: $showDropdown)
                         .padding(.vertical, 8)
-                    textFieldComponent.createTextField(placeholder:"Улица, микрорайон*", text: $street)
-                        .textInputAutocapitalization(.words)
+                    RoundedField(placeholder: "Улица, Дом*", borderColor: isSaving && viewModel.address.isEmpty ? .red : .gray, text: $viewModel.address)
                         .padding(.vertical, 8)
-                    textFieldComponent.createTextField(placeholder:"Дом*", text: $house)
+                    RoundedField(placeholder: "Номер квартиры", borderColor: .gray, text: $viewModel.appatment)
                         .padding(.vertical, 8)
-                    textFieldComponent.createTextField(placeholder:"Подъезд, домофон", text: $entrance)
+                    RoundedField(placeholder: "Этаж, подъезд", borderColor: .gray, text: $viewModel.floor)
+                        .padding(.vertical, 8)
+                    RoundedField(placeholder: "Дополнительные комментарии", borderColor: .gray, text: $viewModel.comments)
+                        .padding(.vertical, 8)
                 }
                 .padding(.horizontal)
                 Spacer()
-                Button(action: {
-                    dismiss()
-                }) {
-                    textComponent.createText(text: "Добавить адрес", fontSize: 16, fontWeight: .regular, color: .white)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.colorLightGray)
-                        .cornerRadius(40)
+                customButton.createButton(text: "Добавить адрес", fontSize: 16, fontWeight: .regular,
+                                          color: viewModel.address.isEmpty || viewModel.selectedCity.isEmpty ? .gray : .white,
+                                          backgroundColor: viewModel.address.isEmpty || viewModel.selectedCity.isEmpty ? Color.clear : Color.colorGreen,
+                                          borderColor: viewModel.address.isEmpty || viewModel.selectedCity.isEmpty ? .gray : .colorGreen) {
+                    isSaving = true
+                    guard !viewModel.selectedCity.isEmpty, !viewModel.address.isEmpty else { return }
+                    Task {
+                        await viewModel.fetchUserProfile()
+                        await viewModel.saveProfile()
+                        dismiss()
+                    }
                 }
-                .padding(.bottom, 8)
-
+                 .padding(.bottom, 8)
             }
             .padding()
             .navigationTitle("Адрес доставки")
@@ -52,57 +53,5 @@ struct AddressInputView: View {
     }
 }
 
-struct Dropdown: View {
-    let placeholder: String
-    let options: [String]
-    @Binding var selectedOption: String
-    @Binding var isExpanded: Bool
-    let borderColor: Color
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Button(action: {
-                withAnimation {
-                    isExpanded.toggle()
-                }
-            }) {
-                HStack {
-                    Text(selectedOption.isEmpty ? placeholder : selectedOption)
-                        .foregroundColor(selectedOption.isEmpty ? .gray : .black)
-                    Spacer()
-                    Image(systemName: "chevron.down")
-                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                        .foregroundColor(.gray)
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 24).stroke(borderColor, lineWidth: 1))
-            }
-            
-            if isExpanded {
-                VStack(spacing: 0) {
-                    ForEach(options, id: \.self) { option in
-                        Button(action: {
-                            selectedOption = option
-                            withAnimation {
-                                isExpanded = false
-                            }
-                        }) {
-                            HStack {
-                                Text(option)
-                                    .foregroundColor(.black)
-                                Spacer()
-                            }
-                            .padding()
-                        }
-                        .background(Color.white)
-                        if option != options.last {
-                            Divider().padding(.horizontal)
-                        }
-                    }
-                }
-                .background(RoundedRectangle(cornerRadius: 24).stroke(borderColor, lineWidth: 1))
-            }
-        }
-    }
-}
+
 

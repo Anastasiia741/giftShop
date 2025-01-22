@@ -104,6 +104,7 @@
 		71AE76972BE8DF4100E4E3A3 /* PromoCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */; };
 		71BE6A922BA85A1E0004ED32 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 71BE6A902BA85A1E0004ED32 /* Localizable.strings */; };
 		71BE6A982BA9A34E0004ED32 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE6A972BA9A34E0004ED32 /* Localization.swift */; };
+		71C4C3142D412DD100115487 /* Dropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C4C3132D412DD100115487 /* Dropdown.swift */; };
 		71D7823C2BF79C030021C150 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 71D7823B2BF79C030021C150 /* FirebaseAppCheck */; };
 		71D7823E2BF79C030021C150 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 71D7823D2BF79C030021C150 /* FirebaseAppDistribution-Beta */; };
 		71D782402BF79C030021C150 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 71D7823F2BF79C030021C150 /* FirebaseAuth */; };
@@ -248,6 +249,7 @@
 		71BE6A912BA85A1E0004ED32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71BE6A932BA85D520004ED32 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71BE6A972BA9A34E0004ED32 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		71C4C3132D412DD100115487 /* Dropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dropdown.swift; sourceTree = "<group>"; };
 		71DCC3202B9A20BE00442C32 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		71E45F982B48568F00941CE7 /* KIYIZGROUP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KIYIZGROUP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E45F9B2B48568F00941CE7 /* KIYIZGROUPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KIYIZGROUPApp.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				7143C86E2CE3B388004CC4B9 /* TextComponent.swift */,
 				719363262CEE382B006FDC6A /* TextFieldComponent.swift */,
 				7143C8872CE79C9F004CC4B9 /* ButtonComponents.swift */,
+				71C4C3132D412DD100115487 /* Dropdown.swift */,
 				71185BCE2D3A987100BB4BBB /* AlertView.swift */,
 				71929EDC2BB6D360001489CB /* AlertModel.swift */,
 				71353CD72B6D5770008A7868 /* ImagePicker.swift */,
@@ -644,8 +647,8 @@
 				719363242CEE2BFE006FDC6A /* HeaderView.swift */,
 				7193632A2CEE4028006FDC6A /* AddressPhoneSection.swift */,
 				719363282CEE3EB7006FDC6A /* AddressInputView.swift */,
-				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
 				7193632C2CEE489F006FDC6A /* PaymentMethodSection.swift */,
+				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
 				7193632E2CEE6338006FDC6A /* OrderSummaryView.swift */,
 				719363312CEFAC9D006FDC6A /* PromoCodeSection.swift */,
 			);
@@ -960,6 +963,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7179A9F82CF78310005270CF /* ProfileInfoView.swift in Sources */,
+				71C4C3142D412DD100115487 /* Dropdown.swift in Sources */,
 				7127168D2BA35BAC00460FB1 /* Accesses.swift in Sources */,
 				7143C8882CE79C9F004CC4B9 /* ButtonComponents.swift in Sources */,
 				717D0FCB2B5AB75F001F2E6E /* ProductService.swift in Sources */,

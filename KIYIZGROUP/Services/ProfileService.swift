@@ -32,7 +32,7 @@ final class ProfileService {
                 case .success(let updatedProfile):
                     completion(.success(updatedProfile))
                     print("Профиль успешно сохранен в Firebase: \(updatedProfile)")
-
+                    
                 case .failure(let error):
                     print("Ошибка при сохранении профиля в Firebase: \(error.localizedDescription)")
                     completion(.failure(error))
@@ -42,26 +42,38 @@ final class ProfileService {
     }
     
     // MARK: - Get profile info
+    
     func getProfile(by userId: String? = nil) async throws -> NewUser {
-        let documentIdToFetch = userId ?? authService.currentUser!.uid
+        let documentIdToFetch = userId ?? authService.currentUser?.uid
+        guard let documentId = documentIdToFetch else {
+            throw NSError(domain: "", code: 401, userInfo: [NSLocalizedDescriptionKey: "Пользователь не авторизован."])
+        }
+        
         do {
-            let docSnapshot = try await usersRef.document(documentIdToFetch).getDocument()
+            print("Получение документа с ID: \(documentId)")
+            let docSnapshot = try await usersRef.document(documentId).getDocument()
             guard let data = docSnapshot.data() else {
-                throw NSError(domain: "", code: 404, userInfo: nil)
+                throw NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "Документ не найден."])
             }
+            
+            print("Данные документа: \(data)")
             
             guard let userName = data["name"] as? String,
                   let id = data["id"] as? String,
                   let phone = data["phone"] as? String,
                   let email = data["email"] as? String,
+                  let city = data["city"] as? String,
                   let address = data["address"] as? String else {
-                throw NSError(domain: "", code: 500, userInfo: nil)
+                print("Обязательные поля отсутствуют в документе: \(data)")
+                throw NSError(domain: "", code: 500, userInfo: [NSLocalizedDescriptionKey: "Обязательные поля не найдены."])
             }
             
+            // Обработка необязательных полей
             let appartment = data["appatment"] as? String ?? ""
             let floor = data["floor"] as? String ?? ""
+            let comments = data["comments"] as? String
             
-            let user = NewUser(id: id, name: userName, phone: phone, email: email, address: address, appatment: appartment, floor: floor)
+            let user = NewUser(id: id, name: userName, phone: phone, email: email, address: address, city: city, appatment: appartment, floor: floor, comments: comments)
             return user
         } catch {
             print("Ошибка при получении профиля: \(error.localizedDescription)")
@@ -69,3 +81,36 @@ final class ProfileService {
         }
     }
 }
+    
+    
+    
+    
+    
+//    func getProfile(by userId: String? = nil) async throws -> NewUser {
+//        let documentIdToFetch = userId ?? authService.currentUser!.uid
+//        do {
+//            let docSnapshot = try await usersRef.document(documentIdToFetch).getDocument()
+//            guard let data = docSnapshot.data() else {
+//                throw NSError(domain: "", code: 404, userInfo: nil)
+//            }
+//            
+//            guard let userName = data["name"] as? String,
+//                  let id = data["id"] as? String,
+//                  let phone = data["phone"] as? String,
+//                  let email = data["email"] as? String,
+//                  let city = data["city"] as? String,
+//                  let address = data["address"] as? String else {
+//                throw NSError(domain: "", code: 500, userInfo: nil)
+//            }
+//            let appartment = data["appatment"] as? String ?? ""
+//            let floor = data["floor"] as? String ?? ""
+//            let comments: String? = data["comments"] as? String
+//            
+//            let user = NewUser(id: id, name: userName, phone: phone, email: email, address: address, city: city, appatment: appartment, floor: floor, comments: comments)
+//            return user
+//        } catch {
+//            print("Ошибка при получении профиля: \(error.localizedDescription)")
+//            throw error
+//        }
+//    }
+//}

@@ -6,11 +6,14 @@ import SwiftUI
 
 struct CartOrdersView: View {
     private let buttonComponents = ButtonComponents()
+    @StateObject private var profileViewModel = ProfileVM()
     @StateObject private var viewModel = CartVM()
-    @State private var promo: String = ""
     @State private var placedOrder: Order?
+    @State private var promo: String = ""
     @State private var orderPlaced = false
     @State private var showOrderDetails = false
+    @State private var isAddressValid = true
+    @State private var isPhoneValid = true
     @State private var isLoading = false
     
     var body: some View {
@@ -24,16 +27,24 @@ struct CartOrdersView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             HeaderView(orderProducts: viewModel.orderProducts,  showEditButton: true)
                             
-                            AddressPhoneSection()
+                            AddressPhoneSection(viewModel: profileViewModel, isAddressValid: $isAddressValid, isPhoneValid: $isPhoneValid)
                             
                             PaymentMethodSection()
                             
                             PromoCodeSection(cartVM: viewModel)
                             
                             OrderSummaryView(viewModel: viewModel)
-                            
-                            buttonComponents.createOrdersButton(amount: "\(viewModel.productCountMessage)") {
-                                placeOrder()
+   
+                            buttonComponents.createOrdersButton(
+                                amount: "\(viewModel.productCountMessage)",
+                                isDisabled: false
+                            ) {
+                                if profileViewModel.address.isEmpty || profileViewModel.phone.isEmpty {
+                                    isAddressValid = !profileViewModel.address.isEmpty
+                                    isPhoneValid = !profileViewModel.phone.isEmpty
+                                } else {
+                                    placeOrder()
+                                }
                             }
                         }
                         .padding()
@@ -42,9 +53,13 @@ struct CartOrdersView: View {
                     }
                     .onAppear {
                         viewModel.fetchOrder()
+                        Task {
+                            await profileViewModel.fetchUserProfile()
+                        }
                     }
                     .navigationBarBackButtonHidden(true)
                     .navigationBarItems(leading: CustomBackButton())
+                    .scrollIndicators(.hidden)
                 }
             }
             
@@ -70,6 +85,10 @@ struct CartOrdersView: View {
         }
         .animation(.easeInOut, value: isLoading)
         .animation(.easeInOut, value: orderPlaced)
+        .onTapGesture {
+            self.hideKeyboard()
+            UIApplication.shared.endEditing()
+        }
     }
     
     private func placeOrder() {
