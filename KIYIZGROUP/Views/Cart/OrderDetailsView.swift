@@ -15,14 +15,19 @@ struct OrderDetailsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             ScrollView(.horizontal, showsIndicators: false) {
-                HeaderView(orderProducts: orderProducts, showEditButton: false)
+                HeaderView(orderProducts: viewModel.orderProducts, showEditButton: false)
                     .padding(.horizontal)
             }
-            
             VStack(alignment: .leading, spacing: 16) {
                 DetailView(viewModel: profileVM, order: order)
             }
             Spacer()
+        }
+        .onAppear{
+            viewModel.fetchOrder()
+            Task {
+                await profileVM.fetchUserProfile()
+            }
         }
         .navigationTitle("Доставки")
         .navigationBarTitleDisplayMode(.inline)

@@ -4,13 +4,13 @@
 
 import SwiftUI
 
-struct CartOrdersView: View {
+struct CartOrderView: View {
     private let buttonComponents = ButtonComponents()
     @StateObject private var profileViewModel = ProfileVM()
     @StateObject private var viewModel = CartVM()
     @State private var placedOrder: Order?
-    @State private var promo: String = ""
-    @State private var orderPlaced = false
+    @State private var promo = ""
+    @State private var showInfoView = false
     @State private var showOrderDetails = false
     @State private var isAddressValid = true
     @State private var isPhoneValid = true
@@ -25,7 +25,7 @@ struct CartOrdersView: View {
                 NavigationStack {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 20) {
-                            HeaderView(orderProducts: viewModel.orderProducts,  showEditButton: true)
+                            HeaderView(orderProducts: viewModel.orderProducts, showEditButton: true)
                             
                             AddressPhoneSection(viewModel: profileViewModel, isAddressValid: $isAddressValid, isPhoneValid: $isPhoneValid)
                             
@@ -34,11 +34,8 @@ struct CartOrdersView: View {
                             PromoCodeSection(cartVM: viewModel)
                             
                             OrderSummaryView(viewModel: viewModel)
-   
-                            buttonComponents.createOrdersButton(
-                                amount: "\(viewModel.productCountMessage)",
-                                isDisabled: false
-                            ) {
+                            
+                            buttonComponents.createOrdersButton(amount: "\(viewModel.productCountMessage)", isDisabled: false) {
                                 if profileViewModel.address.isEmpty || profileViewModel.phone.isEmpty {
                                     isAddressValid = !profileViewModel.address.isEmpty
                                     isPhoneValid = !profileViewModel.phone.isEmpty
@@ -62,56 +59,46 @@ struct CartOrdersView: View {
                     .scrollIndicators(.hidden)
                 }
             }
-            
             if isLoading {
-                VStack {
-                    LoadingView()
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.opacity(0.5).edgesIgnoringSafeArea(.all))
-                .transition(.opacity)
-                .zIndex(2)
+                Spacer()
+                LoadingView()
+                Spacer()
+                    .transition(.opacity)
+                
             }
-            
-            if orderPlaced {
-                InfoView(isOpenView: $orderPlaced)
-                    .transition(.scale(scale: 0.9).combined(with: .opacity))
-                    .background(Color.black.opacity(0.6).edgesIgnoringSafeArea(.all))
-                    .zIndex(1)
+            if showInfoView {
+                InfoView(isOpenView: $showInfoView)
                     .onDisappear {
                         showOrderDetails = true
                     }
             }
         }
         .animation(.easeInOut, value: isLoading)
-        .animation(.easeInOut, value: orderPlaced)
+        .animation(.easeInOut, value: showInfoView)
         .onTapGesture {
             self.hideKeyboard()
             UIApplication.shared.endEditing()
         }
     }
-    
+}
+
+extension CartOrderView{
     private func placeOrder() {
         isLoading = true
-        viewModel.orderButtonTapped(with: promo) { order in
+        Task {
+            let order = await viewModel.saveOrder(with: viewModel.promoCode)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.isLoading = false
-                self.placedOrder = order
-                self.orderPlaced = true
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    self.orderPlaced = false
-                    self.showOrderDetails = true
+                isLoading = false
+                if let order = order {
+                    placedOrder = order
+                    showInfoView = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        showInfoView = false
+                    }
                 }
             }
         }
     }
 }
-
-#Preview {
-    CartOrdersView()
-}
-
-
 
 

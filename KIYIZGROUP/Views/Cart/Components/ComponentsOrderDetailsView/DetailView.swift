@@ -6,7 +6,7 @@ import SwiftUI
 
 struct DetailView: View {
     @Environment(\.colorScheme) var colorScheme
-    @StateObject private var certViewModel = CartVM()
+    @StateObject private var cartViewModel = CartVM()
     @StateObject var viewModel: ProfileVM
     @StateObject var statusColors = StatusColors()
     private let textComponent = TextComponent()
@@ -25,7 +25,7 @@ struct DetailView: View {
                 HStack {
                     textComponent.createText(text: "Номер заказа", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()
-                    textComponent.createText(text: "12345", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     
                 }
                 .padding([.vertical])
@@ -69,6 +69,12 @@ struct DetailView: View {
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(colorScheme == .dark ? Color.white.opacity(0.2) : Color.gray.opacity(0.3), lineWidth: 1.5)
             )
+        }
+        .onAppear(){
+            Task{
+                cartViewModel.fetchOrder()
+                await viewModel.fetchUserProfile()
+            }
         }
         .padding(.horizontal)
     }

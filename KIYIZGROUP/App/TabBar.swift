@@ -43,6 +43,8 @@ struct TabBar: View {
                         }
                         .tag(TabType.catalog.rawValue)
                     CartView(currentUserId: userID, currentTab: $curentTab)
+//                    CartView(currentUserId: "", currentTab: $curentTab)
+
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart

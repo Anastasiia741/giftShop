@@ -4,6 +4,7 @@
 
 import Foundation
 
+@MainActor
 final class CartVM: ObservableObject {
     private let orderService = OrderService()
     private let productsRepository = ProductsRepository()
@@ -12,7 +13,8 @@ final class CartVM: ObservableObject {
     @Published var alertModel: AlertModel?
     @Published var orderProducts: [Product] = []
     @Published var productCountMessage: String = ""
-    @Published var promoCode: String = ""
+    @Published var productCountPrice = ""
+    @Published var promoCode = ""
     @Published var promoResultText: String = ""
     @Published var isPromoSheetVisible = false
     
@@ -23,6 +25,7 @@ final class CartVM: ObservableObject {
         productsRepository.save(orderProducts)
         let (totalPrice, _) = orderService.calculatePrice()
         productCountMessage = "\(totalPrice)"
+        productCountPrice = String(orderProducts.reduce(0) { $0 + $1.price * $1.quantity })
     }
     
     func addPromoProductToOrder(for product: Product) {
@@ -40,72 +43,87 @@ final class CartVM: ObservableObject {
         }
     }
     
-//    func orderButtonTapped(with promoCode: String?) {
-//        if let currentUser = authService.currentUser {
-//            let order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: promoCode ?? "")
-//            order.positions = orderProducts.map{ position in
-//                return Position(id: UUID().uuidString, product: position, count: position.quantity)
-//            }
-//            if order.positions.isEmpty {
-//            } else {
-//                dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
-//                    switch result {
-//                    case .success(_):
-//                        self?.orderProducts.removeAll()
-//                        self?.productsRepository.save(self?.orderProducts ?? [Product]())
-//                    case .failure(let error):
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-    
-    func orderButtonTapped(with promoCode: String?, completion: @escaping (Order) -> Void) {
-        if let currentUser = authService.currentUser {
-            let order = Order(
-                id: UUID().uuidString,
-                userID: currentUser.uid,
-                positions: [],
-                date: Date(),
-                status: OrderStatus.new.rawValue,
-                promocode: promoCode ?? ""
-                
-            )
-            order.positions = orderProducts.map { position in
-                return Position(id: UUID().uuidString, product: position, count: position.quantity, image: position.image ?? "")
-            }
-            if order.positions.isEmpty {
-                alertModel = AlertModel(title: "Ошибка", message: "Корзина пуста", buttons: [])
-            } else {
-                dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
-                    switch result {
-                    case .success:
-                        DispatchQueue.main.async {
-                            completion(order) // Передаём созданный заказ
-                        }
-                    case .failure(let error):
-                        print(error.localizedDescription)
+    func saveOrder(with promoCode: String?) async -> Order? {
+        let userID = authService.currentUser?.uid ?? "guest"
+
+        let order = Order(id: UUID().uuidString, userID: userID,
+                          positions: orderProducts.map { position in
+                                Position(id: UUID().uuidString, product: position, count: position.quantity, image: position.image ?? "")},
+                          date: Date(),
+                          status: OrderStatus.new.rawValue,
+                          promocode: promoCode ?? "")
+
+        guard !order.positions.isEmpty else { return nil }
+
+        return await withCheckedContinuation { continuation in
+            dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.orderProducts.removeAll()
+                        self?.productsRepository.save(self?.orderProducts ?? [])
                     }
+                    continuation.resume(returning: order)
+                case .failure(let error):
+                    print("Error saving order: \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
                 }
             }
         }
     }
 
     
-    func applyPromoCode() {
-        if promoCode.lowercased() == "promo 10" {
-            promoResultText = Localization.discount10
-        } else if promoCode.lowercased() == "promo 20" {
-            promoResultText = Localization.discount20
-        } else if promoCode.lowercased() == "promo 30" {
-            promoResultText = Localization.discount30
+//    func orderButtonTapped(with promoCode: String?) async -> Order? {
+//        guard let currentUser = authService.currentUser else { return nil }
+//        
+//        let order = Order(id: UUID().uuidString, userID: currentUser.uid,
+//                          positions: orderProducts.map { position in
+//            Position(id: UUID().uuidString, product: position, count: position.quantity, image: position.image ?? "")
+//        },
+//                          date: Date(),
+//                          status: OrderStatus.new.rawValue,
+//                          promocode: promoCode ?? ""
+//        )
+//        
+//        
+//        //            let order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: promoCode ?? "")
+//        
+//        guard !order.positions.isEmpty else { return nil }
+//        
+//        return await withCheckedContinuation { continuation in
+//            dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+//                switch result {
+//                case .success(_):
+//                    DispatchQueue.main.async {
+//                        self?.orderProducts.removeAll()
+//                        self?.productsRepository.save(self?.orderProducts ?? [])
+//                    }
+//                    continuation.resume(returning: order)
+//                case .failure(let error):
+//                    print("Error saving order: \(error.localizedDescription)")
+//                    continuation.resume(returning: nil)
+//                }
+//            }
+//        }
+//    }
+    
+    func applyPromoCode() -> Bool {
+        let discountMessages: [String: String] = [
+            "promo 10": Localization.discount10,
+            "promo 20": Localization.discount20,
+            "promo 30": Localization.discount30
+        ]
+        
+        if let message = discountMessages[promoCode.lowercased()] {
+            promoResultText = message
+            promoCode = ""
+            return true
         } else {
             promoResultText = Localization.codeDoesNotExist
+            return false
         }
-        promoCode = ""
     }
+    
 }
 
 
