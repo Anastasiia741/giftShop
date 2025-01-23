@@ -20,6 +20,7 @@ struct ForgotPasswordView: View, InfoDialogHandling {
         ZStack {
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
                 .onTapGesture {
                     self.closeInfoDialog()
                 }
@@ -95,8 +96,9 @@ protocol InfoDialogHandling {
 
 extension InfoDialogHandling {
     func closeInfoDialog() {
+        
         withAnimation(.easeInOut) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 isOpenView.wrappedValue = false
             }
         }

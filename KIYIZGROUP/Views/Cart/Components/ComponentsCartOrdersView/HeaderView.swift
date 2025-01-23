@@ -7,6 +7,8 @@ import SwiftUI
 struct HeaderView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
+    @StateObject private var viewModel = CartVM()
+//    @StateObject private var profileVM = ProfileVM()
     @State private var selectedProduct: Product?
     private let textComponent = TextComponent()
     let orderProducts: [Product]

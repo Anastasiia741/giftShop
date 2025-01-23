@@ -13,35 +13,17 @@ struct PromoCodeView: View {
     
     var body: some View {
         ZStack {
-            Images.Cart.background6
+            Images.Cart.vector
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
                 .frame(height: 20)
                 .offset(y: -80)
             VStack {
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            withAnimation {
-                                isPromoSheetVisible = false
-                            }
-                        }) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.gray)
-                                .padding()
-                        }
-                    }
-                    .padding(.top, 10)
-                    .padding(.trailing, 16)
-                }
-                VStack {
-                    textComponent.createText(text: promo.isEmpty ? "Неверный промокод" : "\(promo)", fontSize: 22, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.vertical)
-                .padding(.horizontal)
+                Spacer()
+                textComponent.createText(text: promo.isEmpty ? "Неверный промокод" : "\(promo)", fontSize: 22, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                    .padding(.vertical)
+                    .padding(.horizontal)
             }
             .offset(y: -40)
         }
@@ -49,4 +31,8 @@ struct PromoCodeView: View {
     }
 }
 
-
+struct PromoCodeView_Previews: PreviewProvider {
+    static var previews: some View {
+        PromoCodeView(promo: .constant(""), isPromoSheetVisible: .constant(false))
+    }
+}

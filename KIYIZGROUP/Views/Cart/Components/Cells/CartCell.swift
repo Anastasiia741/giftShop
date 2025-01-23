@@ -59,12 +59,10 @@ struct CartCell: View {
                 .background(Color.gray)
                      
             HStack {
-                textComponent.createText(text: "\(viewModel.productCountMessage) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .black)
+                textComponent.createText(text: "\(viewModel.productCountPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .black)
                 
                 textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .gray).strikethrough()
-                
                 Spacer()
-                
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 8)

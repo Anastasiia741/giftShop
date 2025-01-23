@@ -42,7 +42,7 @@ enum Images {
         static let emptyCart = Image("emptyCartImage")
         static let happyCart = Image("happyCart")
         static let background4 = Image("background4")
-        static let background6 = Image("background6")
+        static let vector = Image("vector-1")
     }
     
     enum Profile {

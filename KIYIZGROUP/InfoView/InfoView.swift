@@ -4,11 +4,14 @@
 
 import SwiftUI
 
-struct InfoView: View {
+struct InfoView: View, InfoDialogHandling {
+    
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
+    private let customButton = CustomButton()
     @State private var offset: CGFloat = 1000
-    @Binding var isOpenView: Bool
+    var isOpenView: Binding<Bool>
+
     
     var body: some View {
         ZStack {
@@ -30,21 +33,14 @@ struct InfoView: View {
                 
                 textComponent.createText(text: "Наш оператор в скором времени свяжется с вами для подтверждения заказа", fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.5)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
                 
-                    .frame(maxWidth: .infinity)
-                
-                    .padding()
-                
-                
-                
-                Button(action: {
-                    closeInfoDialog()
-                }) {
-                    textComponent.createText(text: "отлично", fontSize: 16, fontWeight:.regular, color: .white)
-                        .frame(width: 302, height: 54)
-                        .background(Color.colorGreen)
-                        .foregroundColor(.black)
-                        .cornerRadius(40)
+                customButton.createButton(text: "отлично", fontSize: 16, fontWeight: .regular, color: .white, backgroundColor: .colorGreen, borderColor: .colorGreen) {
+                    closeDialog()
                 }
                 .padding()
             }
@@ -66,15 +62,19 @@ struct InfoView: View {
 
 
 extension InfoView {
-    func closeInfoDialog() {
-        withAnimation(.easeInOut) {
+    
+    private func closeDialog() {
+        withAnimation(.spring()) {
             offset = 1000
         }
+        
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            isOpenView = false
+            closeInfoDialog()
         }
     }
 }
+
 
 struct InfoDialog_Previews: PreviewProvider {
     static var previews: some View {
