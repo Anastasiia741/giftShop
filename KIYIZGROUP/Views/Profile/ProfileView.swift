@@ -9,7 +9,6 @@ import SDWebImageSwiftUI
 struct ProfileView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var mainTabVM: MainTabVM
-    
     @StateObject private var viewModel = ProfileVM()
     private let buttonComponents = ButtonComponents()
     private let textComponent = TextComponent()
