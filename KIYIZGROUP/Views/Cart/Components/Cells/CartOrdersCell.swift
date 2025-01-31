@@ -1,9 +1,6 @@
-//
 //  CartOrdersCell.swift
 //  KIYIZGROUP
-//
 //  Created by Анастасия Набатова on 19/11/24.
-//
 
 import SwiftUI
 import SDWebImageSwiftUI

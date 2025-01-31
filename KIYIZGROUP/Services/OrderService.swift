@@ -5,7 +5,6 @@
 import Foundation
 
 final class OrderService {
-    
     private let productRepository = ProductsRepository()
     
     func calculatePrice() -> (Int, Int) {

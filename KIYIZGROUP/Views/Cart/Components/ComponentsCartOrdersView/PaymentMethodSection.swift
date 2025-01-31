@@ -35,9 +35,7 @@ struct PaymentMethodSection: View {
                         .foregroundColor(.gray)
                 }
                 .padding()
-//                .background(RoundedRectangle(cornerRadius: 24).stroke(.gray, lineWidth: 1))
                 .background(UnifiedRoundedRectangle())
-
             }
             
             
@@ -51,14 +49,11 @@ struct PaymentMethodSection: View {
                             }
                         }) {
                             HStack {
-                                Text(method)
-                                    .foregroundColor(.black)
+                                textComponent.createText(text: method, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                                 Spacer()
                             }
                             .padding()
                         }
-                        .background(Color.white)
-                        
                         if method != payments.last {
                             Divider()
                                 .padding(.horizontal)
@@ -66,9 +61,7 @@ struct PaymentMethodSection: View {
                     }
                 }
                 .padding(8)
-//                .background(RoundedRectangle(cornerRadius: 24).stroke(.gray, lineWidth: 1))
                 .background(UnifiedRoundedRectangle())
-
             }
         }
     }

@@ -10,8 +10,8 @@ struct NewUser: Identifiable {
     var name: String
     var phone: String
     var email: String
-    var address: String
     var city: String
+    var address: String
     var appatment: String?
     var floor: String?
     var comments: String?
@@ -22,8 +22,8 @@ struct NewUser: Identifiable {
         repres["name"] = self.name
         repres["phone"] = self.phone
         repres["email"] = self.email
-        repres["address"] = self.address
         repres["city"] = self.city
+        repres["address"] = self.address
         repres["appatment"] = self.appatment
         repres["floor"] = self.floor
         repres["comments"] = self.comments

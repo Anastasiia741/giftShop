@@ -6,7 +6,8 @@ import SwiftUI
 
 struct AddressPhoneSection: View {
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject var viewModel: ProfileVM
+    @StateObject private var cartViewModel = CartVM()
+    @ObservedObject var viewModel = ProfileVM()
     private let textFieldComponent = TextFieldComponent()
     private let textComponent = TextComponent()
     @Binding var isAddressValid: Bool
@@ -29,11 +30,58 @@ struct AddressPhoneSection: View {
                     .stroke(isAddressValid ? .gray : .r, lineWidth: 1.3))
             textFieldComponent.createTextField(placeholder: "+996", text: $viewModel.phone, keyboardType: .phonePad, borderColor: isPhoneValid ? .gray : .r)
         }
-        .onChange(of: viewModel.phone) { oldValue, newValue in
-            isPhoneValid = !newValue.isEmpty
-            Task {
-                await viewModel.saveProfile()
-            }
-        }
+//        .onChange(of: viewModel.phone) { oldValue, newValue in
+//            isPhoneValid = !newValue.isEmpty
+////            Task {
+//                await viewModel.saveProfile()
+//            }
+            
+//            if viewModel.authService.currentUser == nil {
+//                              
+//                          } else {
+//                              Task {
+//                                  await viewModel.saveProfile()
+//                              }
+//                          }
+//        }
+//        .onAppear {
+//            if viewModel.authService.currentUser == nil {
+//            }
+//        }
+        .onAppear {
+                  loadUserData()
+              }
+              .onChange(of: viewModel.phone) { _, newValue in
+                  isPhoneValid = !newValue.isEmpty
+                  savePhoneData()
+              }
     }
+}
+
+extension AddressPhoneSection {
+    private func loadUserData() {
+           if viewModel.authService.currentUser == nil {
+               // Load guest data
+               cartViewModel.fetchGuestData()
+           } else {
+               // Fetch profile data for authenticated user
+               Task {
+                   await viewModel.fetchUserProfile()
+               }
+           }
+       }
+    
+    private func savePhoneData() {
+          if viewModel.authService.currentUser == nil {
+              UserDefaults.standard.set(viewModel.phone, forKey: "guestPhone")
+          } else {
+              Task {
+                  await viewModel.saveProfile()
+              }
+          }
+      }
+    
+       
+     
+       
 }

@@ -8,7 +8,6 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class DBOrdersService {
-    
     private let db = Firestore.firestore()
     private var ordersRef: CollectionReference { return db.collection(Accesses.orders) }
     
@@ -82,13 +81,19 @@ class DBOrdersService {
                    let dateTimestamp = document["date"] as? Timestamp,
                    let status = document["status"] as? String,
                    let promocode = document["promocode"] as? String,
+                   let address = document["address"] as? String,
+                   let phone = document["phone"] as? String,
+                   let sity = document["sity"] as? String,
+                   let appartment = document["appartment"] as? String,
+                   let floor = document["floor"] as? String,
+                   let comment = document["comment"] as? String,
                    let _ = document["cost"] as? Int
                 {
                     self?.fetchPositionsForOrder(by: orderId) { result in
                         switch result {
                         case .success(let positions):
                             let date = dateTimestamp.dateValue()
-                            let userOrder = Order(id: orderId, userID: userId, positions: positions, date: date, status: status, promocode: promocode)
+                            let userOrder = Order(id: orderId, userID: userId, positions: positions, date: date, status: status, promocode: promocode, address: address, phone: phone, city: sity, appatment: appartment, floor: floor, comments: comment)
                             userOrders.append(userOrder)
                             if userOrders.count == querySnapshot!.documents.count {
                                 completion(userOrders)

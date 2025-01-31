@@ -11,7 +11,6 @@ struct InfoView: View, InfoDialogHandling {
     private let customButton = CustomButton()
     @State private var offset: CGFloat = 1000
     var isOpenView: Binding<Bool>
-
     
     var body: some View {
         ZStack {
@@ -60,14 +59,11 @@ struct InfoView: View, InfoDialogHandling {
     }
 }
 
-
 extension InfoView {
-    
     private func closeDialog() {
         withAnimation(.spring()) {
             offset = 1000
         }
-        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             closeInfoDialog()

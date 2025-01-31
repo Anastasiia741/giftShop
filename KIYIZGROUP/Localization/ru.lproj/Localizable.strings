@@ -16,7 +16,7 @@
 "registr" = "Зарегистрироваться";
 "already_have_an_account" = "Уже есть аккаунт";
 "press_policy" = "Регистрируясь, вы соглашаетесь с";
-"privacy_policy" = "Политикой Конфиденциальности";
+"privacy_policy" = "Политика конфиденциальности";
 
 //MARK: - OrderDetail
 "order_details" = "Детали заказа";

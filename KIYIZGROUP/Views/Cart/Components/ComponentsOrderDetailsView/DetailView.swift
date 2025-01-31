@@ -40,13 +40,13 @@ struct DetailView: View {
                 HStack {
                     textComponent.createText(text: "Адрес доставки", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()
-                    textComponent.createText(text: "\(viewModel.address)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(order.address)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                 }
                 .padding(.top)
                 HStack {
                     textComponent.createText(text: "Телефон", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()
-                    textComponent.createText(text: "\(viewModel.phone)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(order.phone)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                 }
                 .padding(.top)
                 Divider()
@@ -70,12 +70,22 @@ struct DetailView: View {
                     .stroke(colorScheme == .dark ? Color.white.opacity(0.2) : Color.gray.opacity(0.3), lineWidth: 1.5)
             )
         }
-        .onAppear(){
-            Task{
-                cartViewModel.fetchOrder()
-                await viewModel.fetchUserProfile()
-            }
-        }
+        .onAppear {
+                   Task {
+                       if viewModel.authService.currentUser == nil {
+                           cartViewModel.fetchGuestData()
+                       } else {
+                           cartViewModel.fetchOrder()
+                           await viewModel.fetchUserProfile()
+                       }
+                   }
+               }
+//        .onAppear(){
+//            Task{
+//                cartViewModel.fetchOrder()
+//                await viewModel.fetchUserProfile()
+//            }
+//        }
         .padding(.horizontal)
     }
 }

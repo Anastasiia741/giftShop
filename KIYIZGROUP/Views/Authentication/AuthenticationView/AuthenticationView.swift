@@ -11,26 +11,7 @@ struct AuthenticationView: View {
     @State private var activeScreen: ActiveScreen? = nil
     
     var body: some View {
-        CustomNavigation(isActive: Binding(
-            get: { activeScreen != nil },
-            set: { newValue in
-                if !newValue {
-                    activeScreen = nil
-                }
-            }
-        ),
-                         showBackButton: true,
-                         destination: {
-            switch activeScreen {
-            case .registration:
-                RegistrationView()
-            case .authorization:
-                AuthorizationView()
-            case .none:
-                EmptyView()
-            }
-        },
-                         content: {
+        NavigationStack {
             VStack {
                 Spacer()
                 ImageGridAuthView(imageNames: AuthImages.imageNames)
@@ -44,6 +25,14 @@ struct AuthenticationView: View {
                 })
                 .padding(.vertical)
             }
+            .navigationDestination(item: $activeScreen) { screen in
+                switch screen {
+                case .registration:
+                    RegistrationView()
+                case .authorization:
+                    AuthorizationView(isShowBackButton: true)
+                }
+            }
             .overlay(HStack {
                 Spacer()
                 LanguageToggleAuthView(availableLanguages: LanguageOptions.available, selectedLanguage: $selectedLanguage)
@@ -54,6 +43,6 @@ struct AuthenticationView: View {
                      alignment: .topTrailing
             )
         }
-        )
     }
 }
+

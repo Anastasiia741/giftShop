@@ -10,7 +10,6 @@ enum TabType: Int {
 
 
 
-
 struct CustomTransitionModifier: ViewModifier {
     let isPresented: Bool
     let edge: Edge

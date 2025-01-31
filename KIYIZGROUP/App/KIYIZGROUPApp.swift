@@ -10,11 +10,12 @@ let screen = UIScreen.main.bounds
 @main
 struct KIYIZGROUPApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    @StateObject private var mainTabVM = MainTabVM()
     
     var body: some Scene {
         WindowGroup {
-            let viewModel = MainTabVM()
-            TabBar(viewModel: viewModel)
+            TabBar(viewModel: mainTabVM)
+                .environmentObject(mainTabVM)
         }
     }
     

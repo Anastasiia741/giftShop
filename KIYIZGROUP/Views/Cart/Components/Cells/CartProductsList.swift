@@ -14,8 +14,6 @@ struct CartProductsList: View {
                     CartCell(viewModel: viewModel, position: product)
                 }
             }
-            .padding(.vertical, 20)
-            .padding(.horizontal, 40)
         }
     }
 }

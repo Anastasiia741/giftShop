@@ -20,11 +20,11 @@ struct ProductDetailView: View {
     var body: some View {
         VStack {
             HStack {
-                CustomBackButton() 
+                CustomBackButton()
                 Spacer()
             }
             .padding([.leading, .top], 16)
-            
+            Spacer()
             VStack {
                 WebImage(url: viewModel.imageURL )
                     .resizable()
@@ -53,7 +53,6 @@ struct ProductDetailView: View {
             VStack {
                 Spacer()
                 HStack(spacing: 16) {
-                    
                     buttonComponent.createWhiteButton(
                         text: "Купить сейчас",
                         isAddedToCart: $isAddedToCart) {
@@ -99,7 +98,6 @@ struct ProductDetailView: View {
         .onAppear {
             viewModel.updateImageDetail()
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 

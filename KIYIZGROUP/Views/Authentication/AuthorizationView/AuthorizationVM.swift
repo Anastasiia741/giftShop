@@ -5,32 +5,68 @@
 import Foundation
 import FirebaseAuth
 
+@MainActor
 final class AuthorizationVM: AuthBaseVM {
     private var authService = AuthService()
-    @Published var isTabViewShow = false
+    @Published var isShowCatalog = false
     @Published var isEmailSent: Bool = false
     @Published var isLoading: Bool = false
     
-    func signIn() async {
+    
+    
+    func signIn(onSuccess: @escaping () -> Void) async {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
-            updateError(message: errorMessage, type: .general)
+            DispatchQueue.main.async {
+                self.updateError(message: errorMessage, type: .general)
+            }
             return
         }
-        updateError(message: nil, type: nil)
+        
+        DispatchQueue.main.async {
+            self.updateError(message: nil, type: nil)
+            self.isLoading = true
+        }
         
         authService.signIn(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
-            switch result {
-            case .success(_):
-                self?.isTabViewShow.toggle()
-            case .failure(let error):
-                self?.handleError(error)
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                
+                switch result {
+                case .success(_):
+                    self?.isShowCatalog = true
+                    onSuccess()
+                case .failure(let error):
+                    self?.handleError(error)
+                }
             }
         }
     }
+
+
     
+//    func signIn() async {
+//        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+//        
+//        if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
+//            updateError(message: errorMessage, type: .general)
+//            return
+//        }
+//        updateError(message: nil, type: nil)
+//        
+//        authService.signIn(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
+//            switch result {
+//            case .success(_):
+//                self?.isShowCatalog = true
+//            case .failure(let error):
+//                self?.handleError(error)
+//            }
+//        }
+//    }
+//    
     func sendPasswordResetEmail(completion: @escaping (Bool, String?) -> Void) {
         guard !email.isEmpty else {
             completion(false, "Email cannot be empty.")

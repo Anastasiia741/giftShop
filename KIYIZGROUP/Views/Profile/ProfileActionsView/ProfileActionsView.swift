@@ -37,9 +37,9 @@ struct ProfileActionsView: View {
             Divider()
                 .background(Color.white.opacity(0.5))
                 .padding(.horizontal, 16)
-            NavigationLink(destination: EditProfileView(viewModel: viewModel)) {
-                ProfileActionRow(title: "Адрес доставки", subtitle: viewModel.address.isEmpty ? "Не указан" : viewModel.address, textComponent: textComponent)
-            }
+//            NavigationLink(destination: EditProfileView(viewModel: viewModel)) {
+//                ProfileActionRow(title: "Адрес доставки", subtitle: viewModel.address.isEmpty ? "Не указан" : viewModel.address, textComponent: textComponent)
+//            }
         }
         .background(
             RoundedRectangle(cornerRadius: 16)
