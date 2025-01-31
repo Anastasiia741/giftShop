@@ -29,7 +29,7 @@ final class AuthService {
     func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
         auth.createUser(withEmail: email, password: password) { result, error in
             if let result = result {
-                let newUser = NewUser(id: result.user.uid, name: "", phone: "", email: email, address: "", city: "")
+                let newUser = NewUser(id: result.user.uid, name: "", phone: "", email: email, city: "", address: "")
                 ProfileService.shared.setProfile(user: newUser, email: email) { resultDB in
                     switch resultDB {
                     case .success(_):

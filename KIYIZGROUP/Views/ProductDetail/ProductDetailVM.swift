@@ -7,7 +7,6 @@ import UIKit
 import FirebaseStorage
 
 final class ProductDetailVM: ObservableObject {
-    
     @Published var product: Product
     @Published var imageURL: URL?
     @Published var count = 0

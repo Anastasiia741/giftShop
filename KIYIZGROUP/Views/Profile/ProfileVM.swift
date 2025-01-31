@@ -6,74 +6,21 @@ import SwiftUI
 import Combine
 import FirebaseStorage
 
-//enum ErrorTypeProfile: Identifiable {
-//    case dataSuccessfullySaved
-//    case profileFetchFailed
-//    case profileSaveFailed
-//    case profileNotLoaded
-//    case orderFetchFailed
-//    case accountDeletionFailed
-//    case logoutFailed
-//    
-//    var id: String {
-//        String(describing: self)
-//    }
-//}
-
-enum ErrorTypeProfile: Identifiable {
-    case dataSuccessfullySaved
-    case profileFetchFailed
-    case profileSaveFailed
-    case profileNotLoaded
-    case orderFetchFailed
-    case accountDeletionFailed
-    case logoutFailed
-
-    var id: String {
-        String(describing: self)
-    }
-
-    var message: String {
-        switch self {
-        case .dataSuccessfullySaved:
-            return "Данные успешно сохранены."
-        case .profileFetchFailed:
-            return "Не удалось загрузить профиль."
-        case .profileSaveFailed:
-            return "Не удалось сохранить профиль."
-        case .profileNotLoaded:
-            return "Профиль не загружен."
-        case .orderFetchFailed:
-            return "Ошибка при загрузке заказов."
-        case .accountDeletionFailed:
-            return "Ошибка при удалении аккаунта."
-        case .logoutFailed:
-            return "Не удалось выйти из системы."
-        }
-    }
-}
-
-
 @MainActor
 final class ProfileVM: ObservableObject {
-    private let authService = AuthService()
+    let authService = AuthService()
     private let profileService = ProfileService()
     private let dbOrdersService = DBOrdersService()
+    
     private var cancellables = Set<AnyCancellable>()
     @Published var profile: NewUser?
     @Published var errorType: ErrorTypeProfile? = nil
     @Published var orders: [Order] = []
     @Published var lastOrder: Order?
-    
-    
-
-
-    
     @Published var name = ""
     @Published var email = ""
     @Published var phone: String = ""
 
-    
     @Published var cities = ["Бишкек", "Ош", "Нарын", "Талас", "Баткен"]
     @Published var selectedCity: String = ""
     @Published var address = ""
@@ -84,12 +31,23 @@ final class ProfileVM: ObservableObject {
     
     @Published var noPendingDeliveries = false
     @Published var lastIndOrder = true
-    @Published var showQuitPresenter = false
+    @Published var isShowQuit = false
     @Published var isSaving: Bool = false
 }
 
 
 extension ProfileVM {
+    
+//    func fetchUserProfile() async {
+//    if let currentUser = authService.currentUser {
+//        // Загрузка данных из Firebase для авторизованного пользователя
+//        await fetchProfileForAuthorizedUser()
+//    } else {
+//        // Загрузка данных из UserDefaults для гостя
+//        fetchGuestData()
+//    }
+//}
+
     
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else { return }
@@ -165,7 +123,7 @@ extension ProfileVM {
                     self.orders.sort { $0.date > $1.date }
                     self.lastOrder = self.orders.first
                     self.noPendingDeliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
-                case .failure(let error):
+                case .failure(_):
                     self.errorType = .orderFetchFailed
                 }
             }
@@ -176,23 +134,42 @@ extension ProfileVM {
         authService.deleteAccount { [weak self] result in
             switch result {
             case .success:
-                self?.logout()
+//                self?.logout()
+                self?.logout(mainTabVM: MainTabVM())
+
                 onDelete()
             case .failure(let error):
                 print("Ошибка удаления аккаунта: \(error.localizedDescription)")
             }
         }
     }
-    
-    func logout() {
+    func logout(mainTabVM: MainTabVM) {
         authService.signOut { result in
-            switch result {
-            case .success:
-                self.showQuitPresenter = true
-            case .failure(let error):
-                print(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    mainTabVM.userID = nil
+                    self.isShowQuit = true
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }
+    
+    
+    
+    
+    
+//    func logout() {
+//        authService.signOut { result in
+//            switch result {
+//            case .success:
+//                self.showQuitPresenter = true
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
 }
 

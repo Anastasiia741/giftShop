@@ -30,7 +30,7 @@ struct AlertView: View, InfoDialogHandling {
                 textComponent.createText(text: title, fontSize: 18, fontWeight: .bold, color: .black)
                     .multilineTextAlignment(.center)
                     .padding()
-
+                Spacer()
                 HStack{
                     customButton.createButton(text: okButton, fontSize: 14, fontWeight: .regular, color: .black, backgroundColor: .clear, borderColor: .gray.opacity(0.5), cornerRadius: 100, action: {
                         okButtonAction?()
@@ -42,7 +42,7 @@ struct AlertView: View, InfoDialogHandling {
                     )
                 }
                 .frame(width: 273, height: 50)
-                .padding(.bottom, 20)
+                .padding(.bottom)
             }
             .frame(width: 300, height: 180)
             .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)

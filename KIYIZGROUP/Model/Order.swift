@@ -12,6 +12,12 @@ class Order: Identifiable {
     var date: Date
     var status = OrderStatus.new.rawValue
     var promocode: String
+    var address: String
+    var phone: String
+    var city: String?
+    var appatment: String?
+    var floor: String?
+    var comments: String?
     
     var cost: Int {
         var sum = 0
@@ -33,16 +39,31 @@ class Order: Identifiable {
         repres["status"] = status
         repres["promocode"] = promocode
         repres["cost"] = cost
+        repres["address"] = address
+        repres["address"] = address
+        repres["phone"] = phone
+        repres["city"] = city
+        repres["appatment"] = appatment
+        repres["floor"] = floor
+        repres["comments"] = comments
+
+
         return repres
     }
     
-    init(id: String, userID: String, positions: [Position], date: Date, status: String, promocode: String ) {
+    init(id: String, userID: String, positions: [Position], date: Date, status: String, promocode: String, address: String, phone: String, city: String?, appatment: String?, floor: String?, comments: String?) {
         self.id = id
         self.userID = userID
         self.positions = positions
         self.date = date
         self.status = status
         self.promocode = promocode
+        self.address = address
+        self.phone = phone
+        self.city = city
+        self.appatment = appatment
+        self.floor = floor
+        self.comments = comments
     }
     
     init?(doc: DocumentSnapshot) {
@@ -51,6 +72,13 @@ class Order: Identifiable {
               let userID = data["userID"] as? String,
               let dateTimestamp = data["date"] as? Timestamp,
               let status = data["status"] as? String,
+              let address = data["address"] as? String,
+              let phone = data["phone"] as? String,
+              let city = data["city"] as? String,
+              let appatment = data["appatment"] as? String,
+              let floor = data["floor"] as? String,
+              let comments = data["comments"] as? String,
+
               let promocode = data["promocode"] as? String
         else {
             return nil
@@ -62,5 +90,11 @@ class Order: Identifiable {
         self.date = dateTimestamp.dateValue()
         self.status = status
         self.promocode = promocode
+        self.address = address
+        self.phone = phone
+        self.city = city
+        self.appatment = appatment
+        self.floor = floor
+        self.comments = comments
     }
 }

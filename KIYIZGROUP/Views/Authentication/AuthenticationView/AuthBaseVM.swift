@@ -4,12 +4,6 @@
 
 import Foundation
 
-enum ErrorType {
-    case email
-    case password
-    case general
-}
-
 class AuthBaseVM: ObservableObject {
     @Published var email = ""
     @Published var password = ""

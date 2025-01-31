@@ -10,7 +10,7 @@ struct CatalogView: View {
     @Binding var currentTab: Int
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 if isLoading {
                     Spacer()
@@ -26,7 +26,6 @@ struct CatalogView: View {
                         CategorySectionView(selectedCategory: $viewModel.selectedCategory, onCategorySelected: { category in
                             viewModel.filterProducts(by: category)
                         }, categories: viewModel.categories)
-                        
                         ProductSectionView(filteredProducts: viewModel.filteredProducts, currentTab: $currentTab)
                             .padding(.horizontal, 30)
                     }

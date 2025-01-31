@@ -6,12 +6,11 @@ import SwiftUI
 
 struct RegistrationFieldsView: View {
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject private var viewModel = RegistrationVM()
+    @ObservedObject var viewModel: RegistrationVM
     private let textComponent = TextComponent()
     private let customTextField = CustomTextField()
     private let customSecureField = CustomSecureField()
     let customButton: CustomButton
-    var onAuthenticationSuccess: (String) -> Void
     @State private var isPasswordVisible = false
     
     var body: some View {
@@ -38,16 +37,20 @@ struct RegistrationFieldsView: View {
             customButton.createButton(text: Localization.registr, fontSize: 16, fontWeight: .regular,
                                       color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white,
                                       backgroundColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : Color.colorGreen,
-                                      borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen){
+                                      borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen) {
                 viewModel.signUp()
-                if viewModel.isTabViewShow {
-                    onAuthenticationSuccess(viewModel.email)
-                }
             }
             .padding(6)
             .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
         }
         .padding(.horizontal)
+        .onAppear {
+                    viewModel.onRegistrSuccess = {
+                        DispatchQueue.main.async {
+                            viewModel.isShowConfirmView = true
+                        }
+                    }
+                }
     }
 }
 

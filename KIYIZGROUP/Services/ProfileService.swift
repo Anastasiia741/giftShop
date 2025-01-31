@@ -73,7 +73,7 @@ final class ProfileService {
             let floor = data["floor"] as? String ?? ""
             let comments = data["comments"] as? String
             
-            let user = NewUser(id: id, name: userName, phone: phone, email: email, address: address, city: city, appatment: appartment, floor: floor, comments: comments)
+            let user = NewUser(id: id, name: userName, phone: phone, email: email, city: city, address: address, appatment: appartment, floor: floor, comments: comments)
             return user
         } catch {
             print("Ошибка при получении профиля: \(error.localizedDescription)")

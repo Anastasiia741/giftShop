@@ -6,14 +6,14 @@ import SwiftUI
 
 struct AuthorizationFieldsView: View {
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject private var viewModel = AuthorizationVM()
+    @EnvironmentObject var mainTabVM: MainTabVM
+    @ObservedObject var viewModel: AuthorizationVM
     private let textComponent = TextComponent()
     private let customTextField = CustomTextField()
     private let customSecureField = CustomSecureField()
     private let customButton = CustomButtonLogIn()
-    @State private var isButtonPressed = false
     @State private var isPasswordVisible = false
-    @State private var showTabView = false
+    @Binding var isShowCatalog: Bool
     
     var body: some View {
         ZStack {
@@ -24,18 +24,22 @@ struct AuthorizationFieldsView: View {
                 customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .email ? .r : Color.colorDarkBrown)
                     .padding(6)
                 HStack{
-                    customSecureField.createSecureField(placeholder: Localization.createPassword, text: $viewModel.password, isPasswordVisible: $isPasswordVisible,
+                    customSecureField.createSecureField(placeholder: Localization.enterPassword, text: $viewModel.password, isPasswordVisible: $isPasswordVisible,
                                                         color: colorScheme == .dark ? .white : .black,
                                                         borderColor: viewModel.errorType == .password ? .r : .colorDarkBrown)
                     customButton.createButton(foregroundColor: .white, backgroundColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : .colorGreen, borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen, isEnabled: !(viewModel.email.isEmpty || viewModel.password.isEmpty),action: {
                         Task{
-                            await viewModel.signIn()
-                            if viewModel.isTabViewShow {
-                                //
+                            await viewModel.signIn {
+                                DispatchQueue.main.async {
+                                                                   isShowCatalog = true 
+                                                               }
                             }
                         }
                     })
                 }
+//                .navigationDestination(isPresented: $viewModel.isShowCatalog) {
+//                    TabBar(viewModel: mainTabVM)
+//                }
                 .padding(6)
                 if viewModel.errorType == .password || viewModel.errorType == .general || viewModel.errorType == .email {
                     textComponent.createText(text: viewModel.errorMessage ?? "", fontSize: 12, fontWeight: .regular, color: Color.r)

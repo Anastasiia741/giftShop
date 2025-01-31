@@ -61,7 +61,7 @@ struct MinimalButton {
     
     func createMinimalButton(text: String, fontSize: CGFloat, fontWeight: Font.Weight, color: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, color: color)
+            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, color: color).underline()
         }
     }
 }
@@ -101,22 +101,27 @@ struct RoundedPasswordButton: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     let title: String
-    
+    let action: () -> Void
+
     var body: some View {
-        HStack{
-            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
-            Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(colorScheme == .dark ? .white : .gray)
+        Button(action: {
+            action()
+        }) {
+            HStack{
+                textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundColor(colorScheme == .dark ? .white : .gray)
+            }
+            .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+            .padding(.horizontal)
+            .overlay(
+                RoundedRectangle(cornerRadius: 40)
+                    .stroke(Color.gray, lineWidth: 1.3)
+            )
         }
-        .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
-        .padding(.horizontal)
-        .overlay(
-            RoundedRectangle(cornerRadius: 40)
-                .stroke(Color.gray, lineWidth: 1.3)
-        )
+        
     }
-    
 }
 
 struct RoundedButton: View {

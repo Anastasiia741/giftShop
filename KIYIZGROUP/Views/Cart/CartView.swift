@@ -13,7 +13,6 @@ struct CartView: View {
     @State private var showOrderView = false
     
     var body: some View {
-        NavigationStack {
             VStack {
                 if viewModel.orderProducts.isEmpty {
                     VStack {
@@ -34,10 +33,11 @@ struct CartView: View {
             .padding([.vertical, .horizontal])
             .navigationTitle(Localization.cart)
             .navigationBarTitleDisplayMode(.inline)
+            
             .navigationDestination(isPresented: $showOrderView) {
                 CartOrderView()
             }
-        }
+        
         .onAppear {
             viewModel.fetchOrder()
             Task {

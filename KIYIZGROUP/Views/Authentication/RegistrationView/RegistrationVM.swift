@@ -8,7 +8,8 @@ import UIKit
 
 final class RegistrationVM: AuthBaseVM {
     private var authService = AuthService()
-    @Published var isTabViewShow = false
+    var onRegistrSuccess: (() -> Void)?
+    @Published var isShowConfirmView = false
     
     func signUp() {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -22,7 +23,8 @@ final class RegistrationVM: AuthBaseVM {
         authService.signUp(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
             switch result {
             case .success(_):
-                self?.resetFields()
+                self?.isShowConfirmView = true
+                self?.onRegistrSuccess?()
             case .failure(let error):
                 self?.updateError(message: "Registration failed: \(error.localizedDescription)", type: .general)
             }

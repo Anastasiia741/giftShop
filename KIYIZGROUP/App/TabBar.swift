@@ -43,8 +43,6 @@ struct TabBar: View {
                         }
                         .tag(TabType.catalog.rawValue)
                     CartView(currentUserId: userID, currentTab: $curentTab)
-//                    CartView(currentUserId: "", currentTab: $curentTab)
-
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
@@ -75,23 +73,20 @@ struct TabBar: View {
                     }
                     .tag(TabType.cart.rawValue)
                 AuthenticationView()
-                .tabItem {
-                    VStack {
-                        Images.TabBar.profile
+                    .tabItem {
+                        VStack {
+                            Images.TabBar.profile
+                        }
                     }
-                }
-                .tag(TabType.profile.rawValue)
+                    .tag(TabType.profile.rawValue)
             }
             
         }
-        
+        .navigationBarBackButtonHidden(true)
         .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
             viewModel.fetchUserId()
-//            curentTab = 0
         }
-
     }
 }
-
 

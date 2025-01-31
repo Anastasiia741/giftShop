@@ -36,11 +36,13 @@ struct AddressInputView: View {
                                           borderColor: viewModel.address.isEmpty || viewModel.selectedCity.isEmpty ? .gray : .colorGreen) {
                     isSaving = true
                     guard !viewModel.selectedCity.isEmpty, !viewModel.address.isEmpty else { return }
-                    Task {
-                        await viewModel.fetchUserProfile()
-                        await viewModel.saveProfile()
-                        dismiss()
-                    }
+//                    Task {
+//                        await viewModel.fetchUserProfile()
+//                        await viewModel.saveProfile()
+//                        dismiss()
+//                    }
+                    saveAddress()
+
                 }
                  .padding(.bottom, 8)
             }
@@ -53,5 +55,26 @@ struct AddressInputView: View {
     }
 }
 
+extension AddressInputView {
+    
+    private func saveAddress() {
+           if viewModel.authService.currentUser == nil {
+               // Save data in UserDefaults for guest users
+               UserDefaults.standard.set(viewModel.selectedCity, forKey: "guestCity")
+               UserDefaults.standard.set(viewModel.address, forKey: "guestAddress")
+               UserDefaults.standard.set(viewModel.appatment, forKey: "guestAppartment")
+               UserDefaults.standard.set(viewModel.floor, forKey: "guestFloor")
+               UserDefaults.standard.set(viewModel.comments, forKey: "guestComments")
+           } else {
+               Task {
+                await viewModel.fetchUserProfile()
+
+                   await viewModel.saveProfile()
+                   
+               }
+           }
+           dismiss()
+       }
+}
 
 

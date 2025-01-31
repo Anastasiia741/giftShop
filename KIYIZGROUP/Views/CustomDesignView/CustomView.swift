@@ -7,6 +7,12 @@ import SwiftUI
 struct CustomView: View {
     var body: some View {
         VStack(spacing: 0) {
+            HStack {
+                CustomBackButton()
+                Spacer()
+            }
+            .padding([.leading, .top], 16)
+            Spacer()
             ProductTypeSection()
                 .padding(.vertical)
                 .padding(.horizontal, 20)
@@ -24,9 +30,6 @@ struct CustomView: View {
             
         }
         .navigationTitle("Индивидуальный заказ")
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: CustomBackButton())
-
     }
     
 }

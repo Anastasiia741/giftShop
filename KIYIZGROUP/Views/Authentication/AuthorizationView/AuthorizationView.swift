@@ -5,30 +5,49 @@
 import SwiftUI
 
 struct AuthorizationView: View {
+    @EnvironmentObject var mainTabVM: MainTabVM
     @ObservedObject var viewModel = AuthorizationVM()
+    @State private var isShowCatalog = false
     @State private var isShowView = false
+    let isShowBackButton: Bool
     
     var body: some View {
-        VStack {
-            Spacer()
-            AnimatedImagesView()
-            Spacer()
-            AuthorizationFieldsView()
+        ZStack{
+            VStack {
+                if isShowBackButton {
+                    HStack {
+                        CustomBackButton()
+                        Spacer()
+                    }
+                    .padding([.leading, .top], 16)
+                }
+                Spacer()
+                AnimatedImagesView()
+                Spacer()
+                AuthorizationFieldsView(viewModel: viewModel, isShowCatalog: $isShowCatalog)
+                    .padding(.horizontal)
+                ForgotPasswordButton().createButton(action: {
+                    isShowView.toggle()
+                })
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
-            ForgotPasswordButton().createButton(action: {
-                isShowView.toggle()
-            })
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal)
-            .padding(.bottom, 16)
+                .padding(.bottom, 16)
+            }
+            if isShowView {
+                ForgotPasswordView(isOpenView: $isShowView)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationDestination(isPresented: $viewModel.isShowCatalog) {
+            TabBar(viewModel: mainTabVM)
+                .onAppear {
+                    mainTabVM.fetchUserId()
+                }
         }
         .onTapGesture {
             self.hideKeyboard()
             UIApplication.shared.endEditing()
-        }
-        if isShowView {
-            ForgotPasswordView(isOpenView: $isShowView)
         }
     }
 }
