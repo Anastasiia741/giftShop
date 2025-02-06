@@ -3,60 +3,55 @@
 //  Created by Анастасия Набатова on 28/11/24.
 
 import SwiftUI
-
+import PhotosUI
+import SDWebImageSwiftUI
 
 struct DesignSelectionSection: View {
     @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject var viewModel: CustomProductVM
     private let textComponent = TextComponent()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            textComponent.createText(text: "Выберите дизайн", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
-                .padding(.bottom, 4)
+            headerSection()
+            styleSelectionScrollView()
+        }
+        .onAppear {
+            Task {
+                await viewModel.loadData()
+            }
+        }
+    }
+    
+    private func headerSection() -> some View {
+        textComponent.createText(text: "Выберите стиль", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            .padding(.bottom, 4)
+    }
+}
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    ForEach(Design.allCases, id: \.self) { design in
-                        Image(design.imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 80, height: 80)
-                            .cornerRadius(10)
+extension DesignSelectionSection {
+    
+    private func styleSelectionScrollView() -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 16) {
+                ForEach(viewModel.allCustomStyles, id: \.id) { style in
+                    StyleItemView(
+                        viewModel: viewModel,
+                        style: style,
+                        isSelected: viewModel.selectedStyle?.id == style.id
+                    )
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3)) {
+                            viewModel.selectedStyle = style
+                        }
                     }
                 }
             }
-
-            Button(action: {
-                print("Прикрепить фото нажато")
-            }) {
-                HStack {
-                    textComponent.createText(text: "Прикрепить фото", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
-                    Spacer()
-                    Image(systemName: "plus")
-                        .foregroundColor(Color.colorDarkBrown)
-                }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 24)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
-            }
         }
+        .padding(.bottom)
     }
 }
 
-enum Design: String, CaseIterable {
-    case design1 = "bag"
-    case design2 = "bag1"
-    case design3 = "bag2"
-    case design4 = "bag4"
 
-    var imageName: String {
-        switch self {
-        case .design1: return "bag"
-        case .design2: return "bag"
-        case .design3: return "bag"
-        case .design4: return "bag"
-        }
-    }
-}
+
+

@@ -5,6 +5,36 @@
 import Foundation
 import SwiftUI
 
+struct GreenButton: View {
+    private let textComponent = TextComponent()
+    let text: String
+    let isDisabled: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(isDisabled ? Color.clear : .colorGreen)
+                    .frame(height: 54)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 40)
+                            .stroke(isDisabled ? Color.gray : Color.clear, lineWidth: 1.3)
+                    )
+                textComponent.createText(text: text, fontSize: 16, fontWeight: .regular, color: isDisabled ? .black : .white)
+            }
+            .animation(.easeInOut(duration: 0.2), value: isDisabled)
+        }
+        .frame(height: 54)
+        .padding(.horizontal)
+        .padding(.top, 16)
+        .disabled(isDisabled)
+    }
+}
+
+
+
+
 struct CustomButton {
     private let textComponent = TextComponent()
     
@@ -71,7 +101,6 @@ struct FlashingCircleButton: View {
     @State private var isFlashing: Bool = false
     
     var body: some View {
-        
         ZStack {
             Circle()
                 .stroke(Color.colorDarkBrown, lineWidth: 2)
@@ -96,13 +125,12 @@ struct FlashingCircleButton: View {
 
 
 //Profile
-
 struct RoundedPasswordButton: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     let title: String
     let action: () -> Void
-
+    
     var body: some View {
         Button(action: {
             action()
@@ -161,7 +189,6 @@ struct RoundedRedButton: View {
     }
 }
 
-
 struct SectionHeader: View {
     private let textComponent = TextComponent()
     let title: String
@@ -183,8 +210,6 @@ struct SectionHeader: View {
     }
 }
 
-
-
 struct RoundedField: View {
     let placeholder: String
     let borderColor: Color
@@ -202,9 +227,7 @@ struct RoundedField: View {
     }
 }
 
-//------------------
-
-
+//ProductDetailView
 struct ButtonComponents {
     private let textComponent = TextComponent()
     
@@ -347,7 +370,7 @@ struct ButtonComponents {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(isDisabled ? .gray.opacity(0.5) : .colorGreen)
+            
             .cornerRadius(40)
         }
         .padding(.horizontal, 16)

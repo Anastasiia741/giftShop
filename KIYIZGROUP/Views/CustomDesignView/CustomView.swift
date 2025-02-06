@@ -5,33 +5,80 @@
 import SwiftUI
 
 struct CustomView: View {
+    @StateObject private var viewModel = CustomProductVM()
+    private let customButton = CustomButton()
+    @State private var imageName: String = "Прикрепить фото"
+    @State private var isShowGallery = false
+    @State private var isShowCamera = false
+    @State private var isShowPicker = false
+    
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                CustomBackButton()
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                HStack {
+                    CustomBackButton()
+                    Spacer()
+                }
+                .padding([.leading, .top], 16)
                 Spacer()
-            }
-            .padding([.leading, .top], 16)
-            Spacer()
-            ProductTypeSection()
-                .padding(.vertical)
-                .padding(.horizontal, 20)
-            DesignSelectionSection()
-                .padding(.vertical)
-                .padding(.horizontal, 20)
-
-            AdditionalInfoSection()
-                .padding(.vertical)
-                .padding(.horizontal, 20)
-            GreenButton(text: "Продолжить") {
+                ProductTypeSection(viewModel: viewModel)
+                    .padding(.horizontal, 20)
+               
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .padding(.top, 8)
+                }
                 
+                DesignSelectionSection(viewModel: viewModel)
+                    .padding(.horizontal, 20)
+                ImagePickerButton(title: imageName) {
+                    isShowPicker.toggle()
+                }
+                .padding(.horizontal, 20)
+                AdditionalInfoSection(additionalText: $viewModel.comment)
+                    .padding(.vertical)
+                    .padding(.horizontal, 20)
+                
+                GreenButton(text: "Продолжить",
+                            isDisabled: viewModel.selectedProduct == nil && viewModel.selectedStyle == nil && viewModel.selectedImage == nil
+                ) {
+                    viewModel.isShowConfirm.toggle()
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-            
+            .navigationDestination(isPresented: $viewModel.isShowConfirm) {
+                CustomOrderView(viewModel: viewModel)
+            }
         }
         .navigationTitle("Индивидуальный заказ")
+        .navigationBarTitleDisplayMode(.inline)
+
+        .sheet(isPresented: $isShowPicker) {
+            PhotoSourceSheetView(isShowGalleryPicker: $isShowGallery, isShowCameraPicker: $isShowCamera,
+                                 onDismiss: {isShowPicker = false})
+            .presentationDetents([.height(250)])
+        }
+        
+        .sheet(isPresented: $isShowGallery) {
+            ImagePicker(
+                sourceType: .photoLibrary,
+                onSelected: { image, name in
+                    viewModel.selectedImage = image
+                    imageName = name.map { String($0.prefix(20)) } ?? "Фото выбрано"
+                },
+                selectedImage: $viewModel.selectedImage, isPresented: $isShowGallery)
+        }
+        
+        .sheet(isPresented: $isShowCamera) {
+            ImagePicker(sourceType: .camera, onSelected: {image, name in
+                viewModel.selectedImage = image
+                imageName = name.map { String($0.prefix(20)) } ?? "Фото выбрано"
+            },
+                        selectedImage: $viewModel.selectedImage, isPresented: $isShowCamera)
+        }
     }
-    
 }
 
 #Preview {
@@ -40,20 +87,5 @@ struct CustomView: View {
 
 
 
-
-struct GreenButton: View {
-    private let textComponent = TextComponent()
-
-    let text: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            textComponent.createText(text: text, fontSize: 16, fontWeight: .regular, color: .white)
-                .frame(maxWidth: .infinity, maxHeight: 54)
-                .background(Color.colorGreen)
-                .cornerRadius(40)
-        }
-        .padding(.top, 16)
-    }
-}
+                
+               

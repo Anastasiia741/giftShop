@@ -69,12 +69,12 @@ struct CreateProductView: View {
                     isShowingCameraPicker = true
                 }
             }
-            .sheet(isPresented: $isShowingGalleryPicker) {
-                ImagePicker(sourceType: .photoLibrary, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
-            }
-            .sheet(isPresented: $isShowingCameraPicker) {
-                ImagePicker(sourceType: .camera, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingCameraPicker)
-            }
+//            .sheet(isPresented: $isShowingGalleryPicker) {
+//                ImagePicker(sourceType: .photoLibrary, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingGalleryPicker)
+//            }
+//            .sheet(isPresented: $isShowingCameraPicker) {
+//                ImagePicker(sourceType: .camera, onSelected: {}, selectedImage: $viewModel.productImage, isPresented: $isShowingCameraPicker)
+//            }
             .alert(item: $viewModel.alertModel) { alertModel in
                 return Alert(
                     title: Text(alertModel.title ?? ""),

@@ -34,9 +34,8 @@ struct DetailView: View {
                     Spacer()
                     textComponent.createText(text: "\(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                 }
-                Divider()
-                    .padding(.horizontal)
-                    .background(Color.gray)
+                CustomDivider()
+           
                 HStack {
                     textComponent.createText(text: "Адрес доставки", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()
@@ -49,9 +48,8 @@ struct DetailView: View {
                     textComponent.createText(text: "\(order.phone)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                 }
                 .padding(.top)
-                Divider()
-                    .padding(.horizontal)
-                    .background(Color.gray)
+                CustomDivider()
+
                 HStack {
                     textComponent.createText(text: "Сумма заказа", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()

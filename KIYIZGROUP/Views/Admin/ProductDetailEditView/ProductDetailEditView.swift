@@ -135,12 +135,13 @@ struct ProductDetailEditView: View {
                 isShowingCameraPicker = true
             }
         }
-        .sheet(isPresented: $isShowingGalleryPicker) {
-            ImagePicker(sourceType: .photoLibrary, onSelected: {selectedImage = viewModel.selectedImage}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
-        }
-        .sheet(isPresented: $isShowingCameraPicker) {
-            ImagePicker(sourceType: .camera, onSelected: {selectedImage = viewModel.selectedImage }, selectedImage: $viewModel.selectedImage, isPresented: $isShowingCameraPicker)
-        }
+//        .sheet(isPresented: $isShowingGalleryPicker) {
+//            ImagePicker(sourceType: .photoLibrary, onSelected: {selectedImage = viewModel.selectedImage}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
+//        }
+//        .sheet(isPresented: $isShowingCameraPicker) {
+//            ImagePicker(sourceType: .camera, onSelected: {selectedImage = viewModel.selectedImage }, selectedImage: $viewModel.selectedImage, isPresented: $isShowingCameraPicker)
+//        }
+//        
         .alert(item: $viewModel.alertModel) { alertModel in
             if alertModel.buttons.count > 1 {
                 return Alert(

@@ -16,7 +16,6 @@ struct ProfileView: View {
     @State private var isShowEditProfileView = false
     @State private var activeScreen: ProfileNavigation? = nil
     
-    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
