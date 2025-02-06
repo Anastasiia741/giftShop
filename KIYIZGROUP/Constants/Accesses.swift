@@ -11,6 +11,8 @@ enum Accesses {
     static let storageProducts = "gs://giftshop-d7b5d.appspot.com/productImages"
     static let storageUsers = "gs://giftshop-d7b5d.appspot.com/users"
     static let products = "products"
+    static let customDesign = "customDesign"
+    static let customStyle = "customStyle"
     static let id = "id"
     static let orders = "orders"
     static let positions = "positions"

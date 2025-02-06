@@ -1,0 +1,6 @@
+.task(id: viewModel.selectedImageItem) {
+    if let imageData = await viewModel.loadSelectedImageData() {
+        selectedImage = UIImage(data: imageData)
+        selectedImageName = "Фото выбрано"
+    }
+}

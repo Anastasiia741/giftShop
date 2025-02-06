@@ -40,7 +40,7 @@ class Order: Identifiable {
         repres["promocode"] = promocode
         repres["cost"] = cost
         repres["address"] = address
-        repres["address"] = address
+//        repres["address"] = address
         repres["phone"] = phone
         repres["city"] = city
         repres["appatment"] = appatment

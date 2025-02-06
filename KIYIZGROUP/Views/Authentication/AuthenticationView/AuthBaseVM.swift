@@ -26,7 +26,6 @@ class AuthBaseVM: ObservableObject {
         return nil
     }
     
-    
      func validateFieldsForAuth(email: String, password: String) -> String? {
           if email.isEmpty {
               return "Email cannot be empty."

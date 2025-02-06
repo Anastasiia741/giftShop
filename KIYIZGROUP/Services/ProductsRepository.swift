@@ -5,7 +5,6 @@
 import Foundation
 
 final class ProductsRepository {
-    
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     private let key = Accesses.key
