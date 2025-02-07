@@ -14,7 +14,7 @@ enum OrderStatus: String, CaseIterable {
 }
 
 enum StatusColor {
-    static let new = "NewStatusColor"
+    static let new = "ColorGreen"
     static let inProgress = "InProgressStatusColor"
     static let sended = "SendedStatusColor"
     static let delivered = "DeliveredStatusColor"

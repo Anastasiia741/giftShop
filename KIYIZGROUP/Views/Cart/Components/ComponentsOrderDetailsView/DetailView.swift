@@ -8,7 +8,9 @@ struct DetailView: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var cartViewModel = CartVM()
     @StateObject var viewModel: ProfileVM
-    @StateObject var statusColors = StatusColors()
+//    @StateObject var statusColors = StatusColors()
+    private let statusColors = StatusColors() // ✅ Correct
+
     private let textComponent = TextComponent()
     let order: Order
     
@@ -20,7 +22,7 @@ struct DetailView: View {
                 HStack {
                     textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                     Spacer()
-                    textComponent.createText(text: "\(order.status)", fontSize: 16, fontWeight: .regular, color: statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                    textComponent.createText(text: "\(order.status)", fontSize: 16, fontWeight: .regular, color: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
                 }
                 HStack {
                     textComponent.createText(text: "Номер заказа", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
@@ -78,12 +80,6 @@ struct DetailView: View {
                        }
                    }
                }
-//        .onAppear(){
-//            Task{
-//                cartViewModel.fetchOrder()
-//                await viewModel.fetchUserProfile()
-//            }
-//        }
         .padding(.horizontal)
     }
 }

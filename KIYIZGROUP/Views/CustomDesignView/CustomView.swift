@@ -6,6 +6,7 @@ import SwiftUI
 
 struct CustomView: View {
     @StateObject private var viewModel = CustomProductVM()
+    let customOrder: CustomOrder?
     private let customButton = CustomButton()
     @State private var imageName: String = "Прикрепить фото"
     @State private var isShowGallery = false
@@ -49,7 +50,13 @@ struct CustomView: View {
                 .padding(.horizontal)
             }
             .navigationDestination(isPresented: $viewModel.isShowConfirm) {
-                CustomOrderView(viewModel: viewModel)
+                if let customOrder = customOrder {
+                    CustomOrderView(viewModel: viewModel, customOrder: customOrder)
+                } else {
+                    Text("No order available")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                }
             }
         }
         .navigationTitle("Индивидуальный заказ")
@@ -80,12 +87,5 @@ struct CustomView: View {
         }
     }
 }
-
-#Preview {
-    CustomView()
-}
-
-
-
-                
+     
                

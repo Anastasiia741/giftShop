@@ -15,7 +15,6 @@ final class CatalogVM: ObservableObject {
     @Published var selectedCategory = Localization.allCategories.lowercased()
     private let productService = ProductService()
     
-    
     func fetchAllProducts() async {
         do {
             let result = try await productService.fetchAllProducts()

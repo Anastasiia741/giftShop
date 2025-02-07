@@ -15,7 +15,7 @@ struct OrderRow: View {
             HStack {
                 textComponent.createText(text: "Статус заказа", fontSize: 14, fontWeight: .semibold, color: .gray)
                 Spacer()
-                textComponent.createText(text: order.status, fontSize: 14, fontWeight: .bold, color: statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                textComponent.createText(text: order.status, fontSize: 14, fontWeight: .bold, color: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
             }
             .padding(.vertical, 6)
             HStack {

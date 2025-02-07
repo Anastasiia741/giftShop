@@ -4,8 +4,8 @@
 
 import SwiftUI
 
-final class StatusColors: ObservableObject {
-    func getTextColor(_ status: OrderStatus) -> Color  {
+struct StatusColors {
+    static func getTextColor(_ status: OrderStatus) -> Color {
         switch status {
         case .new:
             return Color(UIColor(named: StatusColor.new) ?? .black)
@@ -18,7 +18,7 @@ final class StatusColors: ObservableObject {
         case .cancelled:
             return Color(UIColor(named: StatusColor.cancelled) ?? .black)
         default:
-            return Color(UIColor(.black))
+            return Color.black
         }
     }
 }

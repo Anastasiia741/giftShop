@@ -19,6 +19,13 @@ struct TabBar: View {
                                 Images.TabBar.order
                             }
                         }
+                    CustomOrdersAdminView()
+                        .tabItem {
+                            VStack {
+                                Images.TabBar.order
+                            }
+                        }
+
                         .tag(TabType.orders.rawValue)
                     ProductsEditView(catalogVM: CatalogVM())
                         .tabItem {
