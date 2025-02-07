@@ -45,20 +45,29 @@ final class CustomProductService: ObservableObject {
 
 
 extension CustomProductService {
+    func fetchCustomOrders() async throws -> [CustomOrder] {
+           let querySnapshot = try await db.collection("customOrders").getDocuments()
+           var orders: [CustomOrder] = []
+           for document in querySnapshot.documents {
+               if let order = try? document.data(as: CustomOrder.self) {
+                   orders.append(order)
+               }
+           }
+           return orders
+       }
+    
+    
     
     func uploadImageToStorage(image: UIImage) async throws -> String {
            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                throw NSError(domain: "Ошибка преобразования изображения", code: -1, userInfo: nil)
            }
 
-           // Создаем уникальное имя файла
            let uniqueImageName = "orderImages/\(UUID().uuidString).jpg"
            let storageRef = storage.reference().child(uniqueImageName)
 
-           // Загружаем изображение
            let _ = try await storageRef.putDataAsync(imageData, metadata: nil)
 
-           // Получаем URL загруженного изображения
            let downloadURL = try await storageRef.downloadURL()
            return downloadURL.absoluteString
        }

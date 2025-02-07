@@ -8,11 +8,13 @@ final class OrderDetailVM: ObservableObject {
     private let profileService = ProfileService()
     private let dbOrderService = DBOrdersService()
     private let orderService = OrderService()
-    @Published var selectedOrder: Order?
+    @Published var selectOrder: Order?
+    @Published var selectCustomOrder: CustomOrder?
+
     @Published var userProfile: NewUser?
     
     func fetchUserProfile() async {
-        guard let userID = selectedOrder?.userID else { return }
+        guard let userID = selectOrder?.userID else { return }
         do {
             let userProfile = try await profileService.getProfile(by: userID)
             DispatchQueue.main.async {
@@ -25,7 +27,7 @@ final class OrderDetailVM: ObservableObject {
     
     func updateOrderStatus(orderID: String, newStatus: String) {
         dbOrderService.updateOrderStatus(orderID: orderID, newStatus: newStatus) { [weak self] in
-            self?.selectedOrder?.status = newStatus
+            self?.selectOrder?.status = newStatus
             self?.objectWillChange.send()
         }
     }

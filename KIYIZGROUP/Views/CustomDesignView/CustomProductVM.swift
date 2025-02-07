@@ -16,6 +16,7 @@ final class CustomProductVM: ObservableObject {
     
     @Published var selectedProduct: CustomProduct?
     @Published var selectedStyle: CustomStyle?
+
     @Published var comment = ""
     @Published var phoneNumber = ""
     @Published var errorMessage: String?
@@ -24,17 +25,7 @@ final class CustomProductVM: ObservableObject {
     @Published var showInfoView = false
     @Published var showOrderDetails = false
     
-    func loadProducts() async {
-        do {
-            let products = try await productService.fetchCustomProducts()
-            await MainActor.run {
-                self.allCustomProducts = products
-            }
-        } catch {
-            print("Ошибка загрузки товаров: \(error.localizedDescription)")
-        }
-    }
-    
+
     func loadData() async {
         async let products = productService.fetchCustomProducts()
         async let styles = productService.fetchCustomStyles()

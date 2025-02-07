@@ -8,7 +8,7 @@ struct CustomOrderView: View {
     @ObservedObject var viewModel: CustomProductVM
     @State private var designImage: UIImage? = nil
     @State var isLoading = false
-
+    let customOrder: CustomOrder
 
     var body: some View {
         ZStack {
@@ -22,11 +22,7 @@ struct CustomOrderView: View {
                 CustomHeaderView(title: "Заказ")
                     .padding(.top, 4)
                 
-                OrderDetailsSection(
-                    productType: viewModel.selectedProduct?.name ?? "Не выбран",
-                    comment: viewModel.comment,
-                    designImage: designImage
-                )
+                OrderDetailsSection(productType: viewModel.selectedProduct?.name ?? "Не выбран", comment: viewModel.comment, designImage: designImage)
                 .padding(.top, 4)
                 
                 ContactInfoSection(phoneNumber: $viewModel.phoneNumber)
@@ -34,10 +30,7 @@ struct CustomOrderView: View {
                 
                 Spacer()
                 
-                GreenButton(
-                    text: "Оформить заказ",
-                    isDisabled: viewModel.phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                ) {
+                GreenButton(text: "Оформить заказ", isDisabled: viewModel.phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
                     Task {
                         await viewModel.submitOrder()
                     }
@@ -50,7 +43,7 @@ struct CustomOrderView: View {
                     .transition(.opacity)
             }
             if viewModel.showInfoView {
-                InfoView(isOpenView: $viewModel.showInfoView)
+                    InfoView(isOpenView: $viewModel.showInfoView)
                     .transition(.opacity)
             }
         }
@@ -65,7 +58,7 @@ struct CustomOrderView: View {
             }
         }
         .navigationDestination(isPresented: $viewModel.showOrderDetails) {
-            CustomDetailsView()
+            CustomDetailsView(viewModel: viewModel, customOrder: customOrder)
         }
     }
 }
@@ -75,10 +68,10 @@ extension CustomOrderView {
     
     private func loadSelectedDesignImage() async -> UIImage? {
         if let attachedImage = viewModel.selectedImage {
-            return attachedImage // Прикрепленное пользователем изображение
+            return attachedImage
         } else if let styleImageURL = viewModel.styleURLs[viewModel.selectedStyle?.id ?? 0] {
             do {
-                let (data, _) = try await URLSession.shared.data(from: styleImageURL) // Асинхронная загрузка данных
+                let (data, _) = try await URLSession.shared.data(from: styleImageURL)
                 if let image = UIImage(data: data) {
                     return image
                 }

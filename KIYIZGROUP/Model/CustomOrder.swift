@@ -5,7 +5,7 @@
 import Foundation
 import FirebaseFirestore
 
-class CustomOrder: Identifiable, Encodable {
+class CustomOrder: Identifiable, Codable {
     var id: String = UUID().uuidString
     var userID: String
     var phone: String

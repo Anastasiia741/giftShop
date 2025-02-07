@@ -6,11 +6,13 @@ import SwiftUI
 
 struct CustomDesignView: View {
     private let textComponent = TextComponent()
+    let customOrder: CustomOrder
+
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 16) {
-            NavigationLink(destination: CustomView()) {
+            NavigationLink(destination: CustomView(customOrder: customOrder)) {
                 HStack {
                     textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, color: .white)
                     Spacer()
@@ -28,6 +30,3 @@ struct CustomDesignView: View {
     }
 }
 
-#Preview {
-    CustomDesignView()
-}

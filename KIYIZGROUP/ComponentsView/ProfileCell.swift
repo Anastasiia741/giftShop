@@ -6,7 +6,8 @@ import SwiftUI
 
 struct ProfileCell: View {
     var order: Order
-    @StateObject var statusColors = StatusColors()
+    private let statusColors = StatusColors() 
+
     @StateObject var viewModel: ProfileVM
     
     var body: some View {
@@ -20,7 +21,7 @@ struct ProfileCell: View {
                     .customTextStyle(TextStyle.avenir, size: 14)
                 Text(order.status)
                     .customTextStyle(TextStyle.avenir, size: 14)
-                    .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                    .foregroundColor(StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
             }
         }
     }

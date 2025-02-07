@@ -5,6 +5,29 @@
 import Foundation
 import SwiftUI
 
+struct StatusButton: View {
+    private let textComponent = TextComponent()
+    let text: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            textComponent.createText(text: text, fontSize: 16, fontWeight: .regular, color: isSelected ? Color.white : Color.black)
+                .padding(.horizontal, 16)
+                .frame(minWidth: 80, maxWidth: .infinity, minHeight: 40)
+                .background(isSelected ? .colorGreen : .clear)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(isSelected ? .colorGreen : Color.gray, lineWidth: 1.5)
+                )
+                .cornerRadius(20)
+                .layoutPriority(1)
+        }
+    }
+}
+
+
 struct GreenButton: View {
     private let textComponent = TextComponent()
     let text: String

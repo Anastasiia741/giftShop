@@ -7,7 +7,9 @@ import SwiftUI
 struct CustomOrdersView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: ProfileVM
-    @StateObject private var statusColors = StatusColors()
+//    @StateObject private var statusColors = StatusColors()
+    private let statusColors = StatusColors() 
+
     @State private var selectedOrder: CustomOrder?
     private let textComponent = TextComponent()
     
