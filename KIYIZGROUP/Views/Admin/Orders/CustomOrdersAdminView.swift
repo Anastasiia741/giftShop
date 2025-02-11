@@ -20,9 +20,7 @@ struct CustomOrdersAdminView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(OrderStatus.allCases, id: \.self) { status in
-                            StatusButton(
-                                text: status.rawValue,
-                                isSelected: selectedStatus == status
+                            DetailButton(text: status.rawValue, isSelected: selectedStatus == status
                             ) {
                                 selectedStatus = status
                                 viewModel.filterCustomOrders(status)
@@ -39,14 +37,19 @@ struct CustomOrdersAdminView: View {
                 .scrollContentBackground(.hidden)
                 .padding(.vertical)
             }
+            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, colorScheme: colorScheme, isPresented: $isShowExit))
+            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
+                NavigationView {
+                    TabBar(viewModel: MainTabVM())
+                }
+            }
+            .onDisappear {
+                viewModel.fetchCustomOrders()
+            }
             .onAppear {
                 viewModel.fetchCustomOrders()
             }
         }
     }
-}
-
-#Preview {
-    CustomOrdersAdminView()
 }
 

@@ -7,10 +7,13 @@ import SwiftUI
 struct OrderDetail: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: OrderDetailVM
+    @ObservedObject var orderViewModel: OrdersVM
+
     @State private var isShowingStatusAlert = false
     
-    init(orderDetailVM: OrderDetailVM) {
+    init(orderDetailVM: OrderDetailVM, orderVM: OrdersVM) {
         self.viewModel = orderDetailVM
+        self.orderViewModel = orderVM
     }
     
     var body: some View {
@@ -30,7 +33,7 @@ struct OrderDetail: View {
                     
                     Text(viewModel.selectOrder?.status ?? "")
                         .customTextStyle(TextStyle.avenir, size: 18)
-//                        .foregroundColor(statusColors.getTextColor(OrderStatus(rawValue: viewModel.selectOrder?.status ?? "") ?? .new))
+                        .foregroundColor(StatusColors.getTextColor(OrderStatus(rawValue: viewModel.selectOrder?.status ?? "") ?? .new))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Text("\(Localization.promoCode): \(viewModel.selectOrder?.promocode ?? "")")
@@ -79,6 +82,12 @@ struct OrderDetail: View {
             .padding(.leading)
             Spacer()
         }
+        
+        HStack {
+//            OrderStatusButton(viewModel: viewModel, isCustomOrder: true, orderID: order.id, status: order.status)
+
+                  }
+        
         Button(action: {
             isShowingStatusAlert = true
         }) {
@@ -91,29 +100,29 @@ struct OrderDetail: View {
                 .cornerRadius(20)
                 .shadow(color: Color(StatusColor.new).opacity(0.5), radius: 5, x: 0, y: 5)
         }
-        .actionSheet(isPresented: $isShowingStatusAlert) {
-            ActionSheet(
-                title: Text(Localization.selectOrderStatus),
-                buttons: [
-                    .default(Text(OrderStatus.new.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.new.rawValue)
-                    },
-                    .default(Text(OrderStatus.processing.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.processing.rawValue)
-                    },
-                    .default(Text(OrderStatus.shipped.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.shipped.rawValue)
-                    },
-                    .default(Text(OrderStatus.delivered.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.delivered.rawValue)
-                    },
-                    .default(Text(OrderStatus.cancelled.rawValue)) {
-                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus:OrderStatus.cancelled.rawValue)
-                    },
-                    .cancel()
-                ]
-            )
-        }
+//        .actionSheet(isPresented: $isShowingStatusAlert) {
+//            ActionSheet(
+//                title: Text(Localization.selectOrderStatus),
+//                buttons: [
+//                    .default(Text(OrderStatus.new.rawValue)) {
+//                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.new.rawValue)
+//                    },
+//                    .default(Text(OrderStatus.processing.rawValue)) {
+//                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.processing.rawValue)
+//                    },
+//                    .default(Text(OrderStatus.shipped.rawValue)) {
+//                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.shipped.rawValue)
+//                    },
+//                    .default(Text(OrderStatus.delivered.rawValue)) {
+//                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus: OrderStatus.delivered.rawValue)
+//                    },
+//                    .default(Text(OrderStatus.cancelled.rawValue)) {
+//                        viewModel.updateOrderStatus(orderID: viewModel.selectOrder?.id ?? "", newStatus:OrderStatus.cancelled.rawValue)
+//                    },
+//                    .cancel()
+//                ]
+//            )
+//        }
         .padding(.bottom, 22)
     }
 }

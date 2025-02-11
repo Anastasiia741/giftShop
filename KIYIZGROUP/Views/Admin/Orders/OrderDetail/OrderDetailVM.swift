@@ -6,11 +6,8 @@ import Foundation
 
 final class OrderDetailVM: ObservableObject {
     private let profileService = ProfileService()
-    private let dbOrderService = DBOrdersService()
     private let orderService = OrderService()
     @Published var selectOrder: Order?
-    @Published var selectCustomOrder: CustomOrder?
-
     @Published var userProfile: NewUser?
     
     func fetchUserProfile() async {
@@ -22,13 +19,6 @@ final class OrderDetailVM: ObservableObject {
             }
         } catch {
             print(error.localizedDescription)
-        }
-    }
-    
-    func updateOrderStatus(orderID: String, newStatus: String) {
-        dbOrderService.updateOrderStatus(orderID: orderID, newStatus: newStatus) { [weak self] in
-            self?.selectOrder?.status = newStatus
-            self?.objectWillChange.send()
         }
     }
 }

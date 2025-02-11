@@ -5,7 +5,11 @@
 import Foundation
 import FirebaseFirestore
 
-class CustomOrder: Identifiable, Codable {
+class CustomOrder: Identifiable, Codable, Equatable {
+    static func == (lhs: CustomOrder, rhs: CustomOrder) -> Bool {
+          return lhs.id == rhs.id && lhs.status == rhs.status
+      }
+    
     var id: String = UUID().uuidString
     var userID: String
     var phone: String
