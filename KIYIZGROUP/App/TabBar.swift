@@ -17,12 +17,14 @@ struct TabBar: View {
                         .tabItem {
                             VStack {
                                 Images.TabBar.order
+                                Text("Заказы")
                             }
                         }
                     CustomOrdersAdminView()
                         .tabItem {
                             VStack {
-                                Images.TabBar.order
+                                Images.TabBar.customOrder
+                                Text("Личные")
                             }
                         }
 
@@ -31,6 +33,7 @@ struct TabBar: View {
                         .tabItem {
                             VStack {
                                 Images.TabBar.productEdit
+                                Text("Товары")
                             }
                         }
                         .tag(TabType.productsEdit.rawValue)
@@ -38,6 +41,7 @@ struct TabBar: View {
                         .tabItem {
                             VStack {
                                 Images.TabBar.createProduct
+                                Text("Создать")
                             }
                         }
                         .tag(TabType.createProduct.rawValue)

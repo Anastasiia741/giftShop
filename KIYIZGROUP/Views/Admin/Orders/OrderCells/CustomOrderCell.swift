@@ -25,6 +25,7 @@ struct CustomOrderCell: View {
                 
                 HStack {
                     textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, color: .black)
+                    
                     textComponent.createText(text: order.status, fontSize: 16, fontWeight: .regular, color: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
                 }
                 .padding(.top, 6)
@@ -42,10 +43,9 @@ struct CustomOrderCell: View {
             }
             .sheet(isPresented: $isShowOrderDetail) {
                 if let selectedOrder = selectedOrder {
-                    CustomOrderDetail(order: selectedOrder)
+                    CustomOrderDetail(viewModel: ordersVM, order: selectedOrder)
                 } else {
-                    Text("Ошибка: заказ не найден.")
-                        .foregroundColor(.red)
+                    textComponent.createText(text: "Ошибка: заказ не найден.", fontSize: 14, fontWeight: .regular, color: .red)
                         .padding()
                 }
             }
@@ -53,4 +53,3 @@ struct CustomOrderCell: View {
         }
     }
 }
-

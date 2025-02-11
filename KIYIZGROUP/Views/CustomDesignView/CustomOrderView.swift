@@ -65,7 +65,6 @@ struct CustomOrderView: View {
 
 extension CustomOrderView {
     @MainActor
-    
     private func loadSelectedDesignImage() async -> UIImage? {
         if let attachedImage = viewModel.selectedImage {
             return attachedImage

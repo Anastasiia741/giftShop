@@ -15,6 +15,7 @@ enum Accesses {
     static let customStyle = "customStyle"
     static let id = "id"
     static let orders = "orders"
+    static let customOrders = "customOrders"
     static let positions = "positions"
     static let userID = "userID"
     static let key = "Products"

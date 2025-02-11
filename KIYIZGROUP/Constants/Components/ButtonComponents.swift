@@ -5,7 +5,7 @@
 import Foundation
 import SwiftUI
 
-struct StatusButton: View {
+struct DetailButton: View {
     private let textComponent = TextComponent()
     let text: String
     let isSelected: Bool

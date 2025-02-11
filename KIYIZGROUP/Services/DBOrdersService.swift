@@ -3,7 +3,6 @@
 //  Created by Анастасия Набатова on 22/1/24.
 
 import Foundation
-import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
@@ -13,10 +12,11 @@ class DBOrdersService {
     
     init() {}
     
+}
+  
+extension DBOrdersService {
     //MARK: - Save order in firebace
-    func saveOrder(order: Order,
-                   promocode: String,
-                   completion: @escaping (Result<Order, Error>) -> ()) {
+    func saveOrder(order: Order, promocode: String, completion: @escaping (Result<Order, Error>) -> ()) {
         ordersRef.document(order.id).setData(order.representation) { error in
             if let error = error {
                 completion(.failure(error))
@@ -35,9 +35,7 @@ class DBOrdersService {
     }
     
     //MARK: - Save list of products in firebace
-    func savePositions(to orderId: String,
-                       positions: [Position],
-                       completion: @escaping (Result<[Position], Error>) -> ()) {
+    func savePositions(to orderId: String, positions: [Position], completion: @escaping (Result<[Position], Error>) -> ()) {
         let positionsRef = ordersRef.document(orderId).collection(Accesses.positions)
         for position in positions {
             positionsRef.document(position.id).setData(position.representation)
@@ -106,7 +104,9 @@ class DBOrdersService {
             }
         }
     }
-    
+}
+
+extension DBOrdersService {
     //MARK: - Change order status for admin
     func updateOrderStatus(orderID: String, newStatus: String, completion: @escaping ()->Void) {
         let orderRef = db.collection(Accesses.orders).document(orderID)
@@ -119,23 +119,19 @@ class DBOrdersService {
         }
     }
     
-    //MARK: - Get order status for admin
-    func fetchOrderStatus(orderID: String, completion: @escaping (String?) -> Void) {
-        let ordersRef = db.collection(Accesses.orders)
-        let orderDocRef = ordersRef.document(orderID)
-        orderDocRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                if let status = document.data()?["status"] as? String {
-                    completion(status)
-                } else {
-                    completion(nil)
-                }
+    func updateCustomOrderStatus(orderID: String, newStatus: String, completion: @escaping ()->Void) {
+        let orderRef = db.collection(Accesses.customOrders).document(orderID)
+        orderRef.updateData(["status": newStatus]) { error in
+            if let error = error {
+                print(error.localizedDescription)
             } else {
-                completion(nil)
+                completion()
             }
         }
     }
-    
+}
+
+extension DBOrdersService {
     //MARK: Get odrer history for user
     func fetchOrderHistory(by userID: String?, completion: @escaping (Result<[Order], Error>) -> ()) {
         let ordersRef = Firestore.firestore().collection(Accesses.orders)
@@ -202,3 +198,21 @@ class DBOrdersService {
         }
     }
 }
+
+//MARK: - Get order status for admin
+//    func fetchOrderStatus(orderID: String, completion: @escaping (String?) -> Void) {
+//        let ordersRef = db.collection(Accesses.orders)
+//        let orderDocRef = ordersRef.document(orderID)
+//        orderDocRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                if let status = document.data()?["status"] as? String {
+//                    completion(status)
+//                } else {
+//                    completion(nil)
+//                }
+//            } else {
+//                completion(nil)
+//            }
+//        }
+//    }
+//

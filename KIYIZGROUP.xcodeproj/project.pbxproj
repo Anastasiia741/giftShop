@@ -524,8 +524,8 @@
 				7143C8822CE77864004CC4B9 /* CustomView.swift */,
 				71CB8B642D52A03C00F0CDA4 /* CustomOrderView.swift */,
 				71CB8B6C2D552F9400F0CDA4 /* CustomDetailsView.swift */,
-				7110BA332D512ABB007BFD26 /* CustomProductVM.swift */,
 				71CB8B682D53B60300F0CDA4 /* CustomProductService.swift */,
+				7110BA332D512ABB007BFD26 /* CustomProductVM.swift */,
 				7179A9FC2CF89BCA005270CF /* ComponentsCustomView */,
 			);
 			path = CustomDesignView;
@@ -702,7 +702,6 @@
 			children = (
 				711ED96D2B504CD80052752F /* OrdersView.swift */,
 				71CB8B6E2D56732F00F0CDA4 /* CustomOrdersAdminView.swift */,
-				71CB8B722D5693BE00F0CDA4 /* CustomOrderDetail.swift */,
 				71AD03A92B766BED006231F9 /* OrdersVM.swift */,
 				71AD03AC2B766CB3006231F9 /* OrderCells */,
 				71AD03B12B768806006231F9 /* OrderDetail */,
@@ -723,6 +722,7 @@
 			isa = PBXGroup;
 			children = (
 				71AD03B22B76881A006231F9 /* OrderDetail.swift */,
+				71CB8B722D5693BE00F0CDA4 /* CustomOrderDetail.swift */,
 				71AD03B42B768A00006231F9 /* OrderDetailVM.swift */,
 			);
 			path = OrderDetail;

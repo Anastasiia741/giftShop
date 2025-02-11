@@ -15,9 +15,11 @@ enum Images {
     static let chevronLeft = "chevron.left"
     
     enum TabBar {
-        static let order = Image(systemName: "list.bullet")
+        static let order = Image(systemName: "tray.full")
+        static let customOrder = Image(systemName: "list.bullet.rectangle")
+    
         static let createProduct = Image(systemName: "plus.circle")
-        static let productEdit = Image(systemName: "square.and.pencil")
+        static let productEdit = Image(systemName: "doc.text")
         static let menu = Image(systemName: "menucard")
         static let cart = Image(systemName: "cart")
         static let profile = Image(systemName: "person.circle")
