@@ -58,9 +58,6 @@ extension OrdersView {
 }
 
 
-
-
-
 struct LogoutButton: View {
     @ObservedObject var viewModel: OrdersVM
     let colorScheme: ColorScheme
