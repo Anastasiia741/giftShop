@@ -6,7 +6,6 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 extension View {
-    
     func productImageView(with url: URL?) -> some View {
         Group {
             if let url = url {
@@ -25,7 +24,6 @@ extension View {
             }
         }
     }
-    
     
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -53,7 +51,6 @@ extension View {
             .transition(.move(edge: .trailing))
             .animation(.easeInOut(duration: 0.1), value: isPresented.wrappedValue)
     }
-    
     
     func customTransition(isPresented: Bool, from edge: Edge = .trailing) -> some View {
         self.modifier(CustomTransitionModifier(isPresented: isPresented, edge: edge))

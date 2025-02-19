@@ -55,9 +55,6 @@ struct GreenButton: View {
     }
 }
 
-
-
-
 struct CustomButton {
     private let textComponent = TextComponent()
     
@@ -119,7 +116,7 @@ struct MinimalButton {
     }
 }
 
-//Cart
+//MARK: - Cart
 struct FlashingCircleButton: View {
     @State private var isFlashing: Bool = false
     
@@ -147,7 +144,7 @@ struct FlashingCircleButton: View {
 }
 
 
-//Profile
+//MARK: - Profile
 struct RoundedPasswordButton: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
@@ -250,7 +247,7 @@ struct RoundedField: View {
     }
 }
 
-//ProductDetailView
+//MARK: - ProductDetailView
 struct ButtonComponents {
     private let textComponent = TextComponent()
     

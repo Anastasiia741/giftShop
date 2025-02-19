@@ -21,22 +21,22 @@ struct CustomBackButton: View {
     }
 }
 
-struct BackButton: View {
-    @Environment(\.colorScheme) private var colorScheme
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                HStack {
-                    Image(systemName: Images.chevronLeft)
-                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                }
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-    }
-}
+//struct BackButton: View {
+//    @Environment(\.colorScheme) private var colorScheme
+//    let action: () -> Void
+//
+//    var body: some View {
+//        Button(action: action) {
+//            HStack {
+//                HStack {
+//                    Image(systemName: Images.chevronLeft)
+//                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+//                }
+//            }
+//        }
+//        .navigationBarBackButtonHidden(true)
+//    }
+//}
 
 enum ProfileNavigation: Hashable {
     case editProfile

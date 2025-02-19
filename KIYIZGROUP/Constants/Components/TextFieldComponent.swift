@@ -26,7 +26,6 @@ struct TextFieldComponent {
                     .stroke(borderColor, lineWidth: 1)
             )
     }
-    
 }
 
 
