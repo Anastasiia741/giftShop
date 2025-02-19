@@ -27,7 +27,6 @@
 		7110A8C52B83850D00457615 /* CreateProductVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A8C42B83850D00457615 /* CreateProductVM.swift */; };
 		7110BA342D512ABB007BFD26 /* CustomProductVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110BA332D512ABB007BFD26 /* CustomProductVM.swift */; };
 		71185BBF2D357E4000BB4BBB /* ViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71185BBE2D357E4000BB4BBB /* ViewExtention.swift */; };
-		71185BC12D357E7A00BB4BBB /* TextExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71185BC02D357E7A00BB4BBB /* TextExtention.swift */; };
 		71185BC32D357EBB00BB4BBB /* UIApplicationExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71185BC22D357EBB00BB4BBB /* UIApplicationExtention.swift */; };
 		71185BC62D35887900BB4BBB /* CustomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71185BC52D35887900BB4BBB /* CustomNavigation.swift */; };
 		71185BC82D393D4C00BB4BBB /* AuthorizationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71185BC72D393D4C00BB4BBB /* AuthorizationVM.swift */; };
@@ -100,7 +99,6 @@
 		719897B72D47FC3300491149 /* ErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719897B62D47FC3300491149 /* ErrorType.swift */; };
 		71AD03AA2B766BED006231F9 /* OrdersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03A92B766BED006231F9 /* OrdersVM.swift */; };
 		71AD03AE2B766CD4006231F9 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03AD2B766CD4006231F9 /* OrderCell.swift */; };
-		71AD03B02B768663006231F9 /* StatusColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03AF2B768663006231F9 /* StatusColors.swift */; };
 		71AD03B32B76881A006231F9 /* OrderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03B22B76881A006231F9 /* OrderDetail.swift */; };
 		71AD03B52B768A00006231F9 /* OrderDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD03B42B768A00006231F9 /* OrderDetailVM.swift */; };
 		71AE76972BE8DF4100E4E3A3 /* PromoCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */; };
@@ -181,7 +179,6 @@
 		7110A8C42B83850D00457615 /* CreateProductVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductVM.swift; sourceTree = "<group>"; };
 		7110BA332D512ABB007BFD26 /* CustomProductVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProductVM.swift; sourceTree = "<group>"; };
 		71185BBE2D357E4000BB4BBB /* ViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtention.swift; sourceTree = "<group>"; };
-		71185BC02D357E7A00BB4BBB /* TextExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExtention.swift; sourceTree = "<group>"; };
 		71185BC22D357EBB00BB4BBB /* UIApplicationExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtention.swift; sourceTree = "<group>"; };
 		71185BC52D35887900BB4BBB /* CustomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigation.swift; sourceTree = "<group>"; };
 		71185BC72D393D4C00BB4BBB /* AuthorizationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationVM.swift; sourceTree = "<group>"; };
@@ -255,7 +252,6 @@
 		719897B62D47FC3300491149 /* ErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorType.swift; sourceTree = "<group>"; };
 		71AD03A92B766BED006231F9 /* OrdersVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersVM.swift; sourceTree = "<group>"; };
 		71AD03AD2B766CD4006231F9 /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
-		71AD03AF2B768663006231F9 /* StatusColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusColors.swift; sourceTree = "<group>"; };
 		71AD03B22B76881A006231F9 /* OrderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetail.swift; sourceTree = "<group>"; };
 		71AD03B42B768A00006231F9 /* OrderDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailVM.swift; sourceTree = "<group>"; };
 		71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeView.swift; sourceTree = "<group>"; };
@@ -419,17 +415,8 @@
 				71185BBE2D357E4000BB4BBB /* ViewExtention.swift */,
 				719897B62D47FC3300491149 /* ErrorType.swift */,
 				71185BC22D357EBB00BB4BBB /* UIApplicationExtention.swift */,
-				71185BC02D357E7A00BB4BBB /* TextExtention.swift */,
 			);
 			path = Extentions;
-			sourceTree = "<group>";
-		};
-		71185BC42D357EF700BB4BBB /* CustonNavigation */ = {
-			isa = PBXGroup;
-			children = (
-				71185BC52D35887900BB4BBB /* CustomNavigation.swift */,
-			);
-			path = CustonNavigation;
 			sourceTree = "<group>";
 		};
 		711ED8EB2B5008D00052752F /* Services */ = {
@@ -472,16 +459,15 @@
 			isa = PBXGroup;
 			children = (
 				71185BBD2D357E1E00BB4BBB /* Extentions */,
-				71185BC42D357EF700BB4BBB /* CustonNavigation */,
-				7143C86E2CE3B388004CC4B9 /* TextComponent.swift */,
-				719363262CEE382B006FDC6A /* TextFieldComponent.swift */,
 				7143C8872CE79C9F004CC4B9 /* ButtonComponents.swift */,
+				719363262CEE382B006FDC6A /* TextFieldComponent.swift */,
+				7143C86E2CE3B388004CC4B9 /* TextComponent.swift */,
 				71C4C3132D412DD100115487 /* Dropdown.swift */,
 				71185BCE2D3A987100BB4BBB /* AlertView.swift */,
-				71929EDC2BB6D360001489CB /* AlertModel.swift */,
 				71353CD72B6D5770008A7868 /* ImagePicker.swift */,
-				71AD03AF2B768663006231F9 /* StatusColors.swift */,
+				71185BC52D35887900BB4BBB /* CustomNavigation.swift */,
 				7143C8762CE3D478004CC4B9 /* LoadingView.swift */,
+				71929EDC2BB6D360001489CB /* AlertModel.swift */,
 			);
 			name = Components;
 			path = Constants/Components;
@@ -1109,10 +1095,8 @@
 				7149E0A92D2EC462009A8689 /* AddressView.swift in Sources */,
 				71AD03B52B768A00006231F9 /* OrderDetailVM.swift in Sources */,
 				710E3DF82D058C8A002FD2F5 /* ImageGridAuthView.swift in Sources */,
-				71AD03B02B768663006231F9 /* StatusColors.swift in Sources */,
 				71185BC32D357EBB00BB4BBB /* UIApplicationExtention.swift in Sources */,
 				711ED8EA2B50085B0052752F /* AuthService.swift in Sources */,
-				71185BC12D357E7A00BB4BBB /* TextExtention.swift in Sources */,
 				7149E0A72D2EC43B009A8689 /* CustomOrdersView.swift in Sources */,
 				71BE6A982BA9A34E0004ED32 /* Localization.swift in Sources */,
 				711ED9622B504B150052752F /* ProductsRepository.swift in Sources */,

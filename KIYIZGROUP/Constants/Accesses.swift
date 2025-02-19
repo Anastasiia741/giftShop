@@ -21,5 +21,3 @@ enum Accesses {
     static let key = "Products"
 }
 
-//Kiyizgroup@gmail.com
-//Kiyiz2024

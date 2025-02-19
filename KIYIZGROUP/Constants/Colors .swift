@@ -17,3 +17,22 @@ enum Colors {
     static let promoApply = Color("promoApply")
     static let whiteAlfa = Color("whiteAlfa")
 }
+
+struct StatusColors {
+    static func getTextColor(_ status: OrderStatus) -> Color {
+        switch status {
+        case .new:
+            return Color(UIColor(named: StatusColor.new) ?? .black)
+        case .processing:
+            return Color(UIColor(named: StatusColor.inProgress) ?? .black)
+        case .shipped:
+            return Color(UIColor(named: StatusColor.sended) ?? .black)
+        case .delivered:
+            return Color(UIColor(named: StatusColor.delivered) ?? .black)
+        case .cancelled:
+            return Color(UIColor(named: StatusColor.cancelled) ?? .black)
+        default:
+            return Color.black
+        }
+    }
+}

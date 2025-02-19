@@ -18,14 +18,15 @@ struct EditProfileView: View {
     @State private var showDropdown = false
     
     var body: some View {
-        HStack {
-            BackButton {
-                dismiss()
-            }
-            Spacer()
-        }
-        .padding([.leading, .top], 16)
+     
+       
         ZStack(alignment: .top) {
+            HStack {
+                CustomBackButton()
+                Spacer()
+            }
+            
+            .padding([.leading, .top], 16)
             ScrollView {
                 VStack(spacing: 16) {
                     SectionHeader(title: "Контактные данные", showButton: true, action:  {

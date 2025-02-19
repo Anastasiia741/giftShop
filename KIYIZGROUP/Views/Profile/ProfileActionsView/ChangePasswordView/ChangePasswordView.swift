@@ -18,12 +18,20 @@ struct ChangePasswordView: View {
     
     var body: some View {
         VStack {
+            
             HStack {
-               BackButton {
-                   activeScreen = .editProfile
-               }
+                CustomBackButton()
                 Spacer()
             }
+            
+            .padding([.leading, .top], 16)
+            
+//            HStack {
+//               BackButton {
+//                   activeScreen = .editProfile
+//               }
+//                Spacer()
+//            }
             .padding([.leading, .top], 16)
            
             VStack(spacing: 16) {

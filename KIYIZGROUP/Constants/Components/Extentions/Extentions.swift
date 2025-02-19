@@ -8,8 +8,6 @@ enum TabType: Int {
     case catalog, cart, profile, productsEdit, createProduct, orders
 }
 
-
-
 struct CustomTransitionModifier: ViewModifier {
     let isPresented: Bool
     let edge: Edge
@@ -24,18 +22,3 @@ struct CustomTransitionModifier: ViewModifier {
     }
 }
 
-
-struct CustomScrollView<Content: View>: View {
-    var showsIndicators: Bool = true
-    var content: () -> Content
-    
-    var body: some View {
-        ScrollView(showsIndicators: showsIndicators) {
-            content()
-                .padding() // Настройка отступов
-        }
-        .onTapGesture {
-            UIApplication.shared.endEditing() // Скрываем клавиатуру при касании
-        }
-    }
-}
