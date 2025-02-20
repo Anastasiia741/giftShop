@@ -14,7 +14,8 @@ struct ProfileView: View {
     @State private var selectedImage: UIImage?
     @State private var isShowEditProfileView = false
     @State private var activeScreen: ProfileNavigation? = nil
-    
+    @Binding var currentTab: Int
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
@@ -50,7 +51,7 @@ struct ProfileView: View {
             .navigationDestination(item: $activeScreen) { screen in
                 switch screen {
                 case .editProfile:
-                    EditProfileView(viewModel: viewModel, navigationTarget: $activeScreen)
+                    EditProfileView(viewModel: viewModel, navigationTarget: $activeScreen, currentTab: $currentTab)
                 case .changePassword:
                     ChangePasswordView(activeScreen: $activeScreen)
                 }

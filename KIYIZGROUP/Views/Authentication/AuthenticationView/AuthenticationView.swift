@@ -9,6 +9,7 @@ struct AuthenticationView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var selectedLanguage = "EN"
     @State private var activeScreen: ActiveScreen? = nil
+    @Binding var currentTab: Int
     
     var body: some View {
         NavigationStack {
@@ -28,9 +29,9 @@ struct AuthenticationView: View {
             .navigationDestination(item: $activeScreen) { screen in
                 switch screen {
                 case .registration:
-                    RegistrationView()
+                    RegistrationView(currentTab: $currentTab)
                 case .authorization:
-                    AuthorizationView(isShowBackButton: true)
+                    AuthorizationView(currentTab: $currentTab)
                 }
             }
             .overlay(HStack {

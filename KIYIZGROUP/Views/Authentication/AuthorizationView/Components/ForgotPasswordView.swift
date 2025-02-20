@@ -63,12 +63,10 @@ struct ForgotPasswordView: View, InfoDialogHandling {
 }
 
 extension ForgotPasswordView {
-    
     private func closeDialog() {
         withAnimation(.spring()) {
             offset = 1000
         }
-        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             closeInfoDialog()
@@ -77,7 +75,7 @@ extension ForgotPasswordView {
     
     private func handlePasswordReset() {
         viewModel.email = email
-        viewModel.sendPasswordResetEmail { success, errorMessage in
+        viewModel.resetPassword { success, errorMessage in
             if success {
                 title = "Пароль был отправлен на \(email)"
                 email = ""

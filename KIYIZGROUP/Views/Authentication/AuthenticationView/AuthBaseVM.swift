@@ -9,7 +9,10 @@ class AuthBaseVM: ObservableObject {
     @Published var password = ""
     @Published var errorMessage: String?
     @Published var errorType: ErrorType? = nil
-    
+}
+
+
+extension AuthBaseVM {
     func validateFieldsForReg(email: String, password: String) -> String? {
         if email.isEmpty {
             return "Email cannot be empty"
@@ -26,18 +29,18 @@ class AuthBaseVM: ObservableObject {
         return nil
     }
     
-     func validateFieldsForAuth(email: String, password: String) -> String? {
-          if email.isEmpty {
-              return "Email cannot be empty."
-          }
-          if !isValidEmail(email) {
-              return "Invalid email format."
-          }
-          if password.isEmpty {
-              return "Password cannot be empty."
-          }
-          return nil
-      }
+    func validateFieldsForAuth(email: String, password: String) -> String? {
+        if email.isEmpty {
+            return "Email cannot be empty."
+        }
+        if !isValidEmail(email) {
+            return "Invalid email format."
+        }
+        if password.isEmpty {
+            return "Password cannot be empty."
+        }
+        return nil
+    }
     
     func updateError(message: String?, type: ErrorType?) {
         DispatchQueue.main.async {
