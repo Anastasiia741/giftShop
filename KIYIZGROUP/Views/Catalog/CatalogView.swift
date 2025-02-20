@@ -38,6 +38,8 @@ struct CatalogView: View {
                 isLoading = false
             }
         }
+           
+
     }
 }
 

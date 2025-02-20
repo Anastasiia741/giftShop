@@ -10,23 +10,40 @@ struct ProductInfoView: View {
     let productDetail: String
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 8) {
-                textComponent.createText(text: "О товаре", fontSize: 14, fontWeight: .regular, color: .colorLightBrown)
-                ScrollView {
-                    textComponent.createText(text: "\(productDetail)", fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
-                }
-            }
-            .padding([.top, .bottom], 20)
+        VStack(alignment: .leading, spacing: 8) {
+            CurvedLineView()
             
-            .background(Color.white)
+            textComponent.createText(text: "О товаре", fontSize: 14, fontWeight: .regular, color: .colorLightBrown)
+                .padding(.horizontal, 16)
+            
+            ScrollView {
+                textComponent.createText(text: "\(productDetail)", fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    .padding(.horizontal, 16)
+            }
         }
-        .padding(.top, 20)
-        .padding(.horizontal)
-        .ignoresSafeArea()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .overlay(RoundedRectangle(cornerRadius: 40)
-            .stroke(Color.gray, lineWidth: 1.5)
-        )
+        .padding(.vertical)
+        .cornerRadius(24)
+        
     }
 }
+
+struct CurvedLineView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                let height: CGFloat = 2
+                let curveHeight: CGFloat = 8
+                
+                path.move(to: CGPoint(x: 0, y: curveHeight))
+                path.addQuadCurve(to: CGPoint(x: 20, y: height), control: CGPoint(x: 10, y: 0))
+                path.addLine(to: CGPoint(x: width - 20, y: height))
+                path.addQuadCurve(to: CGPoint(x: width, y: curveHeight), control: CGPoint(x: width - 10, y: 0))
+            }
+            .stroke(Color.gray.opacity(0.5), lineWidth: 1.5)
+        }
+        .frame(height: 10)
+    }
+}
+
+
