@@ -4,6 +4,7 @@
 
 import Foundation
 
+@MainActor
 final class OrderDetailVM: ObservableObject {
     private let profileService = ProfileService()
     private let orderService = OrderService()

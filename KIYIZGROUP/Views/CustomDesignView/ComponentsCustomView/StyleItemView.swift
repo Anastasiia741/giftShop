@@ -3,7 +3,7 @@
 //  Created by Анастасия Набатова on 5/2/25.
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct StyleItemView: View {
     @ObservedObject var viewModel: CustomProductVM
@@ -18,7 +18,7 @@ struct StyleItemView: View {
                     .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3), value: isSelected)
                 
                 if let imageURL = viewModel.styleURLs[style.id] {
-                    WebImage(url: imageURL)
+                    KFImage(imageURL)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 80, height: 80)

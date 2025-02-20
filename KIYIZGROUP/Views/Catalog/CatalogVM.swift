@@ -5,8 +5,8 @@
 import Foundation
 import FirebaseStorage
 import FirebaseFirestore
-import SDWebImage
 
+@MainActor
 final class CatalogVM: ObservableObject {
     @Published var popularProducts: [Product] = []
     @Published var allProducts: [Product] = []
@@ -15,9 +15,14 @@ final class CatalogVM: ObservableObject {
     @Published var selectedCategory = Localization.allCategories.lowercased()
     private let productService = ProductService()
     
+}
+
+extension CatalogVM {
+    
     func fetchAllProducts() async {
         do {
             let result = try await productService.fetchAllProducts()
+            
             DispatchQueue.main.async {
                 self.allProducts = result
                 self.popularProducts = result.filter { $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased() }

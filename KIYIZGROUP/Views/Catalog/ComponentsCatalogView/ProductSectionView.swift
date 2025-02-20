@@ -7,9 +7,9 @@ import SwiftUI
 struct ProductSectionView: View {
     @Environment(\.colorScheme) var colorScheme
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
+    @StateObject var viewModel: CatalogVM
     let filteredProducts: [Product]
     @Binding var currentTab: Int
-
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {

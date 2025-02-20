@@ -10,8 +10,7 @@ struct PopularSectionView: View {
     private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
     let products: [Product]
     @State var currentTab = 0
-
-
+    
     var body: some View {
         VStack(alignment: .leading ) {
             textComponent.createText(text: Localization.popular, fontSize: 28, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)

@@ -23,6 +23,19 @@ final class Product: Codable, Identifiable, Equatable {
     var image: String?
     var quantity: Int = 1
     
+    var imageURL: URL? {
+         guard let image = image else { return nil }
+         if image.hasPrefix("gs://") {
+             return nil // Заменяется на асинхронное получение в `ProductCell`
+         }
+         return URL(string: image)
+     }
+    
+    
+    
+    
+    
+    
     private enum CodingKeys: String, CodingKey {
         case id, name, category, detail, price, image, quantity
     }

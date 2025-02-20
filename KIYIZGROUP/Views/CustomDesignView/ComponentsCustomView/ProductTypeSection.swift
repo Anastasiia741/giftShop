@@ -3,7 +3,7 @@
 //  Created by Анастасия Набатова on 28/11/24.
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct ProductTypeSection: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -49,7 +49,7 @@ struct ProductTypeSection: View {
                     .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3), value: viewModel.selectedProduct?.id)
                 
                 if let imageURL = viewModel.deisignURLs[product.id] {
-                    WebImage(url: imageURL)
+                    KFImage(imageURL)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .clipped()

@@ -68,6 +68,7 @@
 		7143C8852CE7830E004CC4B9 /* ProductSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143C8842CE7830E004CC4B9 /* ProductSectionView.swift */; };
 		7143C8882CE79C9F004CC4B9 /* ButtonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143C8872CE79C9F004CC4B9 /* ButtonComponents.swift */; };
 		7143C88B2CE7D3E5004CC4B9 /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143C88A2CE7D3E5004CC4B9 /* ProductInfoView.swift */; };
+		714970862D675B2B00B166C2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 714970852D675B2B00B166C2 /* Kingfisher */; };
 		7149E0A22D2D3AF2009A8689 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7149E0A12D2D3AF2009A8689 /* ChangePasswordView.swift */; };
 		7149E0A52D2EC420009A8689 /* DeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7149E0A42D2EC420009A8689 /* DeliveryView.swift */; };
 		7149E0A72D2EC43B009A8689 /* CustomOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7149E0A62D2EC43B009A8689 /* CustomOrdersView.swift */; };
@@ -125,7 +126,6 @@
 		71D782542BF79C030021C150 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 71D782532BF79C030021C150 /* FirebaseRemoteConfigSwift */; };
 		71D782562BF79C030021C150 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 71D782552BF79C030021C150 /* FirebaseStorage */; };
 		71D782582BF79C030021C150 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 71D782572BF79C030021C150 /* FirebaseStorageCombine-Community */; };
-		71D7825B2BF79CA00021C150 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 71D7825A2BF79CA00021C150 /* SDWebImageSwiftUI */; };
 		71DCC3212B9A20BE00442C32 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCC3202B9A20BE00442C32 /* Extentions.swift */; };
 		71E45F9C2B48568F00941CE7 /* KIYIZGROUPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E45F9B2B48568F00941CE7 /* KIYIZGROUPApp.swift */; };
 		71E45F9E2B48568F00941CE7 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E45F9D2B48568F00941CE7 /* AuthenticationView.swift */; };
@@ -305,10 +305,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				714970862D675B2B00B166C2 /* Kingfisher in Frameworks */,
 				71D782482BF79C030021C150 /* FirebaseDatabaseSwift in Frameworks */,
 				71D7823C2BF79C030021C150 /* FirebaseAppCheck in Frameworks */,
 				71D782522BF79C030021C150 /* FirebaseRemoteConfig in Frameworks */,
-				71D7825B2BF79CA00021C150 /* SDWebImageSwiftUI in Frameworks */,
 				71D782402BF79C030021C150 /* FirebaseAuth in Frameworks */,
 				71D782582BF79C030021C150 /* FirebaseStorageCombine-Community in Frameworks */,
 				71D7824A2BF79C030021C150 /* FirebaseFirestore in Frameworks */,
@@ -897,7 +897,7 @@
 				71D782532BF79C030021C150 /* FirebaseRemoteConfigSwift */,
 				71D782552BF79C030021C150 /* FirebaseStorage */,
 				71D782572BF79C030021C150 /* FirebaseStorageCombine-Community */,
-				71D7825A2BF79CA00021C150 /* SDWebImageSwiftUI */,
+				714970852D675B2B00B166C2 /* Kingfisher */,
 			);
 			productName = GiftShop;
 			productReference = 71E45F982B48568F00941CE7 /* KIYIZGROUP.app */;
@@ -934,7 +934,7 @@
 			mainGroup = 71E45F8F2B48568F00941CE7;
 			packageReferences = (
 				71D7823A2BF79C030021C150 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				71D782592BF79CA00021C150 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				714970842D675AD900B166C2 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 71E45F992B48568F00941CE7 /* Products */;
 			projectDirPath = "";
@@ -1400,6 +1400,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		714970842D675AD900B166C2 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
 		71D7823A2BF79C030021C150 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1408,17 +1416,14 @@
 				minimumVersion = 10.26.0;
 			};
 		};
-		71D782592BF79CA00021C150 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.4;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		714970852D675B2B00B166C2 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 714970842D675AD900B166C2 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		71D7823B2BF79C030021C150 /* FirebaseAppCheck */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 71D7823A2BF79C030021C150 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1468,11 +1473,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 71D7823A2BF79C030021C150 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
-		};
-		71D7825A2BF79CA00021C150 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 71D782592BF79CA00021C150 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -3,7 +3,7 @@
 //  Created by Анастасия Набатова on 9/1/25.
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct OrderItems: View {
     @Environment(\.colorScheme) var colorScheme
@@ -21,7 +21,7 @@ struct OrderItems: View {
                     ForEach(order.positions, id: \.id) { position in
                         VStack {
                             if let imageURL = orderItemsVM.imageURLs[position.id] {
-                                WebImage(url: imageURL)
+                                KFImage(imageURL)
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 97, height: 111)

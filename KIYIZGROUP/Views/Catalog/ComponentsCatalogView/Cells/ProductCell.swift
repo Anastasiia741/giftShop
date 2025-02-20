@@ -3,34 +3,42 @@
 //  Created by Анастасия Набатова on 5/1/24.
 
 import SwiftUI
+import Kingfisher
 import FirebaseStorage
-import SDWebImageSwiftUI
-import SDWebImage
 
 struct ProductCell: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
-    @State private var imageURL: URL?
-    @State private var name: String?
-    @State private var category: String?
-    @State private var price: Int?
-    @State private var detail: String?
     let product: Product
+    @State private var imageURL: URL?
     
     var body: some View {
         VStack() {
             if let imageURL = imageURL {
-                WebImage(url: imageURL)
+                KFImage(imageURL)
                     .resizable()
+                    .placeholder {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.gray.opacity(0.3))
+                            .frame(width: screen.width * 0.45, height: 150)
+                    }
+                    .fade(duration: 0.3)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: screen.width * 0.45, height: 150)
                     .clipped()
                     .cornerRadius(24)
+            } else {
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: screen.width * 0.45, height: 150)
+                    .task {
+                        await fetchImageURL()
+                    }
             }
             VStack(alignment: .leading, spacing: 4) {
-                textComponent.createText(text: name ?? "", fontSize: 12, fontWeight: .medium, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: product.name, fontSize: 12, fontWeight: .medium, color: colorScheme == .dark ? .white : .black)
                 HStack {
-                    textComponent.createText(text: "\(price ?? 0) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
                     textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .gray).strikethrough()
                 }
             }
@@ -40,23 +48,23 @@ struct ProductCell: View {
         .padding(.horizontal, 30)
         .frame(maxWidth: .infinity, alignment: .leading)
         .cornerRadius(24)
-        .onAppear {
-            if let productImage = product.image {
-                let imageRef = Storage.storage().reference(forURL: productImage)
-                imageRef.downloadURL { url, error in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else if let url = url {
-                        DispatchQueue.main.async {
-                            self.imageURL = url
-                            self.name = product.name
-                            self.category = product.category
-                            self.price = product.price
-                            self .detail = product.detail
-                        }
-                    }
-                }
+    }
+    
+}
+
+
+extension ProductCell {
+    private func fetchImageURL() async {
+        guard let imagePath = product.image, imagePath.hasPrefix("gs://") else {
+            return
+        }
+        do {
+            let url = try await Storage.storage().reference(forURL: imagePath).downloadURL()
+            DispatchQueue.main.async {
+                self.imageURL = url
             }
+        } catch {
+            print("Ошибка загрузки изображения: \(error.localizedDescription)")
         }
     }
 }

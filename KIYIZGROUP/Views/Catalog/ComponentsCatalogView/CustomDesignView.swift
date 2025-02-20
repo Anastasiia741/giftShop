@@ -7,10 +7,8 @@ import SwiftUI
 struct CustomDesignView: View {
     private let textComponent = TextComponent()
     let customOrder: CustomOrder
-
     
     var body: some View {
-        
         VStack(alignment: .leading, spacing: 16) {
             NavigationLink(destination: CustomView(customOrder: customOrder)) {
                 HStack {
