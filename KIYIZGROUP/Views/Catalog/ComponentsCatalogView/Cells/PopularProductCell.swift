@@ -4,7 +4,6 @@
 
 import SwiftUI
 import FirebaseStorage
-import SDWebImageSwiftUI
 
 struct PopularProductCell: View {
     private let textComponent = TextComponent()
@@ -33,20 +32,6 @@ struct PopularProductCell: View {
         .background(.colorLightBrown)
         .cornerRadius(24)
         .shadow(radius: 2)
-        .onAppear {
-            if let productImage = product.image {
-                let imageRef = Storage.storage().reference(forURL: productImage)
-                imageRef.downloadURL { url, error in
-                    if let error = error {
-                        print(error.localizedDescription)
-                    } else if let url = url {
-                        DispatchQueue.main.async {
-                            self.imageURL = url
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

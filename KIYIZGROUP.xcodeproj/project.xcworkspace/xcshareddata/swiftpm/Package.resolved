@@ -1,5 +1,5 @@
 {
-  "originHash" : "e4c0b1ebc25e0774a0d5d7daf2fa365b39e6bbcac0dfdb2b8036cd5d5459edfe",
+  "originHash" : "dacfd17cdf8fa9f962991925a9162eb62e278dab4974c56cd997ab2b87892aa5",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -83,6 +83,15 @@
       }
     },
     {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher",
+      "state" : {
+        "revision" : "3db26ab625d194c38e68c1a40e43d1bc12743fe0",
+        "version" : "8.2.0"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
@@ -107,24 +116,6 @@
       "state" : {
         "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
         "version" : "2.4.0"
-      }
-    },
-    {
-      "identity" : "sdwebimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage.git",
-      "state" : {
-        "revision" : "59730af512c06fb569c119d737df4c1c499e001d",
-        "version" : "5.18.10"
-      }
-    },
-    {
-      "identity" : "sdwebimageswiftui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
-      "state" : {
-        "revision" : "b7af5e6bd9c2987e41730400d1baad13d74a141a",
-        "version" : "3.0.4"
       }
     },
     {

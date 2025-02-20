@@ -3,13 +3,13 @@
 //  Created by Анастасия Набатова on 13/1/25.
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 extension View {
     func productImageView(with url: URL?) -> some View {
         Group {
             if let url = url {
-                WebImage(url: url)
+                KFImage(url)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 120, height: 140)

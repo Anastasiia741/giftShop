@@ -3,7 +3,7 @@
 //  Created by Анастасия Набатова on 19/11/24.
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 import FirebaseStorage
 
 struct CartOrdersCell: View {
@@ -18,7 +18,7 @@ struct CartOrdersCell: View {
     var body: some View {
         VStack{
         if let imageURL = imageURL {
-                    WebImage(url: imageURL)
+            KFImage(imageURL)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 97, height: 111)

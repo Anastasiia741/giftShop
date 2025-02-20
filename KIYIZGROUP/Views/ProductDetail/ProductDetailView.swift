@@ -3,7 +3,7 @@
 //  Created by Анастасия Набатова on 5/1/24.
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct ProductDetailView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -26,7 +26,7 @@ struct ProductDetailView: View {
             .padding([.leading, .top], 16)
             Spacer()
             VStack {
-                WebImage(url: viewModel.imageURL )
+                KFImage(viewModel.imageURL)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipped()

@@ -2,7 +2,7 @@
 //  GiftShop
 //  Created by Анастасия Набатова on 1/3/24.
 
-import SDWebImageSwiftUI
+import Kingfisher
 import SwiftUI
 
 struct ProductDetailEditView: View {
@@ -31,7 +31,7 @@ struct ProductDetailEditView: View {
                                 showImgAlert = true
                             }
                     } else {
-                        WebImage(url: viewModel.imageURL)
+                        KFImage(viewModel.imageURL)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(maxWidth: .infinity, maxHeight: 260)

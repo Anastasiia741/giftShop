@@ -4,7 +4,6 @@
 
 import SwiftUI
 import PhotosUI
-import SDWebImageSwiftUI
 
 struct DesignSelectionSection: View {
     @Environment(\.colorScheme) private var colorScheme

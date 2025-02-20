@@ -4,7 +4,6 @@
 
 import SwiftUI
 import FirebaseStorage
-import SDWebImageSwiftUI
 
 struct CartCell: View {
     @Environment(\.colorScheme) var colorScheme
