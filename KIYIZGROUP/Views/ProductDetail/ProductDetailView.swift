@@ -7,6 +7,8 @@ import Kingfisher
 
 struct ProductDetailView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
+    
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: ProductDetailVM
     private let textComponent = TextComponent()
@@ -19,84 +21,78 @@ struct ProductDetailView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                CustomBackButton()
-                Spacer()
-            }
-            .padding([.leading, .top], 16)
-            Spacer()
-            VStack {
-                KFImage(viewModel.imageURL)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipped()
-                    .cornerRadius(24)
-                    .frame(maxWidth: .infinity, maxHeight: 445)
-                HStack() {
-                    textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, color: .white)
-                    
-                    textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .colorYellow).strikethrough()
-                }
-                .padding([.top, .bottom])
-                .padding(.horizontal)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .ignoresSafeArea()
-            .frame(maxWidth: .infinity, maxHeight: 572)
-            .background(Color.colorDarkBrown)
-            .cornerRadius(24)
-            .padding()
-            ProductInfoView(productDetail: viewModel.product.detail)
-                .padding(.top, 30)
-                .padding(.bottom, 30)
+            KFImage(viewModel.imageURL)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: .infinity, maxHeight: 345)
+                .clipped()
+                .cornerRadius(24)
+                .padding(.bottom)
+                .overlay(
+                    HStack {
+                        CustomBackButton()
+                            .padding([.leading, .top], 16)
+                        Spacer()
+                    },
+                    alignment: .topLeading
+                )
             
-            VStack {
-                Spacer()
-                HStack(spacing: 16) {
-                    buttonComponent.createWhiteButton(
-                        text: "Купить сейчас",
-                        isAddedToCart: $isAddedToCart) {
-                            let product = Product(
-                                id: viewModel.product.id,
-                                name: viewModel.product.name,
-                                category: viewModel.product.category,
-                                detail: viewModel.product.detail,
-                                price: viewModel.product.price,
-                                image: viewModel.product.image,
-                                quantity: count
-                            )
-                            viewModel.addProductToCart(product)
-                            DispatchQueue.main.async {
-                                currentTab = TabType.cart.rawValue
-                            }
-                            
-                        }
-                        .background(colorScheme == .dark ? Color("ColorDarkBrown") : .white)
-                        .foregroundColor(colorScheme == .dark ? .white : .black)
-                        .cornerRadius(40)
-                    
-                    buttonComponent.createGreenButton(
-                        text: "Добавить в корзину",
-                        count: $count,
-                        isAddedToCart: $isAddedToCart) {
-                            let product = Product(
-                                id: viewModel.product.id,
-                                name: viewModel.product.name,
-                                category: viewModel.product.category,
-                                detail: viewModel.product.detail,
-                                price: viewModel.product.price,
-                                image: viewModel.product.image,
-                                quantity: count
-                            )
-                            viewModel.addProductToCart(product)
-                        }
-                }
-                .padding()
-                .background(.clear)
+            HStack() {
+                textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, color: .white)
+                
+                textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .colorYellow).strikethrough()
             }
+            .padding([.vertical, .horizontal])
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, maxHeight: 572)
+        .background(Color.colorDarkBrown)
+        .cornerRadius(24)
+        ProductInfoView(productDetail: viewModel.product.detail)
+        
+        VStack {
+            HStack(spacing: 16) {
+                buttonComponent.createWhiteButton(text: "Купить сейчас", isAddedToCart: $isAddedToCart) {
+                    let product = Product(
+                        id: viewModel.product.id,
+                        name: viewModel.product.name,
+                        category: viewModel.product.category,
+                        detail: viewModel.product.detail,
+                        price: viewModel.product.price,
+                        image: viewModel.product.image,
+                        quantity: count
+                    )
+                    viewModel.addProductToCart(product)
+                    DispatchQueue.main.async {
+                        currentTab = TabType.cart.rawValue
+                    }
+                }
+                .background(colorScheme == .dark ? Color("ColorDarkBrown") : .white)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
+                .cornerRadius(40)
+                
+                buttonComponent.createGreenButton(text: "Добавить в корзину", count: $count,isAddedToCart: $isAddedToCart) {
+                    let product = Product(
+                        id: viewModel.product.id,
+                        name: viewModel.product.name,
+                        category: viewModel.product.category,
+                        detail: viewModel.product.detail,
+                        price: viewModel.product.price,
+                        image: viewModel.product.image,
+                        quantity: count
+                    )
+                    viewModel.addProductToCart(product)
+                }
+            }
+            .padding()
         }
         .onAppear {
             viewModel.updateImageDetail()
+        }
+        .onChange(of: currentTab) { oldValue, newValue in
+            if oldValue != newValue {
+                dismiss()
+            }
         }
     }
 }

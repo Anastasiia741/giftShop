@@ -33,7 +33,6 @@ struct CartView: View {
             .padding([.vertical, .horizontal])
             .navigationTitle(Localization.cart)
             .navigationBarTitleDisplayMode(.inline)
-            
             .navigationDestination(isPresented: $showOrderView) {
                 CartOrderView()
             }

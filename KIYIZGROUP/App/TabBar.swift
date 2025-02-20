@@ -20,6 +20,7 @@ struct TabBar: View {
                                 Text("Заказы")
                             }
                         }
+                        .tag(TabType.orders.rawValue)
                     CustomOrdersAdminView()
                         .tabItem {
                             VStack {
@@ -27,8 +28,7 @@ struct TabBar: View {
                                 Text("Личные")
                             }
                         }
-
-                        .tag(TabType.orders.rawValue)
+                        .tag(TabType.customOrders.rawValue)
                     ProductsEditView(catalogVM: CatalogVM())
                         .tabItem {
                             VStack {
@@ -46,6 +46,7 @@ struct TabBar: View {
                         }
                         .tag(TabType.createProduct.rawValue)
                 } else {
+                    
                     CatalogView(currentTab: $curentTab)
                         .tabItem {
                             VStack {
@@ -91,13 +92,23 @@ struct TabBar: View {
                     }
                     .tag(TabType.profile.rawValue)
             }
-            
         }
+        .toolbarBackground(Color.white, for: .tabBar)
+        
         .navigationBarBackButtonHidden(true)
         .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
             viewModel.fetchUserId()
         }
+        .onAppear {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor =  colorScheme == .dark ? .black : .white
+            
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
     }
 }
+
 
