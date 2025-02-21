@@ -9,6 +9,7 @@ struct ConfirmationView: View {
     let customButton: CustomButton
     let email: String
     private let textComponent = TextComponent()
+    @Binding var currentTab: Int
     @State private var isShowAuthView = false
     
     var body: some View {
@@ -35,20 +36,9 @@ struct ConfirmationView: View {
                 .padding(.bottom, 36)
             }
             .navigationDestination(isPresented: $isShowAuthView) {
-                AuthorizationView(isShowBackButton: false)
+                AuthorizationView(currentTab: $currentTab)
             }
         }
         .navigationBarBackButtonHidden(true)
-    }
-}
-
-struct RegistrationConfirmationView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockViewModel = RegistrationVM()
-        mockViewModel.email = "test@example.com"
-        
-        return ConfirmationView(customButton: CustomButton(), email: mockViewModel.email)
-            .environment(\.colorScheme, .light)
-            .previewDisplayName("Light Mode")
     }
 }

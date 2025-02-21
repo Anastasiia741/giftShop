@@ -6,9 +6,7 @@ import SwiftUI
 import Kingfisher
 
 struct ProductDetailView: View {
-    @Environment(\.presentationMode) var presentationMode
     @Environment(\.dismiss) private var dismiss
-    
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: ProductDetailVM
     private let textComponent = TextComponent()

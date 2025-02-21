@@ -12,7 +12,9 @@ final class AuthorizationVM: AuthBaseVM {
     @Published var isEmailSent: Bool = false
     @Published var isLoading: Bool = false
     
-    
+}
+
+extension AuthorizationVM {
     
     func signIn(onSuccess: @escaping () -> Void) async {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -44,30 +46,8 @@ final class AuthorizationVM: AuthBaseVM {
             }
         }
     }
-
-
     
-//    func signIn() async {
-//        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
-//        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
-//        
-//        if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
-//            updateError(message: errorMessage, type: .general)
-//            return
-//        }
-//        updateError(message: nil, type: nil)
-//        
-//        authService.signIn(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
-//            switch result {
-//            case .success(_):
-//                self?.isShowCatalog = true
-//            case .failure(let error):
-//                self?.handleError(error)
-//            }
-//        }
-//    }
-//    
-    func sendPasswordResetEmail(completion: @escaping (Bool, String?) -> Void) {
+    func resetPassword(completion: @escaping (Bool, String?) -> Void) {
         guard !email.isEmpty else {
             completion(false, "Email cannot be empty.")
             return
@@ -89,3 +69,23 @@ final class AuthorizationVM: AuthBaseVM {
     }
 }
 
+//    func signIn() async {
+//        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+//        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//        if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
+//            updateError(message: errorMessage, type: .general)
+//            return
+//        }
+//        updateError(message: nil, type: nil)
+//
+//        authService.signIn(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
+//            switch result {
+//            case .success(_):
+//                self?.isShowCatalog = true
+//            case .failure(let error):
+//                self?.handleError(error)
+//            }
+//        }
+//    }
+//

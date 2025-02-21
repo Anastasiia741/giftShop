@@ -6,21 +6,20 @@ import SwiftUI
 
 struct AuthorizationView: View {
     @EnvironmentObject var mainTabVM: MainTabVM
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel = AuthorizationVM()
+    @Binding var currentTab: Int
     @State private var isShowCatalog = false
     @State private var isShowView = false
-    let isShowBackButton: Bool
     
     var body: some View {
         ZStack{
             VStack {
-                if isShowBackButton {
-                    HStack {
-                        CustomBackButton()
-                        Spacer()
-                    }
-                    .padding([.leading, .top], 16)
+                HStack {
+                    CustomBackButton()
+                    Spacer()
                 }
+                .padding([.leading, .top], 16)
                 Spacer()
                 AnimatedImagesView()
                 Spacer()
@@ -48,6 +47,11 @@ struct AuthorizationView: View {
         .onTapGesture {
             self.hideKeyboard()
             UIApplication.shared.endEditing()
+        }
+        .onChange(of: currentTab) { oldValue, newValue in
+            if oldValue != newValue {
+                dismiss()
+            }
         }
     }
 }

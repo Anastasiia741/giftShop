@@ -11,6 +11,7 @@ struct EditProfileView: View {
     
     @ObservedObject var viewModel = ProfileVM()
     @Binding var navigationTarget: ProfileNavigation?
+    @Binding var currentTab: Int
     
     @State private var isShowChangePassword = false
     @State private var isShowAuthView = false
@@ -18,14 +19,11 @@ struct EditProfileView: View {
     @State private var showDropdown = false
     
     var body: some View {
-     
-       
-        ZStack(alignment: .top) {
+        VStack() {
             HStack {
                 CustomBackButton()
                 Spacer()
             }
-            
             .padding([.leading, .top], 16)
             ScrollView {
                 VStack(spacing: 16) {
@@ -76,6 +74,11 @@ struct EditProfileView: View {
             }
         }
         .navigationBarHidden(true)
+        .onChange(of: currentTab) { oldValue, newValue in
+            if oldValue != newValue {
+                dismiss()
+            }
+        }
     }
 }
 

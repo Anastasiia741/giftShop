@@ -4,12 +4,34 @@
 
 import SwiftUI
 
+class AnimationTimer: ObservableObject {
+    @Published var rotationAngles: [Double] = []
+    private var currentIndex = 0
+    private var timer: Timer?
+    
+    func startAnimation(for count: Int) {
+        if rotationAngles.isEmpty {
+            rotationAngles = Array(repeating: 0, count: count)
+        }
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { [weak self] _ in
+            guard let self = self, !rotationAngles.isEmpty else { return }
+            rotationAngles[currentIndex] += 180
+            currentIndex = (currentIndex + 1) % rotationAngles.count
+        }
+    }
+    
+    func stopAnimation() {
+        timer?.invalidate()
+        timer = nil
+    }
+}
+
 struct ImageGridAuthView: View {
     let imageNames: [String]
     private let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
-    @State private var rotationAngles: [Double] = []
-    @State private var animationIndexOrder: [Int] = []
-    @State private var currentIndex = 0
+    @StateObject private var animationTimer = AnimationTimer()
     
     var body: some View {
         LazyVGrid(columns: gridItems) {
@@ -19,32 +41,16 @@ struct ImageGridAuthView: View {
                     .scaledToFit()
                     .frame(width: 105, height: 105)
                     .cornerRadius(8)
-                    .rotationEffect(.degrees(rotationAngles[safe: index] ?? 0))
-                    .animation(.easeInOut(duration: 1), value: rotationAngles[safe: index] ?? 0)
+                    .rotationEffect(.degrees(animationTimer.rotationAngles[safe: index] ?? 0))
+                    .animation(.easeInOut(duration: 1), value: animationTimer.rotationAngles[safe: index] ?? 0)
             }
         }
         .padding(.horizontal, 8)
         .onAppear {
-            initializeRotationAngles()
-            setupAnimationOrder()
-            startAnimation()
+            animationTimer.startAnimation(for: imageNames.count)
         }
-    }
-    
-    private func initializeRotationAngles() {
-        rotationAngles = Array(repeating: 0, count: imageNames.count)
-    }
-    
-    private func setupAnimationOrder() {
-        animationIndexOrder = Array(imageNames.indices).shuffled()
-    }
-    
-    private func startAnimation() {
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { _ in
-            guard !animationIndexOrder.isEmpty else { return }
-            let currentIndexInOrder = animationIndexOrder[currentIndex]
-            rotationAngles[currentIndexInOrder] += 180
-            currentIndex = (currentIndex + 1) % animationIndexOrder.count
+        .onDisappear {
+            animationTimer.stopAnimation()
         }
     }
 }
@@ -54,3 +60,4 @@ extension Array {
         return indices.contains(index) ? self[index] : nil
     }
 }
+

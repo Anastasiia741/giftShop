@@ -31,15 +31,12 @@ struct AuthorizationFieldsView: View {
                         Task{
                             await viewModel.signIn {
                                 DispatchQueue.main.async {
-                                                                   isShowCatalog = true 
-                                                               }
+                                    isShowCatalog = true
+                                }
                             }
                         }
                     })
                 }
-//                .navigationDestination(isPresented: $viewModel.isShowCatalog) {
-//                    TabBar(viewModel: mainTabVM)
-//                }
                 .padding(6)
                 if viewModel.errorType == .password || viewModel.errorType == .general || viewModel.errorType == .email {
                     textComponent.createText(text: viewModel.errorMessage ?? "", fontSize: 12, fontWeight: .regular, color: Color.r)

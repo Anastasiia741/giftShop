@@ -27,7 +27,7 @@ struct RegistrationFieldsView: View {
             customSecureField.createSecureField(placeholder: Localization.createPassword, text: $viewModel.password,
                                                 isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
             .padding(6)
-
+            
             if let errorMessage = viewModel.errorMessage, !errorMessage.isEmpty {
                 textComponent.createText(text: errorMessage, fontSize: 14, fontWeight: .regular, color: .r)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -40,17 +40,17 @@ struct RegistrationFieldsView: View {
                                       borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen) {
                 viewModel.signUp()
             }
-            .padding(6)
-            .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
+                                      .padding(6)
+                                      .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
         }
         .padding(.horizontal)
         .onAppear {
-                    viewModel.onRegistrSuccess = {
-                        DispatchQueue.main.async {
-                            viewModel.isShowConfirmView = true
-                        }
-                    }
+            viewModel.onRegistrSuccess = {
+                DispatchQueue.main.async {
+                    viewModel.isShowConfirmView = true
                 }
+            }
+        }
     }
 }
 

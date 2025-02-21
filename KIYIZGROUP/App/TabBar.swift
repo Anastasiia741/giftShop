@@ -7,10 +7,10 @@ import SwiftUI
 struct TabBar: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: MainTabVM
-    @State private var curentTab: Int = 0
+    @State private var currentTab: Int = 0
     
     var body: some View {
-        TabView(selection: $curentTab) {
+        TabView(selection: $currentTab) {
             if let userID = viewModel.userID {
                 if userID == Accesses.adminUser || userID == Accesses.adminKiyiz {
                     OrdersView()
@@ -47,21 +47,21 @@ struct TabBar: View {
                         .tag(TabType.createProduct.rawValue)
                 } else {
                     
-                    CatalogView(currentTab: $curentTab)
+                    CatalogView(currentTab: $currentTab)
                         .tabItem {
                             VStack {
                                 Images.TabBar.menu
                             }
                         }
                         .tag(TabType.catalog.rawValue)
-                    CartView(currentUserId: userID, currentTab: $curentTab)
+                    CartView(currentUserId: userID, currentTab: $currentTab)
                         .tabItem {
                             VStack {
                                 Images.TabBar.cart
                             }
                         }
                         .tag(TabType.cart.rawValue)
-                    ProfileView()
+                    ProfileView(currentTab: $currentTab)
                         .tabItem {
                             VStack {
                                 Images.TabBar.profile
@@ -70,21 +70,21 @@ struct TabBar: View {
                         .tag(TabType.profile.rawValue)
                 }
             } else {
-                CatalogView(currentTab: $curentTab)
+                CatalogView(currentTab: $currentTab)
                     .tabItem {
                         VStack {
                             Images.TabBar.menu
                         }
                     }
                     .tag(TabType.catalog.rawValue)
-                CartView(currentUserId: "", currentTab: $curentTab)
+                CartView(currentUserId: "", currentTab: $currentTab)
                     .tabItem {
                         VStack {
                             Images.TabBar.cart
                         }
                     }
                     .tag(TabType.cart.rawValue)
-                AuthenticationView()
+                AuthenticationView(currentTab: $currentTab)
                     .tabItem {
                         VStack {
                             Images.TabBar.profile
@@ -93,8 +93,6 @@ struct TabBar: View {
                     .tag(TabType.profile.rawValue)
             }
         }
-        .toolbarBackground(Color.white, for: .tabBar)
-        
         .navigationBarBackButtonHidden(true)
         .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
