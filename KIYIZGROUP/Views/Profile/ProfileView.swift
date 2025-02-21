@@ -12,17 +12,19 @@ struct ProfileView: View {
     private let buttonComponents = ButtonComponents()
     private let textComponent = TextComponent()
     @State private var selectedImage: UIImage?
-    @State private var isShowEditProfileView = false
-    @State private var activeScreen: ProfileNavigation? = nil
+    
     @Binding var currentTab: Int
-
+    @State private var showEditView = false
+    @State private var activeScreen: ProfileNavigation? = nil
+    
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
                 ScrollView {
                     VStack(spacing: 0) {
                         ProfileHeaderView(viewModel: viewModel)
-                        ProfileActionsView()
+                        ProfileActionsView(currentTab: $currentTab)
                         ProfileInfoView()
                         SupportInfoView()
                     }
@@ -48,14 +50,16 @@ struct ProfileView: View {
                         .edgesIgnoringSafeArea(.top)
                 )
             }
+            
             .navigationDestination(item: $activeScreen) { screen in
                 switch screen {
                 case .editProfile:
-                    EditProfileView(viewModel: viewModel, navigationTarget: $activeScreen, currentTab: $currentTab)
+                    EditProfileView(viewModel: viewModel, activeScreen: $activeScreen, currentTab: $currentTab)
                 case .changePassword:
-                    ChangePasswordView(activeScreen: $activeScreen)
+                    ChangePasswordView(activeScreen: $activeScreen, currentTab: $currentTab)
                 }
             }
+            
             .onAppear {
                 Task {
                     await viewModel.fetchUserProfile()
@@ -69,3 +73,23 @@ struct ProfileView: View {
     }
 }
 
+
+
+//                    Button(action: {
+//                        withAnimation {
+//                            isShowEditView.toggle()
+//                        }
+//                    }) {
+//                        Image("lucide")
+//                            .resizable()
+//                            .frame(width: 24, height: 24)
+//                            .foregroundColor(colorScheme == .dark ? .white : .black)
+//                    }
+
+///            .navigationDestination(item: $isShowEditView) { screen in
+//                switch screen {
+//                case .editProfile:
+//                    EditProfileView(viewModel: viewModel, currentTab: $currentTab)
+//                case .changePassword:
+//                    ChangePasswordView(currentTab: $currentTab)
+//                }

@@ -13,9 +13,9 @@ class DBOrdersService {
     init() {}
     
 }
-  
+
+//MARK: - Save order in firebace
 extension DBOrdersService {
-    //MARK: - Save order in firebace
     func saveOrder(order: Order, promocode: String, completion: @escaping (Result<Order, Error>) -> ()) {
         ordersRef.document(order.id).setData(order.representation) { error in
             if let error = error {
@@ -34,7 +34,6 @@ extension DBOrdersService {
         }
     }
     
-    //MARK: - Save list of products in firebace
     func savePositions(to orderId: String, positions: [Position], completion: @escaping (Result<[Position], Error>) -> ()) {
         let positionsRef = ordersRef.document(orderId).collection(Accesses.positions)
         for position in positions {
@@ -43,7 +42,6 @@ extension DBOrdersService {
         completion(.success(positions))
     }
     
-    //MARK: - Get list of products in order for admin
     func fetchPositionsForOrder(by orderID: String, completion: @escaping (Result<[Position], Error>) -> ()) {
         let positionsRef = ordersRef.document(orderID).collection(Accesses.positions)
         positionsRef.getDocuments { [weak self] qSnap, error in
@@ -62,6 +60,11 @@ extension DBOrdersService {
         }
     }
     
+    
+}
+
+//MARK: - Admin
+extension DBOrdersService {
     //MARK: - Get order for admin
     func fetchUserOrders(completion: @escaping ([Order]) -> Void) {
         let db = Firestore.firestore()
@@ -104,9 +107,7 @@ extension DBOrdersService {
             }
         }
     }
-}
-
-extension DBOrdersService {
+    
     //MARK: - Change order status for admin
     func updateOrderStatus(orderID: String, newStatus: String, completion: @escaping ()->Void) {
         let orderRef = db.collection(Accesses.orders).document(orderID)
@@ -131,9 +132,9 @@ extension DBOrdersService {
     }
 }
 
+//MARK: Get orders history for user
 extension DBOrdersService {
-    //MARK: Get odrer history for user
-    func fetchOrderHistory(by userID: String?, completion: @escaping (Result<[Order], Error>) -> ()) {
+    func fetchOrders(by userID: String?, completion: @escaping (Result<[Order], Error>) -> ()) {
         let ordersRef = Firestore.firestore().collection(Accesses.orders)
         if let userID = userID {
             ordersRef.whereField(Accesses.userID, isEqualTo: userID).getDocuments { (querySnapshot, error) in
@@ -195,6 +196,27 @@ extension DBOrdersService {
                     }
                 }
             }
+        }
+    }
+    
+    
+    
+    func fetchCustomOrders(by userID: String?, completion: @escaping (Result<[CustomOrder], Error>) -> Void) {
+        let ordersRef = Firestore.firestore().collection(Accesses.customOrders)
+        
+        var query: Query = ordersRef
+        if let userID = userID {
+            query = query.whereField("userID", isEqualTo: userID)
+        }
+        
+        query.getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            let orders = snapshot?.documents.compactMap { CustomOrder(doc: $0) } ?? []
+            completion(.success(orders))
         }
     }
 }

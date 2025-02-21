@@ -6,7 +6,6 @@ import Foundation
 
 final class ChangePassword: ObservableObject {
     private let authService = AuthService()
-
     @Published var currentPassword: String = ""
     @Published var newPassword: String = ""
     @Published var errorMessage: String? = nil
@@ -48,7 +47,9 @@ final class ChangePassword: ObservableObject {
             }
         }
     }
-    
+}
+
+extension ChangePassword {
     private func resetPasswordFields() {
         currentPassword = ""
         newPassword = ""

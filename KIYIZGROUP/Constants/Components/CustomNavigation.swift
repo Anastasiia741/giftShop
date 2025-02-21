@@ -21,22 +21,29 @@ struct CustomBackButton: View {
     }
 }
 
-//struct BackButton: View {
-//    @Environment(\.colorScheme) private var colorScheme
-//    let action: () -> Void
-//
-//    var body: some View {
-//        Button(action: action) {
-//            HStack {
-//                HStack {
-//                    Image(systemName: Images.chevronLeft)
-//                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-//                }
-//            }
-//        }
-//        .navigationBarBackButtonHidden(true)
-//    }
-//}
+struct CustomBackProfileButton: View {
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
+    var action: (() -> Void)?
+
+    var body: some View {
+        Button(action: {
+            if let action = action {
+                action() // Используем кастомное действие, если оно передано
+            } else {
+                presentationMode.wrappedValue.dismiss() // Обычное закрытие экрана
+            }
+        }) {
+            HStack {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+    }
+}
+
+
 
 enum ProfileNavigation: Hashable {
     case editProfile

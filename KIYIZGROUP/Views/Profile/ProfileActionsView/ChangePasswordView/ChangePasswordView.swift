@@ -6,41 +6,31 @@ import SwiftUI
 
 struct ChangePasswordView: View {
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = ChangePassword()
     private let textComponent = TextComponent()
     @State private var currentPassword: String = ""
     @State private var newPassword: String = ""
     @State private var isSuccess: Bool = false
     @Binding var activeScreen: ProfileNavigation?
-  
-
+    @Binding var currentTab: Int
     
     var body: some View {
         VStack {
-            
             HStack {
-                CustomBackButton()
+                CustomBackProfileButton(action: {
+                    activeScreen = .editProfile
+                })
                 Spacer()
             }
-            
             .padding([.leading, .top], 16)
-            
-//            HStack {
-//               BackButton {
-//                   activeScreen = .editProfile
-//               }
-//                Spacer()
-//            }
-            .padding([.leading, .top], 16)
-           
             VStack(spacing: 16) {
-                
                 textComponent.createText(text: "Change Password", fontSize: 20, fontWeight: .heavy, color:  colorScheme == .dark ? .white : .black)
                     .padding(.top, 20)
                 textComponent.createText(text: "You will be signed out upon changing your password and required to sign back into the app.", fontSize: 18, fontWeight: .regular, color: .gray)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
+                
                 SecureField("Current Password", text: $viewModel.currentPassword)
                     .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
                     .padding(.horizontal)
@@ -55,12 +45,14 @@ struct ChangePasswordView: View {
                         RoundedRectangle(cornerRadius: 40)
                             .stroke(Color.gray, lineWidth: 1.3)
                     )
+                
                 if let errorMessage = viewModel.errorMessage {
                     textComponent.createText(text: errorMessage, fontSize: 12, fontWeight: .regular, color: .red)
                 }
                 if let successMessage = viewModel.successMessage {
                     textComponent.createText(text: successMessage, fontSize: 12, fontWeight: .regular, color: .green)
                 }
+                
                 Button(action: {
                     viewModel.changePassword()
                 }) {
@@ -77,6 +69,11 @@ struct ChangePasswordView: View {
                     }
                 }
                 Spacer()
+            }
+            .onChange(of: currentTab) { oldValue, newValue in
+                if oldValue != newValue {
+                    dismiss()
+                }
             }
             .padding()
             .navigationBarTitleDisplayMode(.inline)

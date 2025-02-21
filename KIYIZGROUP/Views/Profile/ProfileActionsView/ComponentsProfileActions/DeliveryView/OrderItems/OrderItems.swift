@@ -44,7 +44,6 @@ struct OrderItems: View {
                 }
             }
             .padding()
-            
             textComponent.createText(text: "Сумма: \(order.cost) сом", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)

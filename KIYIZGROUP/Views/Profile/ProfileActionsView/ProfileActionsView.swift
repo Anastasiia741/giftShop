@@ -7,39 +7,40 @@ import SwiftUI
 struct ProfileActionsView: View {
     @StateObject private var viewModel = ProfileVM()
     private let textComponent = TextComponent()
+    @Binding var currentTab: Int
     
     var body: some View {
         VStack(spacing: 0) {
             if let lastOrder = viewModel.lastOrder {
-                NavigationLink(destination: DeliveryView(viewModel: viewModel)) {
-                    ProfileActionRow(title: "Доставки", subtitle: "\(lastOrder.totalItems) товара на сумму \(lastOrder.cost) сом", textComponent: textComponent)
+                NavigationLink(destination: DeliveryView(viewModel: viewModel, currentTab: $currentTab)) {
+                    ProfileActionRow(title: "Доставки", subtitle: "\(lastOrder.totalItems) товара на сумму \(lastOrder.cost) сом", textComponent: textComponent, showChevron: true)
                 }
             } else {
-                ProfileActionRow(title: "Доставки", subtitle: "Доставок не ожидается", textComponent: textComponent)
+                ProfileActionRow(title: "Доставки", subtitle: "Доставок не ожидается", textComponent: textComponent, showChevron: false)
             }
-            Divider()
-                .background(Color.white.opacity(0.5))
-                .padding(.horizontal, 16)
+            CustomDivider()
             
-            if viewModel.lastIndOrder {
-                NavigationLink(destination: CustomOrdersView(viewModel: viewModel)) {
-                    ProfileActionRow(title: "Индивидуальные заказы", subtitle: "Название товара",textComponent: textComponent)
+            if let lastCustomOrder = viewModel.customOrders.max(by: { $0.date < $1.date }) {
+                NavigationLink(destination: CustomOrdersView(viewModel: viewModel, currentTab: $currentTab)) {
+                    ProfileActionRow(
+                        title: "Индивидуальные заказы",
+                        subtitle: "\(lastCustomOrder.product?.name ?? "Заказ отсутствует")",
+                        textComponent: textComponent,
+                        showChevron: true
+                    )
                 }
             } else {
-                ProfileActionRow(title: "Индивидуальные заказы", subtitle: "Заказы отсутствуют",textComponent: textComponent)
+                ProfileActionRow(
+                    title: "Индивидуальные заказы",
+                    subtitle: "Заказы отсутствуют",
+                    textComponent: textComponent,
+                    showChevron: false
+                )
             }
             
-            Divider()
-                .background(Color.white.opacity(0.5))
-                .padding(.horizontal, 16)
+            CustomDivider()
             
-            ProfileActionRow(title: "Способ оплаты", subtitle: "Оплата курьеру",textComponent: textComponent)
-            Divider()
-                .background(Color.white.opacity(0.5))
-                .padding(.horizontal, 16)
-//            NavigationLink(destination: EditProfileView(viewModel: viewModel)) {
-//                ProfileActionRow(title: "Адрес доставки", subtitle: viewModel.address.isEmpty ? "Не указан" : viewModel.address, textComponent: textComponent)
-//            }
+            ProfileActionRow(title: "Способ оплаты", subtitle: "Оплата курьеру",textComponent: textComponent, showChevron: false)
         }
         .background(
             RoundedRectangle(cornerRadius: 16)
@@ -50,14 +51,10 @@ struct ProfileActionsView: View {
             Task {
                 await viewModel.fetchUserProfile()
             }
-            viewModel.fetchOrderHistory()
+            viewModel.fetchOrders()
+            viewModel.fetchCustomOrder()
         }
     }
 }
 
 
-
-
-#Preview {
-    ProfileActionsView()
-}

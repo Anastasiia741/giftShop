@@ -38,18 +38,18 @@ struct CustomDetailsView: View {
     }
 }
 
-#Preview {
-    let customOrder = CustomOrder(
-        userID: UUID().uuidString,
-        phone: "dcdcdec",
-        attachedImageURL: "",
-        additionalInfo: "",
-        date: Date() 
-    )
-    let viewModel = CustomProductVM()
-    
-    CustomDetailsView(viewModel: viewModel, customOrder: customOrder)
-}
+//#Preview {
+//    let customOrder = CustomOrder(
+//        userID: UUID().uuidString,
+//        phone: "dcdcdec",
+//        attachedImageURL: "",
+//        additionalInfo: "",
+//        date: Date() 
+//    )
+//    let viewModel = CustomProductVM()
+//    
+//    CustomDetailsView(viewModel: viewModel, customOrder: customOrder)
+//}
 
 
 struct CustomDetailView: View {
