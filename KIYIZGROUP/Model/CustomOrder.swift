@@ -21,22 +21,23 @@ class CustomOrder: Identifiable, Codable, Equatable {
     var status = OrderStatus.new.rawValue
 
     var representation: [String: Any] {
-        return [
-            "id": id,
-            "userID": userID,
-            "phone": phone,
-            "product": product?.representation ?? [:],
-            "style": style?.representation ?? [:],
-            "attachedImageURL": attachedImageURL ?? "",
-            "additionalInfo": additionalInfo,
-            "date": Timestamp(date: date),
-            "status": status
-        ]
+        var repres = [String: Any]()
+        repres["id"] = id
+        repres["userID"] = userID
+        repres["phone"] =  phone
+        repres["product"] = product?.representation ?? [:]
+        repres["style"] = style?.representation ?? [:]
+        repres["attachedImageURL"] = attachedImageURL ?? ""
+        repres["additionalInfo"] = additionalInfo
+        repres["date"] = Timestamp(date: date)
+        repres["status"] = status
+        
+        return repres
+
     }
     
-
     
-    init(id: String = UUID().uuidString, userID: String, phone: String, product: CustomProduct? = nil, style: CustomStyle? = nil, attachedImageURL: String?, additionalInfo: String, date: Date, status: String = OrderStatus.new.rawValue) {
+    init(id: String = UUID().uuidString, userID: String, phone: String, product: CustomProduct?, style: CustomStyle?, attachedImageURL: String?, additionalInfo: String, date: Date, status: String = OrderStatus.new.rawValue) {
         self.id = id
         self.userID = userID
         self.phone = phone
@@ -47,6 +48,39 @@ class CustomOrder: Identifiable, Codable, Equatable {
         self.date = date
         self.status = status
     }
+    
+    init?(doc: DocumentSnapshot) {
+        guard let data = doc.data(),
+              let id = data["id"] as? String,
+              let userID = data["userID"] as? String,
+              let phone = data["phone"] as? String,
+              let additionalInfo = data["additionalInfo"] as? String,
+              let timestamp = data["date"] as? Timestamp,
+              let status = data["status"] as? String else {
+            return nil
+        }
+
+        self.id = id
+        self.userID = userID
+        self.phone = phone
+        self.additionalInfo = additionalInfo
+        self.date = timestamp.dateValue()
+        self.status = status
+
+        if let productData = data["product"] as? [String: Any] {
+            self.product = CustomProduct(from: productData)
+            } else {
+                self.product = nil
+            }
+
+        if let styleData = data["style"] as? [String: Any] {
+            self.style = CustomStyle(from: styleData)
+        } else {
+            self.style = nil
+        }
+
+    }
+    
 }
 
 

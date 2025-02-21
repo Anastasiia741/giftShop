@@ -6,12 +6,12 @@ import SwiftUI
 
 struct DeliveryView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: ProfileVM
-//    @StateObject private var statusColors = StatusColors()
-    private let statusColors = StatusColors() 
-
     @State private var selectedOrder: Order?
     private let textComponent = TextComponent()
+    private let statusColors = StatusColors()
+    @Binding var currentTab: Int
     
     var body: some View {
         VStack {
@@ -35,6 +35,11 @@ struct DeliveryView: View {
         .sheet(item: $selectedOrder) { order in
             OrderItems(order: order)
                 .presentationDetents([.height(300)])
+        }
+        .onChange(of: currentTab) { oldValue, newValue in
+            if oldValue != newValue {
+                dismiss()
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

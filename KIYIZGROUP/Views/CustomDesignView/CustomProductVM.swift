@@ -7,6 +7,8 @@ import FirebaseStorage
 
 final class CustomProductVM: ObservableObject {
     private let productService = CustomProductService()
+    private let authService = AuthService()
+    
     @Published var allCustomProducts: [CustomProduct] = []
     @Published var allCustomStyles: [CustomStyle] = []
     @Published var deisignURLs: [Int: URL] = [:]
@@ -16,7 +18,7 @@ final class CustomProductVM: ObservableObject {
     
     @Published var selectedProduct: CustomProduct?
     @Published var selectedStyle: CustomStyle?
-
+    
     @Published var comment = ""
     @Published var phoneNumber = ""
     @Published var errorMessage: String?
@@ -25,7 +27,7 @@ final class CustomProductVM: ObservableObject {
     @Published var showInfoView = false
     @Published var showOrderDetails = false
     
-
+    
     func loadData() async {
         async let products = productService.fetchCustomProducts()
         async let styles = productService.fetchCustomStyles()
@@ -90,6 +92,7 @@ final class CustomProductVM: ObservableObject {
             return
         }
         
+        
         var uploadedImageURL: String?
         
         if let selectedImage = selectedImage {
@@ -100,8 +103,12 @@ final class CustomProductVM: ObservableObject {
             }
         }
         
+        
+        let currentUserID = authService.currentUser?.uid
+        
+        
         let newOrder = CustomOrder(
-            userID: UUID().uuidString,
+            userID: currentUserID ?? "guest_\(UUID().uuidString)",
             phone: phoneNumber,
             product: selectedProduct,
             style: selectedStyle,
@@ -111,24 +118,22 @@ final class CustomProductVM: ObservableObject {
         )
         
         do {
-                  try await productService.createOrder(newOrder)
-                  print("✅ Заказ успешно создан!")
-                  await MainActor.run {
-                      showInfoView = true
-                  }
-                  
+            try await productService.createOrder(newOrder)
+            await MainActor.run {
+                showInfoView = true
+            }
+            
             try await Task.sleep(for: .seconds(1.5))
-                  
-                  await MainActor.run {
-                      showInfoView = false
-                      showOrderDetails = true
-                  }
-                  
-              } catch {
-                  print("Ошибка при отправке заказа: \(error.localizedDescription)")
-                 
-              }
-          }
+            
+            await MainActor.run {
+                showInfoView = false
+                showOrderDetails = true
+            }
+            
+        } catch {
+            print("Ошибка при отправке заказа: \(error.localizedDescription)")
+        }
+    }
 }
 
 

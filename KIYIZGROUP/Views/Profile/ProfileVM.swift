@@ -11,44 +11,38 @@ final class ProfileVM: ObservableObject {
     let authService = AuthService()
     private let profileService = ProfileService()
     private let dbOrdersService = DBOrdersService()
-    
+    private let customProductService = CustomProductService()
     private var cancellables = Set<AnyCancellable>()
+    
     @Published var profile: NewUser?
     @Published var errorType: ErrorTypeProfile? = nil
+    
     @Published var orders: [Order] = []
     @Published var lastOrder: Order?
+    
+    @Published var customOrders: [CustomOrder] = []
+    @Published var lastCustomOrder: CustomOrder?
+
+    @Published var designImage: [String: URL] = [:]
+    
     @Published var name = ""
     @Published var email = ""
     @Published var phone: String = ""
-
+    
     @Published var cities = ["Бишкек", "Ош", "Нарын", "Талас", "Баткен"]
     @Published var selectedCity: String = ""
     @Published var address = ""
     @Published var appatment = ""
     @Published var floor = ""
     @Published var comments = ""
-
     
-    @Published var noPendingDeliveries = false
-    @Published var lastIndOrder = true
+    @Published var deliveries = false
     @Published var isShowQuit = false
     @Published var isSaving: Bool = false
 }
 
-
+//MARK: - User Data
 extension ProfileVM {
-    
-//    func fetchUserProfile() async {
-//    if let currentUser = authService.currentUser {
-//        // Загрузка данных из Firebase для авторизованного пользователя
-//        await fetchProfileForAuthorizedUser()
-//    } else {
-//        // Загрузка данных из UserDefaults для гостя
-//        fetchGuestData()
-//    }
-//}
-
-    
     func fetchUserProfile() async {
         guard let currentUser = authService.currentUser else { return }
         
@@ -59,13 +53,13 @@ extension ProfileVM {
                 self.name = user.name
                 self.email = user.email
                 self.phone = user.phone
-                self.selectedCity = user.city 
+                self.selectedCity = user.city
                 self.address = user.address
                 self.appatment = user.appatment ?? ""
                 self.floor = user.floor ?? ""
                 self.comments = user.comments ?? ""
                 self.profile = user
-
+                
             }
         } catch _ as NSError {
             DispatchQueue.main.async {
@@ -102,9 +96,8 @@ extension ProfileVM {
                 self.isSaving = false
                 switch result {
                 case .success:
-//
                     self.profile = updatedProfile
-
+                    
                     self.errorType = .dataSuccessfullySaved
                 case .failure:
                     self.errorType = .profileSaveFailed
@@ -112,9 +105,12 @@ extension ProfileVM {
             }
         }
     }
-    
-    func fetchOrderHistory() {
-        dbOrdersService.fetchOrderHistory(by: authService.currentUser?.uid) { [weak self] result in
+}
+
+//MARK: - User Oders
+extension ProfileVM {
+    func fetchOrders() {
+        dbOrdersService.fetchOrders(by: authService.currentUser?.uid) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
@@ -122,7 +118,7 @@ extension ProfileVM {
                     self.orders = orders
                     self.orders.sort { $0.date > $1.date }
                     self.lastOrder = self.orders.first
-                    self.noPendingDeliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
+                    self.deliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
                 case .failure(_):
                     self.errorType = .orderFetchFailed
                 }
@@ -130,19 +126,53 @@ extension ProfileVM {
         }
     }
     
+    func fetchCustomOrder() {
+        guard let userID = authService.currentUser?.uid else {
+            return
+        }
+        dbOrdersService.fetchCustomOrders(by: userID) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let orders):
+                    let sortedOrders = orders.sorted { $0.date > $1.date }
+                    self?.customOrders = sortedOrders
+                    for order in orders {
+                        self?.fetchImages(order: order)
+                    }
+                case .failure(let error):
+                    print("Ошибка загрузки заказов: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func fetchImages(order: CustomOrder) {
+        ImageService.shared.fetchImages(
+            for: order,
+            designImage: { [weak self] orderID, url in
+                self?.designImage[orderID] = url
+            },
+            attachedImage: { _, _ in }
+        )
+    }
+}
+
+//MARK: - User Action
+extension ProfileVM {
     func deleteAccount(onDelete: @escaping () -> Void) {
         authService.deleteAccount { [weak self] result in
             switch result {
             case .success:
-//                self?.logout()
+                //                self?.logout()
                 self?.logout(mainTabVM: MainTabVM())
-
+                
                 onDelete()
             case .failure(let error):
                 print("Ошибка удаления аккаунта: \(error.localizedDescription)")
             }
         }
     }
+    
     func logout(mainTabVM: MainTabVM) {
         authService.signOut { result in
             DispatchQueue.main.async {
@@ -156,11 +186,13 @@ extension ProfileVM {
             }
         }
     }
-    
-    
-    
-    
-    
+}
+
+
+
+
+
+
 //    func logout() {
 //        authService.signOut { result in
 //            switch result {
@@ -171,5 +203,18 @@ extension ProfileVM {
 //            }
 //        }
 //    }
-}
+//}
 
+
+
+
+
+//    func fetchUserProfile() async {
+//    if let currentUser = authService.currentUser {
+//        // Загрузка данных из Firebase для авторизованного пользователя
+//        await fetchProfileForAuthorizedUser()
+//    } else {
+//        // Загрузка данных из UserDefaults для гостя
+//        fetchGuestData()
+//    }
+//}

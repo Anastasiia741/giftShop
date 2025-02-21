@@ -40,7 +40,6 @@ class Order: Identifiable {
         repres["promocode"] = promocode
         repres["cost"] = cost
         repres["address"] = address
-//        repres["address"] = address
         repres["phone"] = phone
         repres["city"] = city
         repres["appatment"] = appatment
@@ -78,7 +77,6 @@ class Order: Identifiable {
               let appatment = data["appatment"] as? String,
               let floor = data["floor"] as? String,
               let comments = data["comments"] as? String,
-
               let promocode = data["promocode"] as? String
         else {
             return nil

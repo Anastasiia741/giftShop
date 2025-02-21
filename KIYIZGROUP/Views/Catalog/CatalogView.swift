@@ -7,7 +7,7 @@ import SwiftUI
 struct CatalogView: View {
     @StateObject private var viewModel = CatalogVM()
     @Binding var currentTab: Int
-    @State private var customOrder = CustomOrder(userID: "", phone: "", attachedImageURL: "", additionalInfo: "", date: Date())
+    @State private var customOrder = CustomOrder(userID: "", phone: "", product: nil, style: nil, attachedImageURL: "", additionalInfo: "", date: Date())
     @State private var isLoading = false
     
     var body: some View {

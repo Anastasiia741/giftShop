@@ -13,6 +13,9 @@ final class ProfileService {
         return db.collection("users")
     }
     
+}
+
+extension ProfileService {
     func setProfile(user: NewUser, email: String, completion: @escaping (Result<NewUser, Error>) -> ()) {
         var updatedUser = user
         updatedUser.email = email
@@ -42,7 +45,6 @@ final class ProfileService {
     }
     
     // MARK: - Get profile info
-    
     func getProfile(by userId: String? = nil) async throws -> NewUser {
         let documentIdToFetch = userId ?? authService.currentUser?.uid
         guard let documentId = documentIdToFetch else {
@@ -50,13 +52,10 @@ final class ProfileService {
         }
         
         do {
-            print("Получение документа с ID: \(documentId)")
             let docSnapshot = try await usersRef.document(documentId).getDocument()
             guard let data = docSnapshot.data() else {
                 throw NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "Документ не найден."])
             }
-            
-            print("Данные документа: \(data)")
             
             guard let userName = data["name"] as? String,
                   let id = data["id"] as? String,
@@ -64,11 +63,9 @@ final class ProfileService {
                   let email = data["email"] as? String,
                   let city = data["city"] as? String,
                   let address = data["address"] as? String else {
-                print("Обязательные поля отсутствуют в документе: \(data)")
                 throw NSError(domain: "", code: 500, userInfo: [NSLocalizedDescriptionKey: "Обязательные поля не найдены."])
             }
             
-            // Обработка необязательных полей
             let appartment = data["appatment"] as? String ?? ""
             let floor = data["floor"] as? String ?? ""
             let comments = data["comments"] as? String
@@ -76,7 +73,6 @@ final class ProfileService {
             let user = NewUser(id: id, name: userName, phone: phone, email: email, city: city, address: address, appatment: appartment, floor: floor, comments: comments)
             return user
         } catch {
-            print("Ошибка при получении профиля: \(error.localizedDescription)")
             throw error
         }
     }

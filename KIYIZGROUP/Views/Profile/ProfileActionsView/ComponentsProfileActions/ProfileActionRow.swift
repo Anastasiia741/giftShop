@@ -8,6 +8,7 @@ struct ProfileActionRow: View {
     let title: String
     let subtitle: String
     let textComponent: TextComponent
+    let showChevron: Bool
     
     var body: some View {
         HStack {
@@ -16,8 +17,10 @@ struct ProfileActionRow: View {
                 textComponent.createText(text: subtitle, fontSize: 14, fontWeight: .regular, color: .white.opacity(0.8))
             }
             Spacer()
-            Image(systemName: "chevron.right")
-                .foregroundColor(.white.opacity(0.8))
+            if showChevron {
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.white.opacity(0.8))
+            }
         }
         .padding()
     }
