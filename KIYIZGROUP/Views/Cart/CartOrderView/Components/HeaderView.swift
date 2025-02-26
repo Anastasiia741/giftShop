@@ -8,7 +8,6 @@ struct HeaderView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = CartVM()
-    @State private var selectedProduct: Product?
     private let textComponent = TextComponent()
     let orderProducts: [Product]
     let showEditButton: Bool
@@ -28,18 +27,12 @@ struct HeaderView: View {
                     }
                 }
             }
-            .padding(.vertical)
+            .padding(.vertical, 6)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack() {
                     ForEach(orderProducts) { product in
-                        NavigationLink(destination: ProductDetailView(
-                            viewModel: ProductDetailVM(product: product),
-                            currentUserId: "",
-                            currentTab: .constant(0)
-                        )) {
                             CartOrdersCell(position: product)
                                 .padding(.vertical)
-                        }
                     }
                 }
             }

@@ -393,7 +393,7 @@ struct ButtonComponents {
                 textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, color: .white)
             }
             .padding()
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: 380)
             .background(Color.colorGreen)
             .cornerRadius(40)
         }
@@ -408,8 +408,8 @@ struct ButtonComponents {
                 textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, color: .white)
             }
             .padding()
-            .frame(maxWidth: .infinity)
-            
+            .frame(maxWidth: 380)
+            .background(Color.colorGreen)
             .cornerRadius(40)
         }
         .padding(.horizontal, 16)

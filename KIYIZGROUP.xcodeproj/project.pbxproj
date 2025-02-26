@@ -538,6 +538,72 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		712A0D382D6F8B3D000DD8FF /* CartView */ = {
+			isa = PBXGroup;
+			children = (
+				71E45FAD2B486C6D00941CE7 /* CartView.swift */,
+				7193631E2CEB88C6006FDC6A /* Components */,
+			);
+			path = CartView;
+			sourceTree = "<group>";
+		};
+		712A0D392D6F8B52000DD8FF /* CartOrderView */ = {
+			isa = PBXGroup;
+			children = (
+				7193631F2CECCEA4006FDC6A /* CartOrderView.swift */,
+				712A0D3B2D6F8B78000DD8FF /* Components */,
+			);
+			path = CartOrderView;
+			sourceTree = "<group>";
+		};
+		712A0D3A2D6F8B5F000DD8FF /* OrderDetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				7179A9E92CF750F4005270CF /* OrderDetailsView.swift */,
+				712A0D3C2D6F8B80000DD8FF /* Components */,
+			);
+			path = OrderDetailsView;
+			sourceTree = "<group>";
+		};
+		712A0D3B2D6F8B78000DD8FF /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				719363242CEE2BFE006FDC6A /* HeaderView.swift */,
+				7193632A2CEE4028006FDC6A /* AddressPhoneSection.swift */,
+				719363282CEE3EB7006FDC6A /* AddressInputView.swift */,
+				7193632C2CEE489F006FDC6A /* PaymentMethodSection.swift */,
+				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
+				7193632E2CEE6338006FDC6A /* OrderSummaryView.swift */,
+				719363312CEFAC9D006FDC6A /* PromoCodeSection.swift */,
+				712A0D3D2D6F8B98000DD8FF /* Cells */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		712A0D3C2D6F8B80000DD8FF /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7179A9EE2CF77F13005270CF /* DetailView.swift */,
+				712A0D3E2D6F8BA6000DD8FF /* Cells */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		712A0D3D2D6F8B98000DD8FF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				719363212CECD7F5006FDC6A /* CartOrdersCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		712A0D3E2D6F8BA6000DD8FF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		7130318D2BF39E7D00605DD6 /* KIYIZGROUPTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,14 +636,15 @@
 			path = ProductDetailEditView;
 			sourceTree = "<group>";
 		};
-		7143C8722CE3C790004CC4B9 /* CustomDesignView */ = {
+		7143C8722CE3C790004CC4B9 /* CustomProductView */ = {
 			isa = PBXGroup;
 			children = (
 				712A0D2A2D6CDE1E000DD8FF /* CustomView */,
 				712A0D2C2D6CDE3C000DD8FF /* CustomOrderView */,
 				712A0D2E2D6CDE65000DD8FF /* CustomDetailsView */,
+				7110BA332D512ABB007BFD26 /* CustomProductVM.swift */,
 			);
-			path = CustomDesignView;
+			path = CustomProductView;
 			sourceTree = "<group>";
 		};
 		7143C8752CE3D466004CC4B9 /* ComponentsCatalogView */ = {
@@ -632,12 +699,11 @@
 		714F76BB2B601A4900931C2A /* Cart */ = {
 			isa = PBXGroup;
 			children = (
-				71E45FAD2B486C6D00941CE7 /* CartView.swift */,
-				7193631F2CECCEA4006FDC6A /* CartOrderView.swift */,
-				7179A9E92CF750F4005270CF /* OrderDetailsView.swift */,
+				712A0D382D6F8B3D000DD8FF /* CartView */,
+				712A0D392D6F8B52000DD8FF /* CartOrderView */,
+				712A0D3A2D6F8B5F000DD8FF /* OrderDetailsView */,
 				710082BF2B4C61D1007831F5 /* CartVM.swift */,
 				7179A9FB2CF89493005270CF /* InfoView */,
-				7193631E2CEB88C6006FDC6A /* Components */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -660,14 +726,6 @@
 				710E3E012D0701AA002FD2F5 /* RegistrationView */,
 			);
 			path = Authentication;
-			sourceTree = "<group>";
-		};
-		7179A9ED2CF77F00005270CF /* ComponentsOrderDetailsView */ = {
-			isa = PBXGroup;
-			children = (
-				7179A9EE2CF77F13005270CF /* DetailView.swift */,
-			);
-			path = ComponentsOrderDetailsView;
 			sourceTree = "<group>";
 		};
 		7179A9F02CF78271005270CF /* ComponentsProfileView */ = {
@@ -703,24 +761,8 @@
 			children = (
 				71C4C3152D42B88900115487 /* EmptyCartView.swift */,
 				719363302CEFA1DC006FDC6A /* Cells */,
-				719363232CEE2BE2006FDC6A /* ComponentsCartOrdersView */,
-				7179A9ED2CF77F00005270CF /* ComponentsOrderDetailsView */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		719363232CEE2BE2006FDC6A /* ComponentsCartOrdersView */ = {
-			isa = PBXGroup;
-			children = (
-				719363242CEE2BFE006FDC6A /* HeaderView.swift */,
-				7193632A2CEE4028006FDC6A /* AddressPhoneSection.swift */,
-				719363282CEE3EB7006FDC6A /* AddressInputView.swift */,
-				7193632C2CEE489F006FDC6A /* PaymentMethodSection.swift */,
-				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
-				7193632E2CEE6338006FDC6A /* OrderSummaryView.swift */,
-				719363312CEFAC9D006FDC6A /* PromoCodeSection.swift */,
-			);
-			path = ComponentsCartOrdersView;
 			sourceTree = "<group>";
 		};
 		719363302CEFA1DC006FDC6A /* Cells */ = {
@@ -728,7 +770,6 @@
 			children = (
 				710082C32B4C6975007831F5 /* CartCell.swift */,
 				71C4C3172D42B8B500115487 /* CartProductsList.swift */,
-				719363212CECD7F5006FDC6A /* CartOrdersCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -843,8 +884,7 @@
 				711ED96C2B504CCD0052752F /* Admin */,
 				714F7AE12B5987FA00E533AD /* Authentication */,
 				717D0FC72B5AAF0E001F2E6E /* Catalog */,
-				7143C8722CE3C790004CC4B9 /* CustomDesignView */,
-				7110BA332D512ABB007BFD26 /* CustomProductVM.swift */,
+				7143C8722CE3C790004CC4B9 /* CustomProductView */,
 				714F76BE2B62A69B00931C2A /* ProductDetail */,
 				714F76BB2B601A4900931C2A /* Cart */,
 				71353CD42B696707008A7868 /* Profile */,
