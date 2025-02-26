@@ -17,7 +17,6 @@ struct ProfileView: View {
     @State private var showEditView = false
     @State private var activeScreen: ProfileNavigation? = nil
     
-    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
@@ -59,7 +58,6 @@ struct ProfileView: View {
                     ChangePasswordView(activeScreen: $activeScreen, currentTab: $currentTab)
                 }
             }
-            
             .onAppear {
                 Task {
                     await viewModel.fetchUserProfile()
@@ -73,23 +71,3 @@ struct ProfileView: View {
     }
 }
 
-
-
-//                    Button(action: {
-//                        withAnimation {
-//                            isShowEditView.toggle()
-//                        }
-//                    }) {
-//                        Image("lucide")
-//                            .resizable()
-//                            .frame(width: 24, height: 24)
-//                            .foregroundColor(colorScheme == .dark ? .white : .black)
-//                    }
-
-///            .navigationDestination(item: $isShowEditView) { screen in
-//                switch screen {
-//                case .editProfile:
-//                    EditProfileView(viewModel: viewModel, currentTab: $currentTab)
-//                case .changePassword:
-//                    ChangePasswordView(currentTab: $currentTab)
-//                }

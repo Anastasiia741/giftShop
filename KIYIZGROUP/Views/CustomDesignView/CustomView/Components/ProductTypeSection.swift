@@ -11,11 +11,9 @@ struct ProductTypeSection: View {
     private let textComponent = TextComponent()
     @State private var isPressed: Bool = false
     
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             textComponent.createText(text: "Тип товара", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
-            .padding(.bottom, 4)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
@@ -36,7 +34,10 @@ struct ProductTypeSection: View {
             }
         }
     }
-    
+}
+
+
+extension ProductTypeSection {
     private func productView(for product: CustomProduct) -> some View {
         VStack {
             ZStack {
@@ -58,17 +59,13 @@ struct ProductTypeSection: View {
                         .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3), value: viewModel.selectedProduct?.id)
                 }
             }
-            .frame(width: 97, height: 111)
+            .frame(width: 87, height: 101)
             
-            textComponent.createText(
-                text: product.name,
-                fontSize: 12,
-                fontWeight: .regular,
-                color: colorScheme == .dark ? .white : .black
-            )
-            .padding(.top, 3)
+            textComponent.createText(text: product.name, fontSize: 12, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+            .padding(.top, 4)
         }
         .padding(.vertical)
+        .padding(.horizontal, 2)
     }
 }
 

@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct InfoView: View, InfoDialogHandling {
-    
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     private let customButton = CustomButton()

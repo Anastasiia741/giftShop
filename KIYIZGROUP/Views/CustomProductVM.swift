@@ -8,7 +8,6 @@ import FirebaseStorage
 final class CustomProductVM: ObservableObject {
     private let productService = CustomProductService()
     private let authService = AuthService()
-    
     @Published var allCustomProducts: [CustomProduct] = []
     @Published var allCustomStyles: [CustomStyle] = []
     @Published var deisignURLs: [Int: URL] = [:]
@@ -20,14 +19,15 @@ final class CustomProductVM: ObservableObject {
     @Published var selectedStyle: CustomStyle?
     
     @Published var comment = ""
-    @Published var phoneNumber = ""
-    @Published var errorMessage: String?
+    @Published var phone = ""
     @Published var isShowConfirm = false
     
     @Published var showInfoView = false
     @Published var showOrderDetails = false
     
-    
+}
+
+extension CustomProductVM {
     func loadData() async {
         async let products = productService.fetchCustomProducts()
         async let styles = productService.fetchCustomStyles()
@@ -80,9 +80,39 @@ final class CustomProductVM: ObservableObject {
         }
     }
     
-    
+}
+
+extension CustomProductVM {
+    @MainActor
+    func loadSelectedDesignImage() async -> UIImage? {
+        if let attachedImage = selectedImage {
+            return attachedImage
+        }
+        return nil
+    }
+
+    @MainActor
+    func loadStyleImage() async -> UIImage? {
+        if let style = selectedStyle,
+           let styleImageURL = styleURLs[style.id] {
+            do {
+                let (data, _) = try await URLSession.shared.data(from: styleImageURL)
+                if let image = UIImage(data: data) {
+                    return image
+                }
+            } catch {
+                print("❌ Ошибка загрузки изображения: \(error.localizedDescription)")
+            }
+        }
+        return nil
+    }
+}
+
+
+
+extension CustomProductVM {
     func submitOrder() async {
-        guard !phoneNumber.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        guard !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             print("Ошибка: Укажите номер телефона")
             return
         }
@@ -91,7 +121,6 @@ final class CustomProductVM: ObservableObject {
             print("Ошибка: Должен быть выбран хотя бы один параметр (тип товара, стиль или изображение)")
             return
         }
-        
         
         var uploadedImageURL: String?
         
@@ -103,13 +132,11 @@ final class CustomProductVM: ObservableObject {
             }
         }
         
-        
         let currentUserID = authService.currentUser?.uid
-        
         
         let newOrder = CustomOrder(
             userID: currentUserID ?? "guest_\(UUID().uuidString)",
-            phone: phoneNumber,
+            phone: phone,
             product: selectedProduct,
             style: selectedStyle,
             attachedImageURL: uploadedImageURL,

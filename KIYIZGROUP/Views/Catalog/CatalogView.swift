@@ -6,8 +6,8 @@ import SwiftUI
 
 struct CatalogView: View {
     @StateObject private var viewModel = CatalogVM()
-    @Binding var currentTab: Int
     @State private var customOrder = CustomOrder(userID: "", phone: "", product: nil, style: nil, attachedImageURL: "", additionalInfo: "", date: Date())
+    @Binding var currentTab: Int
     @State private var isLoading = false
     
     var body: some View {
@@ -22,7 +22,7 @@ struct CatalogView: View {
                         PopularSectionView(products: viewModel.popularProducts)
                             .padding(.vertical)
                             .padding(.horizontal, 20)
-                        CustomDesignSectionView(customOrder: customOrder)
+                        CustomDesignSectionView(customOrder: customOrder, currentTab: $currentTab)
                             .padding(.horizontal, 20)
                         CategorySectionView(selectedCategory: $viewModel.selectedCategory, onCategorySelected: { category in
                             viewModel.filterProducts(by: category)

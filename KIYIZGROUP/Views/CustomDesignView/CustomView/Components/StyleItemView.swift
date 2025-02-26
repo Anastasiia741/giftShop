@@ -14,19 +14,19 @@ struct StyleItemView: View {
         VStack() {
             ZStack {
                 RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.gray.opacity(0.5))
+                    .frame(width: 60, height: 60)
                     .scaleEffect(isSelected ? 1.1 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3), value: isSelected)
-                
                 if let imageURL = viewModel.styleURLs[style.id] {
                     KFImage(imageURL)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 80, height: 80)
+                        .frame(width: 60, height: 60)
                         .cornerRadius(16)
                         .scaleEffect(isSelected ? 1.1 : 1.0)
                         .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3), value: isSelected)
                 }
-                
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
@@ -34,7 +34,6 @@ struct StyleItemView: View {
                     .scaleEffect(isSelected ? 1.1 : 1.0)
                     .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3), value: isSelected)
             )
-            
         }
         .padding(.vertical)
     }

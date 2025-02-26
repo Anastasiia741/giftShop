@@ -36,3 +36,25 @@ struct UnifiedRoundedRectangle: View {
             .stroke(isError ? Color.red : .gray, lineWidth: 1)
     }
 }
+
+
+//MARK: - CustomOrderView
+struct TextEditorWithPlaceholder: View {
+    @Binding var text: String
+    var placeholder: String
+    
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if text.isEmpty {
+                Text(placeholder)
+                    .foregroundColor(.gray)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 12)
+            }
+            TextEditor(text: $text)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 12)
+                .background(Color.clear)
+        }
+    }
+}

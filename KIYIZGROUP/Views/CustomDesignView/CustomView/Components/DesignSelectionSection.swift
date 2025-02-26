@@ -11,10 +11,11 @@ struct DesignSelectionSection: View {
     private let textComponent = TextComponent()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 0) {
             headerSection()
             styleSelectionScrollView()
         }
+        .padding(.vertical)
         .onAppear {
             Task {
                 await viewModel.loadData()
@@ -24,21 +25,15 @@ struct DesignSelectionSection: View {
     
     private func headerSection() -> some View {
         textComponent.createText(text: "Выберите стиль", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
-            .padding(.bottom, 4)
     }
 }
 
 extension DesignSelectionSection {
-    
     private func styleSelectionScrollView() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
                 ForEach(viewModel.allCustomStyles, id: \.id) { style in
-                    StyleItemView(
-                        viewModel: viewModel,
-                        style: style,
-                        isSelected: viewModel.selectedStyle?.id == style.id
-                    )
+                    StyleItemView(viewModel: viewModel, style: style, isSelected: viewModel.selectedStyle?.id == style.id)
                     .onTapGesture {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.3)) {
                             viewModel.selectedStyle = style
@@ -47,7 +42,6 @@ extension DesignSelectionSection {
                 }
             }
         }
-        .padding(.bottom)
     }
 }
 
