@@ -5,31 +5,28 @@
 import SwiftUI
 
 struct OrderDetailsView: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) var colorScheme
-    @StateObject private var viewModel = CartVM()
     @StateObject private var profileVM = ProfileVM()
     private let textComponent = TextComponent()
+    @Binding var currentTab: Int
     let orderProducts: [Product]
     let order: Order
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HeaderView(orderProducts: viewModel.orderProducts, showEditButton: false)
-                    .padding(.horizontal)
-            }
-            VStack(alignment: .leading, spacing: 16) {
-                DetailView(viewModel: profileVM, order: order)
-            }
+            DetailView(viewModel: profileVM, order: order)
             Spacer()
         }
+        .onChange(of: currentTab) { _, _ in
+            dismiss()
+        }
         .onAppear{
-            viewModel.fetchOrder()
             Task {
                 await profileVM.fetchUserProfile()
             }
         }
-        .navigationTitle("Доставки")
+        .navigationTitle("Доставка")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
