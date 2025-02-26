@@ -27,6 +27,25 @@ struct DetailButton: View {
     }
 }
 
+//MARK: - CustomOrderView
+struct SubmitButton: View {
+    private let textComponent = TextComponent()
+    var title: String
+    var action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, color: .white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray)
+                )
+        }
+    }
+}
+
 
 struct GreenButton: View {
     private let textComponent = TextComponent()

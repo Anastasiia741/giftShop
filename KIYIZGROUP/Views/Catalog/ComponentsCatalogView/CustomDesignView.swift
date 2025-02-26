@@ -7,10 +7,11 @@ import SwiftUI
 struct CustomDesignView: View {
     private let textComponent = TextComponent()
     let customOrder: CustomOrder
+    @Binding var currentTab: Int
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            NavigationLink(destination: CustomView(customOrder: customOrder)) {
+            NavigationLink(destination: CustomView(customOrder: customOrder, currentTab: $currentTab)) {
                 HStack {
                     textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, color: .white)
                     Spacer()
