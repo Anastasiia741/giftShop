@@ -13,12 +13,13 @@ struct AuthorizationFieldsView: View {
     private let customSecureField = CustomSecureField()
     private let customButton = CustomButtonLogIn()
     @State private var isPasswordVisible = false
-    @Binding var isShowCatalog: Bool
+    @Binding var showCatalog: Bool
     
     var body: some View {
         ZStack {
             VStack(spacing: 8) {
-                textComponent.createText( text: Localization.authorization, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText( text: Localization.authorization, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(6)
                 customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .email ? .r : Color.colorDarkBrown)
@@ -31,7 +32,7 @@ struct AuthorizationFieldsView: View {
                         Task{
                             await viewModel.signIn {
                                 DispatchQueue.main.async {
-                                    isShowCatalog = true
+                                    showCatalog = true
                                 }
                             }
                         }
@@ -39,7 +40,7 @@ struct AuthorizationFieldsView: View {
                 }
                 .padding(6)
                 if viewModel.errorType == .password || viewModel.errorType == .general || viewModel.errorType == .email {
-                    textComponent.createText(text: viewModel.errorMessage ?? "", fontSize: 12, fontWeight: .regular, color: Color.r)
+                    textComponent.createText(text: viewModel.errorMessage ?? "", fontSize: 12, fontWeight: .regular, lightColor: .r, darkColor: .r)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 8)
                 }

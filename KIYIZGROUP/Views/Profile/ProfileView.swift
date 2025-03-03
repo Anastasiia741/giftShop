@@ -6,16 +6,15 @@ import SwiftUI
 import PhotosUI
 
 struct ProfileView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var mainTabVM: MainTabVM
     @StateObject private var viewModel = ProfileVM()
     private let buttonComponents = ButtonComponents()
     private let textComponent = TextComponent()
+    @State private var activeScreen: ProfileNavigation? = nil
     @State private var selectedImage: UIImage?
     
     @Binding var currentTab: Int
     @State private var showEditView = false
-    @State private var activeScreen: ProfileNavigation? = nil
     
     var body: some View {
         NavigationStack {
@@ -39,7 +38,7 @@ struct ProfileView: View {
                         Image("lucide")
                             .resizable()
                             .frame(width: 24, height: 24)
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                            .adaptiveForeground(light: .black, dark: .white)
                     }
                 }
                 .padding()

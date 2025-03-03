@@ -13,7 +13,7 @@ struct LanguageToggleAuthView: View {
         Button(action: {
             toggleLanguage()
         }) {
-            textComponent.createText(text: selectedLanguage, fontSize: 16, fontWeight: .regular, color: Color.colorLightBrown)
+            textComponent.createText(text: selectedLanguage, fontSize: 16, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
         }
     }
     

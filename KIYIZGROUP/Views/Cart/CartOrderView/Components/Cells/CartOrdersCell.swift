@@ -7,7 +7,6 @@ import Kingfisher
 import FirebaseStorage
 
 struct CartOrdersCell: View {
-    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel =  CartVM()
     private let textComponent = TextComponent()
     private let buttonComponents = ButtonComponents()
@@ -25,7 +24,7 @@ struct CartOrdersCell: View {
                         .clipped()
                         .cornerRadius(24)
                         .shadow(radius: 4)
-            textComponent.createText(text: position.name, fontSize: 12, fontWeight: .thin, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: position.name, fontSize: 12, fontWeight: .thin, lightColor: .black, darkColor: .white)
                     .padding(.bottom, 20)
             }
         }

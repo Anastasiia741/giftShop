@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct ProductSectionView: View {
-    @Environment(\.colorScheme) var colorScheme
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
     @StateObject var viewModel: CatalogVM
     let filteredProducts: [Product]
@@ -20,7 +19,6 @@ struct ProductSectionView: View {
                         ProductDetailView(viewModel: viewModel, currentUserId: "", currentTab: $currentTab)
                     } label: {
                         ProductCell(product: item)
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
                     }
                 }
             }

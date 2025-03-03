@@ -94,18 +94,30 @@ struct TabBar: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .accentColor(colorScheme == .dark ? Color.white : Color.black)
         .onAppear {
             viewModel.fetchUserId()
+            setupTabBarAppearance()
         }
-        .onAppear {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor =  colorScheme == .dark ? .black : .white
-            
-            UITabBar.appearance().standardAppearance = appearance
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
+    }
+}
+
+extension TabBar {
+    private func setupTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = (colorScheme == .dark ? UIColor.black : UIColor.white)
+        
+        let activeTabColor = colorScheme == .dark ? UIColor.colorLightBrown : UIColor.colorDarkBrown
+        let inactiveTabColor = UIColor.gray
+        
+        appearance.stackedLayoutAppearance.selected.iconColor = activeTabColor
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: activeTabColor]
+        
+        appearance.stackedLayoutAppearance.normal.iconColor = inactiveTabColor
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: inactiveTabColor]
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }
 

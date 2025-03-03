@@ -11,11 +11,10 @@ final class AuthorizationVM: AuthBaseVM {
     @Published var isShowCatalog = false
     @Published var isEmailSent: Bool = false
     @Published var isLoading: Bool = false
-    
 }
 
+//MARK: - signIn
 extension AuthorizationVM {
-    
     func signIn(onSuccess: @escaping () -> Void) async {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -46,7 +45,10 @@ extension AuthorizationVM {
             }
         }
     }
-    
+}
+
+//MARK: - resetPassword
+extension AuthorizationVM {
     func resetPassword(completion: @escaping (Bool, String?) -> Void) {
         guard !email.isEmpty else {
             completion(false, "Email cannot be empty.")

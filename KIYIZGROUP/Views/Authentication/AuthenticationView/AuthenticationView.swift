@@ -6,7 +6,6 @@ import SwiftUI
 import FirebaseAuth
 
 struct AuthenticationView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @State private var selectedLanguage = "EN"
     @State private var activeScreen: ActiveScreen? = nil
     @Binding var currentTab: Int
@@ -40,9 +39,11 @@ struct AuthenticationView: View {
                     .padding(.horizontal)
             }
                 .padding()
-                .frame(maxHeight: 44),
-                     alignment: .topTrailing
-            )
+                .frame(maxHeight: 44), alignment: .topTrailing)
+        }
+        .onTapGesture {
+            self.hideKeyboard()
+            UIApplication.shared.endEditing()
         }
     }
 }

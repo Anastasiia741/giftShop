@@ -13,8 +13,8 @@ struct ProfileActionRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                textComponent.createText(text: title, fontSize: 16, fontWeight: .bold,color: .white)
-                textComponent.createText(text: subtitle, fontSize: 14, fontWeight: .regular, color: .white.opacity(0.8))
+                textComponent.createText(text: title, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: subtitle, fontSize: 14, fontWeight: .regular, lightColor: .white.opacity(0.8), darkColor: .white.opacity(0.8))
             }
             Spacer()
             if showChevron {

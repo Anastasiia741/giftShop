@@ -6,7 +6,6 @@ import SwiftUI
 import FirebaseStorage
 
 struct CartCell: View {
-    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel =  CartVM()
     private let textComponent = TextComponent()
     private let buttonComponents = ButtonComponents()
@@ -23,9 +22,9 @@ struct CartCell: View {
                 }
                 .padding(.leading)
                 VStack(alignment: .leading) {
-                    textComponent.createText(text: position.name, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: position.name, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                             .padding()
-                    textComponent.createText(text: position.category.uppercased(), fontSize: 16, fontWeight: .regular, color: .gray)
+                    textComponent.createText(text: position.category.uppercased(), fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
                             .padding()
                     buttonComponents.createCustomStepper(position: position, count: $count, range: 0...10) {
                         viewModel.updateProduct(position, count)
@@ -38,8 +37,8 @@ struct CartCell: View {
             CustomDivider()
                      
             HStack {
-                textComponent.createText(text: "\(position.price * count) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .black)
-                textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .gray).strikethrough()
+                textComponent.createText(text: "\(position.price * count) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .white).strikethrough()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -72,10 +71,6 @@ extension CartCell {
         }
     }
 }
-
-
-
-
 
 
 struct CustomDivider: View {

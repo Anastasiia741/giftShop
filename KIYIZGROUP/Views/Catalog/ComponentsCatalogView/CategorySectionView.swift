@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct CategorySectionView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Binding var selectedCategory: String
     private let textComponent = TextComponent()
     let onCategorySelected: (String) -> Void
@@ -13,7 +12,7 @@ struct CategorySectionView: View {
     
     var body: some View {
         VStack(alignment: .leading ) {
-            textComponent.createText(text: Localization.products, fontSize: 21, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: Localization.products, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .padding(.leading, 30)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -22,10 +21,12 @@ struct CategorySectionView: View {
                             selectedCategory = category
                             onCategorySelected(category)
                         }) {
-                            textComponent.createText(text: category, fontSize: 17, fontWeight: .medium, color: selectedCategory == category ? .white : (colorScheme == .dark ? .white : .black))
+                            textComponent.createText(text: category, fontSize: 17, fontWeight: .medium,
+                                                     lightColor: selectedCategory == category ? .white : .black,
+                                                     darkColor: selectedCategory == category ? .white : .white)
                                 .padding(.vertical, 8)
                                 .padding(.horizontal, 16)
-                                .background(selectedCategory == category ? .colorDarkBrown : .white)
+                                .background(selectedCategory == category ? .colorDarkBrown : .clear)
                                 .cornerRadius(20)
                         }
                         .overlay(RoundedRectangle(cornerRadius: 20)

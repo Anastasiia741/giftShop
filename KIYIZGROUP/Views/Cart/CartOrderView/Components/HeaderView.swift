@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = CartVM()
     private let textComponent = TextComponent()
@@ -15,13 +14,13 @@ struct HeaderView: View {
     var body: some View {
         VStack {
             HStack {
-                textComponent.createText(text: "Товары", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Товары", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 Spacer()
                 if showEditButton {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
                     }) {
-                        textComponent.createText(text: "Изменить", fontSize: 16, fontWeight: .medium, color: .colorLightBrown)
+                        textComponent.createText(text: "Изменить", fontSize: 16, fontWeight: .medium, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                             .font(.body)
                             .foregroundColor(.brown)
                     }

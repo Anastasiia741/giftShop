@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct EmptyCartView: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     
     var body: some View {
@@ -17,9 +16,9 @@ struct EmptyCartView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color.clear)
             VStack {
-                textComponent.createText(text: Localization.emptyСart, fontSize: 21, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: Localization.emptyСart, fontSize: 21, fontWeight: .bold,lightColor: .black, darkColor: .white)
                 .padding(.vertical)
-                textComponent.createText(text: Localization.addItemsToCart, fontSize: 16, fontWeight: .regular, color: .gray)
+                textComponent.createText(text: Localization.addItemsToCart, fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
                 .padding(.horizontal)
                 .multilineTextAlignment(.center)
             }

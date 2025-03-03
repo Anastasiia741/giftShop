@@ -34,7 +34,7 @@ struct CatalogView: View {
                 }
             }
             .task {
-                await self.viewModel.fetchAllProducts()
+                await self.viewModel.fetchProducts()
                 isLoading = false
             }
         }

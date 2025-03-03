@@ -10,7 +10,6 @@ struct ForgotPasswordView: View, InfoDialogHandling {
     private let textComponent = TextComponent()
     private let customTextField = CustomTextField()
     let customButton = CustomButton()
-    var description: String? = nil
     @State private var title = "Восстановление пароля"
     @State private var email = ""
     @State private var offset: CGFloat = 1000
@@ -26,15 +25,15 @@ struct ForgotPasswordView: View, InfoDialogHandling {
                 }
             VStack {
                 Spacer()
-                textComponent.createText(text: title, fontSize: 18, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: title, fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding([.vertical, .horizontal])
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
                 customTextField.createTextField(placeholder: "Введите ваш email", text: $email, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
-                    .padding([.vertical, .horizontal])
-                
+                    .padding([.horizontal])
+                Spacer()
                 customButton.createButton(text: email.isEmpty ? "Закрыть" : "Отправить", fontSize: 18, fontWeight: .medium, color: .black, backgroundColor: colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2), borderColor: .clear, cornerRadius: 100, action: {
                     if email.isEmpty {
                         closeDialog()
@@ -43,12 +42,12 @@ struct ForgotPasswordView: View, InfoDialogHandling {
                     }
                 })
                 .frame(width: 273, height: 60)
-                .padding(.bottom, 20)
+                .padding(.bottom)
             }
             .frame(width: 300, height: 250)
             .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
             .padding()
-            .background(colorScheme == .dark ? Color.black.opacity(0.7) : Color.white)
+            .background(Color.colorBackground)
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .offset(x: 0, y: offset)
             .onAppear {

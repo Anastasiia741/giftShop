@@ -6,14 +6,13 @@ import SwiftUI
 import Kingfisher
 
 struct ProductTypeSection: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: CustomProductVM
     private let textComponent = TextComponent()
     @State private var isPressed: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            textComponent.createText(text: "Тип товара", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: "Тип товара", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
@@ -28,7 +27,7 @@ struct ProductTypeSection: View {
                 }
                 .onAppear {
                     Task {
-                        await viewModel.loadData()
+                        await viewModel.fetchCustomProduct()
                     }
                 }
             }
@@ -61,7 +60,7 @@ extension ProductTypeSection {
             }
             .frame(width: 87, height: 101)
             
-            textComponent.createText(text: product.name, fontSize: 12, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: product.name, fontSize: 12, fontWeight: .regular, lightColor: .black, darkColor: .white)
             .padding(.top, 4)
         }
         .padding(.vertical)

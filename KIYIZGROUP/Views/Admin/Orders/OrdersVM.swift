@@ -25,11 +25,11 @@ final class OrdersVM: ObservableObject {
     
     @Published var selectCustomOrder: CustomOrder?
     
-    @Published var showQuitPresenter = false
+    @Published var showQuit = false
     @Published var imageURL: URL?
 }
 
-
+//MARK: - Orders
 extension OrdersVM {
     func fetchUserOrders() {
         dbOrdersService.fetchUserOrders { [weak self] orders  in
@@ -73,6 +73,7 @@ extension OrdersVM {
     }
 }
 
+//MARK: - Status
 extension OrdersVM {
     func updateOrderStatus(orderID: String, newStatus: String) {
         dbOrderService.updateOrderStatus(orderID: orderID, newStatus: newStatus) { [weak self] in
@@ -91,6 +92,7 @@ extension OrdersVM {
     }
 }
 
+//MARK: - Filters
 extension OrdersVM {
     func filterOrders(_ status: OrderStatus) {
         selectedStatus = status
@@ -114,12 +116,13 @@ extension OrdersVM {
     }
 }
 
+//MARK: - Logout
 extension OrdersVM {
-    func logout()  {
+    func logout() {
         authService.signOut{ result in
             switch result {
             case .success:
-                self.showQuitPresenter = true
+                self.showQuit = true
             case .failure(let error):
                 print("\(error.localizedDescription)")
             }

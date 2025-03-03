@@ -66,7 +66,7 @@ struct ProductsEditView: View {
                 }
                 .onAppear {
                     Task {
-                        await catalogVM.fetchAllProducts()
+                        await catalogVM.fetchProducts()
                     }
                 }
             }

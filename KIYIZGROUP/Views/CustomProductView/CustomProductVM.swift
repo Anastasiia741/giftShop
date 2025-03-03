@@ -27,8 +27,9 @@ final class CustomProductVM: ObservableObject {
     
 }
 
+//MARK: - fetchProduct
 extension CustomProductVM {
-    func loadData() async {
+    func fetchCustomProduct() async {
         async let products = productService.fetchCustomProducts()
         async let styles = productService.fetchCustomStyles()
         
@@ -45,7 +46,10 @@ extension CustomProductVM {
             print("Ошибка загрузки данных: \(error.localizedDescription)")
         }
     }
-    
+}
+
+//MARK: - fetchImage
+extension CustomProductVM {
     func fetchProductImages() {
         for product in allCustomProducts {
             if let productImage = product.image {
@@ -79,9 +83,9 @@ extension CustomProductVM {
             }
         }
     }
-    
 }
 
+//MARK: - 
 extension CustomProductVM {
     @MainActor
     func loadSelectedDesignImage() async -> UIImage? {

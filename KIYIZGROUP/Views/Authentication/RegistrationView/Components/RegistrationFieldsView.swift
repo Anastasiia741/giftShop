@@ -7,18 +7,18 @@ import SwiftUI
 struct RegistrationFieldsView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: RegistrationVM
+    let customButton: CustomButton
     private let textComponent = TextComponent()
     private let customTextField = CustomTextField()
     private let customSecureField = CustomSecureField()
-    let customButton: CustomButton
     @State private var isPasswordVisible = false
     
     var body: some View {
         VStack(spacing: 8) {
-            textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
-            
+    
             customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email,
                                             color: colorScheme == .dark ? .white : .black,
                                             borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
@@ -29,7 +29,7 @@ struct RegistrationFieldsView: View {
             .padding(6)
             
             if let errorMessage = viewModel.errorMessage, !errorMessage.isEmpty {
-                textComponent.createText(text: errorMessage, fontSize: 14, fontWeight: .regular, color: .r)
+                textComponent.createText(text: errorMessage, fontSize: 14, fontWeight: .regular, lightColor: .r, darkColor: .r)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
             }

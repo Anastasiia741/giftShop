@@ -11,7 +11,7 @@ class AuthBaseVM: ObservableObject {
     @Published var errorType: ErrorType? = nil
 }
 
-
+//MARK: - errors
 extension AuthBaseVM {
     func validateFieldsForReg(email: String, password: String) -> String? {
         if email.isEmpty {

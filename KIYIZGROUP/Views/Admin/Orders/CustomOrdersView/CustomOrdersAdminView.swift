@@ -6,7 +6,6 @@
 import SwiftUI
 
 struct CustomOrdersAdminView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel = OrdersVM()
     @State private var selectedStatus: OrderStatus = .all
     private let textComponent = TextComponent()
@@ -37,8 +36,8 @@ struct CustomOrdersAdminView: View {
                 .scrollContentBackground(.hidden)
                 .padding(.vertical)
             }
-            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, colorScheme: colorScheme, isPresented: $isShowExit))
-            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
+            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $isShowExit))
+            .fullScreenCover(isPresented: $viewModel.showQuit) {
                 NavigationView {
                     TabBar(viewModel: MainTabVM())
                 }

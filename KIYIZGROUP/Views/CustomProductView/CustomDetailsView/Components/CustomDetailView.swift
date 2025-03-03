@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct CustomDetailView: View {
-    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: CustomProductVM
     private let statusColors = StatusColors()
     private let textComponent = TextComponent()
@@ -16,20 +15,12 @@ struct CustomDetailView: View {
             headerView
             orderDetails
                 .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(
-                            colorScheme == .dark ? Color.white.opacity(0.2) : Color.gray.opacity(0.3),
-                            lineWidth: 1.5
-                        )
-                )
-                .onAppear(){
-                }
+                .adaptiveStroke()
         }
     }
     
     private var headerView: some View {
-        textComponent.createText(text: "Детали", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+        textComponent.createText(text: "Детали", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
         .padding(.vertical)
     }
     
@@ -49,10 +40,11 @@ struct CustomDetailView: View {
     
     private func detailRow(label: String, value: String, valueColor: Color? = nil) -> some View {
         HStack {
-            textComponent.createText(text: label, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: label, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             Spacer()
            
-            textComponent.createText(text: value, fontSize: 16, fontWeight: .regular, color: valueColor ?? (colorScheme == .dark ? .white : .black))
+            textComponent.createText(text: value, fontSize: 16, fontWeight: .regular,    lightColor: valueColor ?? .black, darkColor: valueColor ?? .white)
+
         }
     }
 }

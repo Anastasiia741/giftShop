@@ -9,8 +9,8 @@ struct AuthorizationView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel = AuthorizationVM()
     @Binding var currentTab: Int
-    @State private var isShowCatalog = false
-    @State private var isShowView = false
+    @State private var showCatalog = false
+    @State private var showView = false
     
     var body: some View {
         ZStack{
@@ -23,18 +23,18 @@ struct AuthorizationView: View {
                 Spacer()
                 AnimatedImagesView()
                 Spacer()
-                AuthorizationFieldsView(viewModel: viewModel, isShowCatalog: $isShowCatalog)
+                AuthorizationFieldsView(viewModel: viewModel, showCatalog: $showCatalog)
                     .padding(.horizontal)
                 ForgotPasswordButton().createButton(action: {
-                    isShowView.toggle()
+                    showView.toggle()
                 })
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.bottom, 16)
             }
-            if isShowView {
-                ForgotPasswordView(isOpenView: $isShowView)
+            if showView {
+                ForgotPasswordView(isOpenView: $showView)
             }
         }
         .navigationBarBackButtonHidden(true)

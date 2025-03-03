@@ -6,23 +6,24 @@ import SwiftUI
 
 struct ConfirmationView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss
+    private let textComponent = TextComponent()
     let customButton: CustomButton
     let email: String
-    private let textComponent = TextComponent()
     @Binding var currentTab: Int
-    @State private var isShowAuthView = false
+    @State private var showAuthView = false
     
     var body: some View {
         VStack {
             VStack{
                 Spacer()
-                textComponent.createText(text: "Поздравляем!", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Поздравляем!", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
                 
-                textComponent.createText(text: "\(email) успешно зарегистрирован.", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "\(email) успешно зарегистрирован.", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
                 
-                textComponent.createText(text: "Завершите авторизацию, чтобы получить доступ к вашему аккаунту.", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Завершите авторизацию, чтобы получить доступ к вашему аккаунту.", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
                 Spacer()
             }
@@ -30,14 +31,17 @@ struct ConfirmationView: View {
             .padding(.horizontal)
             VStack(spacing: 16) {
                 customButton.createButton(text: "Войти", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black, backgroundColor: .clear, borderColor: .colorDarkBrown,action: {
-                    isShowAuthView = true
+                    showAuthView = true
                 })
                 .padding(.horizontal, 16)
                 .padding(.bottom, 36)
             }
-            .navigationDestination(isPresented: $isShowAuthView) {
+            .navigationDestination(isPresented: $showAuthView) {
                 AuthorizationView(currentTab: $currentTab)
             }
+        }
+        .onChange(of: currentTab) { _, _ in
+            dismiss()
         }
         .navigationBarBackButtonHidden(true)
     }
