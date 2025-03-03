@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct EditProfileView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var mainTabVM: MainTabVM
     @ObservedObject var viewModel = ProfileVM()
@@ -54,7 +53,6 @@ struct EditProfileView: View {
                     }
                     .padding(.top, 16)
                     .padding(.horizontal)
-                    
                 }
                 .scrollIndicators(.hidden)
                 .navigationDestination(isPresented: $viewModel.isShowQuit) {

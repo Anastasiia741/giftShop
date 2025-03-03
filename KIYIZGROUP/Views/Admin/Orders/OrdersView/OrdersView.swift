@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct OrdersView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel = OrdersVM()
     @State private var selectedStatus: OrderStatus = .all
     @State private var isShowExit = false
@@ -17,8 +16,8 @@ struct OrdersView: View {
                 statusSection
                 orders
             }
-            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, colorScheme: colorScheme, isPresented: $isShowExit))
-            .fullScreenCover(isPresented: $viewModel.showQuitPresenter) {
+            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $isShowExit))
+            .fullScreenCover(isPresented: $viewModel.showQuit) {
                 NavigationView {
                     TabBar(viewModel: MainTabVM())
                 }
@@ -29,7 +28,8 @@ struct OrdersView: View {
         }
     }
 }
-    
+  
+
 extension OrdersView {
     private var statusSection: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -58,27 +58,3 @@ extension OrdersView {
 }
 
 
-struct LogoutButton: View {
-    @ObservedObject var viewModel: OrdersVM
-    let colorScheme: ColorScheme
-    @Binding var isPresented: Bool
-    
-    var body: some View {
-        Button(action: { isPresented = true }) {
-            Images.Profile.exit
-                .imageScale(.small)
-                .foregroundColor(colorScheme == .dark ? .white : .black)
-        }
-        .actionSheet(isPresented: $isPresented) {
-            ActionSheet(
-                title: Text(Localization.logOut),
-                buttons: [
-                    .default(Text(Localization.yes)) {
-                        viewModel.logout()
-                    },
-                    .cancel(Text(Localization.cancel))
-                ]
-            )
-        }
-    }
-}

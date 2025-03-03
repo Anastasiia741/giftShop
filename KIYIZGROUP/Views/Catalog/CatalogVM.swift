@@ -14,27 +14,33 @@ final class CatalogVM: ObservableObject {
     @Published var categories = [Localization.allCategories.lowercased()]
     @Published var selectedCategory = Localization.allCategories.lowercased()
     private let productService = ProductService()
-    
 }
 
+//MARK: - fetchProducts
 extension CatalogVM {
-    
-    func fetchAllProducts() async {
+    func fetchProducts() async {
         do {
             let result = try await productService.fetchAllProducts()
             
             DispatchQueue.main.async {
                 self.allProducts = result
-                self.popularProducts = result.filter { $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased() }
-                let productCategories = Set(result.map {$0.category.lowercased()})
-                self.categories.append(contentsOf: productCategories)
+                self.popularProducts = result.filter {
+                    $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased()
+                }
+                
+                let productCategories = Set(result.map { $0.category.lowercased() })
+                
+                self.categories = [Localization.allCategories.lowercased()] + productCategories.sorted()
                 self.filteredProducts = result
             }
         } catch {
             print(error.localizedDescription)
         }
     }
-    
+}
+ 
+//MARK: - filter
+extension CatalogVM {
     func filterProducts(by category: String) {
         if category == Localization.allCategories.lowercased() {
             filteredProducts = allProducts

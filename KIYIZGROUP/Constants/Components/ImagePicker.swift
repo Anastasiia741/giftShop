@@ -62,13 +62,13 @@ struct PhotoSourceSheetView: View {
         ZStack {
             VStack {
                 VStack(spacing: 16) {
-                    textComponent.createText(text: "Выберите источник фото", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Выберите источник фото", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     CustomDivider()
                     Button(action: {
                         isShowGalleryPicker = true
                         onDismiss()
                     }) {
-                        textComponent.createText(text: "Галерея", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                        textComponent.createText(text: "Галерея", fontSize: 16, fontWeight: .regular,lightColor: .black, darkColor: .white)
                             .frame(maxWidth: .infinity)
                     }
                     CustomDivider()
@@ -76,14 +76,14 @@ struct PhotoSourceSheetView: View {
                         isShowCameraPicker = true
                         onDismiss()
                     }) {
-                        textComponent.createText(text: "Камера", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                        textComponent.createText(text: "Камера", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                             .frame(maxWidth: .infinity)
                     }
                     CustomDivider()
                     Button(action: {
                         onDismiss()
                     }) {
-                        textComponent.createText(text: "Отмена", fontSize: 16, fontWeight: .regular, color: .gray)
+                        textComponent.createText(text: "Отмена", fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
                     }
                 }
                 .padding()

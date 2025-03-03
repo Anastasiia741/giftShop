@@ -5,15 +5,14 @@
 import SwiftUI
 
 struct AdditionalInfoSection: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     @Binding var additionalText: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            textComponent.createText(text: "Дополнительно", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: "Дополнительно", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 .padding(.bottom, 4)
-            textComponent.createText(text: "Напишите, чтобы вы хотели разместить на товаре", fontSize: 12, fontWeight: .regular, color: .gray)
+            textComponent.createText(text: "Напишите, чтобы вы хотели разместить на товаре", fontSize: 12, fontWeight: .regular, lightColor: .gray, darkColor: .white)
             
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $additionalText)

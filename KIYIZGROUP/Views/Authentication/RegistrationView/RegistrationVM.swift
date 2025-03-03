@@ -10,7 +10,10 @@ final class RegistrationVM: AuthBaseVM {
     private var authService = AuthService()
     var onRegistrSuccess: (() -> Void)?
     @Published var isShowConfirmView = false
+}
     
+//MARK: - signUp
+extension RegistrationVM {
     func signUp() {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -30,7 +33,10 @@ final class RegistrationVM: AuthBaseVM {
             }
         }
     }
-    
+}
+
+//MARK: - disclaimer
+extension RegistrationVM {
     func disclaimerTapped() {
         if let url = URL(string: Accesses.policy) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

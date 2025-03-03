@@ -5,13 +5,12 @@
 import SwiftUI
 
 struct CustomHeaderView: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     var title: String
     
     var body: some View {
         HStack{
-            textComponent.createText(text: title, fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: title, fontSize: 21, fontWeight: .bold, style: .headline,  lightColor: .black, darkColor: .white)
                 .padding(.bottom, 4)
             Spacer()
         }

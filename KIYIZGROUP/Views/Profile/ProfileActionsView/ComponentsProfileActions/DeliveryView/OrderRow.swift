@@ -6,46 +6,44 @@ import SwiftUI
 
 struct OrderRow: View {
     let order: Order
-    let colorScheme: ColorScheme
     let statusColors: StatusColors
     let textComponent: TextComponent
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                textComponent.createText(text: "Статус заказа", fontSize: 14, fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Статус заказа", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: order.status, fontSize: 14, fontWeight: .bold, color: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                textComponent.createText(text: order.status, fontSize: 14, fontWeight: .bold,
+                                         lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
+                                         darkColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
             }
             .padding(.vertical, 6)
            
             HStack {
-                textComponent.createText(text: "Номер заказа", fontSize: 14,fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Номер заказа", fontSize: 14,fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
             }
             .padding(.vertical, 6)
            
             HStack {
-                textComponent.createText(text: "Дата и время заказа", fontSize: 14, fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Дата и время заказа", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: Extentions().formattedDate(order.date), fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: Extentions().formattedDate(order.date), fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
             }
             .padding(.vertical, 6)
             CustomDivider()
            
             HStack {
                 Spacer()
-                textComponent.createText(text: "Сумма: \(order.cost) сом", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Сумма: \(order.cost) сом", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             }
             .padding(.vertical, 6)
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 8).fill(colorScheme == .dark ? Color.black : Color.white))
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(colorScheme == .dark ? Color.gray : Color(UIColor.systemGray4), lineWidth: 1)
-        )
+        .adaptiveFill()
+        .adaptiveOverlay()
         .padding(.vertical, 4)
     }
 }
@@ -53,7 +51,6 @@ struct OrderRow: View {
 
 struct CustomOrderRow: View {
     let order: CustomOrder
-    let colorScheme: ColorScheme
     let statusColors: StatusColors
     let textComponent: TextComponent
     let designImage: [String: URL] 
@@ -61,35 +58,37 @@ struct CustomOrderRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                textComponent.createText(text: "Статус заказа", fontSize: 14, fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Статус заказа", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: order.status, fontSize: 14, fontWeight: .bold, color: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                textComponent.createText(text: order.status, fontSize: 14, fontWeight: .bold,
+                                         lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
+                                         darkColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
             }
             .padding(.vertical, 6)
             
             HStack {
-                textComponent.createText(text: "Номер заказа", fontSize: 14,fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Номер заказа", fontSize: 14,fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
             }
             .padding(.vertical, 6)
             
             HStack {
-                textComponent.createText(text: "Товар", fontSize: 14, fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Товар", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: order.product?.name ?? "", fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: order.product?.name ?? "", fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
             }
             .padding(.vertical, 6)
         
             HStack {
-                       textComponent.createText(text: "Дизайн", fontSize: 14, fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Дизайн", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                        Spacer()
                        
                        if let imageURL = designImage[order.id] {
                            AsyncImage(url: imageURL) { image in
                                image.resizable()
                                    .scaledToFit()
-                                   .frame(width: 50, height: 50) // Фиксированный размер
+                                   .frame(width: 50, height: 50)
                                    .clipShape(RoundedRectangle(cornerRadius: 8))
                            } placeholder: {
                                ProgressView()
@@ -100,7 +99,7 @@ struct CustomOrderRow: View {
                                RoundedRectangle(cornerRadius: 8)
                                    .fill(Color.gray.opacity(0.2))
                                    .frame(width: 50, height: 50)
-                               textComponent.createText(text: "Нет", fontSize: 12, fontWeight: .bold, color: .gray)
+                               textComponent.createText(text: "Нет", fontSize: 12, fontWeight: .bold, lightColor: .gray, darkColor: .white)
                            }
                        }
                    }
@@ -108,18 +107,16 @@ struct CustomOrderRow: View {
             
         
             HStack {
-                textComponent.createText(text: "Дата и время заказа", fontSize: 14, fontWeight: .semibold, color: .gray)
+                textComponent.createText(text: "Дата и время заказа", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
-                textComponent.createText(text: Extentions().formattedDate(order.date), fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: Extentions().formattedDate(order.date), fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                Spacer()
             }
             .padding(.vertical, 6)
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 8).fill(colorScheme == .dark ? Color.black : Color.white))
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(colorScheme == .dark ? Color.gray : Color(UIColor.systemGray4), lineWidth: 1)
-        )
+        .adaptiveFill()
+        .adaptiveOverlay()
         .padding(.vertical, 4)
     }
 }

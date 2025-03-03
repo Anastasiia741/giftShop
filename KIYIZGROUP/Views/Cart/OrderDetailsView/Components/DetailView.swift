@@ -5,70 +5,67 @@
 import SwiftUI
 
 struct DetailView: View {
-    @Environment(\.colorScheme) var colorScheme
     @StateObject private var cartViewModel = CartVM()
     @StateObject var viewModel: ProfileVM
-//    @StateObject var statusColors = StatusColors()
-    private let statusColors = StatusColors() // ✅ Correct
+    private let statusColors = StatusColors() 
 
     private let textComponent = TextComponent()
     let order: Order
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            textComponent.createText(text: "Детали", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: "Детали", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 .padding(.vertical)
             VStack {
                 HStack {
-                    textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(order.status)", fontSize: 16, fontWeight: .regular, color: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+                    textComponent.createText(text: "\(order.status)", fontSize: 16, fontWeight: .regular,
+                                             lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
+                                             darkColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
+
                 }
                 HStack {
-                    textComponent.createText(text: "Номер заказа", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Номер заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
-                    
+                    textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 .padding([.vertical])
                 HStack {
-                    textComponent.createText(text: "Дата и время заказа", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Дата и время заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 CustomDivider()
            
                 HStack {
-                    textComponent.createText(text: "Адрес доставки", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Адрес доставки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(order.address)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(order.address)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
                 .padding(.top)
                 HStack {
-                    textComponent.createText(text: "Телефон", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Телефон", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(order.phone)", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(order.phone)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
                 .padding(.top)
                 CustomDivider()
 
                 HStack {
-                    textComponent.createText(text: "Сумма заказа", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Сумма заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(order.cost) сом", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "\(order.cost) сом", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 .padding(.vertical)
                 HStack {
-                    textComponent.createText(text: "Доставка", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Доставка", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "Бесплатно", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Бесплатно", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
             }
             .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(colorScheme == .dark ? Color.white.opacity(0.2) : Color.gray.opacity(0.3), lineWidth: 1.5)
-            )
+            .adaptiveStroke()
         }
         .onAppear {
                    Task {

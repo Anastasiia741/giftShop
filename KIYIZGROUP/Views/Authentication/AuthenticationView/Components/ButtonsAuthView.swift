@@ -17,7 +17,7 @@ enum ActiveScreen: Identifiable, Equatable {
 }
 
 struct ButtonsAuthView: View {
-    @Environment(\.colorScheme) private var colorScheme
+//    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     var onButtonTap: (ActiveScreen) -> Void
     
@@ -28,7 +28,7 @@ struct ButtonsAuthView: View {
                     onButtonTap(.registration)
                 }
             }) {
-                textComponent.createText(text: "Регистрация", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Регистрация", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, maxHeight: 54)
                     .overlay(
                         RoundedRectangle(cornerRadius: 40)
@@ -40,10 +40,10 @@ struct ButtonsAuthView: View {
                     onButtonTap(.authorization)
                 }
             }) {
-                textComponent.createText(text: "Войти", fontSize: 16, fontWeight: .regular, color: .white)
+                textComponent.createText(text: "Войти", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
                     .font(.headline)
                     .frame(maxWidth: .infinity, maxHeight: 54)
-                    .background(Color.colorGreen)
+                    .background(.colorGreen)
                     .cornerRadius(40)
             }
         }

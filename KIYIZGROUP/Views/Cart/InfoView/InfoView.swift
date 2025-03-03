@@ -26,10 +26,10 @@ struct InfoView: View, InfoDialogHandling {
                     .frame(width: 64, height: 64)
                     .foregroundColor(Color.greenButton)
                 
-                textComponent.createText(text: "Заказ оформлен", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Заказ оформлен", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     .padding()
                 
-                textComponent.createText(text: "Наш оператор в скором времени свяжется с вами для подтверждения заказа", fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Наш оператор в скором времени свяжется с вами для подтверждения заказа", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.5)

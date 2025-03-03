@@ -6,7 +6,6 @@ import SwiftUI
 import PhotosUI
 
 struct DesignSelectionSection: View {
-    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: CustomProductVM
     private let textComponent = TextComponent()
     
@@ -18,13 +17,13 @@ struct DesignSelectionSection: View {
         .padding(.vertical)
         .onAppear {
             Task {
-                await viewModel.loadData()
+                await viewModel.fetchCustomProduct()
             }
         }
     }
     
     private func headerSection() -> some View {
-        textComponent.createText(text: "Выберите стиль", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+        textComponent.createText(text: "Выберите стиль", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
     }
 }
 

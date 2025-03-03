@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct ChangePasswordView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = ChangePassword()
     private let textComponent = TextComponent()
@@ -25,9 +24,9 @@ struct ChangePasswordView: View {
             }
             .padding([.leading, .top], 16)
             VStack(spacing: 16) {
-                textComponent.createText(text: "Change Password", fontSize: 20, fontWeight: .heavy, color:  colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "Change Password", fontSize: 20, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     .padding(.top, 20)
-                textComponent.createText(text: "You will be signed out upon changing your password and required to sign back into the app.", fontSize: 18, fontWeight: .regular, color: .gray)
+                textComponent.createText(text: "You will be signed out upon changing your password and required to sign back into the app.", fontSize: 18, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                 
@@ -47,10 +46,10 @@ struct ChangePasswordView: View {
                     )
                 
                 if let errorMessage = viewModel.errorMessage {
-                    textComponent.createText(text: errorMessage, fontSize: 12, fontWeight: .regular, color: .red)
+                    textComponent.createText(text: errorMessage, fontSize: 12, fontWeight: .regular, lightColor: .r, darkColor: .r)
                 }
                 if let successMessage = viewModel.successMessage {
-                    textComponent.createText(text: successMessage, fontSize: 12, fontWeight: .regular, color: .green)
+                    textComponent.createText(text: successMessage, fontSize: 12, fontWeight: .regular, lightColor: .greenButton, darkColor: .greenButton)
                 }
                 
                 Button(action: {
@@ -62,7 +61,7 @@ struct ChangePasswordView: View {
                             .background(Color.colorGreen)
                             .cornerRadius(40)
                     } else {
-                        textComponent.createText(text: "Save Password", fontSize: 16, fontWeight: .regular, color: .white)
+                        textComponent.createText(text: "Save Password", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
                             .frame(maxWidth: .infinity, minHeight: 50)
                             .background(Color.colorGreen)
                             .cornerRadius(40)

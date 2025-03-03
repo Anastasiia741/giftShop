@@ -7,13 +7,12 @@ import SwiftUI
 struct ImagePickerButton: View {
     let title: String
     let action: () -> Void
-    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     
     var body: some View {
         Button(action: action) {
             HStack {
-                textComponent.createText(text: title, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: title, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 Spacer()
                 Image(systemName: "plus")
                     .foregroundColor(Color.colorDarkBrown)

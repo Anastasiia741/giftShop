@@ -18,10 +18,10 @@ struct PopularProductCell: View {
                     .frame(width: 224, height: 224)
                     .position(x: 294, y: 102)
                 VStack(alignment: .leading, spacing: 8) {
-                    textComponent.createText(text: product.name, fontSize: 16, fontWeight: .bold, color: .white)
+                    textComponent.createText(text: product.name, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
                         .padding(.top, 16)
                         .padding(.leading, 8)
-                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .bold, color: .white)
+                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
                         .padding(.top, 22)
                         .padding(.leading, 8)
                 }

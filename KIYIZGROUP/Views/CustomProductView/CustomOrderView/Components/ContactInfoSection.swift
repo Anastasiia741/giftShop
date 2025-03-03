@@ -14,9 +14,9 @@ struct ContactInfoSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            textComponent.createText(text: "Контактные данные", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: "Контактные данные", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
             
-            textComponent.createText(text: "Оставьте свой номер телефона и наш оператор свяжется с вами в ближайшее время для уточнения деталей", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: "Оставьте свой номер телефона и наш оператор свяжется с вами в ближайшее время для уточнения деталей", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             
             customTextField.createTextField(placeholder: "+996*", text: $phoneNumber, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
                 .keyboardType(.numberPad)

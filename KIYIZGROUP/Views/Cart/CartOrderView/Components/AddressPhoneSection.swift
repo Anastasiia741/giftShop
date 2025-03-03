@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct AddressPhoneSection: View {
-    @Environment(\.colorScheme) var colorScheme
     @StateObject private var cartViewModel = CartVM()
     @ObservedObject var viewModel = ProfileVM()
     private let textFieldComponent = TextFieldComponent()
@@ -15,9 +14,9 @@ struct AddressPhoneSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            textComponent.createText(text: "Адрес и номер телефона", fontSize: 21, fontWeight: .bold, style: .headline, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: "Адрес и номер телефона", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
             HStack {
-                textComponent.createText(text: viewModel.address.isEmpty ? "Добавить адрес" : viewModel.address, fontSize: 16, fontWeight: .medium, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: viewModel.address.isEmpty ? "Добавить адрес" : viewModel.address, fontSize: 16, fontWeight: .medium, lightColor: .black, darkColor: .white)
                     .foregroundColor(.gray)
                 Spacer()
                 NavigationLink(destination: AddressInputView(viewModel: viewModel)) {
@@ -27,7 +26,7 @@ struct AddressPhoneSection: View {
             }
             .padding()
             .background(RoundedRectangle(cornerRadius: 24)
-                    .stroke(isAddressValid ? .gray : .r, lineWidth: 1.3))
+                .stroke(isAddressValid ? .gray : .r, lineWidth: 1.3))
             textFieldComponent.createTextField(placeholder: "+996", text: $viewModel.phone, keyboardType: .phonePad, borderColor: isPhoneValid ? .gray : .r)
         }
         .onAppear {
@@ -42,28 +41,22 @@ struct AddressPhoneSection: View {
 
 extension AddressPhoneSection {
     private func loadUserData() {
-           if viewModel.authService.currentUser == nil {
-               // Load guest data
-               cartViewModel.fetchGuestData()
-           } else {
-               // Fetch profile data for authenticated user
-               Task {
-                   await viewModel.fetchUserProfile()
-               }
-           }
-       }
+        if viewModel.authService.currentUser == nil {
+            cartViewModel.fetchGuestData()
+        } else {
+            Task {
+                await viewModel.fetchUserProfile()
+            }
+        }
+    }
     
     private func savePhoneData() {
-          if viewModel.authService.currentUser == nil {
-              UserDefaults.standard.set(viewModel.phone, forKey: "guestPhone")
-          } else {
-              Task {
-                  await viewModel.saveProfile()
-              }
-          }
-      }
-    
-       
-     
-       
+        if viewModel.authService.currentUser == nil {
+            UserDefaults.standard.set(viewModel.phone, forKey: "guestPhone")
+        } else {
+            Task {
+                await viewModel.saveProfile()
+            }
+        }
+    }
 }

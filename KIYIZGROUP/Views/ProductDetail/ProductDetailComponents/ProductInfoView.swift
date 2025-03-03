@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct ProductInfoView: View {
-    @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     let productDetail: String
     
@@ -13,11 +12,12 @@ struct ProductInfoView: View {
         VStack(alignment: .leading, spacing: 8) {
             CurvedLineView()
             
-            textComponent.createText(text: "О товаре", fontSize: 14, fontWeight: .regular, color: .colorLightBrown)
+            textComponent.createText(text: "О товаре", fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                 .padding(.horizontal, 16)
             
             ScrollView {
-                textComponent.createText(text: "\(productDetail)", fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: "\(productDetail)", fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    .padding(.horizontal, 16)
                     .padding(.horizontal, 16)
             }
         }

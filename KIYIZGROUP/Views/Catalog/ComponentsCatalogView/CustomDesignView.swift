@@ -13,7 +13,7 @@ struct CustomDesignView: View {
         VStack(alignment: .leading, spacing: 16) {
             NavigationLink(destination: CustomView(customOrder: customOrder, currentTab: $currentTab)) {
                 HStack {
-                    textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, color: .white)
+                    textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
                     Spacer()
                     Images.Menu.chevron
                         .foregroundColor(.white)

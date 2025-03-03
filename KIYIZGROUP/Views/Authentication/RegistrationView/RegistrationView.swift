@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct RegistrationView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var viewModel = RegistrationVM()
     private let customButton = CustomButton()
@@ -24,12 +23,15 @@ struct RegistrationView: View {
             Spacer()
             RegistrationFieldsView(viewModel: viewModel, customButton: customButton)
             Spacer()
-            simpleButton.createMinimalButton(text: Localization.privacyPolicy, fontSize: 12, fontWeight: .regular, color: colorScheme == .dark ? .white : .black) {
+            simpleButton.createMinimalButton(text: Localization.privacyPolicy, fontSize: 12) {
                 viewModel.disclaimerTapped()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
             .padding(.leading, 16)
+        }
+        .onChange(of: currentTab) { _, _ in
+            dismiss()
         }
         .onTapGesture {
             self.hideKeyboard()

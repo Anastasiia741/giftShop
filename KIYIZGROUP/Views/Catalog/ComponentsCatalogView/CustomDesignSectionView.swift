@@ -5,14 +5,13 @@
 import SwiftUI
 
 struct CustomDesignSectionView: View {
-    @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     let customOrder: CustomOrder
     @Binding var currentTab: Int
 
     var body: some View {
         VStack(alignment: .leading ) {
-            textComponent.createText(text: Localization.customDesign, fontSize: 21, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+            textComponent.createText(text: Localization.customDesign, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .padding(.leading, 30)
             CustomDesignView(customOrder: customOrder, currentTab: $currentTab)
                 .frame(maxWidth: .infinity, alignment: .leading)

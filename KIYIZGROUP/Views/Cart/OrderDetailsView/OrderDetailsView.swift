@@ -6,7 +6,6 @@ import SwiftUI
 
 struct OrderDetailsView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.colorScheme) var colorScheme
     @StateObject private var profileVM = ProfileVM()
     private let textComponent = TextComponent()
     @Binding var currentTab: Int

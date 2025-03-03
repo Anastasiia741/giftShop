@@ -163,9 +163,7 @@ extension ProfileVM {
         authService.deleteAccount { [weak self] result in
             switch result {
             case .success:
-                //                self?.logout()
                 self?.logout(mainTabVM: MainTabVM())
-                
                 onDelete()
             case .failure(let error):
                 print("Ошибка удаления аккаунта: \(error.localizedDescription)")

@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct OrderDetail: View {
-    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: OrderDetailVM
     @ObservedObject var orderViewModel: OrdersVM
 

@@ -36,9 +36,9 @@ struct ProductDetailView: View {
                 )
             
             HStack() {
-                textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, color: .white)
+                textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 
-                textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .colorYellow).strikethrough()
+                textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .colorYellow, darkColor: .colorYellow).strikethrough()
             }
             .padding([.vertical, .horizontal])
             .frame(maxWidth: .infinity, alignment: .leading)

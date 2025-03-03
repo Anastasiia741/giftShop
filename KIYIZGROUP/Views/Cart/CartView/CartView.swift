@@ -41,7 +41,7 @@ struct CartView: View {
             .onAppear {
                 viewModel.fetchOrder()
                 Task {
-                    await catalogVM.fetchAllProducts()
+                    await catalogVM.fetchProducts()
                 }
             }
         }

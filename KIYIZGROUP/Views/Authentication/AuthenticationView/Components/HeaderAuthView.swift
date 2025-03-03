@@ -17,7 +17,3 @@ struct HeaderAuthView: View {
         .padding(.bottom, 16)
     }
 }
-
-#Preview {
-    HeaderAuthView()
-}

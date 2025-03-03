@@ -7,7 +7,6 @@ import SwiftUI
 import Combine
 
 final class CreateProductVM: ObservableObject {
-    
     private var productService = ProductService()
     @Published var productImage: UIImage?
     @Published var imageURL: String?
@@ -19,17 +18,10 @@ final class CreateProductVM: ObservableObject {
     @Published var alertMessage = ""
     @Published var alertModel: AlertModel?
     
-    private func configureAlertModel(with title: String, message: String?) -> AlertModel {
-        AlertModel(
-            title: title,
-            message: message,
-            buttons: [
-                AlertButtonModel(title: Localization.ok, action: { [weak self] in
-                    self?.alertModel = nil
-                })
-            ])
-    }
-    
+}
+
+//MARK: - create
+extension CreateProductVM {
     private func createProduct(_ product: Product) {
         productService.create(product: product) { [weak self] error in
             guard let self = self else { return }
@@ -42,14 +34,6 @@ final class CreateProductVM: ObservableObject {
                 }
             }
         }
-    }
-    
-    private func clearFields() {
-        productName = ""
-        productCategory = ""
-        productPrice = ""
-        productDetail = ""
-        productImage = nil
     }
     
     func createNewProduct() {
@@ -75,5 +59,27 @@ final class CreateProductVM: ObservableObject {
                 }
             }
         }
+    }
+}
+
+//MARK: - errors
+private extension CreateProductVM {
+    func configureAlertModel(with title: String, message: String?) -> AlertModel {
+        AlertModel(
+            title: title,
+            message: message,
+            buttons: [
+                AlertButtonModel(title: Localization.ok, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ])
+    }
+    
+    func clearFields() {
+        productName = ""
+        productCategory = ""
+        productPrice = ""
+        productDetail = ""
+        productImage = nil
     }
 }

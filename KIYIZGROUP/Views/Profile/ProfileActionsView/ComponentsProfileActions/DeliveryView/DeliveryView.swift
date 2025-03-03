@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct DeliveryView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: ProfileVM
     @State private var selectedOrder: Order?
@@ -15,11 +14,11 @@ struct DeliveryView: View {
     
     var body: some View {
         VStack {
-            textComponent.createText(text: "Детали", fontSize: 26, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black )
+            textComponent.createText(text: "Детали", fontSize: 26, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             List(viewModel.orders) { order in
-                OrderRow(order: order, colorScheme: colorScheme, statusColors: statusColors, textComponent: textComponent)
+                OrderRow(order: order, statusColors: statusColors, textComponent: textComponent)
                     .onTapGesture {
                         selectedOrder = order
                     }

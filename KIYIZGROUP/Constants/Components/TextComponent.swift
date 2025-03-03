@@ -13,7 +13,7 @@ final class Extentions: ObservableObject {
 }
 
 struct TextComponent {
-    func createText(text: String, fontSize: CGFloat, fontWeight: Font.Weight, style: Font.TextStyle? = nil, color: Color) -> some View {
+    func createText(text: String, fontSize: CGFloat, fontWeight: Font.Weight, style: Font.TextStyle? = nil, lightColor: Color, darkColor: Color) -> some View {
         Text(text)
             .font(
                 style != nil
@@ -21,7 +21,8 @@ struct TextComponent {
                 : Font.custom("Inter", size: fontSize)
             )
             .fontWeight(fontWeight)
-            .foregroundColor(color)
+//            .foregroundColor(color)
+            .adaptiveForeground(light: lightColor, dark: darkColor)
     }
 }
 

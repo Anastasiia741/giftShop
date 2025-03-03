@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct SupportInfoView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = ProfileVM()
     private let textComponent = TextComponent()
     
@@ -15,7 +14,7 @@ struct SupportInfoView: View {
                 UIApplication.openWebsite("https://mobimint.kg/")
             }) {
                 HStack {
-                    textComponent.createText(text: "Политика конфиденциальности", fontSize: 16, fontWeight: .bold, color: colorScheme == .dark ? .white : .black)
+                    textComponent.createText(text: "Политика конфиденциальности", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)

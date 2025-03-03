@@ -27,7 +27,7 @@ struct AlertView: View, InfoDialogHandling {
                         self.closeInfoDialog()
                 }
             VStack() {
-                textComponent.createText(text: title, fontSize: 18, fontWeight: .bold, color: .black)
+                textComponent.createText(text: title, fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .black)
                     .multilineTextAlignment(.center)
                     .padding()
                 Spacer()

@@ -7,7 +7,6 @@ import Kingfisher
 import FirebaseStorage
 
 struct ProductCell: View {
-    @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     let product: Product
     @State private var imageURL: URL?
@@ -36,10 +35,11 @@ struct ProductCell: View {
                     }
             }
             VStack(alignment: .leading, spacing: 4) {
-                textComponent.createText(text: product.name, fontSize: 12, fontWeight: .medium, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: product.name, fontSize: 12, fontWeight: .medium, lightColor: .black, darkColor: .white)
                 HStack {
-                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
-                    textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, color: .gray).strikethrough()
+                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray).strikethrough()
+                                            
                 }
             }
             .padding(.top, 6)

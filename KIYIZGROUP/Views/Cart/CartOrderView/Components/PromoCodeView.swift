@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct PromoCodeView: View {
-    @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
     @StateObject private var viewModel = CartVM()
     @Binding var promo: String
@@ -21,7 +20,7 @@ struct PromoCodeView: View {
                 .offset(y: -80)
             VStack {
                 Spacer()
-                textComponent.createText(text: promo.isEmpty ? "Неверный промокод" : "\(promo)", fontSize: 22, fontWeight: .heavy, color: colorScheme == .dark ? .white : .black)
+                textComponent.createText(text: promo.isEmpty ? "Неверный промокод" : "\(promo)", fontSize: 22, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
                     .padding(.horizontal)
             }

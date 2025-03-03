@@ -8,8 +8,8 @@ struct CreateProductView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = CreateProductVM()
     @State private var showImgAlert = false
-    @State private var isShowingGalleryPicker = false
-    @State private var isShowingCameraPicker = false
+    @State private var showGalleryPicker = false
+    @State private var showCameraPicker = false
     
     var body: some View {
         NavigationView {
@@ -63,10 +63,10 @@ struct CreateProductView: View {
             }
             .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
                 Button(Localization.gallery) {
-                    isShowingGalleryPicker = true
+                    showGalleryPicker = true
                 }
                 Button(Localization.camera) {
-                    isShowingCameraPicker = true
+                    showCameraPicker = true
                 }
             }
 //            .sheet(isPresented: $isShowingGalleryPicker) {
