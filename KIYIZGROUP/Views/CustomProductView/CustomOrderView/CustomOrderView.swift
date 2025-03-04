@@ -30,8 +30,7 @@ struct CustomOrderView: View {
                     .padding([.horizontal, .vertical])
                 Spacer()
                 
-                GreenButton(text: "Оформить заказ", isDisabled: viewModel.phone.trimmingCharacters(in:   .whitespacesAndNewlines).isEmpty
-                ) {
+                GreenButton(text: "Оформить заказ", isDisabled: viewModel.phone.trimmingCharacters(in:   .whitespacesAndNewlines).isEmpty) {
                     Task {
                         isLoading = true
                         await viewModel.submitOrder()

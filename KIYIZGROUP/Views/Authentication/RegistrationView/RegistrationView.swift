@@ -11,6 +11,12 @@ struct RegistrationView: View {
     private let simpleButton = MinimalButton()
     @Binding var currentTab: Int
     
+    
+//    @State private var navigationPath = NavigationPath()
+
+    
+    
+    
     var body: some View {
         VStack {
             HStack {
@@ -39,11 +45,6 @@ struct RegistrationView: View {
         }
         .navigationDestination(isPresented: $viewModel.isShowConfirmView) {
             ConfirmationView(customButton: customButton, email: viewModel.email, currentTab: $currentTab)
-        }
-        .onChange(of: currentTab) { oldValue, newValue in
-            if oldValue != newValue {
-                dismiss()
-            }
         }
     }
 }

@@ -8,7 +8,6 @@ import UIKit
 
 final class RegistrationVM: AuthBaseVM {
     private var authService = AuthService()
-    var onRegistrSuccess: (() -> Void)?
     @Published var isShowConfirmView = false
 }
     
@@ -27,7 +26,6 @@ extension RegistrationVM {
             switch result {
             case .success(_):
                 self?.isShowConfirmView = true
-                self?.onRegistrSuccess?()
             case .failure(let error):
                 self?.updateError(message: "Registration failed: \(error.localizedDescription)", type: .general)
             }

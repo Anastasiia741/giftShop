@@ -7,27 +7,32 @@ import UIKit
 import SwiftUICore
 import FirebaseStorage
 
+@MainActor
 final class OrdersVM: ObservableObject {
     private let dbOrdersService = DBOrdersService()
+    private let profileService = ProfileService()
+    private let orderService = OrderService()
     private let productService = CustomProductService()
     private let authService = AuthService()
     private let dbOrderService = DBOrdersService()
     
-    private var selectOrder: Order?
+    var selectOrder: Order?
+    @Published var userProfile: NewUser?
     @Published var selectedStatus: OrderStatus = .all
     
     @Published var orders: [Order] = []
     @Published var filteredOrders: [Order] = []
     @Published var customOrders: [CustomOrder] = []
     @Published var filteredCustomOrders: [CustomOrder] = []
+    
     @Published var designImage: [String: URL] = [:]
     @Published var attachedImage: [String: URL] = [:]
-    
-    @Published var selectCustomOrder: CustomOrder?
-    
+        
     @Published var showQuit = false
     @Published var imageURL: URL?
 }
+
+
 
 //MARK: - Orders
 extension OrdersVM {
@@ -36,6 +41,7 @@ extension OrdersVM {
             let sortedOrders = orders.sorted(by: { $0.date > $1.date })
             self?.orders = sortedOrders
             self?.filterOrders(.all)
+            print("✅ Заказы загружены и отсортированы: \(sortedOrders.count)")
         }
     }
     
@@ -54,6 +60,18 @@ extension OrdersVM {
             } catch {
                 print("Error fetching orders: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func fetchUserProfile() async {
+        guard let userID = selectOrder?.userID else { return }
+        do {
+            let userProfile = try await profileService.getProfile(by: userID)
+            DispatchQueue.main.async {
+                self.userProfile = userProfile
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

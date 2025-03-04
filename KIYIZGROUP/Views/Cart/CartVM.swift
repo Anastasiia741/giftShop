@@ -26,7 +26,9 @@ final class CartVM: ObservableObject {
     
     @Published var isPromoSheetVisible = false
     
-    init() {}
+    init() {
+        fetchGuestData()
+    }
 }
 
 //MARK: - Manage Order
@@ -55,7 +57,7 @@ extension CartVM {
         _ = orderService.addProduct(product)
         fetchOrder()
     }
-
+    
     func applyPromoCode() -> Bool {
         let discountMessages: [String: String] = [
             "promo 10": Localization.discount10,
@@ -76,65 +78,43 @@ extension CartVM {
 
 //MARK: - Save Data
 extension CartVM {
-    func saveOrder(with promoCode: String?) async -> Order? {
-           loadUserData()
-
-           let userID = authService.currentUser?.uid ?? "guest"
-           let order = Order(
-               id: UUID().uuidString,
-               userID: userID,
-               positions: orderProducts.map { position in
-                   Position(
-                       id: UUID().uuidString,
-                       product: position,
-                       count: position.quantity,
-                       image: position.image ?? ""
-                   )
-               },
-               date: Date(),
-               status: OrderStatus.new.rawValue,
-               promocode: promoCode ?? "",
-               address: address,
-               phone: phone,
-               city: selectedCity,
-               appatment: appatment,
-               floor: floor,
-               comments: comments
-               
-           )
-
-           guard !order.positions.isEmpty else { return nil }
-
-           return await withCheckedContinuation { continuation in
-               dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
-                   switch result {
-                   case .success:
-                       DispatchQueue.main.async {
-                           self?.orderProducts.removeAll()
-                           self?.productsRepository.save(self?.orderProducts ?? [])
-                       }
-                       continuation.resume(returning: order)
-                   case .failure(let error):
-                       print("Error saving order: \(error.localizedDescription)")
-                       continuation.resume(returning: nil)
-                   }
-               }
-           }
-       }
     
-    func loadUserData() {
-        if authService.currentUser != nil {
-            address = profileVM.address
-            selectedCity = profileVM.selectedCity
-            appatment = profileVM.appatment
-            floor = profileVM.floor
-            comments = profileVM.comments
-            phone = profileVM.phone
-        } else {
-            fetchGuestData()
+    func saveOrder(with promoCode: String?, profileVM: ProfileVM) async -> Order? {
+        let isUserLoggedIn = profileVM.authService.currentUser != nil
+        
+        let order = Order(
+            id: UUID().uuidString,
+            userID: isUserLoggedIn ? profileVM.authService.currentUser!.uid : "guest",
+            positions: orderProducts.map { Position(id: UUID().uuidString, product: $0, count: $0.quantity, image: $0.image ?? "") },
+            date: Date(),
+            status: OrderStatus.new.rawValue,
+            promocode: promoCode ?? "",
+            address: isUserLoggedIn ? profileVM.address : address,
+            phone: isUserLoggedIn ? profileVM.phone : phone,
+            city: isUserLoggedIn ? profileVM.selectedCity : selectedCity,
+            appatment: isUserLoggedIn ? profileVM.appatment : appatment,
+            floor: isUserLoggedIn ? profileVM.floor : floor,
+            comments: isUserLoggedIn ? profileVM.comments : comments
+        )
+        
+        guard !order.positions.isEmpty else { return nil }
+        
+        return await withCheckedContinuation { continuation in
+            dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
+                DispatchQueue.main.async {
+                    if case .success = result {
+                        self?.orderProducts.removeAll()
+                        self?.productsRepository.save(self?.orderProducts ?? [])
+                        continuation.resume(returning: order)
+                    } else if case let .failure(error) = result {
+                        print("Error saving order: \(error.localizedDescription)")
+                        continuation.resume(returning: nil)
+                    }
+                }
+            }
         }
     }
-    
+
     func fetchGuestData() {
         address = UserDefaults.standard.string(forKey: "guestAddress") ?? ""
         phone = UserDefaults.standard.string(forKey: "guestPhone") ?? ""
@@ -152,123 +132,13 @@ extension CartVM {
         UserDefaults.standard.set(floor, forKey: "guestFloor")
         UserDefaults.standard.set(comments, forKey: "guestComments")
     }
-    
 }
-    
-    
-
-
-
-//    func saveOrder(with promoCode: String?) async -> Order? {
-//        saveUserData()
-//
-//        let userID = authService.currentUser?.uid ?? "guest"
-//        let order = Order(
-//            id: UUID().uuidString,
-//            userID: userID,
-//            positions: orderProducts.map { position in
-//                Position(
-//                    id: UUID().uuidString,
-//                    product: position,
-//                    count: position.quantity,
-//                    image: position.image ?? ""
-//                )
-//            },
-//            date: Date(),
-//            status: OrderStatus.new.rawValue,
-//            promocode: promoCode ?? "",
-//            address: address
-//        )
-//
-//        guard !order.positions.isEmpty else { return nil }
-//
-//        return await withCheckedContinuation { continuation in
-//            dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
-//                switch result {
-//                case .success:
-//                    DispatchQueue.main.async {
-//                        self?.orderProducts.removeAll()
-//                        self?.productsRepository.save(self?.orderProducts ?? [])
-//                    }
-//                    continuation.resume(returning: order)
-//                case .failure(let error):
-//                    print("Error saving order: \(error.localizedDescription)")
-//                    continuation.resume(returning: nil)
-//                }
-//            }
-//        }
-//    }
 
 
 
 
 
 
-    //    func saveOrder(with promoCode: String?) async -> Order? {
-    //        let userID = authService.currentUser?.uid ?? "guest"
-    //
-    //        let order = Order(id: UUID().uuidString, userID: userID,
-    //                          positions: orderProducts.map { position in
-    //            Position(id: UUID().uuidString, product: position, count: position.quantity, image: position.image ?? "")},
-    //                          date: Date(),
-    //                          status: OrderStatus.new.rawValue,
-    //                          promocode: promoCode ?? "")
-    //
-    //        guard !order.positions.isEmpty else { return nil }
-    //
-    //        return await withCheckedContinuation { continuation in
-    //            dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
-    //                switch result {
-    //                case .success:
-    //                    DispatchQueue.main.async {
-    //                        self?.orderProducts.removeAll()
-    //                        self?.productsRepository.save(self?.orderProducts ?? [])
-    //                    }
-    //                    continuation.resume(returning: order)
-    //                case .failure(let error):
-    //                    print("Error saving order: \(error.localizedDescription)")
-    //                    continuation.resume(returning: nil)
-    //                }
-    //            }
-    //        }
-    //    }
-    
-    
-    //    func orderButtonTapped(with promoCode: String?) async -> Order? {
-    //        guard let currentUser = authService.currentUser else { return nil }
-    //
-    //        let order = Order(id: UUID().uuidString, userID: currentUser.uid,
-    //                          positions: orderProducts.map { position in
-    //            Position(id: UUID().uuidString, product: position, count: position.quantity, image: position.image ?? "")
-    //        },
-    //                          date: Date(),
-    //                          status: OrderStatus.new.rawValue,
-    //                          promocode: promoCode ?? ""
-    //        )
-    //
-    //
-    //        //            let order = Order(id: UUID().uuidString, userID: currentUser.uid, positions: [], date: Date(), status: OrderStatus.new.rawValue, promocode: promoCode ?? "")
-    //
-    //        guard !order.positions.isEmpty else { return nil }
-    //
-    //        return await withCheckedContinuation { continuation in
-    //            dbOrdersService.saveOrder(order: order, promocode: order.promocode) { [weak self] result in
-    //                switch result {
-    //                case .success(_):
-    //                    DispatchQueue.main.async {
-    //                        self?.orderProducts.removeAll()
-    //                        self?.productsRepository.save(self?.orderProducts ?? [])
-    //                    }
-    //                    continuation.resume(returning: order)
-    //                case .failure(let error):
-    //                    print("Error saving order: \(error.localizedDescription)")
-    //                    continuation.resume(returning: nil)
-    //                }
-    //            }
-    //        }
-    //    }
-    
-   
 
 
 

@@ -11,7 +11,6 @@ struct AuthenticationView: View {
     @Binding var currentTab: Int
     
     var body: some View {
-        NavigationStack {
             VStack {
                 Spacer()
                 ImageGridAuthView(imageNames: AuthImages.imageNames)
@@ -40,7 +39,7 @@ struct AuthenticationView: View {
             }
                 .padding()
                 .frame(maxHeight: 44), alignment: .topTrailing)
-        }
+        
         .onTapGesture {
             self.hideKeyboard()
             UIApplication.shared.endEditing()

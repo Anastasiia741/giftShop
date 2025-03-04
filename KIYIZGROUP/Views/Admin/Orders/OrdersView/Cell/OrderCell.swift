@@ -5,9 +5,10 @@
 import SwiftUI
 
 struct OrderCell: View {
-    @StateObject var orderDetailVM = OrderDetailVM()
-    private let textComponent = TextComponent()
+    @ObservedObject var viewModel = OrdersVM()
+    @State private var selectedOrder: Order?
     @Binding var order: Order
+    private let textComponent = TextComponent()
     @State private var isShowDetail = false
     
     var body: some View {
@@ -15,7 +16,6 @@ struct OrderCell: View {
             VStack(alignment: .leading) {
                 textComponent.createText(text: "\(Localization.dateOf) \(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.top, 6)
-               
                 HStack {
                     textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                    
@@ -25,26 +25,27 @@ struct OrderCell: View {
                 }
                 .padding(.top, 6)
             }
-        }
-        Spacer()
-        Button(action: {
-            isShowDetail = true
-            orderDetailVM.selectOrder = order
-            Task {
-                await orderDetailVM.fetchUserProfile()
+            Spacer()
+
+            Button(action: {
+                selectedOrder = order
+                isShowDetail = true
+            }) {
+                textComponent.createText(text: Localization.moreDetails, fontSize: 14, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                    .frame(maxWidth: 100, minHeight: 30)
+                    .background(Color(StatusColor.new))
+                    .cornerRadius(20)
+                    .shadow(color: Color(StatusColor.new).opacity(0.3), radius: 3, x: 0, y: 3)
             }
-        }) {
-            textComponent.createText(text: Localization.moreDetails, fontSize: 14, fontWeight: .regular,  lightColor: .white, darkColor: .white)
-                .frame(maxWidth: 100, minHeight: 30)
-                .background(Color(StatusColor.new))
-                .cornerRadius(20)
-                .shadow(color: Color(StatusColor.new).opacity(0.3), radius: 3, x: 0, y: 3)
         }
-        .buttonStyle(PlainButtonStyle())
+    
         .sheet(isPresented: $isShowDetail) {
-            OrderDetail(orderDetailVM: orderDetailVM, orderVM: OrdersVM())
+            if let selectedOrder = selectedOrder {
+                OrderDetail(viewModel: viewModel, order: selectedOrder)
+            } else {
+                textComponent.createText(text: "Ошибка: заказ не найден.", fontSize: 14, fontWeight: .regular, lightColor: .r, darkColor: .r)
+                    .padding()
+            }
         }
     }
 }
-
-

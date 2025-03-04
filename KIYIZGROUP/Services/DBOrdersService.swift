@@ -69,44 +69,100 @@ extension DBOrdersService {
     func fetchUserOrders(completion: @escaping ([Order]) -> Void) {
         let db = Firestore.firestore()
         let ordersCollection = db.collection(Accesses.orders)
+        
         ordersCollection.getDocuments { [weak self] (querySnapshot, error) in
             if let error = error {
-                print(error.localizedDescription)
                 completion([])
                 return
             }
+            
+            guard let documents = querySnapshot?.documents, !documents.isEmpty else {
+                completion([])
+                return
+            }
+
             var userOrders: [Order] = []
-            for document in querySnapshot!.documents {
+            
+            for document in documents {
                 if let orderId = document["id"] as? String,
                    let userId = document["userID"] as? String,
                    let dateTimestamp = document["date"] as? Timestamp,
-                   let status = document["status"] as? String,
-                   let promocode = document["promocode"] as? String,
-                   let address = document["address"] as? String,
-                   let phone = document["phone"] as? String,
-                   let sity = document["sity"] as? String,
-                   let appartment = document["appartment"] as? String,
-                   let floor = document["floor"] as? String,
-                   let comment = document["comment"] as? String,
-                   let _ = document["cost"] as? Int
-                {
+                   let status = document["status"] as? String {
+                    
                     self?.fetchPositionsForOrder(by: orderId) { result in
                         switch result {
                         case .success(let positions):
                             let date = dateTimestamp.dateValue()
-                            let userOrder = Order(id: orderId, userID: userId, positions: positions, date: date, status: status, promocode: promocode, address: address, phone: phone, city: sity, appatment: appartment, floor: floor, comments: comment)
+                            let userOrder = Order(
+                                id: orderId,
+                                userID: userId,
+                                positions: positions,
+                                date: date,
+                                status: status,
+                                promocode: document["promocode"] as? String ?? "",
+                                address: document["address"] as? String ?? "",
+                                phone: document["phone"] as? String ?? "",
+                                city: document["sity"] as? String ?? "",
+                                appatment: document["appartment"] as? String ?? "",
+                                floor: document["floor"] as? String ?? "",
+                                comments: document["comment"] as? String ?? ""
+                            )
+                            
                             userOrders.append(userOrder)
-                            if userOrders.count == querySnapshot!.documents.count {
+                            
+                            if userOrders.count == documents.count {
                                 completion(userOrders)
                             }
                         case .failure(let error):
-                            print(error.localizedDescription)
+                            print("Ошибка загрузки позиций для заказа \(orderId): \(error.localizedDescription)")
                         }
                     }
-                }
+                } 
             }
         }
     }
+
+//    func fetchUserOrders(completion: @escaping ([Order]) -> Void) {
+//        let db = Firestore.firestore()
+//        let ordersCollection = db.collection(Accesses.orders)
+//        ordersCollection.getDocuments { [weak self] (querySnapshot, error) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                completion([])
+//                return
+//            }
+//            var userOrders: [Order] = []
+//            for document in querySnapshot!.documents {
+//                if let orderId = document["id"] as? String,
+//                   let userId = document["userID"] as? String,
+//                   let dateTimestamp = document["date"] as? Timestamp,
+//                   let status = document["status"] as? String,
+//                   let promocode = document["promocode"] as? String,
+//                   let address = document["address"] as? String,
+//                   let phone = document["phone"] as? String,
+//                   let sity = document["sity"] as? String,
+//                   let appartment = document["appartment"] as? String,
+//                   let floor = document["floor"] as? String,
+//                   let comment = document["comment"] as? String,
+//                   let _ = document["cost"] as? Int
+//                {
+//                    self?.fetchPositionsForOrder(by: orderId) { result in
+//                        switch result {
+//                        case .success(let positions):
+//                            let date = dateTimestamp.dateValue()
+//                            let userOrder = Order(id: orderId, userID: userId, positions: positions, date: date, status: status, promocode: promocode, address: address, phone: phone, city: sity, appatment: appartment, floor: floor, comments: comment)
+//                            userOrders.append(userOrder)
+//                            if userOrders.count == querySnapshot!.documents.count {
+//                                completion(userOrders)
+//                            }
+//                        case .failure(let error):
+//                            print(error.localizedDescription)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     //MARK: - Change order status for admin
     func updateOrderStatus(orderID: String, newStatus: String, completion: @escaping ()->Void) {

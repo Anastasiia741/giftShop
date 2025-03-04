@@ -11,7 +11,7 @@ struct ProductsEditView: View {
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 Section {
                     HStack(alignment: .center, spacing: 10) {
@@ -70,6 +70,6 @@ struct ProductsEditView: View {
                     }
                 }
             }
-        }
+//        }
     }
 }

@@ -5,7 +5,7 @@
 import SwiftUI
 
 enum TabType: Int {
-    case catalog, cart, profile, productsEdit, createProduct, orders, customOrders
+    case catalog, cart, profile, auth, productsEdit, createProduct, orders, customOrders
 }
 
 struct CustomTransitionModifier: ViewModifier {

@@ -14,14 +14,13 @@ final class ProductService {
     
     init() {}
     
-    //  MARK: - add collection 'product' in firebase
-    func add(product: Product, completion: @escaping (Error?) -> Void) throws {
-        try productCollection.addDocument(from: product) { error in
-            completion(error)
-        }
+    deinit {
+        listenerRegistation?.remove()
     }
-    
-    //  MARK: - Fetch and monitor changes of products from firebase
+}
+
+//  MARK: - Fetch product
+extension ProductService {
     func fetchAllProducts() async throws -> [Product] {
         let querySnapshot = try await db.collection(Accesses.products).getDocuments()
         var products: [Product] = []
@@ -32,9 +31,15 @@ final class ProductService {
         }
         return products
     }
-    
-    deinit {
-        listenerRegistation?.remove()
+}
+
+//  MARK: - Add product
+extension ProductService {
+    //  MARK: - add collection 'product' in firebase
+    func add(product: Product, completion: @escaping (Error?) -> Void) throws {
+        try productCollection.addDocument(from: product) { error in
+            completion(error)
+        }
     }
     
     //  MARK: - create new product
@@ -77,7 +82,11 @@ final class ProductService {
             }
         }
     }
+}
     
+    
+//  MARK: - Image
+extension ProductService {
     //  MARK: - Save image in storage
     func save(imageData: Data, nameImg: String, completion: @escaping (_ imageLink: String?) -> Void) {
         let storageRef = storage.reference(forURL: Accesses.storageProducts).child(nameImg)
@@ -155,7 +164,10 @@ final class ProductService {
             }
         }
     }
-    
+}
+
+//  MARK: - delete product
+extension ProductService {
     //  MARK: - Delete product from firestore
     func delete(product: Product, completion: @escaping (Error?) -> Void) {
         let productID = product.id

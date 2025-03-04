@@ -6,13 +6,14 @@
 import SwiftUI
 
 struct CustomOrdersAdminView: View {
+    @EnvironmentObject var mainTabVM: MainTabVM
     @StateObject var viewModel = OrdersVM()
     @State private var selectedStatus: OrderStatus = .all
     private let textComponent = TextComponent()
     @State private var isShowExit = false
     
     var body: some View {
-        NavigationStack {
+//        NavigationView {
             VStack {
                 CustomHeaderView(title: "Индивидуальные заказы")
                     .padding(.top, 4)
@@ -37,18 +38,23 @@ struct CustomOrdersAdminView: View {
                 .padding(.vertical)
             }
             .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $isShowExit))
-            .fullScreenCover(isPresented: $viewModel.showQuit) {
-                NavigationView {
-                    TabBar(viewModel: MainTabVM())
-                }
+//            .fullScreenCover(isPresented: $viewModel.showQuit) {
+//                NavigationView {
+//                    TabBar(viewModel: MainTabVM())
+//                }
+//            }
+            
+            .navigationDestination(isPresented: $viewModel.showQuit) {
+                TabBar(viewModel: mainTabVM)
             }
+            
             .onDisappear {
                 viewModel.fetchCustomOrders()
             }
             .onAppear {
                 viewModel.fetchCustomOrders()
             }
-        }
+//        }
     }
 }
 

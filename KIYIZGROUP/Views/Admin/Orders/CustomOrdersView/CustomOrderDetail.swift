@@ -25,7 +25,6 @@ struct CustomOrderDetail: View {
                 OrderStatusButton(viewModel: viewModel, status: order.status, orderID: order.id, isCustomOrder: true)
             }
             .frame(maxWidth: .infinity, alignment: .center)
-           
             .task {
                 viewModel.fetchImages(order: order)
             }

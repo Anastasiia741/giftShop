@@ -14,6 +14,7 @@ struct TabBar: View {
             if let userID = viewModel.userID {
                 if userID == Accesses.adminUser || userID == Accesses.adminKiyiz {
                     OrdersView()
+                    
                         .tabItem {
                             VStack {
                                 Images.TabBar.order
@@ -21,7 +22,10 @@ struct TabBar: View {
                             }
                         }
                         .tag(TabType.orders.rawValue)
+                    
+                    
                     CustomOrdersAdminView()
+                    
                         .tabItem {
                             VStack {
                                 Images.TabBar.customOrder
@@ -29,6 +33,7 @@ struct TabBar: View {
                             }
                         }
                         .tag(TabType.customOrders.rawValue)
+                    
                     ProductsEditView(catalogVM: CatalogVM())
                         .tabItem {
                             VStack {
@@ -45,8 +50,8 @@ struct TabBar: View {
                             }
                         }
                         .tag(TabType.createProduct.rawValue)
-                } else {
                     
+                } else {
                     CatalogView(currentTab: $currentTab)
                         .tabItem {
                             VStack {
@@ -54,6 +59,7 @@ struct TabBar: View {
                             }
                         }
                         .tag(TabType.catalog.rawValue)
+                    
                     CartView(currentUserId: userID, currentTab: $currentTab)
                         .tabItem {
                             VStack {
@@ -61,6 +67,7 @@ struct TabBar: View {
                             }
                         }
                         .tag(TabType.cart.rawValue)
+                    
                     ProfileView(currentTab: $currentTab)
                         .tabItem {
                             VStack {
@@ -69,6 +76,7 @@ struct TabBar: View {
                         }
                         .tag(TabType.profile.rawValue)
                 }
+                
             } else {
                 CatalogView(currentTab: $currentTab)
                     .tabItem {
@@ -77,6 +85,7 @@ struct TabBar: View {
                         }
                     }
                     .tag(TabType.catalog.rawValue)
+                
                 CartView(currentUserId: "", currentTab: $currentTab)
                     .tabItem {
                         VStack {
@@ -84,6 +93,7 @@ struct TabBar: View {
                         }
                     }
                     .tag(TabType.cart.rawValue)
+                
                 AuthenticationView(currentTab: $currentTab)
                     .tabItem {
                         VStack {
@@ -92,12 +102,14 @@ struct TabBar: View {
                     }
                     .tag(TabType.profile.rawValue)
             }
+            
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.fetchUserId()
             setupTabBarAppearance()
         }
+        
     }
 }
 

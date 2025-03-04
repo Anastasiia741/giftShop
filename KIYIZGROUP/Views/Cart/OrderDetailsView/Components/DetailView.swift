@@ -70,7 +70,7 @@ struct DetailView: View {
         .onAppear {
                    Task {
                        if viewModel.authService.currentUser == nil {
-                           cartViewModel.fetchGuestData()
+//                           cartViewModel.fetchGuestData()
                        } else {
                            cartViewModel.fetchOrder()
                            await viewModel.fetchUserProfile()
