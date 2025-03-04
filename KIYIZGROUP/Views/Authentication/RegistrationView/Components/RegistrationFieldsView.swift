@@ -19,14 +19,13 @@ struct RegistrationFieldsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
     
-            customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email,
-                                            color: colorScheme == .dark ? .white : .black,
-                                            borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
-            .padding(6)
+            customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
+                .padding(6)
             
             customSecureField.createSecureField(placeholder: Localization.createPassword, text: $viewModel.password,
-                                                isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
-            .padding(6)
+                                                isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black,
+                                                borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
+                .padding(6)
             
             if let errorMessage = viewModel.errorMessage, !errorMessage.isEmpty {
                 textComponent.createText(text: errorMessage, fontSize: 14, fontWeight: .regular, lightColor: .r, darkColor: .r)
@@ -38,18 +37,13 @@ struct RegistrationFieldsView: View {
                                       color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white,
                                       backgroundColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : Color.colorGreen,
                                       borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen) {
-                viewModel.signUp()
-            }
-                                      .padding(6)
-                                      .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
+                                        viewModel.signUp()}
+                              .padding(6)
+                              .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
         }
         .padding(.horizontal)
         .onAppear {
-            viewModel.onRegistrSuccess = {
-                DispatchQueue.main.async {
-                    viewModel.isShowConfirmView = true
-                }
-            }
+            viewModel.isShowConfirmView = true
         }
     }
 }

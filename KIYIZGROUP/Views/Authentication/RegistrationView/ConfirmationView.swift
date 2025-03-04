@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ConfirmationView: View {
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.dismiss) private var dismiss
+//    @Environment(\.dismiss) private var dismiss
     private let textComponent = TextComponent()
     let customButton: CustomButton
     let email: String
@@ -40,9 +40,13 @@ struct ConfirmationView: View {
                 AuthorizationView(currentTab: $currentTab)
             }
         }
-        .onChange(of: currentTab) { _, _ in
-            dismiss()
-        }
+//        .onChange(of: currentTab) { oldValue, newValue in
+//            if oldValue != newValue {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 300 мс задержки
+//                    dismiss()
+//                }
+//            }
+//        }
         .navigationBarBackButtonHidden(true)
     }
 }

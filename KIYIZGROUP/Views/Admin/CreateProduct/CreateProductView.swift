@@ -12,7 +12,7 @@ struct CreateProductView: View {
     @State private var showCameraPicker = false
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack {
                 List {
                     Section(header: Text(Localization.image)) {
@@ -82,6 +82,6 @@ struct CreateProductView: View {
                     dismissButton: .default(Text(alertModel.buttons.first?.title ?? ""), action: alertModel.buttons.first?.action)
                 )
             }
-        }
+//        }
     }
 }

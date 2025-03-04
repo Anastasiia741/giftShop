@@ -17,7 +17,6 @@ enum ActiveScreen: Identifiable, Equatable {
 }
 
 struct ButtonsAuthView: View {
-//    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     var onButtonTap: (ActiveScreen) -> Void
     

@@ -11,32 +11,31 @@ struct CatalogView: View {
     @State private var isLoading = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                if isLoading {
-                    Spacer()
-                    LoadingView()
-                    Spacer()
-                } else {
-                    ScrollView(.vertical, showsIndicators: false) {
-                        PopularSectionView(products: viewModel.popularProducts)
-                            .padding(.vertical)
-                            .padding(.horizontal, 20)
-                        CustomDesignSectionView(customOrder: customOrder, currentTab: $currentTab)
-                            .padding(.horizontal, 20)
-                        CategorySectionView(selectedCategory: $viewModel.selectedCategory, onCategorySelected: { category in
-                            viewModel.filterProducts(by: category)
-                        }, categories: viewModel.categories)
-                        ProductSectionView(viewModel: viewModel, filteredProducts: viewModel.filteredProducts, currentTab: $currentTab)
-                            .padding(.horizontal, 30)
-                            .environmentObject(viewModel)
-                    }
+        VStack {
+            if isLoading {
+                Spacer()
+                LoadingView()
+                Spacer()
+            } else {
+                ScrollView(.vertical, showsIndicators: false) {
+                    PopularSectionView(products: viewModel.popularProducts)
+                        .padding(.vertical)
+                        .padding(.horizontal, 20)
+                    CustomDesignSectionView(customOrder: customOrder, currentTab: $currentTab)
+                        .padding(.horizontal, 20)
+                    CategorySectionView(selectedCategory: $viewModel.selectedCategory, onCategorySelected: { category in
+                        viewModel.filterProducts(by: category)
+                    }, categories: viewModel.categories)
+                    ProductSectionView(viewModel: viewModel, filteredProducts: viewModel.filteredProducts, currentTab: $currentTab)
+                        .padding(.horizontal, 30)
+                        .environmentObject(viewModel)
                 }
             }
-            .task {
-                await self.viewModel.fetchProducts()
-                isLoading = false
-            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await self.viewModel.fetchProducts()
+            isLoading = false
         }
     }
 }

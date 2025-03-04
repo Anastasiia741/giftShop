@@ -40,6 +40,7 @@ struct CustomDetailsView: View {
           }
         .padding(.horizontal)
         .navigationTitle("Индивидуальный заказ")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
     }
 }

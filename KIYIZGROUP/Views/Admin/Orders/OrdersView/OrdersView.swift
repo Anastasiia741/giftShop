@@ -5,30 +5,53 @@
 import SwiftUI
 
 struct OrdersView: View {
+    @EnvironmentObject var mainTabVM: MainTabVM
     @StateObject var viewModel = OrdersVM()
     @State private var selectedStatus: OrderStatus = .all
-    @State private var isShowExit = false
+    @State private var showQuit = false
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack {
                 CustomHeaderView(title: "Заказы")
-                statusSection
-                orders
-            }
-            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $isShowExit))
-            .fullScreenCover(isPresented: $viewModel.showQuit) {
-                NavigationView {
-                    TabBar(viewModel: MainTabVM())
+                    .padding(.top, 4)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(OrderStatus.allCases, id: \.self) { status in
+                            DetailButton(text: status.rawValue, isSelected: selectedStatus == status
+                            ) {
+                                selectedStatus = status
+                                viewModel.filterOrders(status)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
                 }
+                List(viewModel.filteredOrders) { order in
+                    OrderCell(order: .constant(order))
+                }
+                
+                .listStyle(PlainListStyle())
+                .background(Color.clear)
+                .scrollContentBackground(.hidden)
+                .padding(.vertical)
             }
-            .onAppear {
+            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $showQuit))
+//        }
+        .navigationDestination(isPresented: $viewModel.showQuit) {
+//            NavigationView{
+                TabBar(viewModel: mainTabVM)
+//            }
+        }
+        .onAppear {
+            Task{
                 viewModel.fetchUserOrders()
+                await viewModel.fetchUserProfile()
             }
         }
     }
 }
-  
+
 
 extension OrdersView {
     private var statusSection: some View {
@@ -47,14 +70,27 @@ extension OrdersView {
     }
     
     private var orders: some View {
-        List(viewModel.filteredOrders) { order in
-            OrderCell(order: .constant(order))
+        ScrollView {
+            VStack(spacing: 10) {
+                ForEach(viewModel.filteredOrders) { order in
+                    OrderCell(order: .constant(order))
+                    
+                }
+            }
+            .padding()
         }
-        .listStyle(PlainListStyle())
-        .background(Color.clear)
-        .scrollContentBackground(.hidden)
-        .padding(.vertical)
     }
+    
+    
+    //    private var orders: some View {
+    //        List(viewModel.filteredOrders) { order in
+    //            OrderCell(order: .constant(order))
+    //        }
+    //        .listStyle(PlainListStyle())
+    //        .background(Color.clear)
+    //        .scrollContentBackground(.hidden)
+    //        .padding(.vertical)
+    //    }
 }
 
 
