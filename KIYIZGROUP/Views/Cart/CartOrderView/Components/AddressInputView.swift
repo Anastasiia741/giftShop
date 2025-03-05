@@ -8,11 +8,10 @@ struct AddressInputView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var profileVM: ProfileVM
     @ObservedObject var cartVM: CartVM
-    
     private let textComponent = TextComponent()
     private let textFieldComponent = TextFieldComponent()
     private let customButton = CustomButton()
-    
+    @Binding var currentTab: Int
     @State private var showDropdown = false
     @State private var isSaving = false
     
@@ -25,7 +24,6 @@ struct AddressInputView: View {
                          selectedOption: profileVM.authService.currentUser != nil ? $profileVM.selectedCity : $cartVM.selectedCity,
                          isExpanded: $showDropdown)
                 .padding(.vertical, 8)
-                
                 RoundedField(placeholder: "Улица, Дом*", borderColor: isSaving && getAddress().isEmpty ? .red : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.address : $cartVM.address)
                     .padding(.vertical, 8)
                 RoundedField(placeholder: "Номер квартиры", borderColor: .gray, text: profileVM.authService.currentUser != nil ? $profileVM.appatment : $cartVM.appatment)
@@ -47,6 +45,10 @@ struct AddressInputView: View {
             }
                                       .padding(.bottom, 8)
         }
+        .onChange(of: currentTab) { _, _ in
+            dismiss()
+        }
+        
         .onAppear {
             if profileVM.authService.currentUser == nil {
                 cartVM.fetchGuestData()
@@ -61,7 +63,6 @@ struct AddressInputView: View {
 }
 
 extension AddressInputView {
-    
     private func getAddress() -> String {
         return profileVM.authService.currentUser != nil ? profileVM.address : cartVM.address
     }

@@ -39,14 +39,8 @@ struct ConfirmationView: View {
             .navigationDestination(isPresented: $showAuthView) {
                 AuthorizationView(currentTab: $currentTab)
             }
-        }
-//        .onChange(of: currentTab) { oldValue, newValue in
-//            if oldValue != newValue {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // 300 мс задержки
-//                    dismiss()
-//                }
-//            }
-//        }
+        }        
         .navigationBarBackButtonHidden(true)
     }
 }
+

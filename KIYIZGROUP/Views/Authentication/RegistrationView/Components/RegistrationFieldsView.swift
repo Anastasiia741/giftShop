@@ -22,7 +22,8 @@ struct RegistrationFieldsView: View {
             customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
                 .padding(6)
             
-            customSecureField.createSecureField(placeholder: Localization.createPassword, text: $viewModel.password,
+            customSecureField.createSecureField(placeholder: Localization.createPassword,
+                                                text: $viewModel.password,
                                                 isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black,
                                                 borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
                 .padding(6)
@@ -42,9 +43,6 @@ struct RegistrationFieldsView: View {
                               .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
         }
         .padding(.horizontal)
-        .onAppear {
-            viewModel.isShowConfirmView = true
-        }
     }
 }
 

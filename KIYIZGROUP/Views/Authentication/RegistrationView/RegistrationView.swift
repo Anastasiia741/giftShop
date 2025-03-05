@@ -11,13 +11,8 @@ struct RegistrationView: View {
     private let simpleButton = MinimalButton()
     @Binding var currentTab: Int
     
-    
-//    @State private var navigationPath = NavigationPath()
-
-    
-    
-    
     var body: some View {
+        NavigationStack{
         VStack {
             HStack {
                 CustomBackButton()
@@ -38,11 +33,12 @@ struct RegistrationView: View {
         }
         .onChange(of: currentTab) { _, _ in
             dismiss()
-        }
+                }
         .onTapGesture {
             self.hideKeyboard()
             UIApplication.shared.endEditing()
         }
+    }
         .navigationDestination(isPresented: $viewModel.isShowConfirmView) {
             ConfirmationView(customButton: customButton, email: viewModel.email, currentTab: $currentTab)
         }

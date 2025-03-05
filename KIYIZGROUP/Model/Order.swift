@@ -5,7 +5,15 @@
 import Foundation
 import FirebaseFirestore
 
-class Order: Identifiable {
+class Order: Identifiable, Equatable, Hashable {
+    static func == (lhs: Order, rhs: Order) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     var id: String = UUID().uuidString
     var userID: String
     var positions = [Position]()
@@ -94,5 +102,16 @@ class Order: Identifiable {
         self.appatment = appatment
         self.floor = floor
         self.comments = comments
+        self.positions = []
+
+        let positionsCollection = doc.reference.collection("positions")
+            positionsCollection.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("\(error.localizedDescription)")
+                    return
+                }
+                self.positions = querySnapshot?.documents.compactMap { Position(doc: $0) } ?? []
+            }
+        
     }
 }

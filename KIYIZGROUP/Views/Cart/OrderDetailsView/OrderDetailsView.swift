@@ -27,7 +27,7 @@ struct OrderDetailsView: View {
         }
         .navigationTitle("Доставка")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
+//        .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
     }
 }

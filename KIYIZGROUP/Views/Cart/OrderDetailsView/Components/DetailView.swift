@@ -7,8 +7,8 @@ import SwiftUI
 struct DetailView: View {
     @StateObject private var cartViewModel = CartVM()
     @StateObject var viewModel: ProfileVM
-    private let statusColors = StatusColors() 
-
+    private let statusColors = StatusColors()
+    
     private let textComponent = TextComponent()
     let order: Order
     
@@ -23,7 +23,7 @@ struct DetailView: View {
                     textComponent.createText(text: "\(order.status)", fontSize: 16, fontWeight: .regular,
                                              lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
                                              darkColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
-
+                    
                 }
                 HStack {
                     textComponent.createText(text: "Номер заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
@@ -37,7 +37,7 @@ struct DetailView: View {
                     textComponent.createText(text: "\(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 CustomDivider()
-           
+                
                 HStack {
                     textComponent.createText(text: "Адрес доставки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
@@ -51,7 +51,7 @@ struct DetailView: View {
                 }
                 .padding(.top)
                 CustomDivider()
-
+                
                 HStack {
                     textComponent.createText(text: "Сумма заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
@@ -68,15 +68,15 @@ struct DetailView: View {
             .adaptiveStroke()
         }
         .onAppear {
-                   Task {
-                       if viewModel.authService.currentUser == nil {
-//                           cartViewModel.fetchGuestData()
-                       } else {
-                           cartViewModel.fetchOrder()
-                           await viewModel.fetchUserProfile()
-                       }
-                   }
-               }
+            Task {
+                if viewModel.authService.currentUser == nil {
+                    cartViewModel.fetchGuestData()
+                } else {
+                    cartViewModel.fetchOrder()
+                    await viewModel.fetchUserProfile()
+                }
+            }
+        }
         .padding(.horizontal)
     }
 }

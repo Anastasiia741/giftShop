@@ -7,15 +7,27 @@ import SwiftUI
 struct CustomDesignSectionView: View {
     private let textComponent = TextComponent()
     let customOrder: CustomOrder
+    @Binding var navigationPath: NavigationPath
     @Binding var currentTab: Int
 
     var body: some View {
-        VStack(alignment: .leading ) {
-            textComponent.createText(text: Localization.customDesign, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
-                .padding(.leading, 30)
-            CustomDesignView(customOrder: customOrder, currentTab: $currentTab)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading) {
+            Button(action: {
+                navigationPath.append(customOrder)
+            }) {
+                HStack {
+                    textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
+                    Spacer()
+                    Images.Menu.chevron
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .frame(width: 362, height: 72)
+                .background(.colorGreen)
+                .cornerRadius(24)
+            }
         }
+        .padding()
     }
 }
 

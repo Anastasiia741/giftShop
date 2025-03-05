@@ -6,7 +6,7 @@ import SwiftUI
 
 struct AuthorizationView: View {
     @EnvironmentObject var mainTabVM: MainTabVM
-    @Environment(\.dismiss) private var dismiss
+//    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel = AuthorizationVM()
     @Binding var currentTab: Int
     @State private var showCatalog = false
@@ -48,10 +48,8 @@ struct AuthorizationView: View {
             self.hideKeyboard()
             UIApplication.shared.endEditing()
         }
-        .onChange(of: currentTab) { oldValue, newValue in
-            if oldValue != newValue {
-                dismiss()
-            }
+        .onChange(of: currentTab) { _, _ in
+//                dismiss()
         }
     }
 }

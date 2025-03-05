@@ -18,11 +18,7 @@ final class ProfileVM: ObservableObject {
     @Published var errorType: ErrorTypeProfile? = nil
     
     @Published var orders: [Order] = []
-    @Published var lastOrder: Order?
-    
     @Published var customOrders: [CustomOrder] = []
-    @Published var lastCustomOrder: CustomOrder?
-
     @Published var designImage: [String: URL] = [:]
     
     @Published var name = ""
@@ -59,7 +55,6 @@ extension ProfileVM {
                 self.floor = user.floor ?? ""
                 self.comments = user.comments ?? ""
                 self.profile = user
-                
             }
         } catch _ as NSError {
             DispatchQueue.main.async {
@@ -110,17 +105,20 @@ extension ProfileVM {
 //MARK: - User Oders
 extension ProfileVM {
     func fetchOrders() {
-        dbOrdersService.fetchOrders(by: authService.currentUser?.uid) { [weak self] result in
+        guard let userID = authService.currentUser?.uid else {
+            return
+        }
+        
+        dbOrdersService.fetchOrders(by: userID) { [weak self] result in
             DispatchQueue.main.async {
-                guard let self = self else { return }
                 switch result {
                 case .success(let orders):
-                    self.orders = orders
-                    self.orders.sort { $0.date > $1.date }
-                    self.lastOrder = self.orders.first
-                    self.deliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
-                case .failure(_):
-                    self.errorType = .orderFetchFailed
+                    let sortedOrders = orders.sorted { $0.date > $1.date }
+                    self?.orders = sortedOrders
+                    
+                    self?.deliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
+                case .failure(let error):
+                    self?.errorType = .orderFetchFailed
                 }
             }
         }
@@ -191,28 +189,3 @@ extension ProfileVM {
 
 
 
-//    func logout() {
-//        authService.signOut { result in
-//            switch result {
-//            case .success:
-//                self.showQuitPresenter = true
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
-//}
-
-
-
-
-
-//    func fetchUserProfile() async {
-//    if let currentUser = authService.currentUser {
-//        // Загрузка данных из Firebase для авторизованного пользователя
-//        await fetchProfileForAuthorizedUser()
-//    } else {
-//        // Загрузка данных из UserDefaults для гостя
-//        fetchGuestData()
-//    }
-//}
