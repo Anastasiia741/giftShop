@@ -11,7 +11,7 @@ struct OrdersView: View {
     @State private var showQuit = false
     
     var body: some View {
-//        NavigationView {
+        NavigationView {
             VStack {
                 CustomHeaderView(title: "Заказы")
                     .padding(.top, 4)
@@ -37,7 +37,7 @@ struct OrdersView: View {
                 .padding(.vertical)
             }
             .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $showQuit))
-//        }
+        }
         .navigationDestination(isPresented: $viewModel.showQuit) {
 //            NavigationView{
                 TabBar(viewModel: mainTabVM)

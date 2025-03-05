@@ -11,36 +11,46 @@ struct CartView: View {
     private let buttonComponents = ButtonComponents()
     let currentUserId: String
     @Binding var currentTab: Int
-    @State private var showOrderView = false
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
-        VStack {
-            if viewModel.orderProducts.isEmpty {
-                VStack {
-                    EmptyCartView()
-                        .frame(maxHeight: .infinity, alignment: .top)
-                    PopularSectionView(products: catalogVM.popularProducts)
-                        .padding(.vertical)
+        NavigationStack(path: $navigationPath) {
+            VStack {
+                if viewModel.orderProducts.isEmpty {
+                    VStack {
+                        EmptyCartView()
+                            .frame(maxHeight: .infinity, alignment: .top)
+                        PopularSectionView(products: catalogVM.popularProducts)
+                            .padding(.vertical)
+                    }
+                    .frame(maxHeight: .infinity, alignment: .bottom)
+                } else {
+                    CartProductsList(viewModel: viewModel)
+                    
+                    buttonComponents.createOrderButton(amount: "\(viewModel.productCountMessage)", action: {
+                        navigationPath.append(CartNavigation.cartOrderView)
+                        
+                    })
                 }
-                .frame(maxHeight: .infinity, alignment: .bottom)
-            } else {
-                CartProductsList(viewModel: viewModel)
-                
-                buttonComponents.createOrderButton(amount: "\(viewModel.productCountMessage)", action: {
-                    showOrderView.toggle()
-                })
             }
-        }
-        .padding([.vertical, .horizontal])
-        .navigationTitle("Koрзина")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(isPresented: $showOrderView) {
-            CartOrderView(currentTab: $currentTab)
-        }
-        .onAppear {
-            viewModel.fetchOrder()
-            Task {
-                await catalogVM.fetchProducts()
+            .padding([.vertical, .horizontal])
+            .navigationTitle("Koрзина")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: CartNavigation.self) { destination in
+                switch destination {
+                case .cartOrderView:
+                    CartOrderView(navigationPath: $navigationPath, currentTab: $currentTab)
+                case .orderDetailsView(let order):
+                    OrderDetailsView(currentTab: $currentTab, orderProducts: viewModel.orderProducts, order: order)
+                case .addressInputView:
+                    AddressInputView(profileVM: ProfileVM(), cartVM: viewModel, currentTab: $currentTab)
+                }
+            }
+            .onAppear {
+                viewModel.fetchOrder()
+                Task {
+                    await catalogVM.fetchProducts()
+                }
             }
         }
     }

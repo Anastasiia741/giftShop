@@ -9,6 +9,7 @@ struct AddressPhoneSection: View {
     @ObservedObject var profileVM = ProfileVM()
     private let textFieldComponent = TextFieldComponent()
     private let textComponent = TextComponent()
+    @Binding var navigationPath: NavigationPath
     @Binding var isAddressValid: Bool
     @Binding var isPhoneValid: Bool
     
@@ -20,7 +21,10 @@ struct AddressPhoneSection: View {
                     .foregroundColor(.gray)
                 
                 Spacer()
-                NavigationLink(destination: AddressInputView(profileVM: profileVM, cartVM: cartVM)) {
+                
+                Button(action: {
+                    navigationPath.append(CartNavigation.addressInputView)
+                }) {
                     Image(systemName: "plus")
                         .foregroundColor(Color.colorDarkBrown)
                 }

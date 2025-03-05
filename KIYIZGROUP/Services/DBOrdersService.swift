@@ -71,7 +71,7 @@ extension DBOrdersService {
         let ordersCollection = db.collection(Accesses.orders)
         
         ordersCollection.getDocuments { [weak self] (querySnapshot, error) in
-            if let error = error {
+            if error != nil {
                 completion([])
                 return
             }
@@ -191,70 +191,28 @@ extension DBOrdersService {
 //MARK: Get orders history for user
 extension DBOrdersService {
     func fetchOrders(by userID: String?, completion: @escaping (Result<[Order], Error>) -> ()) {
+        guard let userID = userID else {
+            return
+        }
+
         let ordersRef = Firestore.firestore().collection(Accesses.orders)
-        if let userID = userID {
-            ordersRef.whereField(Accesses.userID, isEqualTo: userID).getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                guard let querySnapshot = querySnapshot else {
-                    completion(.success([]))
-                    return
-                }
-                var orders = [Order]()
-                var orderCount = 0
-                for document in querySnapshot.documents {
-                    if let order = Order(doc: document) {
-                        self.fetchPositionsForOrder(by: order.id) { result in
-                            switch result {
-                            case .success(let positions):
-                                order.positions = positions
-                                orders.append(order)
-                                orderCount += 1
-                                if orderCount == querySnapshot.documents.count {
-                                    completion(.success(orders))
-                                }
-                            case .failure(let error):
-                                print(error.localizedDescription)
-                            }
-                        }
-                    }
-                }
+        
+        ordersRef.whereField(Accesses.userID, isEqualTo: userID).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
             }
-        } else {
-            ordersRef.getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                guard let querySnapshot = querySnapshot else {
-                    completion(.success([]))
-                    return
-                }
-                var orders = [Order]()
-                var orderCount = 0
-                for document in querySnapshot.documents {
-                    if let order = Order(doc: document) {
-                        self.fetchPositionsForOrder(by: order.id) { result in
-                            switch result {
-                            case .success(let positions):
-                                order.positions = positions
-                                orders.append(order)
-                                orderCount += 1
-                                if orderCount == querySnapshot.documents.count {
-                                    completion(.success(orders))
-                                }
-                            case .failure(let error):
-                                print(error.localizedDescription)
-                            }
-                        }
-                    }
-                }
+
+            guard let documents = querySnapshot?.documents, !documents.isEmpty else {
+                completion(.success([]))
+                return
             }
+
+            let orders = documents.compactMap { Order(doc: $0) }
+
+            completion(.success(orders))
         }
     }
-    
     
     
     func fetchCustomOrders(by userID: String?, completion: @escaping (Result<[CustomOrder], Error>) -> Void) {

@@ -26,6 +26,7 @@ struct CustomDesignView: View {
                 .background(.colorGreen)
                 .cornerRadius(24)
             }
+            
             .navigationDestination(isPresented: $showCustomView) {
                 CustomView(customOrder: customOrder, currentTab: $currentTab)
             }

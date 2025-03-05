@@ -6,8 +6,8 @@ import SwiftUI
 import Kingfisher
 
 struct ProductDetailView: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: ProductDetailVM
     private let textComponent = TextComponent()
     private let buttonComponent = ButtonComponents()
@@ -16,6 +16,7 @@ struct ProductDetailView: View {
     @Binding var currentTab: Int
     @State private var isShowCart = false
     @State private var isAddedToCart = false
+    
     
     var body: some View {
         VStack {
@@ -34,7 +35,6 @@ struct ProductDetailView: View {
                     },
                     alignment: .topLeading
                 )
-            
             HStack() {
                 textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 
@@ -46,8 +46,8 @@ struct ProductDetailView: View {
         .frame(maxWidth: .infinity, maxHeight: 572)
         .background(Color.colorDarkBrown)
         .cornerRadius(24)
-        ProductInfoView(productDetail: viewModel.product.detail)
         
+        ProductInfoView(productDetail: viewModel.product.detail)
         VStack {
             HStack(spacing: 16) {
                 buttonComponent.createWhiteButton(text: "Купить сейчас", isAddedToCart: $isAddedToCart) {
@@ -84,16 +84,14 @@ struct ProductDetailView: View {
             }
             .padding()
         }
+        .navigationBarTitleDisplayMode(.inline)
+        
         .onAppear {
             viewModel.updateImageDetail()
         }
-        .onChange(of: currentTab) { oldValue, newValue in
-            if oldValue != newValue {
-                dismiss()
-            }
+        .onChange(of: currentTab) { _, _ in
+            dismiss()
         }
     }
 }
-
-
 

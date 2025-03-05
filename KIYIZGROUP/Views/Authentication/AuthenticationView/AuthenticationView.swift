@@ -9,8 +9,9 @@ struct AuthenticationView: View {
     @State private var selectedLanguage = "EN"
     @State private var activeScreen: ActiveScreen? = nil
     @Binding var currentTab: Int
-    
+   
     var body: some View {
+        NavigationStack{
             VStack {
                 Spacer()
                 ImageGridAuthView(imageNames: AuthImages.imageNames)
@@ -24,6 +25,7 @@ struct AuthenticationView: View {
                 })
                 .padding(.vertical)
             }
+            
             .navigationDestination(item: $activeScreen) { screen in
                 switch screen {
                 case .registration:
@@ -39,10 +41,11 @@ struct AuthenticationView: View {
             }
                 .padding()
                 .frame(maxHeight: 44), alignment: .topTrailing)
-        
-        .onTapGesture {
-            self.hideKeyboard()
-            UIApplication.shared.endEditing()
+            
+            .onTapGesture {
+                self.hideKeyboard()
+                UIApplication.shared.endEditing()
+            }
         }
     }
 }

@@ -15,51 +15,53 @@ struct ProfileView: View {
     
     @Binding var currentTab: Int
     @State private var showEditView = false
-    
+
     var body: some View {
-        ZStack(alignment: .top) {
-            ScrollView {
-                VStack(spacing: 0) {
-                    ProfileHeaderView(viewModel: viewModel)
-                    ProfileActionsView(currentTab: $currentTab)
-                    ProfileInfoView()
-                    SupportInfoView()
-                }
-                .padding(.top, 70)
-            }
-            HStack {
-                Spacer()
-                Button(action: {
-                    withAnimation {
-                        activeScreen = .editProfile
+        NavigationStack{
+            ZStack(alignment: .top) {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ProfileHeaderView(viewModel: viewModel)
+                        ProfileActionsView(currentTab: $currentTab)
+                        ProfileInfoView()
+                        SupportInfoView()
                     }
-                }) {
-                    Image("lucide")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .adaptiveForeground(light: .black, dark: .white)
+                    .padding(.top, 70)
+                }
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            activeScreen = .editProfile
+                        }
+                    }) {
+                        Image("lucide")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .adaptiveForeground(light: .black, dark: .white)
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.white.opacity(0.9) .edgesIgnoringSafeArea(.top))
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(item: $activeScreen) { screen in
+                switch screen {
+                case .editProfile:
+                    EditProfileView(viewModel: viewModel, activeScreen: $activeScreen, currentTab: $currentTab)
+                case .changePassword:
+                    ChangePasswordView(activeScreen: $activeScreen, currentTab: $currentTab)
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.white.opacity(0.9) .edgesIgnoringSafeArea(.top))
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(item: $activeScreen) { screen in
-            switch screen {
-            case .editProfile:
-                EditProfileView(viewModel: viewModel, activeScreen: $activeScreen, currentTab: $currentTab)
-            case .changePassword:
-                ChangePasswordView(activeScreen: $activeScreen, currentTab: $currentTab)
+            .onAppear {
+                Task {
+                    await viewModel.fetchUserProfile()
+                }
             }
-        }
-        .onAppear {
-            Task {
-                await viewModel.fetchUserProfile()
+            .onTapGesture {
+                self.hideKeyboard()
             }
-        }
-        .onTapGesture {
-            self.hideKeyboard()
         }
     }
 }

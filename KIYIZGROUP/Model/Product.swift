@@ -5,10 +5,14 @@
 import Foundation
 import FirebaseFirestore
 
-final class Product: Codable, Identifiable, Equatable {
+final class Product: Codable, Identifiable, Equatable, Hashable {
     static func == (lhs: Product, rhs: Product) -> Bool {
           return lhs.id == rhs.id && lhs.name == rhs.name && lhs.price == rhs.price && lhs.quantity == rhs.quantity
       }
+    
+    func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
     
     @DocumentID var documentID: String?
     var id = UUID().hashValue
