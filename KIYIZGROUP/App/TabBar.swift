@@ -76,7 +76,7 @@ struct AdminTabView: View {
                 }
                 .tag(TabType.customOrders.rawValue)
             
-            ProductsEditView(catalogVM: CatalogVM())
+            ProductsEditView(viewModel: CatalogVM(), currentTab: $currentTab)
                 .tabItem {
                     VStack {
                         Images.TabBar.productEdit

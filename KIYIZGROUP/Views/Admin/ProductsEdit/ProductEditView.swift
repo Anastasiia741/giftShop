@@ -5,9 +5,9 @@
 import Kingfisher
 import SwiftUI
 
-struct ProductDetailEditView: View {
+struct ProductEditView: View {
     @Environment(\.presentationMode) private var presentationMode
-    @ObservedObject var viewModel: ProductDetailEditVM
+    @ObservedObject var viewModel: ProductEditVM
     @State private var selectedImage: UIImage?
     @State private var isShowingGalleryPicker = false
     @State private var isShowingCameraPicker = false
@@ -80,6 +80,16 @@ struct ProductDetailEditView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                   
+                    Text("Скидка").font(.callout)
+                    TextField("0", text: Binding(
+                        get: { String(viewModel.selectedProduct?.price ?? 0) },
+                        set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }))
+                    .keyboardType(.decimalPad)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+
                     Text(Localization.detailedProductDescrip).font(.callout)
                     TextEditor(text: Binding(
                         get: { viewModel.selectedProduct?.detail ?? "" },
@@ -127,6 +137,9 @@ struct ProductDetailEditView: View {
         .onTapGesture {
             self.hideKeyboard()
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: CustomBackButton())
         .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
             Button(Localization.gallery) {
                 isShowingGalleryPicker = true

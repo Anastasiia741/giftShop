@@ -6,70 +6,51 @@ import SwiftUI
 
 struct ProductsEditView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @StateObject var catalogVM: CatalogVM
-    private let layoutForPopular = [GridItem(.adaptive(minimum: screen.width / 2.2))]
+    @StateObject var viewModel: CatalogVM
     private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
+    @Binding var currentTab: Int
     
     var body: some View {
-//        NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                Section {
-                    HStack(alignment: .center, spacing: 10) {
-                        Text(Localization.popular)
-                            .font(.title3.bold())
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
-                            .padding(.leading, 20)
-//                        Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.chevron : Images.Menu.chevron) ?? UIImage())
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 45, height: 50)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: layoutForPopular, spacing: 16) {
-                            ForEach(catalogVM.popularProducts) { item in
-                                NavigationLink {
-                                    let viewModel = ProductDetailEditVM(selectedProduct: item)
-                                    ProductDetailEditView(viewModel: viewModel)
-                                } label: {
-                                    ProductCell(product: item)
-                                        .foregroundColor(colorScheme == .dark ? .white : .black)
-                                }
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 0) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(viewModel.categories, id: \.self) { category in
+                            DetailButton(
+                                text: category,
+                                isSelected: viewModel.selectedCategory == category
+                            ) {
+                                viewModel.selectedCategory = category
+                                viewModel.filterProducts(by: category)
                             }
-                        }.padding()
+                        }
                     }
-                }
-                Section {
-                    HStack(alignment: .center, spacing: 10) {
-                        Text(Localization.products)
-                            .font(.title3.bold())
-                            .foregroundColor(colorScheme == .dark ? .white : .black)
-//                        Image(uiImage: UIImage(named: colorScheme == .dark ? Images.Menu.popular2 : Images.Menu.popular1) ?? UIImage())
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 45, height: 50)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }.padding(.horizontal, 20)
-                    ScrollView(.vertical, showsIndicators: false) {
-                        LazyVGrid(columns: layoutForProducts) {
-                            ForEach(catalogVM.allProducts) { item in
-                                NavigationLink {
-                                    let viewModel = ProductDetailEditVM(selectedProduct: item)
-                                    ProductDetailEditView(viewModel: viewModel)
-                                } label: {
-                                    ProductCell(product: item)
-                                        .foregroundColor(colorScheme == .dark ? .white : .black)
-                                }
-                            }
-                        }.padding()
-                    }
-                }
-                .onAppear {
-                    Task {
-                        await catalogVM.fetchProducts()
-                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
                 }
             }
-//        }
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: layoutForProducts, spacing: 8) {
+                    ForEach(viewModel.filteredProducts) { item in
+                        NavigationLink {
+                            let viewModel = ProductEditVM(selectedProduct: item)
+                            ProductEditView(viewModel: viewModel)
+                        } label: {
+                            ProductCell(product: item)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
+                        }
+                    }
+                }
+                .padding(.horizontal, 8)
+            }
+            .onAppear {
+                Task {
+                    await viewModel.fetchProducts()
+                }
+            }
+            .navigationTitle("Товары")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }

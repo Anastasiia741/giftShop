@@ -6,8 +6,7 @@ import Foundation
 import SwiftUI
 import FirebaseStorage
 
-final class ProductDetailEditVM: ObservableObject {
-    
+final class ProductEditVM: ObservableObject {
     private let productsDB = ProductService()
     @Published var selectedProduct: Product?
     @Published var selectedImage: UIImage?

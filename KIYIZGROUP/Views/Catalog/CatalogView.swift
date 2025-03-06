@@ -29,7 +29,7 @@ struct CatalogView: View {
                         
                         CategorySectionView(selectedCategory: $viewModel.selectedCategory, onCategorySelected: { category in
                             viewModel.filterProducts(by: category)
-                        }, categories: viewModel.categories)
+                        }, categories: viewModel.categories, showText: true)
                         
                         ProductSectionView(viewModel: viewModel, filteredProducts: viewModel.filteredProducts, navigationPath: $navigationPath, currentTab: $currentTab)
                             .padding(.horizontal, 30)
