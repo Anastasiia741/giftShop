@@ -9,11 +9,14 @@ struct CategorySectionView: View {
     private let textComponent = TextComponent()
     let onCategorySelected: (String) -> Void
     let categories: [String]
+    let showText: Bool
     
     var body: some View {
         VStack(alignment: .leading ) {
-            textComponent.createText(text: Localization.products, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
-                .padding(.leading, 30)
+            if showText {
+                textComponent.createText(text: Localization.products, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                    .padding(.leading, 30)
+            }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(categories, id: \.self) { category in
@@ -24,10 +27,10 @@ struct CategorySectionView: View {
                             textComponent.createText(text: category, fontSize: 17, fontWeight: .medium,
                                                      lightColor: selectedCategory == category ? .white : .black,
                                                      darkColor: selectedCategory == category ? .white : .white)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 16)
-                                .background(selectedCategory == category ? .colorDarkBrown : .clear)
-                                .cornerRadius(20)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 16)
+                            .background(selectedCategory == category ? .colorDarkBrown : .clear)
+                            .cornerRadius(20)
                         }
                         .overlay(RoundedRectangle(cornerRadius: 20)
                             .stroke(Color("ColorYellow"), lineWidth: 1)

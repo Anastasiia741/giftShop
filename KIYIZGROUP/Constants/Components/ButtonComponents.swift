@@ -28,6 +28,7 @@ struct DetailButton: View {
     }
 }
 
+
 //MARK: - CustomOrderView
 struct SubmitButton: View {
     private let textComponent = TextComponent()
