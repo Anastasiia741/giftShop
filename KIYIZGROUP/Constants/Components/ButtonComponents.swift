@@ -417,6 +417,46 @@ struct ButtonComponents {
     }
 }
 
+struct OrderStatusButton: View {
+    @ObservedObject var viewModel: OrdersVM
+    private let textComponent = TextComponent()
+    @State var status: String
+    let orderID: String
+    let isCustomOrder: Bool
+    @State private var isShowStatus = false
+    
+    var body: some View {
+        Button(action: {
+            isShowStatus = true
+        }) {
+            textComponent.createText(text: status, fontSize: 16, fontWeight: .medium, lightColor: .white, darkColor: .white)
+                .frame(maxWidth: 130, minHeight: 50)
+                .background(StatusColors.getTextColor(OrderStatus(rawValue: status) ?? .new))
+                .cornerRadius(20)
+        }
+        .actionSheet(isPresented: $isShowStatus) {
+            ActionSheet(
+                title: Text(Localization.selectOrderStatus),
+                buttons: OrderStatus.allCases.map { orderStatus in
+                        .default(Text(orderStatus.rawValue)) {
+                            updateStatus(orderStatus.rawValue)
+                        }
+                } + [.cancel()]
+            )
+        }
+        .padding(.bottom, 22)
+    }
+    
+    private func updateStatus(_ newStatus: String) {
+        if isCustomOrder {
+            viewModel.updateCustomOrderStatus(orderID: orderID, newStatus: newStatus)
+        } else {
+            viewModel.updateOrderStatus(orderID: orderID, newStatus: newStatus)
+        }
+        status = newStatus
+    }
+}
+
 //MARK: - LogoutButton
 struct LogoutButton: View {
     @EnvironmentObject var mainTabVM: MainTabVM

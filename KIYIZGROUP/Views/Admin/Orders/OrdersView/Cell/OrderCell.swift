@@ -18,7 +18,7 @@ struct OrderCell: View {
                     .padding(.top, 6)
                 HStack {
                     textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                   
+                    
                     textComponent.createText(text: order.status, fontSize: 16, fontWeight: .regular,
                                              lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
                                              darkColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new))
@@ -26,7 +26,7 @@ struct OrderCell: View {
                 .padding(.top, 6)
             }
             Spacer()
-
+            
             Button(action: {
                 selectedOrder = order
                 isShowDetail = true
@@ -38,7 +38,6 @@ struct OrderCell: View {
                     .shadow(color: Color(StatusColor.new).opacity(0.3), radius: 3, x: 0, y: 3)
             }
         }
-    
         .sheet(isPresented: $isShowDetail) {
             if let selectedOrder = selectedOrder {
                 OrderDetail(viewModel: viewModel, order: selectedOrder)

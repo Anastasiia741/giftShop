@@ -30,18 +30,14 @@ struct OrdersView: View {
                 List(viewModel.filteredOrders) { order in
                     OrderCell(order: .constant(order))
                 }
-                
                 .listStyle(PlainListStyle())
-                .background(Color.clear)
                 .scrollContentBackground(.hidden)
                 .padding(.vertical)
             }
             .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $showQuit))
         }
         .navigationDestination(isPresented: $viewModel.showQuit) {
-//            NavigationView{
-                TabBar(viewModel: mainTabVM)
-//            }
+            TabBar(viewModel: mainTabVM)
         }
         .onAppear {
             Task{
@@ -51,7 +47,6 @@ struct OrdersView: View {
         }
     }
 }
-
 
 extension OrdersView {
     private var statusSection: some View {
@@ -74,23 +69,12 @@ extension OrdersView {
             VStack(spacing: 10) {
                 ForEach(viewModel.filteredOrders) { order in
                     OrderCell(order: .constant(order))
-                    
                 }
             }
             .padding()
         }
     }
-    
-    
-    //    private var orders: some View {
-    //        List(viewModel.filteredOrders) { order in
-    //            OrderCell(order: .constant(order))
-    //        }
-    //        .listStyle(PlainListStyle())
-    //        .background(Color.clear)
-    //        .scrollContentBackground(.hidden)
-    //        .padding(.vertical)
-    //    }
 }
+
 
 

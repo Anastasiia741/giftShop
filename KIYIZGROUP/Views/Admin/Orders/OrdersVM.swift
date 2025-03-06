@@ -19,7 +19,6 @@ final class OrdersVM: ObservableObject {
     var selectOrder: Order?
     @Published var userProfile: NewUser?
     @Published var selectedStatus: OrderStatus = .all
-    
     @Published var orders: [Order] = []
     @Published var filteredOrders: [Order] = []
     @Published var customOrders: [CustomOrder] = []
@@ -33,7 +32,6 @@ final class OrdersVM: ObservableObject {
 }
 
 
-
 //MARK: - Orders
 extension OrdersVM {
     func fetchUserOrders() {
@@ -41,6 +39,7 @@ extension OrdersVM {
             let sortedOrders = orders.sorted(by: { $0.date > $1.date })
             self?.orders = sortedOrders
             self?.filterOrders(.all)
+            
             print("✅ Заказы загружены и отсортированы: \(sortedOrders.count)")
         }
     }
@@ -57,17 +56,17 @@ extension OrdersVM {
                         self.fetchImages(order: order)
                     }
                 }
-            } catch {
-                print("Error fetching orders: \(error.localizedDescription)")
-            }
+            } 
         }
     }
-    
+
     func fetchUserProfile() async {
-        guard let userID = selectOrder?.userID else { return }
+        guard let userID = selectOrder?.userID else {
+
+            return }
         do {
             let userProfile = try await profileService.getProfile(by: userID)
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.userProfile = userProfile
             }
         } catch {
@@ -104,11 +103,12 @@ extension OrdersVM {
     func updateCustomOrderStatus(orderID: String, newStatus: String) {
         dbOrderService.updateCustomOrderStatus(orderID: orderID, newStatus: newStatus) { [weak self] in
             DispatchQueue.main.async {
-                self?.orders.first { $0.id == orderID }?.status = newStatus
+                self?.customOrders.first { $0.id == orderID }?.status = newStatus
             }
         }
     }
 }
+
 
 //MARK: - Filters
 extension OrdersVM {

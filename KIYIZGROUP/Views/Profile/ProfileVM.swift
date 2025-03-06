@@ -117,7 +117,7 @@ extension ProfileVM {
                     self?.orders = sortedOrders
                     
                     self?.deliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
-                case .failure(let error):
+                case .failure(_):
                     self?.errorType = .orderFetchFailed
                 }
             }
