@@ -18,19 +18,34 @@ final class ProductEditVM: ObservableObject {
     init(selectedProduct: Product ) {
         self.selectedProduct = selectedProduct
     }
-    
+}
+
+//MARK: - Alert
+extension ProductEditVM {
     private func configureAlertModel(with title: String) -> AlertModel {
-        AlertModel(
-            title: title,
-            buttons: [
-                AlertButtonModel(title: Localization.ok, action: { [weak self] in
-                    self?.alertModel = nil
-                    self?.onSaveCompletion?()
-                    
-                })
-            ])
+        AlertModel(title: title, buttons: [AlertButtonModel(title: Localization.ok, action: { [weak self] in
+            self?.alertModel = nil
+            self?.onSaveCompletion?()
+        }) ])
     }
     
+    func showDeleteConfirmationAlert(onDelete: @escaping ()->Void) {
+        alertModel = AlertModel(
+            title: Localization.deleteProduct,
+            buttons: [
+                AlertButtonModel(title: Localization.yes, action: { [weak self] in
+                    self?.deleteProduct(onDelete: onDelete)
+                }),
+                AlertButtonModel(title: Localization.no, action: { [weak self] in
+                    self?.alertModel = nil
+                })
+            ]
+        )
+    }
+}
+
+//MARK: - Image
+extension ProductEditVM {
     func updateImageDetail() {
         if let productImage = selectedProduct?.image {
             let imageRef = Storage.storage().reference(forURL: productImage)
@@ -47,7 +62,10 @@ final class ProductEditVM: ObservableObject {
             }
         }
     }
-    
+}
+
+//MARK: - Product
+extension ProductEditVM {
     func saveEditedProduct() {
         guard let selectedProduct = selectedProduct else { return }
         productsDB.update(product: selectedProduct) { [weak self] error in
@@ -66,20 +84,6 @@ final class ProductEditVM: ObservableObject {
                 }
             }
         }
-    }
-    
-    func showDeleteConfirmationAlert(onDelete: @escaping ()->Void) {
-        alertModel = AlertModel(
-            title: Localization.deleteProduct,
-            buttons: [
-                AlertButtonModel(title: Localization.yes, action: { [weak self] in
-                    self?.deleteProduct(onDelete: onDelete)
-                }),
-                AlertButtonModel(title: Localization.no, action: { [weak self] in
-                    self?.alertModel = nil
-                })
-            ]
-        )
     }
     
     func deleteProduct(onDelete: @escaping () -> Void) {

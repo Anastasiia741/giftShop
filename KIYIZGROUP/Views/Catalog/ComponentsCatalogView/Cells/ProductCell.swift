@@ -38,8 +38,8 @@ struct ProductCell: View {
                 textComponent.createText(text: product.name, fontSize: 12, fontWeight: .medium, lightColor: .black, darkColor: .white)
                 HStack {
                     textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
-                    textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray).strikethrough()
-                                            
+                    
+                    fullPriceView()
                 }
             }
             .padding(.top, 6)
@@ -65,6 +65,14 @@ extension ProductCell {
             }
         } catch {
             print("Ошибка загрузки изображения: \(error.localizedDescription)")
+        }
+    }
+    
+    @ViewBuilder
+    private func fullPriceView() -> some View {
+        if let fullPrice = product.fullPrice, fullPrice > 0 {
+            textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+            .strikethrough()
         }
     }
 }

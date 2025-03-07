@@ -8,9 +8,11 @@ import SwiftUI
 struct ProductEditView: View {
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var viewModel: ProductEditVM
+    private let textComponent = TextComponent()
     @State private var selectedImage: UIImage?
-    @State private var isShowingGalleryPicker = false
-    @State private var isShowingCameraPicker = false
+    @State private var showPicker = false
+    @State private var showGallery = false
+    @State private var showCamera = false
     @State private var showImgAlert = false
     
     var body: some View {
@@ -50,7 +52,8 @@ struct ProductEditView: View {
                 }
                 .padding([.leading, .trailing], 20)
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(Localization.productName).font(.callout)
+                    textComponent.createText(text: Localization.productName, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    
                     TextField(Localization.enterProductName, text: Binding(
                         get: { viewModel.selectedProduct?.name ?? "" },
                         set: { newValue in
@@ -60,7 +63,8 @@ struct ProductEditView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    Text(Localization.category).font(.callout)
+                    textComponent.createText(text: Localization.category, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    
                     TextField(Localization.enterCategory, text: Binding(
                         get: { viewModel.selectedProduct?.category ?? "" },
                         set: { newValue in
@@ -72,7 +76,9 @@ struct ProductEditView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    Text(Localization.price).font(.callout)
+                    
+                    textComponent.createText(text: Localization.price, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    
                     TextField(Localization.enterPrice, text: Binding(
                         get: { String(viewModel.selectedProduct?.price ?? 0) },
                         set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }))
@@ -80,17 +86,19 @@ struct ProductEditView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                   
-                    Text("Скидка").font(.callout)
+                    
+                    textComponent.createText(text: "Цена до скидки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    
                     TextField("0", text: Binding(
-                        get: { String(viewModel.selectedProduct?.price ?? 0) },
-                        set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }))
+                        get: { String(viewModel.selectedProduct?.fullPrice ?? 0) },
+                        set: { viewModel.selectedProduct?.fullPrice = Int($0) ?? 0 }))
                     .keyboardType(.decimalPad)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-
-                    Text(Localization.detailedProductDescrip).font(.callout)
+                    
+                    textComponent.createText(text: Localization.detailedProductDescrip, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    
                     TextEditor(text: Binding(
                         get: { viewModel.selectedProduct?.detail ?? "" },
                         set: { newValue in
@@ -140,21 +148,29 @@ struct ProductEditView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
-        .confirmationDialog(Localization.selectPhotoSource, isPresented: $showImgAlert) {
-            Button(Localization.gallery) {
-                isShowingGalleryPicker = true
-            }
-            Button(Localization.camera) {
-                isShowingCameraPicker = true
-            }
+    
+        .sheet(isPresented: $showImgAlert) {
+            PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera, onDismiss: { showImgAlert = false })
+                .presentationDetents([.height(250)])
         }
-//        .sheet(isPresented: $isShowingGalleryPicker) {
-//            ImagePicker(sourceType: .photoLibrary, onSelected: {selectedImage = viewModel.selectedImage}, selectedImage: $viewModel.selectedImage, isPresented: $isShowingGalleryPicker)
-//        }
-//        .sheet(isPresented: $isShowingCameraPicker) {
-//            ImagePicker(sourceType: .camera, onSelected: {selectedImage = viewModel.selectedImage }, selectedImage: $viewModel.selectedImage, isPresented: $isShowingCameraPicker)
-//        }
-//        
+        
+        .sheet(isPresented: $showGallery) {
+            ImagePicker(sourceType: .photoLibrary, onSelected: { image, fileName in
+                selectedImage = image
+            },
+                        selectedImage: $viewModel.selectedImage,
+                        isPresented: $showGallery
+            )
+        }
+        
+        .sheet(isPresented: $showCamera) {
+            ImagePicker(sourceType: .camera, onSelected: { image, fileName in
+                selectedImage = image
+            },
+                        selectedImage: $viewModel.selectedImage,
+                        isPresented: $showCamera
+            )
+        }
         .alert(item: $viewModel.alertModel) { alertModel in
             if alertModel.buttons.count > 1 {
                 return Alert(

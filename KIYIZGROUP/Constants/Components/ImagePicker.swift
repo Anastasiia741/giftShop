@@ -8,7 +8,6 @@ import UIKit
 
 struct ImagePicker: UIViewControllerRepresentable {
     var sourceType: UIImagePickerController.SourceType
-//    var onSelected: ()->Void
     var onSelected: (UIImage?, String?) -> Void
     @Binding var selectedImage: UIImage?
     @Binding var isPresented: Bool
@@ -54,8 +53,8 @@ struct ImagePicker: UIViewControllerRepresentable {
 struct PhotoSourceSheetView: View {
     @Environment(\.colorScheme) var colorScheme
     private let textComponent = TextComponent()
-    @Binding var isShowGalleryPicker: Bool
-    @Binding var isShowCameraPicker: Bool
+    @Binding var isShowGallery: Bool
+    @Binding var isShowCamera: Bool
     var onDismiss: () -> Void
     
     var body: some View {
@@ -65,7 +64,7 @@ struct PhotoSourceSheetView: View {
                     textComponent.createText(text: "Выберите источник фото", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     CustomDivider()
                     Button(action: {
-                        isShowGalleryPicker = true
+                        isShowGallery = true
                         onDismiss()
                     }) {
                         textComponent.createText(text: "Галерея", fontSize: 16, fontWeight: .regular,lightColor: .black, darkColor: .white)
@@ -73,7 +72,7 @@ struct PhotoSourceSheetView: View {
                     }
                     CustomDivider()
                     Button(action: {
-                        isShowCameraPicker = true
+                        isShowCamera = true
                         onDismiss()
                     }) {
                         textComponent.createText(text: "Камера", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)

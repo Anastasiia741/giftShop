@@ -11,10 +11,11 @@ struct CustomView: View {
     private let textComponent = TextComponent()
     private let customButton = CustomButton()
     @State private var imageName: String = "Прикрепить фото"
-    @State private var isShowGallery = false
-    @State private var isShowCamera = false
-    @State private var isShowPicker = false
+    @State private var showGallery = false
+    @State private var showCamera = false
+    @State private var showPicker = false
     @Binding var currentTab: Int
+
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -25,6 +26,7 @@ struct CustomView: View {
                 }
                 .padding([.leading, .top], 16)
                 Spacer()
+                
                 ProductTypeSection(viewModel: viewModel)
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
@@ -33,7 +35,7 @@ struct CustomView: View {
                     .padding(.horizontal, 16)
                 
                 ImagePickerButton(title: imageName) {
-                    isShowPicker.toggle()
+                    showPicker.toggle()
                 }
                 .padding(.horizontal, 16)
                 AdditionalInfoSection(additionalText: $viewModel.comment)
@@ -64,26 +66,26 @@ struct CustomView: View {
         .navigationTitle("Индивидуальный заказ")
         .navigationBarTitleDisplayMode(.inline)
         
-        .sheet(isPresented: $isShowPicker) {
-            PhotoSourceSheetView(isShowGalleryPicker: $isShowGallery, isShowCameraPicker: $isShowCamera,
-                                 onDismiss: {isShowPicker = false})
+        .sheet(isPresented: $showPicker) {
+            PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera,
+                                 onDismiss: {showPicker = false})
             .presentationDetents([.height(250)])
         }
         
-        .sheet(isPresented: $isShowGallery) {
+        .sheet(isPresented: $showGallery) {
             ImagePicker(sourceType: .photoLibrary, onSelected: { image, name in
                 viewModel.selectedImage = image
                 imageName = name.map { String($0.prefix(20)) } ?? "Фото выбрано"
             },
-                        selectedImage: $viewModel.selectedImage, isPresented: $isShowGallery)
+                        selectedImage: $viewModel.selectedImage, isPresented: $showGallery)
         }
         
-        .sheet(isPresented: $isShowCamera) {
+        .sheet(isPresented: $showCamera) {
             ImagePicker(sourceType: .camera, onSelected: {image, name in
                 viewModel.selectedImage = image
                 imageName = name.map { String($0.prefix(20)) } ?? "Фото выбрано"
             },
-                        selectedImage: $viewModel.selectedImage, isPresented: $isShowCamera)
+                        selectedImage: $viewModel.selectedImage, isPresented: $showCamera)
         }
     }
 }

@@ -6,12 +6,12 @@ import SwiftUI
 
 struct AuthorizationView: View {
     @EnvironmentObject var mainTabVM: MainTabVM
-//    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel = AuthorizationVM()
     @Binding var currentTab: Int
     @State private var showCatalog = false
     @State private var showView = false
-    
+
     var body: some View {
         ZStack{
             VStack {
@@ -25,6 +25,7 @@ struct AuthorizationView: View {
                 Spacer()
                 AuthorizationFieldsView(viewModel: viewModel, showCatalog: $showCatalog)
                     .padding(.horizontal)
+
                 ForgotPasswordButton().createButton(action: {
                     showView.toggle()
                 })
@@ -33,10 +34,12 @@ struct AuthorizationView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 16)
             }
+
             if showView {
                 ForgotPasswordView(isOpenView: $showView)
             }
         }
+
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $viewModel.isShowCatalog) {
             TabBar(viewModel: mainTabVM)
@@ -49,7 +52,7 @@ struct AuthorizationView: View {
             UIApplication.shared.endEditing()
         }
         .onChange(of: currentTab) { _, _ in
-//                dismiss()
+                dismiss()
         }
     }
 }

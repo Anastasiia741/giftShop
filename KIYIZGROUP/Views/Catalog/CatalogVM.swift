@@ -27,7 +27,7 @@ extension CatalogVM {
                 self.popularProducts = result.filter {
                     $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased()
                 }
-                
+             
                 let productCategories = Set(result.map { $0.category.lowercased() })
                 
                 self.categories = [Localization.allCategories.lowercased()] + productCategories.sorted()

@@ -105,7 +105,7 @@ extension CustomProductVM {
                     return image
                 }
             } catch {
-                print("❌ Ошибка загрузки изображения: \(error.localizedDescription)")
+                print(error.localizedDescription)
             }
         }
         return nil

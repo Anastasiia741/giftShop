@@ -20,6 +20,7 @@ struct CatalogView: View {
                     Spacer()
                 } else {
                     ScrollView(.vertical, showsIndicators: false) {
+
                         PopularSectionView(products: viewModel.popularProducts)
                             .padding(.vertical)
                             .padding(.horizontal, 20)
@@ -32,7 +33,7 @@ struct CatalogView: View {
                         }, categories: viewModel.categories, showText: true)
                         
                         ProductSectionView(viewModel: viewModel, filteredProducts: viewModel.filteredProducts, navigationPath: $navigationPath, currentTab: $currentTab)
-                            .padding(.horizontal, 30)
+                            .padding(.horizontal)
                             .environmentObject(viewModel)
                     }
                 }

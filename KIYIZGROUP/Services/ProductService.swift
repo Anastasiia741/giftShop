@@ -42,7 +42,7 @@ extension ProductService {
         }
     }
     
-    //  MARK: - create new product
+    //  MARK: - create new product collection
     func create(product: Product, completion: @escaping (Error?) -> Void) {
         let newProduct = product
         newProduct.id = UUID().hashValue
@@ -68,6 +68,7 @@ extension ProductService {
                     "category": product.category,
                     "detail": product.detail,
                     "price": product.price,
+                    "fullPrice": product.fullPrice ?? 0,
                     "image": product.image ?? "",
                     "quantity": product.quantity
                 ]) { error in
