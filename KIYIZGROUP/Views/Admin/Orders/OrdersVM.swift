@@ -26,7 +26,7 @@ final class OrdersVM: ObservableObject {
     
     @Published var designImage: [String: URL] = [:]
     @Published var attachedImage: [String: URL] = [:]
-        
+    
     @Published var showQuit = false
     @Published var imageURL: URL?
 }
@@ -39,8 +39,6 @@ extension OrdersVM {
             let sortedOrders = orders.sorted(by: { $0.date > $1.date })
             self?.orders = sortedOrders
             self?.filterOrders(.all)
-            
-            print("✅ Заказы загружены и отсортированы: \(sortedOrders.count)")
         }
     }
     
@@ -56,13 +54,13 @@ extension OrdersVM {
                         self.fetchImages(order: order)
                     }
                 }
-            } 
+            }
         }
     }
-
+    
     func fetchUserProfile() async {
         guard let userID = selectOrder?.userID else {
-
+            
             return }
         do {
             let userProfile = try await profileService.getProfile(by: userID)

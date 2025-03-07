@@ -4,9 +4,6 @@
 
 import SwiftUI
 
-
-import SwiftUI
-
 struct ProductSectionView: View {
     private let layoutForProducts = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width / 2.4))]
     @StateObject var viewModel: CatalogVM
@@ -16,40 +13,21 @@ struct ProductSectionView: View {
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            LazyVGrid(columns: layoutForProducts) {
+            LazyVGrid(columns: layoutForProducts, spacing: 12) {
                 ForEach(filteredProducts) { item in
                     Button {
-                        navigationPath.append(item) // Переход через navigationPath
+                        navigationPath.append(item)
                     } label: {
                         ProductCell(product: item)
+                            .frame(maxWidth: .infinity)
+                            .padding(.bottom, 16)
                     }
                 }
             }
+            .padding(.horizontal, 6)
         }
     }
 }
 
 
-//struct ProductSectionView: View {
-//    private let layoutForProducts = [GridItem(.adaptive(minimum: screen.width / 2.4))]
-//    @StateObject var viewModel: CatalogVM
-//    let filteredProducts: [Product]
-//    @Binding var currentTab: Int
-//
-//    var body: some View {
-//        ScrollView(.vertical, showsIndicators: false) {
-//            LazyVGrid(columns: layoutForProducts) {
-//                ForEach(filteredProducts) { item in
-//                    NavigationLink {
-//                        let viewModel = ProductDetailVM(product: item)
-//                        ProductDetailView(viewModel: viewModel, currentUserId: "", currentTab: $currentTab)
-//                    } label: {
-//                        ProductCell(product: item)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-//
 

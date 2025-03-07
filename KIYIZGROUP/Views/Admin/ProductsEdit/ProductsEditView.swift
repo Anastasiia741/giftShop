@@ -16,10 +16,7 @@ struct ProductsEditView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(viewModel.categories, id: \.self) { category in
-                            DetailButton(
-                                text: category,
-                                isSelected: viewModel.selectedCategory == category
-                            ) {
+                            DetailButton(text: category, isSelected: viewModel.selectedCategory == category) {
                                 viewModel.selectedCategory = category
                                 viewModel.filterProducts(by: category)
                             }

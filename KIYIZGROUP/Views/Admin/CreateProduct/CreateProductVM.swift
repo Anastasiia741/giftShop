@@ -10,10 +10,11 @@ final class CreateProductVM: ObservableObject {
     private var productService = ProductService()
     @Published var productImage: UIImage?
     @Published var imageURL: String?
-    @Published var productName: String = ""
-    @Published var productCategory: String = ""
-    @Published var productPrice: String = ""
-    @Published var productDetail: String = ""
+    @Published var name: String = ""
+    @Published var category: String = ""
+    @Published var price: String = ""
+    @Published var fullPrice: String = ""
+    @Published var detail: String = ""
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     @Published var alertModel: AlertModel?
@@ -37,20 +38,21 @@ extension CreateProductVM {
     }
     
     func createNewProduct() {
-        guard !productName.isEmpty, !productCategory.isEmpty, !productPrice.isEmpty, let selectedImage = productImage else {
+        guard !name.isEmpty, !category.isEmpty, !price.isEmpty, let selectedImage = productImage else {
             self.alertModel = configureAlertModel(with: Localization.attention, message: Localization.notFilledIn)
             return
         }
-        productService.upload(image: selectedImage, url: productName) { [weak self] uploadedImageURL, error in
+        productService.upload(image: selectedImage, url: name) { [weak self] uploadedImageURL, error in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if let uploadedImageURL = uploadedImageURL {
                     let newProduct = Product(
                         id: 0,
-                        name: self.productName,
-                        category: self.productCategory,
-                        detail: self.productDetail,
-                        price: Int(self.productPrice) ?? 0,
+                        name: self.name,
+                        category: self.category,
+                        detail: self.detail,
+                        price: Int(self.price) ?? 0,
+                        fullPrice: Int(self.fullPrice) ?? 0,
                         image: uploadedImageURL,
                         quantity: 1)
                     self.createProduct(newProduct)
@@ -76,10 +78,11 @@ private extension CreateProductVM {
     }
     
     func clearFields() {
-        productName = ""
-        productCategory = ""
-        productPrice = ""
-        productDetail = ""
+        name = ""
+        category = ""
+        price = ""
+        fullPrice = ""
+        detail = ""
         productImage = nil
     }
 }

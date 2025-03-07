@@ -21,6 +21,7 @@ struct Position: Identifiable {
         repres["count"] = count
         repres["name"] = product.name
         repres["price"] = product.price
+        repres["fullPrice"] = product.fullPrice
         repres["cost"] = self.cost
         repres["image"] = image
 
@@ -39,9 +40,10 @@ struct Position: Identifiable {
         guard let id = data["id"] as? String else { return nil}
         guard let name = data["name"] as? String else { return nil}
         guard let price = data["price"] as? Int else { return nil}
+        guard let fullPrice = data["fullPrice"] as? Int else { return nil }
         guard let image = data["image"] as? String else { return nil}
 
-        let product: Product = Product( id: 0, name: name, category: "", detail: "", price: price, image: "", quantity: 1)
+        let product: Product = Product( id: 0, name: name, category: "", detail: "", price: price, fullPrice: fullPrice, image: "", quantity: 1)
         guard let count = data["count"] as? Int else { return nil}
         
         self.id = id

@@ -8,7 +8,7 @@ struct ForgotPasswordView: View, InfoDialogHandling {
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = AuthorizationVM()
     private let textComponent = TextComponent()
-    private let customTextField = CustomTextField()
+    private let textFieldComponent = TextFieldComponent()
     let customButton = CustomButton()
     @State private var title = "Восстановление пароля"
     @State private var email = ""
@@ -31,7 +31,7 @@ struct ForgotPasswordView: View, InfoDialogHandling {
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
-                customTextField.createTextField(placeholder: "Введите ваш email", text: $email, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
+                textFieldComponent.createCustomTextField(placeholder: "Введите ваш email", text: $email, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
                     .padding([.horizontal])
                 Spacer()
                 customButton.createButton(text: email.isEmpty ? "Закрыть" : "Отправить", fontSize: 18, fontWeight: .medium, color: .black, backgroundColor: colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2), borderColor: .clear, cornerRadius: 100, action: {

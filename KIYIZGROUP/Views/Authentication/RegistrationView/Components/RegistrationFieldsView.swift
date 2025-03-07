@@ -5,12 +5,10 @@
 import SwiftUI
 
 struct RegistrationFieldsView: View {
-    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: RegistrationVM
     let customButton: CustomButton
     private let textComponent = TextComponent()
-    private let customTextField = CustomTextField()
-    private let customSecureField = CustomSecureField()
+    private let textFieldComponent = TextFieldComponent()
     @State private var isPasswordVisible = false
     
     var body: some View {
@@ -19,12 +17,12 @@ struct RegistrationFieldsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
     
-            customTextField.createTextField(placeholder: Localization.email, text: $viewModel.email, color: colorScheme == .dark ? .white : .black, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
+            textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, color: Color.primary, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
                 .padding(6)
             
-            customSecureField.createSecureField(placeholder: Localization.createPassword,
+            textFieldComponent.createSecureField(placeholder: Localization.createPassword,
                                                 text: $viewModel.password,
-                                                isPasswordVisible: $isPasswordVisible, color: colorScheme == .dark ? .white : .black,
+                                                isPasswordVisible: $isPasswordVisible, color: Color.primary,
                                                 borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
                 .padding(6)
             

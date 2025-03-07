@@ -79,7 +79,6 @@ extension View {
 //        )
 
 
-
 struct AdaptiveFill: ViewModifier {
     let lightColor: Color
     let darkColor: Color
@@ -103,8 +102,6 @@ extension View {
 }
 //    .background(RoundedRectangle(cornerRadius: 8).fill(colorScheme == .dark ? Color.black : Color.white))
 //
-    
-
 
 struct AdaptiveOverlay: ViewModifier {
     let lightColor: Color
@@ -137,3 +134,11 @@ extension View {
 //            .stroke(colorScheme == .dark ? Color.gray : Color(UIColor.systemGray4), lineWidth: 1)
 //    )
 
+
+extension View {
+    @ViewBuilder
+      func adaptiveTextColor(light: Color, dark: Color) -> some View {
+          self.environment(\.colorScheme, .light)
+              .foregroundColor(Environment(\.colorScheme).wrappedValue == .dark ? dark : light)
+      }
+}

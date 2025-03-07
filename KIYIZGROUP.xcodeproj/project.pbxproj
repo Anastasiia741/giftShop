@@ -12,6 +12,7 @@
 		710082C22B4C6228007831F5 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710082C12B4C6228007831F5 /* Position.swift */; };
 		710082C42B4C6975007831F5 /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710082C32B4C6975007831F5 /* CartCell.swift */; };
 		7100AE9B2D7899AD009C1C60 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7100AE9A2D7899AD009C1C60 /* Enum.swift */; };
+		7100AE9E2D7B509D009C1C60 /* CustomProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7100AE9D2D7B509D009C1C60 /* CustomProduct.swift */; };
 		710E3DF62D058ACB002FD2F5 /* HeaderAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710E3DF52D058ACB002FD2F5 /* HeaderAuthView.swift */; };
 		710E3DF82D058C8A002FD2F5 /* ImageGridAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710E3DF72D058C8A002FD2F5 /* ImageGridAuthView.swift */; };
 		710E3DFA2D058D68002FD2F5 /* ButtonsAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710E3DF92D058D68002FD2F5 /* ButtonsAuthView.swift */; };
@@ -167,6 +168,7 @@
 		710082C12B4C6228007831F5 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		710082C32B4C6975007831F5 /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		7100AE9A2D7899AD009C1C60 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		7100AE9D2D7B509D009C1C60 /* CustomProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProduct.swift; sourceTree = "<group>"; };
 		710E3DF52D058ACB002FD2F5 /* HeaderAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAuthView.swift; sourceTree = "<group>"; };
 		710E3DF72D058C8A002FD2F5 /* ImageGridAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridAuthView.swift; sourceTree = "<group>"; };
 		710E3DF92D058D68002FD2F5 /* ButtonsAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsAuthView.swift; sourceTree = "<group>"; };
@@ -912,6 +914,7 @@
 			isa = PBXGroup;
 			children = (
 				71E45FB32B48717000941CE7 /* Product.swift */,
+				7100AE9D2D7B509D009C1C60 /* CustomProduct.swift */,
 				710082C12B4C6228007831F5 /* Position.swift */,
 				711ED95A2B50120F0052752F /* Order.swift */,
 				71F5B2392D3115A6003B3106 /* CustomOrder.swift */,
@@ -1186,6 +1189,7 @@
 				7179A9EA2CF750F4005270CF /* OrderDetailsView.swift in Sources */,
 				710E3E132D086CF4002FD2F5 /* ConfirmationView.swift in Sources */,
 				713A29042B91FDBF00CE720D /* ProductEditVM.swift in Sources */,
+				7100AE9E2D7B509D009C1C60 /* CustomProduct.swift in Sources */,
 				712A0D352D6CDF35000DD8FF /* ContactInfoSection.swift in Sources */,
 				71E45F9C2B48568F00941CE7 /* KIYIZGROUPApp.swift in Sources */,
 				71E45FBA2B48776900941CE7 /* CatalogVM.swift in Sources */,

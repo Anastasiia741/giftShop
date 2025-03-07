@@ -21,59 +21,7 @@ struct TextComponent {
                 : Font.custom("Inter", size: fontSize)
             )
             .fontWeight(fontWeight)
-//            .foregroundColor(color)
             .adaptiveForeground(light: lightColor, dark: darkColor)
     }
 }
 
-struct CustomTextField {
-    func createTextField(placeholder: String, text: Binding<String>, fontSize: CGFloat = 16, fontWeight: Font.Weight = .regular, color: Color, borderColor: Color, padding: CGFloat = 12, frameWidth: CGFloat? = nil, frameHeight: CGFloat = 50) -> some View {
-            TextField(placeholder, text: text)
-            .font(.custom("Inter", size: fontSize))
-            .fontWeight(fontWeight)
-            .foregroundColor(color)
-            .padding(padding)
-            .frame(maxWidth: frameWidth, minHeight: frameHeight)
-            .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(borderColor, lineWidth: 1.3)
-            )
-            .frame(height: 50)
-    }
-}
-
-
-struct CustomSecureField {
-    func createSecureField(placeholder: String, text: Binding<String>, isPasswordVisible: Binding<Bool>, fontSize: CGFloat = 16, fontWeight: Font.Weight = .regular, color: Color, borderColor: Color, padding: CGFloat = 12, frameWidth: CGFloat? = nil, frameHeight: CGFloat = 50) -> some View {
-        HStack {
-            if isPasswordVisible.wrappedValue {
-                TextField(placeholder, text: text)
-                    .font(.custom("Inter", size: fontSize))
-                    .fontWeight(fontWeight)
-                    .foregroundColor(color)
-                    .padding(padding)
-            } else {
-                SecureField(placeholder, text: text)
-                    .font(.custom("Inter", size: fontSize))
-                    .fontWeight(fontWeight)
-                    .foregroundColor(color)
-                    .padding(padding)
-            }
-            Button(action: {
-                isPasswordVisible.wrappedValue.toggle()
-            }) {
-                Image(isPasswordVisible.wrappedValue ? "eye.slash" : "eye" )
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(color)
-            }
-            .padding(.trailing, 12)
-        }
-        .frame(maxWidth: frameWidth, minHeight: frameHeight) 
-        .overlay(
-            RoundedRectangle(cornerRadius: 40)
-                .stroke(borderColor, lineWidth: 1.3)
-        )
-        .frame(height: 50)
-    }
-}
