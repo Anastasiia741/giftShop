@@ -41,6 +41,9 @@ struct RegistrationFieldsView: View {
                               .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
         }
         .padding(.horizontal)
+        .onTapGesture {
+            self.hideKeyboard()
+        }
     }
 }
 

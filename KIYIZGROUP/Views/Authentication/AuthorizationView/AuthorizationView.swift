@@ -39,7 +39,9 @@ struct AuthorizationView: View {
                 ForgotPasswordView(isOpenView: $showView)
             }
         }
-
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $viewModel.showCatalog) {
             TabBar(viewModel: mainTabVM)
@@ -47,10 +49,7 @@ struct AuthorizationView: View {
                     mainTabVM.fetchUserId()
                 }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-            UIApplication.shared.endEditing()
-        }
+    
         .onChange(of: currentTab) { _, _ in
                 dismiss()
         }

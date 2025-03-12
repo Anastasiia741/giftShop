@@ -48,6 +48,9 @@ struct AuthorizationFieldsView: View {
                 }
             }
             .padding(.horizontal)
+            .onTapGesture {
+                self.hideKeyboard()
+            }
         }
     }
 }

@@ -8,15 +8,17 @@ struct ProductSectionView: View {
     private let layoutForProducts = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width / 2.4))]
     @StateObject var viewModel: CatalogVM
     let filteredProducts: [Product]
-    @Binding var navigationPath: NavigationPath
+//    @Binding var navigationPath: NavigationPath
     @Binding var currentTab: Int
+    @Binding var selectedProduct: Product?
+
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: layoutForProducts, spacing: 12) {
                 ForEach(filteredProducts) { item in
                     Button {
-                        navigationPath.append(item)
+                        selectedProduct = item
                     } label: {
                         ProductCell(product: item)
                             .frame(maxWidth: .infinity)

@@ -73,7 +73,6 @@ struct CartOrderView: View {
         }
         .onTapGesture {
             self.hideKeyboard()
-            UIApplication.shared.endEditing()
         }
     }
 }

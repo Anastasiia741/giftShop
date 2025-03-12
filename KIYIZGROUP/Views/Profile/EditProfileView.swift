@@ -34,7 +34,7 @@ struct EditProfileView: View {
                         RoundedField(placeholder: "Email", borderColor: .gray, text: $viewModel.email)
                             .disabled(true)
                         RoundedField(placeholder: "Номер телефона", borderColor: .gray, text: $viewModel.phone)
-                        
+                            .keyboardType(.numberPad)
                         RoundedPasswordButton(title: "Сменить пароль") {
                             activeScreen = .changePassword
                         }
@@ -60,6 +60,9 @@ struct EditProfileView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onTapGesture {
+                self.hideKeyboard()
+            }
             .onChange(of: currentTab) { _, new_alue in
                 dismiss()
             }

@@ -5,6 +5,7 @@
 import Foundation
 import SwiftUI
 
+//MARK: - OrdersView, OrdersAdmin
 struct DetailButton: View {
     private let textComponent = TextComponent()
     let text: String
@@ -48,7 +49,7 @@ struct SubmitButton: View {
     }
 }
 
-
+//MARK: - CustomView, CustomOrderView, ProductDetailView
 struct GreenButton: View {
     private let textComponent = TextComponent()
     let text: String
@@ -76,199 +77,7 @@ struct GreenButton: View {
     }
 }
 
-struct CustomButton {
-    private let textComponent = TextComponent()
-    
-    func createButton(text: String, fontSize: CGFloat, fontWeight: Font.Weight, color: Color, backgroundColor: Color, borderColor: Color, cornerRadius: CGFloat = 25, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, lightColor: color, darkColor: color)
-                .frame(maxWidth: .infinity, maxHeight: 50)
-                .background(backgroundColor)
-                .cornerRadius(cornerRadius)
-                .overlay(
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(borderColor, lineWidth: 1.3)
-                )
-        }
-    }
-}
-
-struct CustomButtonLogIn {
-    func createButton(foregroundColor: Color, backgroundColor: Color, borderColor: Color, isEnabled: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: {
-            if isEnabled {
-                action()
-            }
-        }) {
-            Image(systemName: "chevron.right")
-                .foregroundColor(isEnabled ? foregroundColor : .gray)
-                .frame(width: 54, height: 54)
-                .background(
-                    Circle()
-                        .fill(isEnabled ? backgroundColor : .clear)
-                        .overlay(
-                            Circle()
-                                .stroke(borderColor, lineWidth: 1)
-                        )
-                )
-        }
-        .disabled(!isEnabled)
-    }
-}
-
-struct ForgotPasswordButton {
-    private let textComponent = TextComponent()
-    
-    func createButton(action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            textComponent.createText(text: "Забыл пароль?", fontSize: 16, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
-                .padding()
-        }
-    }
-}
-
-struct MinimalButton {
-    private let textComponent = TextComponent()
-    
-    func createMinimalButton(text: String, fontSize: CGFloat = 13, fontWeight: Font.Weight = .regular, lightColor: Color = .black, darkColor: Color = .white, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, lightColor: lightColor, darkColor: darkColor).underline()
-        }
-    }
-}
-
-//MARK: - Cart
-struct FlashingCircleButton: View {
-    @Environment(\.colorScheme) var colorScheme
-    @State private var isFlashing: Bool = false
-    
-    var body: some View {
-        ZStack {
-            Circle()
-            .stroke(colorScheme == .dark ? .colorLightBrown : .colorDarkBrown, lineWidth: 2)
-            .scaleEffect(isFlashing ? 1.2 : 1.0)
-            .opacity(isFlashing ? 0.5 : 1.0)
-            
-            Circle()
-                .fill(colorScheme == .dark ? .colorLightBrown : .colorDarkBrown)
-                .padding(4)
-        }
-        .frame(width: 22, height: 22)
-        .onTapGesture {
-            withAnimation(Animation.easeInOut(duration: 0.2).repeatCount(3, autoreverses: true)) {
-                isFlashing = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                isFlashing = false
-            }
-        }
-    }
-}
-
-
-//MARK: - Profile
-struct RoundedPasswordButton: View {
-    @Environment(\.colorScheme) var colorScheme
-    private let textComponent = TextComponent()
-    let title: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: {
-            action()
-        }) {
-            HStack{
-                textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(colorScheme == .dark ? .white : .gray)
-            }
-            .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
-            .padding(.horizontal)
-            .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.gray, lineWidth: 1.3)
-            )
-        }
-        
-    }
-}
-
-struct RoundedButton: View {
-    @Environment(\.colorScheme) var colorScheme
-    private let textComponent = TextComponent()
-    let title: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
-                .padding(.horizontal)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 40)
-                        .stroke(Color.gray, lineWidth: 1.3)
-                )
-        }
-    }
-}
-
-struct RoundedRedButton: View {
-    private let textComponent = TextComponent()
-    let title: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular,  lightColor: .r, darkColor: .r)
-                .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
-                .padding(.horizontal)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 40)
-                        .stroke(Color.gray, lineWidth: 1.3)
-                )
-        }
-    }
-}
-
-struct SectionHeader: View {
-    private let textComponent = TextComponent()
-    let title: String
-    let showButton: Bool
-    let action: (() -> Void)?
-    
-    var body: some View {
-        HStack {
-            textComponent.createText(text: title.uppercased(), fontSize: 14, fontWeight: .regular,  lightColor: .gray, darkColor: .white)
-            Spacer()
-            if showButton, let action = action {
-                Button(action: action) {
-                    textComponent.createText(text: "Save".uppercased(), fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
-                }
-            }
-        }
-        .padding(.top, 10)
-        .padding(.horizontal)
-    }
-}
-
-struct RoundedField: View {
-    let placeholder: String
-    let borderColor: Color
-    @Binding var text: String
-    
-    
-    var body: some View {
-        TextField(placeholder, text: $text)
-            .padding()
-            .overlay(
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(borderColor, lineWidth: 1.3)
-            )
-            .frame(height: 50)
-    }
-}
-
+//MARK: - ProductDetailView, CartView, CartOrderView, ProfileView
 struct ButtonComponents {
     private let textComponent = TextComponent()
     
@@ -424,6 +233,7 @@ struct ButtonComponents {
     }
 }
 
+//MARK: - OrderDetail, CustomOrderDetail
 struct OrderStatusButton: View {
     @ObservedObject var viewModel: OrdersVM
     private let textComponent = TextComponent()
@@ -461,6 +271,188 @@ struct OrderStatusButton: View {
             viewModel.updateOrderStatus(orderID: orderID, newStatus: newStatus)
         }
         status = newStatus
+    }
+}
+
+//MARK: - Authorization
+struct CustomButton {
+    private let textComponent = TextComponent()
+    
+    func createButton(text: String, fontSize: CGFloat, fontWeight: Font.Weight, color: Color, backgroundColor: Color, borderColor: Color, cornerRadius: CGFloat = 25, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, lightColor: color, darkColor: color)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .background(backgroundColor)
+                .cornerRadius(cornerRadius)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(borderColor, lineWidth: 1.3)
+                )
+        }
+    }
+}
+
+//MARK: - AuthorizationFieldsView
+struct CustomButtonLogIn {
+    func createButton(foregroundColor: Color, backgroundColor: Color, borderColor: Color, isEnabled: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: {
+            if isEnabled {
+                action()
+            }
+        }) {
+            Image(systemName: "chevron.right")
+                .foregroundColor(isEnabled ? foregroundColor : .gray)
+                .frame(width: 54, height: 54)
+                .background(
+                    Circle()
+                        .fill(isEnabled ? backgroundColor : .clear)
+                        .overlay(
+                            Circle()
+                                .stroke(borderColor, lineWidth: 1)
+                        )
+                )
+        }
+        .disabled(!isEnabled)
+    }
+}
+
+//MARK: - AuthorizationFieldsView
+struct ForgotPasswordButton {
+    private let textComponent = TextComponent()
+    
+    func createButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            textComponent.createText(text: "Забыл пароль?", fontSize: 16, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
+                .padding()
+        }
+    }
+}
+
+//MARK: - RegistrationView
+struct MinimalButton {
+    private let textComponent = TextComponent()
+    
+    func createMinimalButton(text: String, fontSize: CGFloat = 13, fontWeight: Font.Weight = .regular, lightColor: Color = .black, darkColor: Color = .white, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            textComponent.createText(text: text, fontSize: fontSize, fontWeight: fontWeight, lightColor: lightColor, darkColor: darkColor).underline()
+        }
+    }
+}
+
+//MARK: - Cart
+struct FlashingCircleButton: View {
+    @Environment(\.colorScheme) var colorScheme
+    @State private var isFlashing: Bool = false
+    
+    var body: some View {
+        ZStack {
+            Circle()
+            .stroke(colorScheme == .dark ? .colorLightBrown : .colorDarkBrown, lineWidth: 2)
+            .scaleEffect(isFlashing ? 1.2 : 1.0)
+            .opacity(isFlashing ? 0.5 : 1.0)
+            
+            Circle()
+                .fill(colorScheme == .dark ? .colorLightBrown : .colorDarkBrown)
+                .padding(4)
+        }
+        .frame(width: 22, height: 22)
+        .onTapGesture {
+            withAnimation(Animation.easeInOut(duration: 0.2).repeatCount(3, autoreverses: true)) {
+                isFlashing = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                isFlashing = false
+            }
+        }
+    }
+}
+
+//MARK: - Profile
+struct RoundedPasswordButton: View {
+    @Environment(\.colorScheme) var colorScheme
+    private let textComponent = TextComponent()
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: {
+            action()
+        }) {
+            HStack{
+                textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundColor(colorScheme == .dark ? .white : .gray)
+            }
+            .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+            .padding(.horizontal)
+            .overlay(
+                RoundedRectangle(cornerRadius: 40)
+                    .stroke(Color.gray, lineWidth: 1.3)
+            )
+        }
+        
+    }
+}
+
+//MARK: - EditProfileView
+struct RoundedButton: View {
+    @Environment(\.colorScheme) var colorScheme
+    private let textComponent = TextComponent()
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+                .padding(.horizontal)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 40)
+                        .stroke(Color.gray, lineWidth: 1.3)
+                )
+        }
+    }
+}
+
+//MARK: - EditProfileView
+struct RoundedRedButton: View {
+    private let textComponent = TextComponent()
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            textComponent.createText(text: title, fontSize: 14, fontWeight: .regular,  lightColor: .r, darkColor: .r)
+                .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
+                .padding(.horizontal)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 40)
+                        .stroke(Color.gray, lineWidth: 1.3)
+                )
+        }
+    }
+}
+
+//MARK: - EditProfileView
+struct SectionHeader: View {
+    private let textComponent = TextComponent()
+    let title: String
+    let showButton: Bool
+    let action: (() -> Void)?
+    
+    var body: some View {
+        HStack {
+            textComponent.createText(text: title.uppercased(), fontSize: 14, fontWeight: .regular,  lightColor: .gray, darkColor: .white)
+            Spacer()
+            if showButton, let action = action {
+                Button(action: action) {
+                    textComponent.createText(text: "Save".uppercased(), fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
+                }
+            }
+        }
+        .padding(.top, 10)
+        .padding(.horizontal)
     }
 }
 

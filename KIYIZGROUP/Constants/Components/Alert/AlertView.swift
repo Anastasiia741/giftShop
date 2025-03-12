@@ -10,21 +10,17 @@ struct AlertView: View, InfoDialogHandling {
     private let customButton = CustomButton()
     @State private var offset: CGFloat = 1000
     let title: String
-    
     let okButton: String
     let canselButton: String
     let okButtonAction: (() -> Void)?
-    
     var isOpenView: Binding<Bool>
-    
-    
     
     var body: some View {
         ZStack {
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
-                        self.closeInfoDialog()
+                    self.closeInfoDialog()
                 }
             VStack() {
                 textComponent.createText(text: title, fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)

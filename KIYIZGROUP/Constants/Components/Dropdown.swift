@@ -53,7 +53,6 @@ struct Dropdown: View {
                 .background(RoundedRectangle(cornerRadius: 24).stroke(borderColor, lineWidth: 1.3))
                 .padding(.top, 8)
             }
-            
         }
     }
 }

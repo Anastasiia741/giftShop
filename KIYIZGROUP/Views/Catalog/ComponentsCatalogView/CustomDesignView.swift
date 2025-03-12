@@ -9,7 +9,9 @@ struct CustomDesignView: View {
     let customOrder: CustomOrder
     @Binding var currentTab: Int
     @State private var showCustomView = false
-    @State var email:    String = ""
+    @State var email: String = ""
+    @State private var isViewActive = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Button(action: {

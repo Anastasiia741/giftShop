@@ -4,6 +4,11 @@
 
 import SwiftUI
 
+enum ProfileNavigation: Hashable {
+    case editProfile
+    case changePassword
+}
+
 struct CustomBackButton: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
@@ -25,13 +30,13 @@ struct CustomBackProfileButton: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     var action: (() -> Void)?
-
+    
     var body: some View {
         Button(action: {
             if let action = action {
-                action() // Используем кастомное действие, если оно передано
+                action()
             } else {
-                presentationMode.wrappedValue.dismiss() // Обычное закрытие экрана
+                presentationMode.wrappedValue.dismiss()
             }
         }) {
             HStack {
@@ -44,8 +49,3 @@ struct CustomBackProfileButton: View {
 }
 
 
-
-enum ProfileNavigation: Hashable {
-    case editProfile
-    case changePassword
-}

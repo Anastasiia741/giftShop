@@ -10,10 +10,10 @@ struct CustomOrderView: View {
     let customOrder: CustomOrder
     @State private var designImage: UIImage? = nil
     @State private var addedImage: UIImage? = nil
-    
     @Binding var currentTab: Int
     @State var isLoading = false
-    
+    @State private var showCustomDetailsView = false
+ 
     var body: some View {
         ZStack(alignment: .center) {
             VStack(spacing: 0) {
@@ -57,6 +57,9 @@ struct CustomOrderView: View {
                     .transition(.opacity)
             }
         }
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .onChange(of: currentTab) { _, _ in
             dismiss()
         }
@@ -65,7 +68,7 @@ struct CustomOrderView: View {
             UIApplication.shared.endEditing()
         }
         .navigationDestination(isPresented: $viewModel.showOrderDetails) {
-            CustomDetailsView(viewModel: viewModel, customOrder: customOrder, currentTab: $currentTab)
+            CustomDetailsView(viewModel: viewModel, customOrder: customOrder, currentTab: $currentTab, isViewActive: $viewModel.showOrderDetails)
         }
         .animation(.easeInOut, value: isLoading)
         .animation(.easeInOut, value: viewModel.showInfoView)

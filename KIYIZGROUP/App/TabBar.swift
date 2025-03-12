@@ -102,7 +102,7 @@ struct UserTabView: View {
     
     var body: some View {
         TabView(selection: $currentTab) {
-            CatalogView(navigationPath: $navigationPath, currentTab: $currentTab)
+            CatalogView(currentTab: $currentTab)
                 .tabItem {
                     VStack {
                         Images.TabBar.menu
@@ -132,10 +132,10 @@ struct UserTabView: View {
 struct GuestTabView: View {
     @Binding var currentTab: Int
     @State private var navigationPath = NavigationPath()
-    
+
     var body: some View {
         TabView(selection: $currentTab) {
-            CatalogView(navigationPath: $navigationPath, currentTab: $currentTab)
+            CatalogView(currentTab: $currentTab)
                 .tabItem {
                     VStack {
                         Images.TabBar.menu

@@ -48,7 +48,6 @@ enum Images {
     }
     
     enum Profile {
-        static let emptyList = Image("emptyOrdersImage")
         static let exit = Image(systemName: "rectangle.portrait.and.arrow.forward")
     }
     

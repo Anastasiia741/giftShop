@@ -15,7 +15,6 @@ struct CategorySectionView: View {
         VStack(alignment: .leading ) {
             if showText {
                 textComponent.createText(text: Localization.products, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
-                    .padding(.leading, 30)
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -33,12 +32,11 @@ struct CategorySectionView: View {
                             .cornerRadius(20)
                         }
                         .overlay(RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color("ColorYellow"), lineWidth: 1)
+                            .stroke(.colorYellow, lineWidth: 1)
                             .opacity(selectedCategory == category ? 0 : 1)
                         )
                     }
                 }
-                .padding(.leading, 30)
                 .padding(.vertical, 10)
             }
         }

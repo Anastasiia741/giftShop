@@ -106,7 +106,7 @@ struct GoodsSection: View {
             
             ForEach(order.positions) { position in
                 HStack {
-                    textComponent.createText(text: "\(Localization.title) \(position.product.name): \(position.count) \(Localization.amount).", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(position.product.name): \(position.count) \(Localization.amount).", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

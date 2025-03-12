@@ -24,7 +24,7 @@ struct InfoView: View, InfoDialogHandling {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 64, height: 64)
-                    .foregroundColor(Color.greenButton)
+                    .foregroundColor(.new)
                 
                 textComponent.createText(text: "Заказ оформлен", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     .padding()

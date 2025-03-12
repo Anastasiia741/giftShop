@@ -40,10 +40,8 @@ struct AuthenticationView: View {
             }
                 .padding()
                 .frame(maxHeight: 44), alignment: .topTrailing)
-            
             .onTapGesture {
                 self.hideKeyboard()
-                UIApplication.shared.endEditing()
             }
         }
     }

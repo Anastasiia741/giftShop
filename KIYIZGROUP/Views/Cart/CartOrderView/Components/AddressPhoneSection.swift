@@ -12,7 +12,6 @@ struct AddressPhoneSection: View {
     private let textComponent = TextComponent()
     @Binding var navigationPath: NavigationPath
     var isValidate: Bool
-
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -20,7 +19,7 @@ struct AddressPhoneSection: View {
             HStack {
                 textComponent.createText(text: getAddress().isEmpty ? "Добавить адрес" : getAddress(), fontSize: 16, fontWeight: .medium, lightColor: .black, darkColor: .white)
                     .foregroundColor(getAddress().isEmpty ? .gray : .primary)
-
+                
                 Spacer()
                 
                 Button(action: {
@@ -34,7 +33,7 @@ struct AddressPhoneSection: View {
             .padding()
             .background(RoundedRectangle(cornerRadius: 24)
                 .stroke(isValidate && getAddress().isEmpty ? Color.red : .gray, lineWidth: 1.3))
-
+            
             textFieldComponent.createTextField(placeholder: "+996", text: profileVM.authService.currentUser != nil ? $profileVM.phone : $cartVM.phone, keyboardType: .phonePad,  borderColor: isValidate && getPhone().isEmpty ? .red : .gray)
         }
         .onAppear {
@@ -43,10 +42,9 @@ struct AddressPhoneSection: View {
         .onChange(of: profileVM.phone) { _, newValue in
             savePhoneData()
         }
-        
         .onChange(of: cartVM.phone) { _, newValue in
-                   savePhoneData()
-               }
+            savePhoneData()
+        }
     }
 }
 
@@ -57,7 +55,7 @@ extension AddressPhoneSection {
     
     private func getPhone() -> String {
         return profileVM.authService.currentUser != nil ? profileVM.phone : cartVM.phone
-      }
+    }
     
     private func loadUserData() {
         if profileVM.authService.currentUser == nil {
