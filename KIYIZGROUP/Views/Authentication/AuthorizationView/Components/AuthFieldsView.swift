@@ -19,14 +19,14 @@ struct AuthorizationFieldsView: View {
                 textComponent.createText(text: Localization.authorization, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(6)
-                textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, color: Color.primary, borderColor: viewModel.errorType == .email ? .r : .colorDarkBrown)
+                textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, borderColor: viewModel.errorType == .email ? .r : .colorDarkBrown)
                     .padding(6)
                 HStack {
                     textFieldComponent.createSecureField(placeholder: Localization.enterPassword, text: $viewModel.password,
                                                          isPasswordVisible: $isPasswordVisible,
                                                          color: Color.primary,
                                                          borderColor: viewModel.errorType == .password ? .r : .colorDarkBrown)
-                   
+                    
                     customButton.createButton(foregroundColor: .white,
                                               backgroundColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : .colorGreen,
                                               borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen,
@@ -48,7 +48,6 @@ struct AuthorizationFieldsView: View {
                 }
             }
             .padding(.horizontal)
-
         }
     }
 }

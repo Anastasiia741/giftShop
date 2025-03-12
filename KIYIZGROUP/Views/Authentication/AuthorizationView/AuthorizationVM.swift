@@ -8,7 +8,7 @@ import FirebaseAuth
 @MainActor
 final class AuthorizationVM: AuthBaseVM {
     private var authService = AuthService()
-    @Published var isShowCatalog = false
+    @Published var showCatalog = false
     @Published var isEmailSent: Bool = false
     @Published var isLoading: Bool = false
 }
@@ -37,7 +37,7 @@ extension AuthorizationVM {
                 
                 switch result {
                 case .success(_):
-                    self?.isShowCatalog = true
+                    self?.showCatalog = true
                     onSuccess()
                 case .failure(let error):
                     self?.handleError(error)

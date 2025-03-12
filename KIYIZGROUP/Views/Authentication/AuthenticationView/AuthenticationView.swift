@@ -25,7 +25,6 @@ struct AuthenticationView: View {
                 })
                 .padding(.vertical)
             }
-            
             .navigationDestination(item: $activeScreen) { screen in
                 switch screen {
                 case .registration:

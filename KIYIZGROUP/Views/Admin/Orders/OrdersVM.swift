@@ -134,13 +134,16 @@ extension OrdersVM {
 
 //MARK: - Logout
 extension OrdersVM {
-    func logout() {
-        authService.signOut{ result in
-            switch result {
-            case .success:
-                self.showQuit = true
-            case .failure(let error):
-                print("\(error.localizedDescription)")
+    func logout(mainTabVM: MainTabVM) {
+        authService.signOut { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    mainTabVM.userID = nil
+                    self.showQuit = true
+                case .failure(let error):
+                    print("Ошибка выхода: \(error.localizedDescription)")
+                }
             }
         }
     }

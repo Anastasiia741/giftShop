@@ -15,15 +15,15 @@ struct DetailButton: View {
         Button(action: action) {
             textComponent.createText(text: text, fontSize: 16, fontWeight: .regular, lightColor: isSelected ? .white : .black,
                                      darkColor: isSelected ? .white : .white)
-                .padding(.horizontal, 16)
-                .frame(minWidth: 80, maxWidth: .infinity, minHeight: 40)
-                .background(isSelected ? .colorGreen : .clear)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(isSelected ? .colorGreen : Color.gray, lineWidth: 1.5)
-                )
-                .cornerRadius(20)
-                .layoutPriority(1)
+            .padding(.horizontal, 16)
+            .frame(minWidth: 80, maxWidth: .infinity, minHeight: 40)
+            .background(isSelected ? .colorGreen : .clear)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(isSelected ? .colorGreen : Color.gray, lineWidth: 1.5)
+            )
+            .cornerRadius(20)
+            .layoutPriority(1)
         }
     }
 }
@@ -139,17 +139,18 @@ struct MinimalButton {
 
 //MARK: - Cart
 struct FlashingCircleButton: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var isFlashing: Bool = false
     
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.colorDarkBrown, lineWidth: 2)
-                .scaleEffect(isFlashing ? 1.2 : 1.0)
-                .opacity(isFlashing ? 0.5 : 1.0)
+            .stroke(colorScheme == .dark ? .colorLightBrown : .colorDarkBrown, lineWidth: 2)
+            .scaleEffect(isFlashing ? 1.2 : 1.0)
+            .opacity(isFlashing ? 0.5 : 1.0)
             
             Circle()
-                .fill(Color.colorDarkBrown)
+                .fill(colorScheme == .dark ? .colorLightBrown : .colorDarkBrown)
                 .padding(4)
         }
         .frame(width: 22, height: 22)
@@ -268,7 +269,6 @@ struct RoundedField: View {
     }
 }
 
-//MARK: - ProductDetailView
 struct ButtonComponents {
     private let textComponent = TextComponent()
     
@@ -277,7 +277,7 @@ struct ButtonComponents {
             action()
         }) {
             HStack {
-                textComponent.createText(text: text, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .black)
+                textComponent.createText(text: text, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity, maxHeight: 54)
@@ -344,10 +344,9 @@ struct ButtonComponents {
             }
         }
     }
-    
-    
-    
-    func createCustomStepper(position: Product, count: Binding<Int>, range: ClosedRange<Int>, action: @escaping () -> Void) -> some View {
+   
+//MARK: - Cart
+    func createCustomStepper(position: Product, count: Binding<Int>, range: ClosedRange<Int>, colorScheme: ColorScheme, action: @escaping () -> Void) -> some View {
         HStack {
             Button(action: {
                 if count.wrappedValue > range.lowerBound {
@@ -356,14 +355,14 @@ struct ButtonComponents {
                 }
             }) {
                 Image(systemName: "minus")
-                    .foregroundColor(count.wrappedValue > range.lowerBound ? .black : .gray)
+                    .foregroundColor(count.wrappedValue > range.lowerBound ? (colorScheme == .dark ? .white : .black) : .gray)
                     .frame(width: 22, height: 22)
                     .background(Color.clear)
             }
             .disabled(count.wrappedValue <= range.lowerBound)
             
-            textComponent.createText(text: "\(count.wrappedValue)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                .frame(maxWidth: .infinity, alignment: .center)
+            textComponent.createText(text: "\(count.wrappedValue)", fontSize: 16, fontWeight: .regular, lightColor: colorScheme == .dark ? .white : .black, darkColor: colorScheme == .dark ? .white : .black)
+            .frame(maxWidth: .infinity, alignment: .center)
             
             Button(action: {
                 if count.wrappedValue < range.upperBound {
@@ -372,7 +371,7 @@ struct ButtonComponents {
                 }
             }) {
                 Image(systemName: "plus")
-                    .foregroundColor(count.wrappedValue < range.upperBound ? .black : .gray)
+                    .foregroundColor(count.wrappedValue < range.upperBound ? (colorScheme == .dark ? .white : .black) : .gray)
                     .frame(width: 24, height: 24)
                     .background(Color.clear)
             }
@@ -385,7 +384,8 @@ struct ButtonComponents {
                 .stroke(Color.gray, lineWidth: 1)
         )
     }
-    
+  
+    //MARK: - Cart
     func createOrderButton(amount: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
@@ -401,20 +401,26 @@ struct ButtonComponents {
         .padding(.horizontal, 16)
     }
     
-    func createOrdersButton(amount: String, isDisabled: Bool, action: @escaping () -> Void) -> some View {
+    func createOrdersButton(amount: String, color: Color, backgroundColor: Color, borderColor: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
-                textComponent.createText(text: "Заказать", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: "Заказать", fontSize: 16, fontWeight: .regular, lightColor: color, darkColor: color)
                 
-                textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, lightColor: color, darkColor: color)
             }
             .padding()
-            .frame(maxWidth: 380)
-            .background(Color.colorGreen)
-            .cornerRadius(40)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(backgroundColor)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 40)
+                    .stroke(borderColor, lineWidth: 1.3)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 40))
         }
         .padding(.horizontal, 16)
-        .disabled(isDisabled)
     }
 }
 
@@ -430,7 +436,7 @@ struct OrderStatusButton: View {
         Button(action: {
             isShowStatus = true
         }) {
-            textComponent.createText(text: status, fontSize: 16, fontWeight: .medium, lightColor: .white, darkColor: .white)
+            textComponent.createText(text: status, fontSize: 16, fontWeight: .medium, lightColor: .white, darkColor: .gray)
                 .frame(maxWidth: 130, minHeight: 50)
                 .background(StatusColors.getTextColor(OrderStatus(rawValue: status) ?? .new))
                 .cornerRadius(20)
@@ -475,7 +481,7 @@ struct LogoutButton: View {
                 title: Text(Localization.logOut),
                 buttons: [
                     .default(Text(Localization.yes)) {
-                        viewModel.logout()
+                        viewModel.logout(mainTabVM: mainTabVM)
                     },
                     .cancel(Text(Localization.cancel))
                 ]

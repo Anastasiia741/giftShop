@@ -69,18 +69,24 @@ extension ProductEditVM {
     func saveEditedProduct() {
         guard let selectedProduct = selectedProduct else { return }
         productsDB.update(product: selectedProduct) { [weak self] error in
+            guard let self = self else { return }
+            
             if error != nil {
-                self?.alertModel = self?.configureAlertModel(with: Localization.error)
-            } else {
-                self?.alertModel = self?.configureAlertModel(with: Localization.dataSavedSuccessfully)
-                guard let selectedImage = self?.selectedImage, let imageURL = selectedProduct.image else { return }
-                self?.productsDB.uploadImageToFirebase(selectedImage, imageURL) { [weak self] imageURL in
-                    if let imageURL = imageURL {
-                        self?.selectedProduct?.image = imageURL
-                    } else {
-                        self?.alertModel = self?.configureAlertModel(with: Localization.error)
-                    }
-                    
+                self.alertModel = self.configureAlertModel(with: Localization.error)
+                return
+            }
+            
+            self.alertModel = self.configureAlertModel(with: Localization.dataSavedSuccessfully)
+            
+            guard let selectedImage = self.selectedImage, let imageURL = selectedProduct.image else { return }
+            
+            self.productsDB.updateImage(selectedImage, imageURL: imageURL) { [weak self] (updatedURL: String?, error: Error?) in
+                guard let self = self else { return }
+                
+                if let updatedURL = updatedURL {
+                    self.selectedProduct?.image = updatedURL
+                } else {
+                    self.alertModel = self.configureAlertModel(with: Localization.error)
                 }
             }
         }

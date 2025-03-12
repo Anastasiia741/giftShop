@@ -27,16 +27,15 @@ struct AlertView: View, InfoDialogHandling {
                         self.closeInfoDialog()
                 }
             VStack() {
-                textComponent.createText(text: title, fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .black)
+                textComponent.createText(text: title, fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     .multilineTextAlignment(.center)
                     .padding()
                 Spacer()
                 HStack{
-                    customButton.createButton(text: okButton, fontSize: 14, fontWeight: .regular, color: .black, backgroundColor: .clear, borderColor: .gray.opacity(0.5), cornerRadius: 100, action: {
+                    customButton.createButton(text: okButton, fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black, backgroundColor: .clear, borderColor: .gray.opacity(0.5), cornerRadius: 100, action: {
                         okButtonAction?()
-                        
                     })
-                    customButton.createButton(text: canselButton, fontSize: 14, fontWeight: .regular, color: .black, backgroundColor: .clear,  borderColor: .gray.opacity(0.5), cornerRadius: 100, action: {
+                    customButton.createButton(text: canselButton, fontSize: 14, fontWeight: .regular, color: colorScheme == .dark ? .white : .black, backgroundColor: .clear,  borderColor: .gray.opacity(0.5), cornerRadius: 100, action: {
                         closeInfoDialog()
                     }
                     )

@@ -5,8 +5,8 @@
 import SwiftUI
 
 struct CartView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject private var catalogVM = CatalogVM()
+    @StateObject var profileVM = ProfileVM()
     @StateObject private var viewModel = CartVM()
     private let buttonComponents = ButtonComponents()
     let currentUserId: String
@@ -29,7 +29,6 @@ struct CartView: View {
                     
                     buttonComponents.createOrderButton(amount: "\(viewModel.productCountMessage)", action: {
                         navigationPath.append(CartNavigation.cartOrderView)
-                        
                     })
                 }
             }
@@ -39,7 +38,7 @@ struct CartView: View {
             .navigationDestination(for: CartNavigation.self) { destination in
                 switch destination {
                 case .cartOrderView:
-                    CartOrderView(navigationPath: $navigationPath, currentTab: $currentTab)
+                    CartOrderView(profileVM: profileVM, navigationPath: $navigationPath, currentTab: $currentTab)
                 case .orderDetailsView(let order):
                     OrderDetailsView(currentTab: $currentTab, orderProducts: viewModel.orderProducts, order: order)
                 case .addressInputView:

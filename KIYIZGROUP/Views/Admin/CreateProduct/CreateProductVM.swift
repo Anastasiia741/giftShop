@@ -19,6 +19,11 @@ final class CreateProductVM: ObservableObject {
     @Published var alertMessage = ""
     @Published var alertModel: AlertModel?
     
+    @Published var isImageValid: Bool = true
+    @Published var isNameValid: Bool = true
+    @Published var isCategoryValid: Bool = true
+    @Published var isPriceValid: Bool = true
+    @Published var isFullPriceValid: Bool = true
 }
 
 //MARK: - create
@@ -38,43 +43,69 @@ extension CreateProductVM {
     }
     
     func createNewProduct() {
-        guard !name.isEmpty, !category.isEmpty, !price.isEmpty, let selectedImage = productImage else {
+        guard validateFields() else {
             self.alertModel = configureAlertModel(with: Localization.attention, message: Localization.notFilledIn)
             return
         }
-        productService.upload(image: selectedImage, url: name) { [weak self] uploadedImageURL, error in
+        
+        guard let selectedImage = productImage else {
+            self.alertModel = configureAlertModel(with: Localization.attention, message: Localization.notFilledIn)
+            return
+        }
+        
+        productService.uploadNewImage(selectedImage) { [weak self] uploadedImageURL, error in
             guard let self = self else { return }
+            
             DispatchQueue.main.async {
-                if let uploadedImageURL = uploadedImageURL {
-                    let newProduct = Product(
-                        id: 0,
-                        name: self.name,
-                        category: self.category,
-                        detail: self.detail,
-                        price: Int(self.price) ?? 0,
-                        fullPrice: Int(self.fullPrice) ?? 0,
-                        image: uploadedImageURL,
-                        quantity: 1)
-                    self.createProduct(newProduct)
-                } else if let error = error {
+                if let error = error {
                     self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
+                    return
                 }
+                
+                guard let uploadedImageURL = uploadedImageURL else {
+                    self.alertModel = self.configureAlertModel(with: Localization.error, message: "imageUploadFailed")
+                    return
+                }
+                
+                let newProduct = Product(
+                    id: 0,
+                    name: self.name,
+                    category: self.category,
+                    detail: self.detail,
+                    price: Int(self.price) ?? 0,
+                    fullPrice: Int(self.fullPrice) ?? 0,
+                    image: uploadedImageURL,
+                    quantity: 1
+                )
+                self.createProduct(newProduct)
             }
         }
+    }
+    
+    func resetValidation() {
+        isImageValid = true
+        isNameValid = true
+        isCategoryValid = true
+        isPriceValid = true
+        isFullPriceValid = true
     }
 }
 
 //MARK: - errors
 private extension CreateProductVM {
+    func validateFields() -> Bool {
+        isImageValid = productImage != nil
+        isNameValid = !name.trimmingCharacters(in: .whitespaces).isEmpty
+        isCategoryValid = !category.trimmingCharacters(in: .whitespaces).isEmpty
+        isPriceValid = !price.trimmingCharacters(in: .whitespaces).isEmpty && Int(price) != nil
+        isFullPriceValid = !fullPrice.trimmingCharacters(in: .whitespaces).isEmpty && Int(fullPrice) != nil
+        
+        return isImageValid && isNameValid && isCategoryValid && isPriceValid && isFullPriceValid
+    }
+    
     func configureAlertModel(with title: String, message: String?) -> AlertModel {
-        AlertModel(
-            title: title,
-            message: message,
-            buttons: [
-                AlertButtonModel(title: Localization.ok, action: { [weak self] in
-                    self?.alertModel = nil
-                })
-            ])
+        AlertModel(title: title, message: message, buttons: [AlertButtonModel(title: Localization.ok, action: { [weak self] in
+            self?.alertModel = nil})])
     }
     
     func clearFields() {

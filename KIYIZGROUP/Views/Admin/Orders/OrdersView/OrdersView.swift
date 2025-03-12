@@ -35,14 +35,17 @@ struct OrdersView: View {
                 .padding(.vertical)
             }
             .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $showQuit))
-        }
-        .navigationDestination(isPresented: $viewModel.showQuit) {
-            TabBar(viewModel: mainTabVM)
-        }
-        .onAppear {
-            Task{
-                viewModel.fetchUserOrders()
-                await viewModel.fetchUserProfile()
+            .navigationDestination(isPresented: $viewModel.showQuit) {
+                TabBar(viewModel: mainTabVM)
+                    .onAppear {
+                        mainTabVM.fetchUserId()
+                    }
+            }
+            .onAppear {
+                Task{
+                    viewModel.fetchUserOrders()
+                    await viewModel.fetchUserProfile()
+                }
             }
         }
     }

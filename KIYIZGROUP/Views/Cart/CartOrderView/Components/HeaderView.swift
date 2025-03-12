@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = CartVM()
     private let textComponent = TextComponent()
     let orderProducts: [Product]
@@ -18,7 +18,7 @@ struct HeaderView: View {
                 Spacer()
                 if showEditButton {
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }) {
                         textComponent.createText(text: "Изменить", fontSize: 16, fontWeight: .medium, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                             .font(.body)

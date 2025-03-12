@@ -12,10 +12,9 @@ struct ProfileView: View {
     private let textComponent = TextComponent()
     @State private var activeScreen: ProfileNavigation? = nil
     @State private var selectedImage: UIImage?
-    
     @Binding var currentTab: Int
     @State private var showEditView = false
-
+    
     var body: some View {
         NavigationStack{
             ZStack(alignment: .top) {
@@ -43,7 +42,6 @@ struct ProfileView: View {
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.white.opacity(0.9) .edgesIgnoringSafeArea(.top))
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(item: $activeScreen) { screen in

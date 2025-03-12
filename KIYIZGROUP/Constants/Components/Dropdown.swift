@@ -5,6 +5,7 @@
 import SwiftUI
 
 struct Dropdown: View {
+    private let textComponent = TextComponent()
     var borderColor: Color = .gray
     let placeholder: String
     let options: [String]
@@ -19,8 +20,7 @@ struct Dropdown: View {
                 }
             }) {
                 HStack {
-                    Text(selectedOption.isEmpty ? placeholder : selectedOption)
-                        .foregroundColor(selectedOption.isEmpty ? .gray : .black)
+                    textComponent.createText(text: selectedOption.isEmpty ? placeholder : selectedOption, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     Image(systemName: "chevron.down")
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
@@ -39,15 +39,13 @@ struct Dropdown: View {
                             }
                         }) {
                             HStack {
-                                Text(option)
-                                    .foregroundColor(.black)
+                                textComponent.createText(text: option, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                                 Spacer()
                             }
                             .padding()
                         }
-                        .background(Color.white)
                         if option != options.last {
-                            Divider().padding(.horizontal)
+                            CustomDivider()
                         }
                     }
                 }

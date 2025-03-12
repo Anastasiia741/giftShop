@@ -22,16 +22,19 @@ struct ProductCell: View {
                             .frame(width: screen.width * 0.45, height: 150)
                     }
                     .fade(duration: 0.3)
+                    .forceRefresh()
+                    .cacheOriginalImage(false)
                     .aspectRatio(contentMode: .fill)
                     .frame(width: screen.width * 0.45, height: 150)
                     .clipped()
                     .cornerRadius(24)
+                
             } else {
                 RoundedRectangle(cornerRadius: 24)
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: screen.width * 0.45, height: 150)
                     .task {
-                        await fetchImageURL()
+                        fetchImage()
                     }
             }
             VStack(alignment: .leading, spacing: 4) {
@@ -49,22 +52,29 @@ struct ProductCell: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .cornerRadius(24)
     }
-    
 }
 
 
 extension ProductCell {
-    private func fetchImageURL() async {
-        guard let imagePath = product.image, imagePath.hasPrefix("gs://") else {
+    
+    private func fetchImage() {
+        guard let imagePath = product.image else { return }
+        
+        if let url = URL(string: imagePath), imagePath.starts(with: "https://") {
+            self.imageURL = url
             return
         }
-        do {
-            let url = try await Storage.storage().reference(forURL: imagePath).downloadURL()
-            DispatchQueue.main.async {
-                self.imageURL = url
+        
+        if imagePath.starts(with: "gs://") {
+            Storage.storage().reference(forURL: imagePath).downloadURL { url, error in
+                if let error = error {
+                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.imageURL = url
+                }
             }
-        } catch {
-            print("Ошибка загрузки изображения: \(error.localizedDescription)")
         }
     }
     
@@ -72,7 +82,19 @@ extension ProductCell {
     private func fullPriceView() -> some View {
         if let fullPrice = product.fullPrice, fullPrice > 0 {
             textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
-            .strikethrough()
+                .strikethrough()
         }
+    }
+}
+
+extension URL {
+    func appendingQueryParameter(_ name: String, value: String) -> URL {
+        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return self
+        }
+        var queryItems = urlComponents.queryItems ?? []
+        queryItems.append(URLQueryItem(name: name, value: value))
+        urlComponents.queryItems = queryItems
+        return urlComponents.url ?? self
     }
 }

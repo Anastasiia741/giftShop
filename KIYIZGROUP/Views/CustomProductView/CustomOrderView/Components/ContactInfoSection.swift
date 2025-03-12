@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct ContactInfoSection: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let textComponent = TextComponent()
     private let customTextField = TextFieldComponent()
     
@@ -18,7 +17,7 @@ struct ContactInfoSection: View {
             
             textComponent.createText(text: "Оставьте свой номер телефона и наш оператор свяжется с вами в ближайшее время для уточнения деталей", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             
-            customTextField.createCustomTextField(placeholder: "+996*", text: $phoneNumber, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
+            customTextField.createCustomTextField(placeholder: "+996*", text: $phoneNumber, borderColor: .colorDarkBrown)
                 .keyboardType(.numberPad)
                 .padding()
         }

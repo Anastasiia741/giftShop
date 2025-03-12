@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-
 struct TabBar: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: MainTabVM
@@ -18,17 +17,16 @@ struct TabBar: View {
                     
                 } else {
                     UserTabView(currentTab: $currentTab, userID: userID)
-                    
                 }
             } else {
                 GuestTabView(currentTab: $currentTab)
-                
             }
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.fetchUserId()
             setupTabBarAppearance()
+            currentTab = 0 
         }
     }
 }
@@ -97,7 +95,6 @@ struct AdminTabView: View {
     }
 }
 
-
 struct UserTabView: View {
     @Binding var currentTab: Int
     let userID: String
@@ -163,8 +160,6 @@ struct GuestTabView: View {
                 .tag(TabType.profile.rawValue)
         }
         .navigationBarBackButtonHidden(true)
-        
-        
     }
 }
 

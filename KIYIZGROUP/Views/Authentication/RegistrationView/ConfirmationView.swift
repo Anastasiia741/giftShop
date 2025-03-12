@@ -6,7 +6,6 @@ import SwiftUI
 
 struct ConfirmationView: View {
     @Environment(\.colorScheme) var colorScheme
-//    @Environment(\.dismiss) private var dismiss
     private let textComponent = TextComponent()
     let customButton: CustomButton
     let email: String

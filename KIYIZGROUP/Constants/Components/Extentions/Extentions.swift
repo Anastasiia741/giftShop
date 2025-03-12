@@ -67,7 +67,7 @@ struct AdaptiveStroke: ViewModifier {
 }
 
 extension View {
-    func adaptiveStroke(lightColor: Color = Color.gray.opacity(0.3), darkColor: Color = Color.white.opacity(0.1), lineWidth: CGFloat = 1.5, cornerRadius: CGFloat = 12) -> some View {
+    func adaptiveStroke(lightColor: Color = .gray, darkColor: Color = .white, lineWidth: CGFloat = 1.7, cornerRadius: CGFloat = 12) -> some View {
         self.modifier(AdaptiveStroke(lightColor: lightColor, darkColor: darkColor, lineWidth: lineWidth, cornerRadius: cornerRadius))
     }
 }

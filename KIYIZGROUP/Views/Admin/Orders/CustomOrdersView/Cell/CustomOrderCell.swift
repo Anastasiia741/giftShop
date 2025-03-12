@@ -6,10 +6,10 @@ import SwiftUI
 
 struct CustomOrderCell: View {
     @ObservedObject var viewModel = OrdersVM()
+    private let textComponent = TextComponent()
     @State private var selectedOrder: CustomOrder?
     @Binding var order: CustomOrder
-    private let textComponent = TextComponent()
-    @State private var isShowDetail = false
+    @State private var showDetail = false
     
     var body: some View {
         HStack {
@@ -36,7 +36,7 @@ struct CustomOrderCell: View {
             Spacer()
             Button(action: {
                 selectedOrder = order
-                isShowDetail = true
+                showDetail = true
             }) {
                 textComponent.createText(text: Localization.moreDetails, fontSize: 14, fontWeight: .regular, lightColor: .white, darkColor: .white)
                     .frame(maxWidth: 100, minHeight: 30)
@@ -45,7 +45,7 @@ struct CustomOrderCell: View {
                     .shadow(color: Color(StatusColor.new).opacity(0.3), radius: 3, x: 0, y: 3)
             }
             
-            .sheet(isPresented: $isShowDetail) {
+            .sheet(isPresented: $showDetail) {
                 if let selectedOrder = selectedOrder {
                     CustomOrderDetail(viewModel: viewModel, order: selectedOrder)
                 } else {

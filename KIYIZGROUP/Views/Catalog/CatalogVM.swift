@@ -27,21 +27,20 @@ extension CatalogVM {
                 self.popularProducts = result.filter {
                     $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased()
                 }
-             
                 let productCategories = Set(result.map { $0.category.lowercased() })
-                
                 self.categories = [Localization.allCategories.lowercased()] + productCategories.sorted()
-                self.filteredProducts = result
+                self.filterProducts(by: self.selectedCategory)
             }
         } catch {
             print(error.localizedDescription)
         }
     }
 }
- 
+
 //MARK: - filter
 extension CatalogVM {
     func filterProducts(by category: String) {
+        selectedCategory = category
         if category == Localization.allCategories.lowercased() {
             filteredProducts = allProducts
         } else {
