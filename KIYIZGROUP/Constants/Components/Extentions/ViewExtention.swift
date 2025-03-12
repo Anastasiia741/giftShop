@@ -24,36 +24,36 @@ extension View {
             }
         }
     }
+}
+
+
+
+
+
+import SwiftUI
+
+extension View {
+    func dismissView() {
+        if let root = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow })?.rootViewController?.presentedViewController {
+            root.dismiss(animated: true)
+        } else {
+            NotificationCenter.default.post(name: .dismissView, object: nil)
+        }
+    }
+}
+
+extension Notification.Name {
+    static let dismissView = Notification.Name("dismissView")
+}
+
+
+extension View {
     
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-    
-    func customTransition() -> some View {
-        self.transition(.move(edge: .leading))
-            .animation(.easeInOut(duration: 0.3), value: UUID())
-    }
-    
-    func customTransition(isPresented: Binding<ActiveScreen?>) -> some View {
-        self
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.white)
-            .zIndex(1)
-            .transition(.move(edge: .trailing))
-            .animation(.easeInOut(duration: 0.1), value: isPresented.wrappedValue)
-    }
-    
-    func customTransitions(isPresented: Binding<Bool?>) -> some View {
-        self
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.white)
-            .zIndex(1)
-            .transition(.move(edge: .trailing))
-            .animation(.easeInOut(duration: 0.1), value: isPresented.wrappedValue)
-    }
-    
-    func customTransition(isPresented: Bool, from edge: Edge = .trailing) -> some View {
-        self.modifier(CustomTransitionModifier(isPresented: isPresented, edge: edge))
     }
 }
 
@@ -64,4 +64,13 @@ extension View {
                 .stroke(borderColor, lineWidth: lineWidth)
         )
     }
+}
+
+struct CustomDivider: View {
+    var body: some View {
+        Divider()
+            .frame(height: 1.7)
+            .padding(.horizontal)
+            .background(Color.gray)
+        }
 }

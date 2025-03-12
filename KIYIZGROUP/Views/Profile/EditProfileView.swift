@@ -55,15 +55,13 @@ struct EditProfileView: View {
                     .padding(.horizontal)
                 }
                 .scrollIndicators(.hidden)
-                .navigationDestination(isPresented: $viewModel.isShowQuit) {
+                .navigationDestination(isPresented: $viewModel.showQuit) {
                     TabBar(viewModel: mainTabVM)
                 }
             }
             .navigationBarHidden(true)
-            .onChange(of: currentTab) { oldValue, newValue in
-                if oldValue != newValue {
-                    dismiss()
-                }
+            .onChange(of: currentTab) { _, new_alue in
+                dismiss()
             }
             if viewModel.isSaving {
                 showLoadingView()

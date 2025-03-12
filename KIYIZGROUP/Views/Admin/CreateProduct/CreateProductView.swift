@@ -5,13 +5,11 @@
 import SwiftUI
 
 struct CreateProductView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = CreateProductVM()
     @State private var showImgAlert = false
     @State private var showPicker = false
     @State private var showGallery = false
     @State private var showCamera = false
-    
     
     var body: some View {
         VStack {
@@ -21,27 +19,33 @@ struct CreateProductView: View {
                         Image(uiImage: (viewModel.productImage ?? Images.CreateProduct.image ?? UIImage()))
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: .infinity, maxHeight: 260)
+                            .frame(height: 180)
+                            .frame(maxWidth: .infinity)
                             .clipped()
-                            .border(Color.gray, width: 2)
+                            .validationBorder(isValid: viewModel.isImageValid)
                             .cornerRadius(10)
-                            .padding(.vertical, 8)
                             .onTapGesture {
                                 showImgAlert = true
                             }
                     }
                 }
-                Section(header: Text(Localization.description).foregroundColor(colorScheme == .dark ? .white : .black)) {
+                Section(header: Text(Localization.description)
+                    )
+                {
                     TextField(Localization.productName, text: $viewModel.name)
+                        .validationBorder(isValid: viewModel.isNameValid)
                     TextField(Localization.category, text: $viewModel.category)
                         .keyboardType(.alphabet)
                         .autocapitalization(.none)
+                        .validationBorder(isValid: viewModel.isCategoryValid)
                     TextField(Localization.price, text: $viewModel.price)
+                        .validationBorder(isValid: viewModel.isPriceValid)
                         .keyboardType(.decimalPad)
                     TextField("Цена до скидки", text: $viewModel.fullPrice)
                         .keyboardType(.decimalPad)
+                        .validationBorder(isValid: viewModel.isFullPriceValid)
                 }
-                Section(header: Text(Localization.detailedProductDescrip).foregroundColor(colorScheme == .dark ? .white : .black)) {
+                Section(header: Text(Localization.detailedProductDescrip)) {
                     TextEditor(text: $viewModel.detail)
                         .frame(height: 100)
                         .padding(.horizontal)
@@ -53,18 +57,18 @@ struct CreateProductView: View {
                 viewModel.createNewProduct()
             }
             .font(.system(size: 16))
-            .fontWeight(.medium)
-            .frame(maxWidth: 100, minHeight: 40)
+            .frame(maxWidth: 150, minHeight: 50)
             .foregroundColor(.white)
             .background(Color(.orange))
             .cornerRadius(20)
-            .shadow(color: Color(.orange).opacity(0.5), radius: 5, x: 0, y: 5)
             .padding(.bottom)
         }
         .onTapGesture {
             self.hideKeyboard()
         }
-        
+        .onDisappear {
+            viewModel.resetValidation()
+        }
         .sheet(isPresented: $showImgAlert) {
             PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera, onDismiss: { showImgAlert = false })
                 .presentationDetents([.height(250)])
@@ -83,5 +87,30 @@ struct CreateProductView: View {
                         selectedImage: $viewModel.productImage,
                         isPresented: $showCamera)
         }
+        
+        .alert(item: $viewModel.alertModel) { alertModel in
+            Alert(
+                title: Text(alertModel.title ?? ""),
+                message: Text(alertModel.message ?? ""),
+                dismissButton: .default(Text(alertModel.buttons.first?.title ?? Localization.ok), action: {
+                    alertModel.buttons.first?.action?()
+                })
+            )
+        }
     }
 }
+
+extension View {
+    func validationBorder(isValid: Bool) -> some View {
+        self
+            .padding(12)
+            .cornerRadius(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isValid ? Color.gray.opacity(0.5) : Color.red, lineWidth: isValid ? 1 : 2)
+            )
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+    }
+}
+

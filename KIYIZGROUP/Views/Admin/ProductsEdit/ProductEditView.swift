@@ -6,7 +6,7 @@ import Kingfisher
 import SwiftUI
 
 struct ProductEditView: View {
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: ProductEditVM
     private let textComponent = TextComponent()
     @State private var selectedImage: UIImage?
@@ -113,7 +113,7 @@ struct ProductEditView: View {
                 HStack(spacing: 16){
                     Button(Localization.delete) {
                         viewModel.showDeleteConfirmationAlert {
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     }
                     .font(.system(size: 16))
@@ -122,12 +122,11 @@ struct ProductEditView: View {
                     .foregroundColor(.white)
                     .background(Color.red)
                     .cornerRadius(20)
-                    .shadow(color: Color.red.opacity(0.5), radius: 5, x: 0, y: 5)
                     Spacer().frame(width: 16)
                     Button(Localization.save) {
                         viewModel.saveEditedProduct()
                         viewModel.onSaveCompletion = {
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     }
                     .font(.system(size: 16))

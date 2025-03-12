@@ -5,8 +5,8 @@
 import SwiftUI
 
 struct CustomOrderView: View {
-    @ObservedObject var viewModel: CustomProductVM
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var viewModel: CustomProductVM
     let customOrder: CustomOrder
     @State private var designImage: UIImage? = nil
     @State private var addedImage: UIImage? = nil

@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct CustomOrdersView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel = ProfileVM()
     @State private var selectedOrder: CustomOrder?

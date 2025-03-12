@@ -12,6 +12,8 @@ struct OrderDetailsView: View {
     let orderProducts: [Product]
     let order: Order
     
+    
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             DetailView(viewModel: profileVM, order: order)
@@ -27,7 +29,6 @@ struct OrderDetailsView: View {
         }
         .navigationTitle("Доставка")
         .navigationBarTitleDisplayMode(.inline)
-//        .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
     }
 }

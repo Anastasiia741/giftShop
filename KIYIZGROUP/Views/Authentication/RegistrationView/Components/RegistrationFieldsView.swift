@@ -17,7 +17,7 @@ struct RegistrationFieldsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
     
-            textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, color: Color.primary, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
+            textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
                 .padding(6)
             
             textFieldComponent.createSecureField(placeholder: Localization.createPassword,

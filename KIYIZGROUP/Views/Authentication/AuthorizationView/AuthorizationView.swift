@@ -5,8 +5,8 @@
 import SwiftUI
 
 struct AuthorizationView: View {
-    @EnvironmentObject var mainTabVM: MainTabVM
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var mainTabVM: MainTabVM
     @ObservedObject var viewModel = AuthorizationVM()
     @Binding var currentTab: Int
     @State private var showCatalog = false
@@ -41,7 +41,7 @@ struct AuthorizationView: View {
         }
 
         .navigationBarBackButtonHidden(true)
-        .navigationDestination(isPresented: $viewModel.isShowCatalog) {
+        .navigationDestination(isPresented: $viewModel.showCatalog) {
             TabBar(viewModel: mainTabVM)
                 .onAppear {
                     mainTabVM.fetchUserId()

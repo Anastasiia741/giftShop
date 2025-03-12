@@ -33,7 +33,7 @@ final class ProfileVM: ObservableObject {
     @Published var comments = ""
     
     @Published var deliveries = false
-    @Published var isShowQuit = false
+    @Published var showQuit = false
     @Published var isSaving: Bool = false
 }
 
@@ -175,7 +175,7 @@ extension ProfileVM {
                 switch result {
                 case .success:
                     mainTabVM.userID = nil
-                    self.isShowQuit = true
+                    self.showQuit = true
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

@@ -12,37 +12,39 @@ struct CustomOrdersAdminView: View {
     @State private var isShowExit = false
     
     var body: some View {
-        VStack {
-            CustomHeaderView(title: "Индивидуальные заказы")
-                .padding(.top, 4)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(OrderStatus.allCases, id: \.self) { status in
-                        DetailButton(text: status.rawValue, isSelected: selectedStatus == status
-                        ) {
-                            selectedStatus = status
-                            viewModel.filterCustomOrders(status)
+        NavigationView {
+            VStack {
+                CustomHeaderView(title: "Индивидуальные заказы")
+                    .padding(.top, 4)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(OrderStatus.allCases, id: \.self) { status in
+                            DetailButton(text: status.rawValue, isSelected: selectedStatus == status
+                            ) {
+                                selectedStatus = status
+                                viewModel.filterCustomOrders(status)
+                            }
                         }
                     }
+                    .padding(.horizontal, 16)
                 }
-                .padding(.horizontal, 16)
+                List(viewModel.filteredCustomOrders) { order in
+                    CustomOrderCell(order: .constant(order))
+                }
+                .listStyle(PlainListStyle())
+                .scrollContentBackground(.hidden)
+                .padding(.vertical)
             }
-            List(viewModel.filteredCustomOrders) { order in
-                CustomOrderCell(order: .constant(order))
+            .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $isShowExit))
+            .navigationDestination(isPresented: $viewModel.showQuit) {
+                TabBar(viewModel: mainTabVM)
             }
-            .listStyle(PlainListStyle())
-            .scrollContentBackground(.hidden)
-            .padding(.vertical)
-        }
-        .navigationBarItems(trailing: LogoutButton(viewModel: viewModel, isPresented: $isShowExit))
-        .navigationDestination(isPresented: $viewModel.showQuit) {
-            TabBar(viewModel: mainTabVM)
-        }
-        .onDisappear {
-            viewModel.fetchCustomOrders()
-        }
-        .onAppear {
-            viewModel.fetchCustomOrders()
+            .onDisappear {
+                viewModel.fetchCustomOrders()
+            }
+            .onAppear {
+                viewModel.fetchCustomOrders()
+            }
         }
     }
 }

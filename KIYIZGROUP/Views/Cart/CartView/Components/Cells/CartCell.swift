@@ -6,6 +6,7 @@ import SwiftUI
 import FirebaseStorage
 
 struct CartCell: View {
+    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel =  CartVM()
     private let textComponent = TextComponent()
     private let buttonComponents = ButtonComponents()
@@ -26,7 +27,7 @@ struct CartCell: View {
                             .padding()
                     textComponent.createText(text: position.category.uppercased(), fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
                             .padding()
-                    buttonComponents.createCustomStepper(position: position, count: $count, range: 0...10) {
+                    buttonComponents.createCustomStepper(position: position, count: $count, range: 0...10, colorScheme: colorScheme) {
                         viewModel.updateProduct(position, count)
                         viewModel.fetchOrder()
                     }
@@ -38,7 +39,7 @@ struct CartCell: View {
                      
             HStack {
                 textComponent.createText(text: "\(position.price * count) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
-                textComponent.createText(text: "\("1000") \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .white).strikethrough()
+                fullPriceView()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
@@ -46,7 +47,7 @@ struct CartCell: View {
         .frame(width: 370, height: 210)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray, lineWidth: 1)
+                .stroke(Color.gray, lineWidth: 1.5)
         )
         .onAppear {
             setupViews()
@@ -70,13 +71,15 @@ extension CartCell {
             }
         }
     }
-}
-
-
-struct CustomDivider: View {
-    var body: some View {
-        Divider()
-            .padding(.horizontal)
-            .background(Color.gray)
+    
+    @ViewBuilder
+    private func fullPriceView() -> some View {
+        if let fullPrice = position.fullPrice, fullPrice > 0 {
+            textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+                .strikethrough()
+        }
     }
 }
+
+
+

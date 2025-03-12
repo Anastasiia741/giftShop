@@ -6,8 +6,8 @@ import SwiftUI
 import Kingfisher
 
 struct ProductDetailView: View {
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @ObservedObject var viewModel: ProductDetailVM
     private let textComponent = TextComponent()
     private let buttonComponent = ButtonComponents()
@@ -16,7 +16,6 @@ struct ProductDetailView: View {
     @Binding var currentTab: Int
     @State private var isShowCart = false
     @State private var isAddedToCart = false
-    
     
     var body: some View {
         VStack {
@@ -37,8 +36,7 @@ struct ProductDetailView: View {
                 )
             HStack() {
                 textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
-                
-                textComponent.createText(text: "\(String(describing: viewModel.product.fullPrice)) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .colorYellow, darkColor: .colorYellow).strikethrough()
+                fullPriceView()
             }
             .padding([.vertical, .horizontal])
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -66,8 +64,7 @@ struct ProductDetailView: View {
                         currentTab = TabType.cart.rawValue
                     }
                 }
-                .background(colorScheme == .dark ? Color("ColorDarkBrown") : .white)
-                .foregroundColor(colorScheme == .dark ? .white : .black)
+                .background(colorScheme == .dark ? .colorDarkBrown : .white)
                 .cornerRadius(40)
                 
                 buttonComponent.createGreenButton(text: "Добавить в корзину", count: $count,isAddedToCart: $isAddedToCart) {
@@ -93,6 +90,16 @@ struct ProductDetailView: View {
         }
         .onChange(of: currentTab) { _, _ in
             dismiss()
+        }
+    }
+}
+
+private extension ProductDetailView {
+    @ViewBuilder
+    func fullPriceView() -> some View {
+        if let fullPrice = viewModel.product.fullPrice, fullPrice > 0 {
+            textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+                .strikethrough()
         }
     }
 }

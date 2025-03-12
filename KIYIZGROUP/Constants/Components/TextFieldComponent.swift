@@ -5,12 +5,12 @@
 import SwiftUI
 
 struct TextFieldComponent {
-    func createCustomTextField(placeholder: String, text: Binding<String>, color: Color, borderColor: Color) -> some View {
+    func createCustomTextField(placeholder: String, text: Binding<String>, borderColor: Color) -> some View {
             TextField(placeholder, text: text)
             .font(.custom("Inter", size: 16))
             .padding(12)
             .fontWeight(.regular)
-            .foregroundColor(color)
+            .foregroundColor(.primary)
             .frame(height: 50)
             .roundedBorder(borderColor: borderColor)
     }
@@ -51,10 +51,6 @@ struct TextFieldComponent {
         TextField(placeholder, text: text)
             .padding(padding)
             .keyboardType(keyboardType)
-//            .background(
-//                RoundedRectangle(cornerRadius: cornerRadius)
-//                    .stroke(borderColor, lineWidth: 1)
-//            )
             .roundedBorder(cornerRadius: cornerRadius, borderColor: borderColor, lineWidth: 1)
     }
     
@@ -64,10 +60,6 @@ struct TextFieldComponent {
             .padding(padding)
             .keyboardType(keyboardType)
             .onSubmit(onSubmit)
-//            .background(
-//                RoundedRectangle(cornerRadius: cornerRadius)
-//                    .stroke(borderColor, lineWidth: 1)
-//            )
             .roundedBorder(cornerRadius: cornerRadius, borderColor: borderColor, lineWidth: 1) // Используем расширение
 
     }
@@ -78,7 +70,7 @@ struct UnifiedRoundedRectangle: View {
     var isError: Bool = false
     var body: some View {
         RoundedRectangle(cornerRadius: 24)
-            .stroke(isError ? Color.red : .gray, lineWidth: 1)
+            .stroke(isError ? Color.red : .gray, lineWidth: 1.5)
     }
 }
 

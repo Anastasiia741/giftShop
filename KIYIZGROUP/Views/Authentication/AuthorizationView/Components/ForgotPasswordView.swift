@@ -31,10 +31,10 @@ struct ForgotPasswordView: View, InfoDialogHandling {
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
-                textFieldComponent.createCustomTextField(placeholder: "Введите ваш email", text: $email, color: colorScheme == .dark ? .white : .black, borderColor: .colorDarkBrown)
+                textFieldComponent.createCustomTextField(placeholder: "Введите ваш email", text: $email, borderColor: .colorDarkBrown)
                     .padding([.horizontal])
                 Spacer()
-                customButton.createButton(text: email.isEmpty ? "Закрыть" : "Отправить", fontSize: 18, fontWeight: .medium, color: .black, backgroundColor: colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2), borderColor: .clear, cornerRadius: 100, action: {
+                customButton.createButton(text: email.isEmpty ? "Закрыть" : "Отправить", fontSize: 18, fontWeight: .medium, color: .white, backgroundColor: email.isEmpty ? (colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2)) : .colorGreen, borderColor: .clear, cornerRadius: 100, action: {
                     if email.isEmpty {
                         closeDialog()
                     } else {
@@ -93,7 +93,6 @@ protocol InfoDialogHandling {
 
 extension InfoDialogHandling {
     func closeInfoDialog() {
-        
         withAnimation(.easeInOut) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 isOpenView.wrappedValue = false

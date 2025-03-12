@@ -5,7 +5,8 @@
 import SwiftUI
 
 struct AddressInputView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var profileVM: ProfileVM
     @ObservedObject var cartVM: CartVM
     private let textComponent = TextComponent()
@@ -18,19 +19,19 @@ struct AddressInputView: View {
     var body: some View {
         VStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
-                Dropdown(borderColor: isSaving && getSelectedCity().isEmpty ? .red : .gray,
+                Dropdown(borderColor: isSaving && getSelectedCity().isEmpty ? .red : (colorScheme == .dark ? .white : .gray),
                          placeholder: getSelectedCity().isEmpty ? "Выберите город*" : getSelectedCity(),
                          options: profileVM.cities,
                          selectedOption: profileVM.authService.currentUser != nil ? $profileVM.selectedCity : $cartVM.selectedCity,
                          isExpanded: $showDropdown)
                 .padding(.vertical, 8)
-                RoundedField(placeholder: "Улица, Дом*", borderColor: isSaving && getAddress().isEmpty ? .red : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.address : $cartVM.address)
+                RoundedField(placeholder: "Улица, Дом*", borderColor: isSaving && getAddress().isEmpty ? .red : (colorScheme == .dark ? .white : .gray), text: profileVM.authService.currentUser != nil ? $profileVM.address : $cartVM.address)
                     .padding(.vertical, 8)
-                RoundedField(placeholder: "Номер квартиры", borderColor: .gray, text: profileVM.authService.currentUser != nil ? $profileVM.appatment : $cartVM.appatment)
+                RoundedField(placeholder: "Номер квартиры", borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.appatment : $cartVM.appatment)
                     .padding(.vertical, 8)
-                RoundedField(placeholder: "Этаж, подъезд", borderColor: .gray, text: profileVM.authService.currentUser != nil ? $profileVM.floor : $cartVM.floor)
+                RoundedField(placeholder: "Этаж, подъезд", borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.floor : $cartVM.floor)
                     .padding(.vertical, 8)
-                RoundedField(placeholder: "Дополнительные комментарии", borderColor: .gray, text: profileVM.authService.currentUser != nil ? $profileVM.comments : $cartVM.comments)
+                RoundedField(placeholder: "Дополнительные комментарии", borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.comments : $cartVM.comments)
                     .padding(.vertical, 8)
             }
             .padding(.horizontal)

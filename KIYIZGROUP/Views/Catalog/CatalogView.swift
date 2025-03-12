@@ -48,6 +48,7 @@ struct CatalogView: View {
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 await self.viewModel.fetchProducts()
+                viewModel.filterProducts(by: viewModel.selectedCategory) 
                 isLoading = false
             }
         }
