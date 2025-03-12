@@ -4,9 +4,10 @@
 
 import SwiftUI
 
+//MARK: - Auth, Cart
 struct TextFieldComponent {
     func createCustomTextField(placeholder: String, text: Binding<String>, borderColor: Color) -> some View {
-            TextField(placeholder, text: text)
+        TextField(placeholder, text: text)
             .font(.custom("Inter", size: 16))
             .padding(12)
             .fontWeight(.regular)
@@ -14,7 +15,7 @@ struct TextFieldComponent {
             .frame(height: 50)
             .roundedBorder(borderColor: borderColor)
     }
-
+    
     func createSecureField(placeholder: String, text: Binding<String>, isPasswordVisible: Binding<Bool>, color: Color, borderColor: Color, frameWidth: CGFloat? = nil) -> some View {
         HStack {
             if isPasswordVisible.wrappedValue {
@@ -24,7 +25,7 @@ struct TextFieldComponent {
                     .foregroundColor(color)
                     .padding(12)
                     .frame(height: 50)
-
+                
             } else {
                 SecureField(placeholder, text: text)
                     .font(.custom("Inter", size: 16))
@@ -60,18 +61,24 @@ struct TextFieldComponent {
             .padding(padding)
             .keyboardType(keyboardType)
             .onSubmit(onSubmit)
-            .roundedBorder(cornerRadius: cornerRadius, borderColor: borderColor, lineWidth: 1) // Используем расширение
-
+            .roundedBorder(cornerRadius: cornerRadius, borderColor: borderColor, lineWidth: 1)
     }
 }
 
-
-struct UnifiedRoundedRectangle: View {
-    var isError: Bool = false
+//MARK: - AddressInputView, TextFieldComponent
+struct RoundedField: View {
+    let placeholder: String
+    let borderColor: Color
+    @Binding var text: String
+    
+    
     var body: some View {
-        RoundedRectangle(cornerRadius: 24)
-            .stroke(isError ? Color.red : .gray, lineWidth: 1.5)
+        TextField(placeholder, text: $text)
+            .padding()
+            .overlay(
+                RoundedRectangle(cornerRadius: 40)
+                    .stroke(borderColor, lineWidth: 1.3)
+            )
+            .frame(height: 50)
     }
 }
-
-

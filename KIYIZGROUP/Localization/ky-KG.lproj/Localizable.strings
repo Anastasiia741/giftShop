@@ -1,0 +1,129 @@
+/* 
+  Localizable.strings
+  GiftShop
+  Created by Анастасия Набатова on 18/3/24.
+*/
+
+//MARK: - Authentication
+"empty_string" = "";
+"authorization" = "Authorization";
+"registration" = "Registration";
+"enter_password" = "Enter password";
+"create_a_password" = "Create a password";
+"sign_in" = "Sign in";
+"registr" = "Registration";
+//"already_have_an_account" = "Have an account";
+"press_policy" = "By registering you confirm that you agree to";
+"privacy_policy" = "Privacy Policy";
+
+//MARK: - OrderDetail
+"order_details" = "Order details";
+"order_date" = "Date of:";
+"status" = "Status:";
+"promo_code" = "Промокод:";
+"goods" = "Goods:";
+"name" = "Title";
+"amount" = "pcs";
+"sum" = "Sum:";
+"som" = "som";
+"name" = "Name";
+"email" = "Email";
+"delivery_address" = "Delivery address:";
+"phone_number" = "Phone number:";
+
+//MARK: - ProductDetailEditView
+"product_name" = "Product Name";
+"enter_product_name" = "Enter product name";
+"category" = "Category";
+"enter_category" = "Enter category";
+"price" = "Price";
+"enter_price" = "Enter price";
+"detailed_product_descrip" = "Detailed product description";
+"delete" = "Delete";
+"save" = "Save";
+
+//MARK: - CreateProductView
+"image" = "Image";
+"description" = "Description";
+
+//MARK: - OrderCell
+"date_of" = "Date of:";
+"more_details" = "More details";
+
+//MARK: - CatalogView
+"popular" = "Offer of the day";
+"custom_design" = "Custom design";
+"make_custom_order" = "Make a custom order";
+"products" = "Categories";
+"all_categories" = "all";
+
+//MARK: - ProductDetailView
+"quantity" = "Quantity:";
+"add" = "add";
+
+//MARK: - CartView
+"cart" = "Cart";
+"empty_cart" = "Your cart is currently empty";
+"order_sent_successfully" = "Order sent successfully. Order amount:";
+"your_cart_is_empty" = "Your cart is currently empty";
+"thanks_for_order" = "Thanks for your order!";
+"we_preparing_order" = "We are already preparing your order. Please wait 🌺";
+"add_items_to_cart" = "Add items to cart to start shopping";
+"add_to_order" = "Add to order?";
+"get_discount" = "Get a discount!";
+"promo_code" = "Promo code";
+"total" = "Total";
+"order" = "Order";
+"unlock_exclusive_discount" = "Unlock an exclusive discount!";
+"enter_promo_code" = "Enter promotional code";
+"cancel" = "Cancel";
+"apply" = "Apply";
+"10%_discount" = "You received a 10% discount on your order!";
+"20%_discount" = "You received a 20% discount on your order!";
+"30%_discount" = "You received a 30% discount on your order!";
+"code_does_not_exist" = "Such code does not exist";
+
+//MARK: - ProfileView
+"profile" = "Profile";
+"your_name" = "Your name";
+"enter_your_name" = "Enter your name";
+"enter_phone_number" = "Enter phone number";
+"your_email" = "Your email";
+"your_delivery_address" = "Delivery address";
+"enter_your_delivery_address" = "Your delivery address";
+"your_future_orders" = "Your orders will be here";
+"no_orders_yet" = "No orders yet";
+"your_orders" = "Your orders";
+"delete_account_name" = "Are you sure you want to delete your account? This action is irreversible.";
+
+//MARK: - Alerts
+"registration_error" = "Registration error";
+"password_mismatch" = "Password mismatch";
+"enter_password_confirmation" = "Please enter password confirmation";
+"delete_product" = "Delete product?";
+"product_removed" = "The product has been removed";
+"yes" = "Yes";
+"no" = "No";
+"data_saved_successfully" = "Data saved successfully";
+"ok" = "OK";
+"select_photo_source" = "Select photo source";
+"gallery" = "Gallery";
+"camera" = "Camera";
+"delete_account" = "Delete account?";
+"data_successfully_saved" = "Your data has been successfully saved";
+"log_out" = "Do you want to go out?";
+"go_out" = "Go out";
+"cancel" = "Cancel";
+"error" = "Error";
+"attention" = "Attention";
+"congratulations" = "Congratulations";
+"not_filled_in" = "Not all fields are filled inuu";
+"select_order_status" = "Select order status";
+"delete_your_account" = "Do you want to delete your account?";
+"account_deleted" = "Your account has been deleted";
+"error_retrieving_user_data" = "Error retrieving user data";
+"failed_download_image" = "Failed to download image URL";
+"error_retrieving_order_history" = "Error when retrieving order history";
+"product_removed" = "product Removed";
+
+

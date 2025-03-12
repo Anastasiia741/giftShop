@@ -59,7 +59,7 @@ struct CreateProductView: View {
             .font(.system(size: 16))
             .frame(maxWidth: 150, minHeight: 50)
             .foregroundColor(.white)
-            .background(Color(.orange))
+            .background(.orange)
             .cornerRadius(20)
             .padding(.bottom)
         }

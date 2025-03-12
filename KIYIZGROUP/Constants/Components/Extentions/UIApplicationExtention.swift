@@ -4,6 +4,13 @@
 
 import SwiftUI
 
+//MARK: - Keyboard
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.endEditing()
+    }
+}
+
 extension UIApplication {
     func endEditing() {
         self.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

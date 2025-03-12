@@ -104,13 +104,11 @@ struct CustomOrderRow: View {
                        }
                    }
                    .padding(.vertical, 6)
-            
         
             HStack {
                 textComponent.createText(text: "Дата и время заказа", fontSize: 14, fontWeight: .semibold, lightColor: .gray, darkColor: .white)
                 Spacer()
                 textComponent.createText(text: Extentions().formattedDate(order.date), fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                Spacer()
             }
             .padding(.vertical, 6)
         }

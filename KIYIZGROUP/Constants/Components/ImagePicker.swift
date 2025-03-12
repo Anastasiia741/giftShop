@@ -33,18 +33,13 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//            if let image = info[.originalImage] as? UIImage {
-//                parent.selectedImage = image
-//                parent.isPresented = false
-//                parent.onSelected(image)
-//            }
             let image = info[.originalImage] as? UIImage
-                      let imageURL = info[.imageURL] as? URL
-                      let fileName = imageURL?.lastPathComponent
-                      
-                      parent.selectedImage = image
-                      parent.isPresented = false
-                      parent.onSelected(image, fileName)
+            let imageURL = info[.imageURL] as? URL
+            let fileName = imageURL?.lastPathComponent
+            
+            parent.selectedImage = image
+            parent.isPresented = false
+            parent.onSelected(image, fileName)
         }
     }
 }

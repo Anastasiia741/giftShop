@@ -49,7 +49,7 @@ struct ChangePasswordView: View {
                     textComponent.createText(text: errorMessage, fontSize: 12, fontWeight: .regular, lightColor: .r, darkColor: .r)
                 }
                 if let successMessage = viewModel.successMessage {
-                    textComponent.createText(text: successMessage, fontSize: 12, fontWeight: .regular, lightColor: .greenButton, darkColor: .greenButton)
+                    textComponent.createText(text: successMessage, fontSize: 12, fontWeight: .regular, lightColor: .new, darkColor: .new)
                 }
                 
                 Button(action: {

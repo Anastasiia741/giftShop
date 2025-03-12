@@ -7,13 +7,13 @@ import SwiftUI
 struct CustomDesignSectionView: View {
     private let textComponent = TextComponent()
     let customOrder: CustomOrder
-    @Binding var navigationPath: NavigationPath
     @Binding var currentTab: Int
+    @Binding var showCustomView: Bool
 
     var body: some View {
         VStack(alignment: .leading) {
             Button(action: {
-                navigationPath.append(customOrder)
+                showCustomView.toggle()
             }) {
                 HStack {
                     textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)

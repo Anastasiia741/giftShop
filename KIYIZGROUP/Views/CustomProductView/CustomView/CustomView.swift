@@ -15,8 +15,8 @@ struct CustomView: View {
     @State private var showCamera = false
     @State private var showPicker = false
     @Binding var currentTab: Int
+    @State private var showCustomOrderView = false
 
-    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
@@ -42,16 +42,17 @@ struct CustomView: View {
                     .padding(.vertical)
                     .padding(.horizontal, 16)
                 
-                GreenButton(text: "Продолжить", isDisabled: viewModel.selectedProduct == nil && viewModel.selectedStyle == nil && viewModel.selectedImage == nil
-                ) {
+                GreenButton(text: "Продолжить", isDisabled: viewModel.selectedProduct == nil && viewModel.selectedStyle == nil && viewModel.selectedImage == nil) {
                     viewModel.isShowConfirm.toggle()
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 16)
             }
             .onChange(of: currentTab) { _, _ in
+                showCustomOrderView = false
                 dismiss()
             }
+            
             .onTapGesture {
                 self.hideKeyboard()
                 UIApplication.shared.endEditing()
@@ -65,7 +66,9 @@ struct CustomView: View {
         
         .navigationTitle("Индивидуальный заказ")
         .navigationBarTitleDisplayMode(.inline)
-        
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         .sheet(isPresented: $showPicker) {
             PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera,
                                  onDismiss: {showPicker = false})
