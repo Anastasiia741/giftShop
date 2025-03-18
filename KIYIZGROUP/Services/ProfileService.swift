@@ -77,36 +77,9 @@ extension ProfileService {
         }
     }
 }
-    
-    
-    
-    
-    
-//    func getProfile(by userId: String? = nil) async throws -> NewUser {
-//        let documentIdToFetch = userId ?? authService.currentUser!.uid
-//        do {
-//            let docSnapshot = try await usersRef.document(documentIdToFetch).getDocument()
-//            guard let data = docSnapshot.data() else {
-//                throw NSError(domain: "", code: 404, userInfo: nil)
-//            }
-//            
-//            guard let userName = data["name"] as? String,
-//                  let id = data["id"] as? String,
-//                  let phone = data["phone"] as? String,
-//                  let email = data["email"] as? String,
-//                  let city = data["city"] as? String,
-//                  let address = data["address"] as? String else {
-//                throw NSError(domain: "", code: 500, userInfo: nil)
-//            }
-//            let appartment = data["appatment"] as? String ?? ""
-//            let floor = data["floor"] as? String ?? ""
-//            let comments: String? = data["comments"] as? String
-//            
-//            let user = NewUser(id: id, name: userName, phone: phone, email: email, address: address, city: city, appatment: appartment, floor: floor, comments: comments)
-//            return user
-//        } catch {
-//            print("Ошибка при получении профиля: \(error.localizedDescription)")
-//            throw error
-//        }
-//    }
-//}
+
+
+
+
+
+

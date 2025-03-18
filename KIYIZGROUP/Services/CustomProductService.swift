@@ -11,6 +11,14 @@ final class CustomProductService: ObservableObject {
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
     
+    deinit {
+        listenerRegistation?.remove()
+    }
+}
+
+//MARK: - fetchCustomProducts
+extension CustomProductService {
+    
     func fetchCustomProducts() async throws -> [CustomProduct] {
         let querySnapshot = try await db.collection(Accesses.customDesign).getDocuments()
         var products: [CustomProduct] = []
@@ -33,44 +41,42 @@ final class CustomProductService: ObservableObject {
         return products
     }
     
-    deinit {
-        listenerRegistation?.remove()
-    }
-    
     func createOrder(_ order: CustomOrder) async throws {
-           let orderData = order.representation
-           try await db.collection("customOrders").document(order.id).setData(orderData)
-       }
+        let orderData = order.representation
+        try await db.collection("customOrders").document(order.id).setData(orderData)
+    }
 }
 
-
+//MARK: - fetchCustomOrders for Admin
 extension CustomProductService {
     func fetchCustomOrders() async throws -> [CustomOrder] {
-           let querySnapshot = try await db.collection("customOrders").getDocuments()
-           var orders: [CustomOrder] = []
-           for document in querySnapshot.documents {
-               if let order = try? document.data(as: CustomOrder.self) {
-                   orders.append(order)
-               }
-           }
-           return orders
-       }
+        let querySnapshot = try await db.collection("customOrders").getDocuments()
+        var orders: [CustomOrder] = []
+        
+        for document in querySnapshot.documents {
+            if let order = CustomOrder(doc: document) {
+                orders.append(order)
+            }
+        }
+        return orders
+    }
     
-    
-    
+}
+
+//MARK: - Images
+extension CustomProductService {
     func uploadImageToStorage(image: UIImage) async throws -> String {
-           guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-               throw NSError(domain: "Ошибка преобразования изображения", code: -1, userInfo: nil)
-           }
-
-           let uniqueImageName = "orderImages/\(UUID().uuidString).jpg"
-           let storageRef = storage.reference().child(uniqueImageName)
-
-           let _ = try await storageRef.putDataAsync(imageData, metadata: nil)
-
-           let downloadURL = try await storageRef.downloadURL()
-           return downloadURL.absoluteString
-       }
-    
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            throw NSError(domain: "Ошибка преобразования изображения", code: -1, userInfo: nil)
+        }
+        
+        let uniqueImageName = "orderImages/\(UUID().uuidString).jpg"
+        let storageRef = storage.reference().child(uniqueImageName)
+        
+        let _ = try await storageRef.putDataAsync(imageData, metadata: nil)
+        
+        let downloadURL = try await storageRef.downloadURL()
+        return downloadURL.absoluteString
+    }
 }
 

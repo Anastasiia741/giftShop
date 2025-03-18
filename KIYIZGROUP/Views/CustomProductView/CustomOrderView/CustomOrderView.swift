@@ -33,7 +33,7 @@ struct CustomOrderView: View {
                 GreenButton(text: "Оформить заказ", isDisabled: viewModel.phone.trimmingCharacters(in:   .whitespacesAndNewlines).isEmpty) {
                     Task {
                         isLoading = true
-                        await viewModel.submitOrder()
+                        await viewModel.saveCustomOrder()
                         isLoading = false
                     }
                 }

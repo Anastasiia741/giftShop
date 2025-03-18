@@ -142,7 +142,7 @@ extension OrdersVM {
                     mainTabVM.userID = nil
                     self.showQuit = true
                 case .failure(let error):
-                    print("Ошибка выхода: \(error.localizedDescription)")
+                    print(error.localizedDescription)
                 }
             }
         }

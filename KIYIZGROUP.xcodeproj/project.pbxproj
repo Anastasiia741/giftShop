@@ -439,10 +439,10 @@
 			children = (
 				711ED8E92B50085B0052752F /* AuthService.swift */,
 				717D0FCA2B5AB75F001F2E6E /* ProductService.swift */,
+				71CB8B682D53B60300F0CDA4 /* CustomProductService.swift */,
 				71FF920F2B5EDCD500180598 /* DBOrdersService.swift */,
 				714F7AE42B599D9900E533AD /* ProfileService.swift */,
 				711ED95F2B504AF00052752F /* OrderService.swift */,
-				71CB8B682D53B60300F0CDA4 /* CustomProductService.swift */,
 				711ED9612B504B150052752F /* ProductsRepository.swift */,
 				7158AE1B2D68F8DF00AD8DDF /* ImageService.swift */,
 			);

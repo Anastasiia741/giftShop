@@ -3,12 +3,13 @@
 //  Created by Анастасия Набатова on 7/2/25.
 
 import SwiftUI
+import Kingfisher
 
 struct CustomOrderDetail: View {
     @StateObject var viewModel: OrdersVM
     @State var order: CustomOrder
     private let textComponent = TextComponent()
-
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -31,7 +32,6 @@ struct CustomOrderDetail: View {
         }
     }
 }
-
 
 struct OrderHeaderSection: View {
     let textComponent: TextComponent
@@ -119,15 +119,17 @@ struct ImageSection: View {
             textComponent.createText(text: title, fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
             Spacer()
             if let imageURL = imageURL {
-                AsyncImage(url: imageURL) { image in
-                    image.resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .cornerRadius(8)
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: 50, height: 50)
-                }
+                KFImage(imageURL)
+                    .placeholder {
+                        ProgressView()
+                            .frame(width: 50, height: 50)
+                    }
+                    .fade(duration: 0.3) 
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                
             } else {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
