@@ -94,7 +94,7 @@ extension CustomProductVM {
         }
         return nil
     }
-
+    
     @MainActor
     func loadStyleImage() async -> UIImage? {
         if let style = selectedStyle,
@@ -115,16 +115,12 @@ extension CustomProductVM {
 
 
 extension CustomProductVM {
-    func submitOrder() async {
-        guard !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            print("Ошибка: Укажите номер телефона")
-            return
-        }
+    func saveCustomOrder() async {
+        guard !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         
-        guard selectedProduct != nil || selectedStyle != nil || selectedImage != nil else {
-            print("Ошибка: Должен быть выбран хотя бы один параметр (тип товара, стиль или изображение)")
-            return
-        }
+        guard selectedProduct != nil || selectedStyle != nil || selectedImage != nil else { return }
+        
+        let currentUserID = authService.currentUser?.uid ?? "guest_\(UUID().uuidString)"
         
         var uploadedImageURL: String?
         
@@ -132,22 +128,17 @@ extension CustomProductVM {
             do {
                 uploadedImageURL = try await productService.uploadImageToStorage(image: selectedImage)
             } catch {
-                print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                print(error.localizedDescription)
             }
         }
         
-        let currentUserID = authService.currentUser?.uid
-        
-        let newOrder = CustomOrder(
-            userID: currentUserID ?? "guest_\(UUID().uuidString)",
-            phone: phone,
-            product: selectedProduct,
-            style: selectedStyle,
-            attachedImageURL: uploadedImageURL,
-            additionalInfo: comment,
-            date: Date()
-        )
-        
+        let newOrder = CustomOrder(userID: currentUserID,
+                                   phone: phone,
+                                   product: selectedProduct,
+                                   style: selectedStyle,
+                                   attachedImageURL: uploadedImageURL,
+                                   additionalInfo: comment,
+                                   date: Date())
         do {
             try await productService.createOrder(newOrder)
             await MainActor.run {

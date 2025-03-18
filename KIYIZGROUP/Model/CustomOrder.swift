@@ -7,12 +7,12 @@ import FirebaseFirestore
 
 class CustomOrder: Identifiable, Codable, Equatable, Hashable {
     static func == (lhs: CustomOrder, rhs: CustomOrder) -> Bool {
-          return lhs.id == rhs.id && lhs.status == rhs.status
-      }
+        return lhs.id == rhs.id && lhs.status == rhs.status
+    }
     
     func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
+        hasher.combine(id)
+    }
     
     var id: String = UUID().uuidString
     var userID: String
@@ -23,7 +23,7 @@ class CustomOrder: Identifiable, Codable, Equatable, Hashable {
     var additionalInfo: String
     var date: Date
     var status = OrderStatus.new.rawValue
-
+    
     var representation: [String: Any] {
         var repres = [String: Any]()
         repres["id"] = id
@@ -37,7 +37,7 @@ class CustomOrder: Identifiable, Codable, Equatable, Hashable {
         repres["status"] = status
         
         return repres
-
+        
     }
     
     
@@ -63,28 +63,27 @@ class CustomOrder: Identifiable, Codable, Equatable, Hashable {
               let status = data["status"] as? String else {
             return nil
         }
-
+        
         self.id = id
         self.userID = userID
         self.phone = phone
         self.additionalInfo = additionalInfo
         self.date = timestamp.dateValue()
         self.status = status
-
+        self.attachedImageURL = data["attachedImageURL"] as? String ?? nil
+        
         if let productData = data["product"] as? [String: Any] {
             self.product = CustomProduct(from: productData)
-            } else {
-                self.product = nil
-            }
-
+        } else {
+            self.product = nil
+        }
+        
         if let styleData = data["style"] as? [String: Any] {
             self.style = CustomStyle(from: styleData)
         } else {
             self.style = nil
         }
-
     }
-    
 }
 
 

@@ -114,7 +114,7 @@ extension CartVM {
             }
         }
     }
-
+    
     func fetchGuestData() {
         address = UserDefaults.standard.string(forKey: "guestAddress") ?? ""
         phone = UserDefaults.standard.string(forKey: "guestPhone") ?? ""

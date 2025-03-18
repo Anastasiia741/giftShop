@@ -39,9 +39,6 @@ struct CustomOrdersAdminView: View {
             .navigationDestination(isPresented: $viewModel.showQuit) {
                 TabBar(viewModel: mainTabVM)
             }
-            .onDisappear {
-                viewModel.fetchCustomOrders()
-            }
             .onAppear {
                 viewModel.fetchCustomOrders()
             }
