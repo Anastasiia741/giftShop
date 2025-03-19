@@ -16,9 +16,9 @@ struct EmptyCartView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color.clear)
             VStack {
-                textComponent.createText(text: Localization.emptyСart, fontSize: 21, fontWeight: .bold,lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "empty_cart".localized, fontSize: 21, fontWeight: .bold,lightColor: .black, darkColor: .white)
                 .padding(.vertical)
-                textComponent.createText(text: Localization.addItemsToCart, fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
+                textComponent.createText(text: "add_items_to_cart".localized, fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
                 .padding(.horizontal)
                 .multilineTextAlignment(.center)
             }

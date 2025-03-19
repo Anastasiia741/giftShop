@@ -10,9 +10,9 @@ struct AdditionalInfoSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            textComponent.createText(text: "Дополнительно", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "additionally".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 .padding(.bottom, 4)
-            textComponent.createText(text: "Напишите, чтобы вы хотели разместить на товаре", fontSize: 12, fontWeight: .regular, lightColor: .gray, darkColor: .white)
+            textComponent.createText(text: "write_what_you_would_like".localized, fontSize: 12, fontWeight: .regular, lightColor: .gray, darkColor: .white)
             
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $additionalText)

@@ -14,7 +14,7 @@ struct CustomOrderCell: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                textComponent.createText(text: "\(Localization.dateOf) \(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "Дата: \(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.top, 6)
               
                 HStack {
@@ -25,7 +25,7 @@ struct CustomOrderCell: View {
                 .padding(.top, 6)
 
                 HStack {
-                    textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "Статус:", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     
                     textComponent.createText(text: order.status, fontSize: 16, fontWeight: .regular,
                                              lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
@@ -38,7 +38,7 @@ struct CustomOrderCell: View {
                 selectedOrder = order
                 showDetail = true
             }) {
-                textComponent.createText(text: Localization.moreDetails, fontSize: 14, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: "Детали", fontSize: 14, fontWeight: .regular, lightColor: .white, darkColor: .white)
                     .frame(maxWidth: 100, minHeight: 30)
                     .background(Color(StatusColor.new))
                     .cornerRadius(20)

@@ -20,23 +20,23 @@ struct AddressInputView: View {
         VStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
                 Dropdown(borderColor: isSaving && getSelectedCity().isEmpty ? .red : (colorScheme == .dark ? .white : .gray),
-                         placeholder: getSelectedCity().isEmpty ? "Выберите город*" : getSelectedCity(),
+                         placeholder: getSelectedCity().isEmpty ? "select_city".localized : getSelectedCity(),
                          options: profileVM.cities,
                          selectedOption: profileVM.authService.currentUser != nil ? $profileVM.selectedCity : $cartVM.selectedCity,
                          isExpanded: $showDropdown)
                 .padding(.vertical, 8)
-                RoundedField(placeholder: "Улица, Дом*", borderColor: isSaving && getAddress().isEmpty ? .red : (colorScheme == .dark ? .white : .gray), text: profileVM.authService.currentUser != nil ? $profileVM.address : $cartVM.address)
+                RoundedField(placeholder: "street_house".localized, borderColor: isSaving && getAddress().isEmpty ? .red : (colorScheme == .dark ? .white : .gray), text: profileVM.authService.currentUser != nil ? $profileVM.address : $cartVM.address)
                     .padding(.vertical, 8)
-                RoundedField(placeholder: "Номер квартиры", borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.appatment : $cartVM.appatment)
+                RoundedField(placeholder: "apartment_number".localized, borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.appatment : $cartVM.appatment)
                     .padding(.vertical, 8)
-                RoundedField(placeholder: "Этаж, подъезд", borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.floor : $cartVM.floor)
+                RoundedField(placeholder: "floor_entrance".localized, borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.floor : $cartVM.floor)
                     .padding(.vertical, 8)
-                RoundedField(placeholder: "Дополнительные комментарии", borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.comments : $cartVM.comments)
+                RoundedField(placeholder: "additional_comments".localized, borderColor: colorScheme == .dark ? .white : .gray, text: profileVM.authService.currentUser != nil ? $profileVM.comments : $cartVM.comments)
                     .padding(.vertical, 8)
             }
             .padding(.horizontal)
             Spacer()
-            customButton.createButton(text: "Добавить адрес", fontSize: 16, fontWeight: .regular,
+            customButton.createButton(text: "add_address".localized, fontSize: 16, fontWeight: .regular,
                                       color: getAddress().isEmpty || getSelectedCity().isEmpty ? .gray : .white,
                                       backgroundColor: getAddress().isEmpty || getSelectedCity().isEmpty ? Color.clear : Color.colorGreen,
                                       borderColor: getAddress().isEmpty || getSelectedCity().isEmpty ? .gray : .colorGreen) {
@@ -56,7 +56,7 @@ struct AddressInputView: View {
             }
         }
         .padding()
-        .navigationTitle("Адрес доставки")
+        .navigationTitle("your_delivery_address".localized)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())

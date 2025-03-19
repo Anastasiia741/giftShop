@@ -20,6 +20,7 @@ struct ButtonsAuthView: View {
     private let textComponent = TextComponent()
     var onButtonTap: (ActiveScreen) -> Void
     
+    
     var body: some View {
         HStack(spacing: 16) {
             Button(action: {
@@ -27,7 +28,7 @@ struct ButtonsAuthView: View {
                     onButtonTap(.registration)
                 }
             }) {
-                textComponent.createText(text: "Регистрация", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "registration".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, maxHeight: 54)
                     .overlay(
                         RoundedRectangle(cornerRadius: 40)
@@ -39,7 +40,7 @@ struct ButtonsAuthView: View {
                     onButtonTap(.authorization)
                 }
             }) {
-                textComponent.createText(text: "Войти", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: "sign_in".localized, fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
                     .font(.headline)
                     .frame(maxWidth: .infinity, maxHeight: 54)
                     .background(.colorGreen)

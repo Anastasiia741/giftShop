@@ -12,7 +12,7 @@ struct ProductInfoView: View {
         VStack(alignment: .leading, spacing: 8) {
             CurvedLineView()
             
-            textComponent.createText(text: "О товаре", fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
+            textComponent.createText(text: "about_product".localized, fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                 .padding(.horizontal, 16)
             
             ScrollView {

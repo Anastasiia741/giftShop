@@ -38,7 +38,7 @@ struct CartCell: View {
             CustomDivider()
                      
             HStack {
-                textComponent.createText(text: "\(position.price * count) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "\(position.price * count) \("som".localized)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 fullPriceView()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -75,7 +75,7 @@ extension CartCell {
     @ViewBuilder
     private func fullPriceView() -> some View {
         if let fullPrice = position.fullPrice, fullPrice > 0 {
-            textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+            textComponent.createText(text: "\(fullPrice) сом", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
                 .strikethrough()
         }
     }

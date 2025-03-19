@@ -58,12 +58,12 @@ struct OrderDetailsAdminSection: View {
     }
     
     private var orderDateView: some View {
-        textComponent.createText(text: "\(Localization.orderDate) \(Extentions().formattedDate(order.date))", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "\("Дата") \(Extentions().formattedDate(order.date))", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
     }
     
     private var orderStatusView: some View {
         HStack {
-            textComponent.createText(text: Localization.status, fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "Статус", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
             
             textComponent.createText(text: order.status, fontSize: 18, fontWeight: .regular,
                                      lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
@@ -72,26 +72,26 @@ struct OrderDetailsAdminSection: View {
     }
     
     private var promoCodeView: some View {
-        textComponent.createText(text: "\(Localization.promoCode): \(order.promocode.isEmpty ? "нет" : order.promocode)", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Промокод: \(order.promocode.isEmpty ? "нет" : order.promocode)", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
     }
 
     private var nameView: some View {
-        textComponent.createText(text: "\(Localization.name) \(viewModel.userProfile?.name ?? "нет")", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Наименование: \(viewModel.userProfile?.name ?? "нет")", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
     }
     private var addressView: some View {
-        textComponent.createText(text: "\(Localization.deliveryAddress) \(order.address)", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Адрес доставки: \(order.address)", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
     }
 
     private var phoneView: some View {
-        textComponent.createText(text: "\(Localization.phoneNumber) \(order.phone)", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Телефон: \(order.phone)", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
     }
     
     private var emailView: some View {
-        textComponent.createText(text: "\(Localization.email) \(viewModel.userProfile?.email ?? "нет")", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Email: \(viewModel.userProfile?.email ?? "нет")", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
     }
     
     private var sumView: some View {
-        textComponent.createText(text: "\(Localization.sum) \(order.cost) \(Localization.som)", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Сумма: \(order.cost) ", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
     }
 }
 
@@ -101,12 +101,12 @@ struct GoodsSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            textComponent.createText(text: Localization.goods, fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "Товары", fontSize: 18, fontWeight: .bold, lightColor: .black, darkColor: .white)
             .frame(maxWidth: .infinity, alignment: .leading)
             
             ForEach(order.positions) { position in
                 HStack {
-                    textComponent.createText(text: "\(position.product.name): \(position.count) \(Localization.amount).", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(position.product.name): \(position.count) шт.", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

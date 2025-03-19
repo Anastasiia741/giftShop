@@ -35,7 +35,7 @@ struct ProductDetailView: View {
                     alignment: .topLeading
                 )
             HStack() {
-                textComponent.createText(text: "\(viewModel.product.price) \(Localization.som)", fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "\(viewModel.product.price) \("som".localized)", fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 fullPriceView()
             }
             .padding([.vertical, .horizontal])
@@ -48,7 +48,7 @@ struct ProductDetailView: View {
         ProductInfoView(productDetail: viewModel.product.detail)
         VStack {
             HStack(spacing: 16) {
-                buttonComponent.createWhiteButton(text: "Купить сейчас", isAddedToCart: $isAddedToCart) {
+                buttonComponent.createWhiteButton(text: "buy_now".localized, isAddedToCart: $isAddedToCart) {
                     let product = Product(
                         id: viewModel.product.id,
                         name: viewModel.product.name,
@@ -67,7 +67,7 @@ struct ProductDetailView: View {
                 .background(colorScheme == .dark ? .colorDarkBrown : .white)
                 .cornerRadius(40)
                 
-                buttonComponent.createGreenButton(text: "Добавить в корзину", count: $count,isAddedToCart: $isAddedToCart) {
+                buttonComponent.createGreenButton(text: "add_to_cart".localized, count: $count,isAddedToCart: $isAddedToCart) {
                     let product = Product(
                         id: viewModel.product.id,
                         name: viewModel.product.name,
@@ -98,7 +98,7 @@ private extension ProductDetailView {
     @ViewBuilder
     func fullPriceView() -> some View {
         if let fullPrice = viewModel.product.fullPrice, fullPrice > 0 {
-            textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+            textComponent.createText(text: "\(fullPrice) \("som".localized)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
                 .strikethrough()
         }
     }

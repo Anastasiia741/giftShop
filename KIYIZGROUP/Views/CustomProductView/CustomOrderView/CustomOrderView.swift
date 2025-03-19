@@ -23,14 +23,14 @@ struct CustomOrderView: View {
                 }
                 .padding([.leading, .top], 8)
                 
-                OrderDetailsSection(productType: viewModel.selectedProduct?.name ?? "Не выбран", comment: viewModel.comment, designImage: designImage, addedImage: addedImage)
+                OrderDetailsSection(productType: viewModel.selectedProduct?.name ?? "not_selected".localized, comment: viewModel.comment, designImage: designImage, addedImage: addedImage)
                     .padding(.top, 4)
                 
                 ContactInfoSection(phoneNumber: $viewModel.phone)
                     .padding([.horizontal, .vertical])
                 Spacer()
                 
-                GreenButton(text: "Оформить заказ", isDisabled: viewModel.phone.trimmingCharacters(in:   .whitespacesAndNewlines).isEmpty) {
+                GreenButton(text: "place_an_order".localized, isDisabled: viewModel.phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
                     Task {
                         isLoading = true
                         await viewModel.saveCustomOrder()
@@ -72,7 +72,7 @@ struct CustomOrderView: View {
         }
         .animation(.easeInOut, value: isLoading)
         .animation(.easeInOut, value: viewModel.showInfoView)
-        .navigationTitle("Индивидуальный заказ")
+        .navigationTitle("custom_order".localized)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             Task {

@@ -1,129 +1,168 @@
 /* 
-  Localizable.strings
-  GiftShop
-  Created by Анастасия Набатова on 18/3/24.
-*/
+ Localizable.strings
+ GiftShop
+ Created by Анастасия Набатова on 18/3/24.
+ */
 
 //MARK: - Authentication
-"empty_string" = "";
-"authorization" = "Authorization";
-"registration" = "Registration";
-"enter_password" = "Enter password";
-"create_a_password" = "Create a password";
-"sign_in" = "Sign in";
-"registr" = "Registration";
-//"already_have_an_account" = "Have an account";
-"press_policy" = "By registering you confirm that you agree to";
-"privacy_policy" = "Privacy Policy";
+"registration" = "Каттоо";
+"sign_in" = "Кирүү";
 
-//MARK: - OrderDetail
-"order_details" = "Order details";
-"order_date" = "Date of:";
-"status" = "Status:";
-"promo_code" = "Промокод:";
-"goods" = "Goods:";
-"name" = "Title";
-"amount" = "pcs";
-"sum" = "Sum:";
-"som" = "som";
-"name" = "Name";
-"email" = "Email";
-"delivery_address" = "Delivery address:";
-"phone_number" = "Phone number:";
+//MARK: - AuthorizationView
+"authorization" = "Авторизация";
+"email" = "Email:";
+"enter_password" = "Сырсөзүңүздү киргизиңиз";
+"forgot_your_password" = "Сырсөзүңүздү унутуп калдыңызбы?";
 
-//MARK: - ProductDetailEditView
-"product_name" = "Product Name";
-"enter_product_name" = "Enter product name";
-"category" = "Category";
-"enter_category" = "Enter category";
-"price" = "Price";
-"enter_price" = "Enter price";
-"detailed_product_descrip" = "Detailed product description";
-"delete" = "Delete";
-"save" = "Save";
+//MARK: - Authentication - errors
+"email_cannot_be_empty" = "Электрондук почта бош болушу мүмкүн эмес";
+"invalid_email_format" = "Электрондук почта дарегинин форматы туура эмес";
+"password_cannot_be_empty" = "Сырсөз бош болушу мүмкүн эмес";
+"password_must_be_at_least_6_characters" = "Сырсөз кеминде 6 белгиден турушу керек";
+"incorrect_password" = "Туура эмес сырсөз";
+"email_not_found" = "Электрондук почта табылган жок";
+"operation_error" = "Операция катасы:";
 
-//MARK: - CreateProductView
-"image" = "Image";
-"description" = "Description";
 
-//MARK: - OrderCell
-"date_of" = "Date of:";
-"more_details" = "More details";
+//MARK: - RegistrationView
+"enter_email" = "Электрондук почтаны киргизиңиз";
+"create_password" = "Сырсөз түзүү";
+"repeat_password" = "Сырсөздү кайталоо";
+"register" = "Каттоо";
+"privacy_policy" = "Купуялык саясаты";
+"congratulations" = "Куттуктайбыз!";
+"successfully_registered" = "ийгиликтүү катталды.";
+"complete_authorization" = "Каттоо эсебиңизге кирүү үчүн авторизацияны бүтүрүңүз.";
+
 
 //MARK: - CatalogView
-"popular" = "Offer of the day";
-"custom_design" = "Custom design";
-"make_custom_order" = "Make a custom order";
-"products" = "Categories";
-"all_categories" = "all";
+"popular" = "популярдуу";
+"make_custom_order" = "Ыңгайлаштырылган заказ жасоо";
+"products" = "Категориялар";
+"all_categories" = "Бардыгы";
+
+//MARK: - CustomView
+"attach_photo" = "Сүрөттү тиркөө";
+"continue" = "Улантуу";
+"custom_order" = "Ыңгайлаштырылган буйрутма";
+"photo_selected" = "Тандалган сүрөт";
+
+"product_type" = "Продукт түрү";
+"choose_style" = "Стиль тандоо";
+"additionally" = "Кошумча";
+"write_what_you_would_like" = "Өндүрүмдө эмнени көргүңүз келсе, ошону жазыңыз";
+"not_selected" = "Тандалган эмес";
+"place_an_order" = "Заказ берүү";
+
+"order" = "Заказ";
+"дизайн" = "Дизайн";
+"added_photo" = "Кошулган сүрөт";
+"comment" = "Comment";
+
+"contact_details" = "Байланыш маалыматы";
+"leave_your_phone" = "Телефон номериңизди калтырыңыз, биздин оператор чоо-жайын тактоо үчүн сиз менен жакын арада байланышат";
+
+//MARK: - InfoView
+"order_placed" = "Заказ берилди";
+"our_operator_will_contact_you" = "Биздин оператор буйрутмаңызды ырастоо үчүн сиз менен жакын арада байланышат";
+"улуу" = "мыкты";
+
+
+//MARK: - CustomDetailView
+"details" = "Маалымат";
+"order_number" = "Буйрутма номери";
+"date_and_time_of_order" = "Заказдын датасы жана убактысы";
+"телефон" = "Телефон";
 
 //MARK: - ProductDetailView
-"quantity" = "Quantity:";
-"add" = "add";
+"som" = "сом";
+"buy_now" = "Азыр сатып ал";
+"add_to_cart" = "Карабага кошуу";
+"about_product" = "Продукция жөнүндө";
 
 //MARK: - CartView
-"cart" = "Cart";
-"empty_cart" = "Your cart is currently empty";
-"order_sent_successfully" = "Order sent successfully. Order amount:";
-"your_cart_is_empty" = "Your cart is currently empty";
-"thanks_for_order" = "Thanks for your order!";
-"we_preparing_order" = "We are already preparing your order. Please wait 🌺";
-"add_items_to_cart" = "Add items to cart to start shopping";
-"add_to_order" = "Add to order?";
-"get_discount" = "Get a discount!";
-"promo_code" = "Promo code";
-"total" = "Total";
-"order" = "Order";
-"unlock_exclusive_discount" = "Unlock an exclusive discount!";
-"enter_promo_code" = "Enter promotional code";
-"cancel" = "Cancel";
-"apply" = "Apply";
-"10%_discount" = "You received a 10% discount on your order!";
-"20%_discount" = "You received a 20% discount on your order!";
-"30%_discount" = "You received a 30% discount on your order!";
-"code_does_not_exist" = "Such code does not exist";
+"cart" = "Арба";
+"empty_cart" = "Учурда арабаң бош";
+"add_items_to_cart" = "Жеткирүүнү уюштуруу үчүн нерселерди арабага кошуңуз";
+"order_placement" = "Заказды жайгаштыруу";
+"items" = "Продукциялар";
+"change" = "Өзгөртүү";
+"address_and_phone_number" = "Дарек жана телефон номери";
+"add_address" = "Дарек кошуу";
+"select_city" = "Шаарды тандоо*";
+"street_house" = "Көчө, үй*";
+"apartment_number" = "Квартира номери";
+"floor_entrance" = "Кабат, кире бериш";
+"additional_comments" = "Кошумча комментарийлер";
+
+"payment_to_courier" = "Курьерге төлөм";
+"payment_method" = "Төлөм ыкмасы";
+"all_payment_methods" = "Бардык төлөм ыкмалары";
+
+"invalid_promo_code" = "Жараксыз промо код";
+"enter_promo_code" = "Промо-кодду киргизиңиз";
+"discount_applied" = "Арзандатуу колдонулду";
+"there_is_no_such_code" = "Мындай код жок";
+"10%_discount" = "Сиз заказыңызга 10% арзандатуу алдыңыз!";
+"20%_discount" = "Сиз заказыңызга 20% арзандатуу алдыңыз!";
+"30%_discount" = "Сиз заказыңызга 30% арзандатуу алдыңыз!";
+"there_is_no_such_code" = "Мындай код жок";
+
+
+"total" = "Бардыгы";
+"delivery" = "жеткирүү";
+"for_free" = "Акысыз";
+"total_amount" = "Жалпы сумма";
+"status" = "Абал:";
+
+"order_amount" = "Буйрутма суммасы";
 
 //MARK: - ProfileView
-"profile" = "Profile";
-"your_name" = "Your name";
-"enter_your_name" = "Enter your name";
-"enter_phone_number" = "Enter phone number";
-"your_email" = "Your email";
-"your_delivery_address" = "Delivery address";
-"enter_your_delivery_address" = "Your delivery address";
-"your_future_orders" = "Your orders will be here";
-"no_orders_yet" = "No orders yet";
-"your_orders" = "Your orders";
-"delete_account_name" = "Are you sure you want to delete your account? This action is irreversible.";
+"name" = "Аты";
+"phone_number" = "Телефон номери:";
+"change_password" = "Сырсөздү өзгөртүү";
+"address" = "Дарек";
+"account" = "Аккаунт";
+"logout" = "Чыгуу";
+"delete_your_account" = "Каттоо эсебин жок кылуу";
+"log_out" = "Каттоо эсебиңизден чын эле чыккыңыз келеби?";
+"delete_account" = "Каттоо эсебиңизди чын эле жок кылгыңыз келеби";
+"yes" = "Ооба";
+"no" = "Жок";
 
-//MARK: - Alerts
-"registration_error" = "Registration error";
-"password_mismatch" = "Password mismatch";
-"enter_password_confirmation" = "Please enter password confirmation";
-"delete_product" = "Delete product?";
-"product_removed" = "The product has been removed";
-"yes" = "Yes";
-"no" = "No";
-"data_saved_successfully" = "Data saved successfully";
-"ok" = "OK";
-"select_photo_source" = "Select photo source";
-"gallery" = "Gallery";
-"camera" = "Camera";
-"delete_account" = "Delete account?";
-"data_successfully_saved" = "Your data has been successfully saved";
-"log_out" = "Do you want to go out?";
-"go_out" = "Go out";
-"cancel" = "Cancel";
-"error" = "Error";
-"attention" = "Attention";
-"congratulations" = "Congratulations";
-"not_filled_in" = "Not all fields are filled inuu";
-"select_order_status" = "Select order status";
-"delete_your_account" = "Do you want to delete your account?";
-"account_deleted" = "Your account has been deleted";
-"error_retrieving_user_data" = "Error retrieving user data";
-"failed_download_image" = "Failed to download image URL";
-"error_retrieving_order_history" = "Error when retrieving order history";
-"product_removed" = "product Removed";
+"bishkek" = "Бишкек";
+"osh" = "Ош";
+"naryn" = "Нарын";
+"talas" = "Талас";
+"batken" = "Баткен";
 
+"orders" = "Заказдар";
+"deliveries" = "жеткирүү";
+"for_the_amount" = "суммасы үчүн";
+"no_deliveries_expected" = "Эч кандай жеткирүү күтүлгөн жок";
+"individual_orders" = "Жеке заказдар";
+"order_missing" = "Буйрутма жок";
+"no_orders" = "Буйрутмалар жок";
+"goods" = "товар";
+"good" = "продукт";
+"goodss" = "товар";
 
+"order_status" = "Буйрутма абалы";
+"sum" = "Сума:";
+
+"change_password" = "Сырсөздү өзгөртүү";
+"to_change_the_password" = "Сырсөзүңүздү өзгөртүү үчүн эски сырсөздү киргизип, жаңысын кошушуңуз керек.";
+"current_password" = "Учурдагы сырсөз";
+"new_password" = "Жаңы сырсөз";
+
+"username" = "Колдонуучунун аты";
+"any_questions" = "КАНДАЙ СУРООЛОР КАЛДЫ?";
+"leave_request" = "Акысыз консультация алуу үчүн өтүнүч калтырыңыз же веб-сайтта көрсөтүлгөн телефон номерине чалыңыз.";
+"shopping_center_betastores" = "TC Beta Stores 1, Бишкек";
+"mamyrova" = "83 Мамырова, Ош";
+
+//MARK: - ChangePassword Errors
+"current_password_is_required" = "Учурдагы сырсөз талап кылынат";
+"new_password_cannot_be_empty" = "Жаңы сырсөз бош болушу мүмкүн эмес";
+"password_updated_successfully" = "Сырсөз ийгиликтүү жаңыртылды!";
+"failed_to_update_password" = "Сырсөз жаңыртылган жок:";

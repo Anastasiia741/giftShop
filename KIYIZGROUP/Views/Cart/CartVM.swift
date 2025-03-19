@@ -60,9 +60,9 @@ extension CartVM {
     
     func applyPromoCode() -> Bool {
         let discountMessages: [String: String] = [
-            "promo 10": Localization.discount10,
-            "promo 20": Localization.discount20,
-            "promo 30": Localization.discount30
+            "promo 10": "10%_discount".localized,
+            "promo 20": "20%_discount".localized,
+            "promo 30": "30%_discount".localized
         ]
         
         if let message = discountMessages[promoCode.lowercased()] {
@@ -70,7 +70,7 @@ extension CartVM {
             promoCode = ""
             return true
         } else {
-            promoResultText = Localization.codeDoesNotExist
+            promoResultText = "there_is_no_such_code".localized
             return false
         }
     }

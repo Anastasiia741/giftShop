@@ -10,7 +10,7 @@ struct OrderSummaryView: View {
     
     var body: some View {
         VStack {
-            textComponent.createText(text: "Итого", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "total".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 .padding(.bottom, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack(alignment: .leading, spacing: 16) {
@@ -23,9 +23,9 @@ struct OrderSummaryView: View {
                         }
                     }
                     HStack {
-                        textComponent.createText(text: "Доставка", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                        textComponent.createText(text: "delivery".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                         Spacer()
-                        textComponent.createText(text: "Бесплатно", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                        textComponent.createText(text: "for_free".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     }
                 }
                 .padding()
@@ -33,9 +33,9 @@ struct OrderSummaryView: View {
                     .padding(.horizontal)
                     .background(.gray)
                 HStack {
-                    textComponent.createText(text: "Общая сумма", fontSize: 16, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "total_amount".localized, fontSize: 16, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(viewModel.productCountMessage) сом", fontSize: 16, fontWeight: .bold, style: .headline,  lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(viewModel.productCountMessage) \("com".localized)", fontSize: 16, fontWeight: .bold, style: .headline,  lightColor: .black, darkColor: .white)
                 }
                 .padding()
             }

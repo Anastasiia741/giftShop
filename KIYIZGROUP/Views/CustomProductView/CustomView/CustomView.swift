@@ -10,13 +10,13 @@ struct CustomView: View {
     let customOrder: CustomOrder?
     private let textComponent = TextComponent()
     private let customButton = CustomButton()
-    @State private var imageName: String = "Прикрепить фото"
+    @State private var imageName: String = "attach_photo".localized
     @State private var showGallery = false
     @State private var showCamera = false
     @State private var showPicker = false
     @Binding var currentTab: Int
     @State private var showCustomOrderView = false
-
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
@@ -42,7 +42,7 @@ struct CustomView: View {
                     .padding(.vertical)
                     .padding(.horizontal, 16)
                 
-                GreenButton(text: "Продолжить", isDisabled: viewModel.selectedProduct == nil && viewModel.selectedStyle == nil && viewModel.selectedImage == nil) {
+                GreenButton(text: "continue".localized, isDisabled: viewModel.selectedProduct == nil && viewModel.selectedStyle == nil && viewModel.selectedImage == nil) {
                     viewModel.isShowConfirm.toggle()
                 }
                 .padding(.horizontal)
@@ -63,8 +63,7 @@ struct CustomView: View {
                 }
             }
         }
-        
-        .navigationTitle("Индивидуальный заказ")
+        .navigationTitle("custom_order".localized)
         .navigationBarTitleDisplayMode(.inline)
         .onTapGesture {
             self.hideKeyboard()
@@ -78,7 +77,7 @@ struct CustomView: View {
         .sheet(isPresented: $showGallery) {
             ImagePicker(sourceType: .photoLibrary, onSelected: { image, name in
                 viewModel.selectedImage = image
-                imageName = name.map { String($0.prefix(20)) } ?? "Фото выбрано"
+                imageName = name.map { String($0.prefix(20)) } ?? "photo_selected".localized
             },
                         selectedImage: $viewModel.selectedImage, isPresented: $showGallery)
         }
@@ -86,7 +85,7 @@ struct CustomView: View {
         .sheet(isPresented: $showCamera) {
             ImagePicker(sourceType: .camera, onSelected: {image, name in
                 viewModel.selectedImage = image
-                imageName = name.map { String($0.prefix(20)) } ?? "Фото выбрано"
+                imageName = name.map { String($0.prefix(20)) } ?? "photo_selected".localized
             },
                         selectedImage: $viewModel.selectedImage, isPresented: $showCamera)
         }

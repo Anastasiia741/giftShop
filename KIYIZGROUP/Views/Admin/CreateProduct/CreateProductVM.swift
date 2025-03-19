@@ -35,7 +35,7 @@ extension CreateProductVM {
                 print(error.localizedDescription)
             } else {
                 DispatchQueue.main.async {
-                    self.alertModel = self.configureAlertModel(with: Localization.dataSavedSuccessfully, message: nil)
+                    self.alertModel = self.configureAlertModel(with: "Данные успешно добавлены", message: nil)
                     self.clearFields()
                 }
             }
@@ -44,12 +44,12 @@ extension CreateProductVM {
     
     func createNewProduct() {
         guard validateFields() else {
-            self.alertModel = configureAlertModel(with: Localization.attention, message: Localization.notFilledIn)
+            self.alertModel = configureAlertModel(with: "Внимание", message: "Не все поля заполнены")
             return
         }
         
         guard let selectedImage = productImage else {
-            self.alertModel = configureAlertModel(with: Localization.attention, message: Localization.notFilledIn)
+            self.alertModel = configureAlertModel(with: "Внимание", message: "Изображение не выбрано")
             return
         }
         
@@ -58,25 +58,23 @@ extension CreateProductVM {
             
             DispatchQueue.main.async {
                 if let error = error {
-                    self.alertModel = self.configureAlertModel(with: Localization.error, message: error.localizedDescription)
+                    self.alertModel = self.configureAlertModel(with: "Ошибка", message: error.localizedDescription)
                     return
                 }
                 
                 guard let uploadedImageURL = uploadedImageURL else {
-                    self.alertModel = self.configureAlertModel(with: Localization.error, message: "imageUploadFailed")
+                    self.alertModel = self.configureAlertModel(with: "Ошибка", message: "imageUploadFailed")
                     return
                 }
                 
-                let newProduct = Product(
-                    id: 0,
-                    name: self.name,
-                    category: self.category,
-                    detail: self.detail,
-                    price: Int(self.price) ?? 0,
-                    fullPrice: Int(self.fullPrice) ?? 0,
-                    image: uploadedImageURL,
-                    quantity: 1
-                )
+                let newProduct = Product(id: 0,
+                                         name: self.name,
+                                         category: self.category,
+                                         detail: self.detail,
+                                         price: Int(self.price) ?? 0,
+                                         fullPrice: Int(self.fullPrice) ?? 0,
+                                         image: uploadedImageURL,
+                                         quantity: 1)
                 self.createProduct(newProduct)
             }
         }
@@ -104,7 +102,7 @@ private extension CreateProductVM {
     }
     
     func configureAlertModel(with title: String, message: String?) -> AlertModel {
-        AlertModel(title: title, message: message, buttons: [AlertButtonModel(title: Localization.ok, action: { [weak self] in
+        AlertModel(title: title, message: message, buttons: [AlertButtonModel(title: "Ок", action: { [weak self] in
             self?.alertModel = nil})])
     }
     

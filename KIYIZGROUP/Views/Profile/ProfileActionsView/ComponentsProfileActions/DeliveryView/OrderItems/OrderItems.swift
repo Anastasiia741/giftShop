@@ -12,7 +12,7 @@ struct OrderItems: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            textComponent.createText(text: "Товары", fontSize: 22, fontWeight: .bold, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "items".localized, fontSize: 22, fontWeight: .bold, lightColor: .black, darkColor: .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             
@@ -43,7 +43,7 @@ struct OrderItems: View {
                     }
                 }
                 .padding()
-                textComponent.createText(text: "Сумма: \(order.cost) сом", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "\("sum".localized) \(order.cost) \("som".localized)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
             }

@@ -24,7 +24,7 @@ struct RegistrationView: View {
             Spacer()
             RegistrationFieldsView(viewModel: viewModel, customButton: customButton)
             Spacer()
-            simpleButton.createMinimalButton(text: Localization.privacyPolicy, fontSize: 12) {
+            simpleButton.createMinimalButton(text: "privacy_policy".localized, fontSize: 12) {
                 viewModel.disclaimerTapped()
             }
             .frame(maxWidth: .infinity, alignment: .leading)

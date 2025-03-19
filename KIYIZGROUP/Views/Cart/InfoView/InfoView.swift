@@ -26,10 +26,10 @@ struct InfoView: View, InfoDialogHandling {
                     .frame(width: 64, height: 64)
                     .foregroundColor(.new)
                 
-                textComponent.createText(text: "Заказ оформлен", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "order_placed".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     .padding()
                 
-                textComponent.createText(text: "Наш оператор в скором времени свяжется с вами для подтверждения заказа", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "our_operator_will_contact_you".localized, fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.5)
@@ -37,7 +37,7 @@ struct InfoView: View, InfoDialogHandling {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                 
-                customButton.createButton(text: "отлично", fontSize: 16, fontWeight: .regular, color: .white, backgroundColor: .colorGreen, borderColor: .colorGreen) {
+                customButton.createButton(text: "great".localized, fontSize: 16, fontWeight: .regular, color: .white, backgroundColor: .colorGreen, borderColor: .colorGreen) {
                     closeDialog()
                 }
                 .padding()

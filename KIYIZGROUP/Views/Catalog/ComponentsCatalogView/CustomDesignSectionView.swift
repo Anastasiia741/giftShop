@@ -16,7 +16,7 @@ struct CustomDesignSectionView: View {
                 showCustomView.toggle()
             }) {
                 HStack {
-                    textComponent.createText(text: Localization.makeCustomOrder, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
+                    textComponent.createText(text: "make_custom_order".localized, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
                     Spacer()
                     Images.Menu.chevron
                         .foregroundColor(.white)

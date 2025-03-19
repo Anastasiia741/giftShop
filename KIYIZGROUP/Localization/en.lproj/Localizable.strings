@@ -1,129 +1,169 @@
-/* 
-  Localizable.strings
-  GiftShop
-  Created by Анастасия Набатова on 18/3/24.
-*/
+/*
+ Localizable.strings
+ GiftShop
+ Created by Анастасия Набатова on 18/3/24.
+ */
 
 //MARK: - Authentication
-"empty_string" = "";
-"authorization" = "Authorization";
 "registration" = "Registration";
-"enter_password" = "Enter password";
-"create_a_password" = "Create a password";
 "sign_in" = "Sign in";
-"registr" = "Registration";
-//"already_have_an_account" = "Have an account";
-"press_policy" = "By registering you confirm that you agree to";
+
+//MARK: - AuthorizationView
+"authorization" = "Authorization";
+"email" = "Email:";
+"enter_password" = "Enter your password";
+"forgot_your_password" = "Forgot password?";
+
+//MARK: - Authentication - errors
+"email_cannot_be_empty" = "Email cannot be empty";
+"invalid_email_format" = "Invalid email format";
+"password_cannot_be_empty" = "Password cannot be empty";
+"password_must_be_at_least_6_characters" = "Password must be at least 6 characters";
+"incorrect_password" = "Invalid email format";
+"email_not_found" = "Email not found";
+"operation_error" = "Operation error:";
+
+//MARK: - RegistrationView
+"enter_email" = "Enter email";
+"create_password" = "Create a password";
+"repeat_password" = "Repeat password";
+"register" = "Register";
 "privacy_policy" = "Privacy Policy";
+"congratulations" = "Congratulations!";
+"successfully_registered" = "successfully registered.";
+"complete_authorization" = "Please complete authorization to access your account.";
 
-//MARK: - OrderDetail
-"order_details" = "Order details";
-"order_date" = "Date of:";
-"status" = "Status:";
-"promo_code" = "Промокод:";
-"goods" = "Goods:";
-"name" = "Title";
-"amount" = "pcs";
-"sum" = "Sum:";
-"som" = "som";
-"name" = "Name";
-"email" = "Email";
-"delivery_address" = "Delivery address:";
-"phone_number" = "Phone number:";
-
-//MARK: - ProductDetailEditView
-"product_name" = "Product Name";
-"enter_product_name" = "Enter product name";
-"category" = "Category";
-"enter_category" = "Enter category";
-"price" = "Price";
-"enter_price" = "Enter price";
-"detailed_product_descrip" = "Detailed product description";
-"delete" = "Delete";
-"save" = "Save";
-
-//MARK: - CreateProductView
-"image" = "Image";
-"description" = "Description";
-
-//MARK: - OrderCell
-"date_of" = "Date of:";
-"more_details" = "More details";
-
-//MARK: - CatalogView
-"popular" = "Offer of the day";
-"custom_design" = "Custom design";
-"make_custom_order" = "Make a custom order";
+"popular" = "Popular";
+"make_custom_order" = "Make Custom Order";
 "products" = "Categories";
-"all_categories" = "all";
+"all_categories" = "All";
+
+//MARK: - CustomView
+"attach_photo" = "Attach Photo";
+"continue" = "Continue";
+"custom_order" = "Custom Order";
+"photo_selected" = "Photo Selected";
+
+"product_type" = "Product Type";
+"choose_style" = "Select Style";
+"additionally" = "Additionally";
+"write_what_you_would_like" = "Write what you would like to see on the product";
+"not_selected" = "Not Selected";
+"place_an_order" = "Place an Order";
+
+"order" = "Order";
+"design" = "Design";
+"added_photo" = "Added photo";
+"comment" = "Comment";
+
+"contact_details" = "Contact details";
+"leave_your_phone" = "Leave your phone number and our operator will contact you shortly to clarify the details";
+
+//MARK: - InfoView
+"order_placed" = "Order placed";
+"our_operator_will_contact_you" = "Our operator will contact you shortly to confirm the order";
+"great" = "great";
+
+//MARK: - CustomDetailView
+"details" = "Details";
+"order_number" = "Order number";
+"date_and_time_of_order" = "Date and time of order";
+"phone" = "Phone";
 
 //MARK: - ProductDetailView
-"quantity" = "Quantity:";
-"add" = "add";
+"som" = "som";
+"buy_now" = "Buy now";
+"add_to_cart" = "Add to cart";
+"about_product" = "About the product";
 
 //MARK: - CartView
 "cart" = "Cart";
 "empty_cart" = "Your cart is currently empty";
-"order_sent_successfully" = "Order sent successfully. Order amount:";
-"your_cart_is_empty" = "Your cart is currently empty";
-"thanks_for_order" = "Thanks for your order!";
-"we_preparing_order" = "We are already preparing your order. Please wait 🌺";
-"add_items_to_cart" = "Add items to cart to start shopping";
-"add_to_order" = "Add to order?";
-"get_discount" = "Get a discount!";
-"promo_code" = "Promo code";
-"total" = "Total";
-"order" = "Order";
-"unlock_exclusive_discount" = "Unlock an exclusive discount!";
-"enter_promo_code" = "Enter promotional code";
-"cancel" = "Cancel";
-"apply" = "Apply";
+"add_items_to_cart" = "Add items to cart to place an order";
+"order_placement" = "Place an order";
+
+"items" = "Products";
+"change" = "Change";
+"address_and_phone_number" = "Address and phone number";
+"add_address" = "Add address";
+"select_city" = "Select a city*";
+"street_house" = "Street, House*";
+"apartment_number" = "Apartment number";
+"floor_entrance" = "Floor, entrance";
+
+"additional_comments" = "Additional comments";
+"payment_to_courier" = "Payment to courier";
+"payment_method" = "Payment method";
+"all_payment_methods" = "All payment methods";
+
+"invalid_promo_code" = "Invalid promo code";
+"enter_promo_code" = "Enter promo code";
+"discount_applied" = "Discount applied";
+"there_is_no_such_code" = "There is no such code";
 "10%_discount" = "You received a 10% discount on your order!";
-"20%_discount" = "You received a 20% discount on your order!";
-"30%_discount" = "You received a 30% discount on your order!";
-"code_does_not_exist" = "Such code does not exist";
+"20%_discount" = "You got 20% off your order!";
+"30%_discount" = "You got 30% off your order!";
+"there_is_no_such_code" = "There is no such code";
+
+"total" = "Total";
+"delivery" = "Delivery";
+"for_free" = "Free";
+"total_amount" = "Total amount";
+"status" = "Status:";
+"order_amount" = "Order amount";
 
 //MARK: - ProfileView
-"profile" = "Profile";
-"your_name" = "Your name";
-"enter_your_name" = "Enter your name";
-"enter_phone_number" = "Enter phone number";
-"your_email" = "Your email";
-"your_delivery_address" = "Delivery address";
-"enter_your_delivery_address" = "Your delivery address";
-"your_future_orders" = "Your orders will be here";
-"no_orders_yet" = "No orders yet";
-"your_orders" = "Your orders";
-"delete_account_name" = "Are you sure you want to delete your account? This action is irreversible.";
+"name" = "Name";
+"phone_number" = "Phone number:";
+"change_password" = "Change password";
 
-//MARK: - Alerts
-"registration_error" = "Registration error";
-"password_mismatch" = "Password mismatch";
-"enter_password_confirmation" = "Please enter password confirmation";
-"delete_product" = "Delete product?";
-"product_removed" = "The product has been removed";
+"address" = "Address";
+
+"account" = "Account";
+"logout" = "Log out of account";
+"delete_your_account" = "Delete account";
+"log_out" = "Are you sure you want to log out of your account?";
+"delete_account" = "Are you sure you want to delete your account";
 "yes" = "Yes";
 "no" = "No";
-"data_saved_successfully" = "Data saved successfully";
-"ok" = "OK";
-"select_photo_source" = "Select photo source";
-"gallery" = "Gallery";
-"camera" = "Camera";
-"delete_account" = "Delete account?";
-"data_successfully_saved" = "Your data has been successfully saved";
-"log_out" = "Do you want to go out?";
-"go_out" = "Go out";
-"cancel" = "Cancel";
-"error" = "Error";
-"attention" = "Attention";
-"congratulations" = "Congratulations";
-"not_filled_in" = "Not all fields are filled inuu";
-"select_order_status" = "Select order status";
-"delete_your_account" = "Do you want to delete your account?";
-"account_deleted" = "Your account has been deleted";
-"error_retrieving_user_data" = "Error retrieving user data";
-"failed_download_image" = "Failed to download image URL";
-"error_retrieving_order_history" = "Error when retrieving order history";
-"product_removed" = "product Removed";
 
+"bishkek" = "Bishkek";
+"osh" = "Osh";
+"naryn" = "Naryn";
+"talas" = "Talas";
+"batken" = "Batken";
+
+"orders" = "Orders";
+
+"deliveries" = "Deliveries";
+"for_the_amount" = "for the amount of";
+
+"no_deliveries_expected" = "No deliveries expected";
+"individual_orders" = "Individual orders";
+"order_missing" = "No order";
+"no_orders" = "No orders";
+"goods" = "products";
+"good" = "product";
+"goodss" = "products";
+
+"order_status" = "Order status";
+"sum" = "Amount:";
+
+"change_password" = "Change password";
+"to_change_the_password" = "To change your password, you must enter your old password and add a new one.";
+"current_password" = "Current password";
+"new_password" = "New password";
+
+"username" = "Username";
+
+"any_questions" = "ANY QUESTIONS?";
+"leave_request" = "Leave a request or call the phone number listed on the website to get a free consultation.";
+"shopping_center_betastores" = "TC BetaStores 1, Bishkek";
+"mamyrova" = "83 Mamyrova, Osh";
+
+//MARK: - ChangePassword Errors
+"current_password_is_required" = "Current password is required";
+"new_password_cannot_be_empty" = "New password cannot be empty";
+"password_updated_successfully" = "Password updated successfully!";
+"failed_to_update_password" = "Failed to update password:";
 

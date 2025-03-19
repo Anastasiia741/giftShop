@@ -14,11 +14,11 @@ struct DetailView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            textComponent.createText(text: "Детали", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "details".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 .padding(.vertical)
             VStack {
                 HStack {
-                    textComponent.createText(text: Localization.status, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "status".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     textComponent.createText(text: "\(order.status)", fontSize: 16, fontWeight: .regular,
                                              lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),
@@ -26,26 +26,26 @@ struct DetailView: View {
                     
                 }
                 HStack {
-                    textComponent.createText(text: "Номер заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "order_number".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     textComponent.createText(text: "\(order.id.prefix(6))", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 .padding([.vertical])
                 HStack {
-                    textComponent.createText(text: "Дата и время заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "date_and_time_of_order".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     textComponent.createText(text: "\(Extentions().formattedDate(order.date))", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 CustomDivider()
                 
                 HStack {
-                    textComponent.createText(text: "Адрес доставки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "your_delivery_address".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     textComponent.createText(text: "\(order.address)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
                 .padding(.top)
                 HStack {
-                    textComponent.createText(text: "Телефон", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "phone".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     textComponent.createText(text: "\(order.phone)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
@@ -53,15 +53,15 @@ struct DetailView: View {
                 CustomDivider()
                 
                 HStack {
-                    textComponent.createText(text: "Сумма заказа", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "order_amount".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "\(order.cost) сом", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(order.cost) \("com".localized)", fontSize: 16, fontWeight: .regular,  lightColor: .black, darkColor: .white)
                 }
                 .padding(.vertical)
                 HStack {
-                    textComponent.createText(text: "Доставка", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "delivery".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
-                    textComponent.createText(text: "Бесплатно", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "for_free".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
             }
             .padding()

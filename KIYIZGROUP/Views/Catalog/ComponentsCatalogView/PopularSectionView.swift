@@ -12,7 +12,7 @@ struct PopularSectionView: View {
     
     var body: some View {
         VStack(alignment: .leading ) {
-            textComponent.createText(text: Localization.popular, fontSize: 28, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "popular".localized, fontSize: 28, fontWeight: .heavy, lightColor: .black, darkColor: .white)
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: layoutForPopular, spacing: 6) {
                     ForEach(products) { item in

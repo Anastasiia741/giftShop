@@ -23,7 +23,7 @@ final class ProductEditVM: ObservableObject {
 //MARK: - Alert
 extension ProductEditVM {
     private func configureAlertModel(with title: String) -> AlertModel {
-        AlertModel(title: title, buttons: [AlertButtonModel(title: Localization.ok, action: { [weak self] in
+        AlertModel(title: title, buttons: [AlertButtonModel(title: "Ок", action: { [weak self] in
             self?.alertModel = nil
             self?.onSaveCompletion?()
         }) ])
@@ -31,12 +31,12 @@ extension ProductEditVM {
     
     func showDeleteConfirmationAlert(onDelete: @escaping ()->Void) {
         alertModel = AlertModel(
-            title: Localization.deleteProduct,
+            title: "Вы действительно хотите удалить товар?",
             buttons: [
-                AlertButtonModel(title: Localization.yes, action: { [weak self] in
+                AlertButtonModel(title: "Да", action: { [weak self] in
                     self?.deleteProduct(onDelete: onDelete)
                 }),
-                AlertButtonModel(title: Localization.no, action: { [weak self] in
+                AlertButtonModel(title: "Нет", action: { [weak self] in
                     self?.alertModel = nil
                 })
             ]
@@ -72,11 +72,11 @@ extension ProductEditVM {
             guard let self = self else { return }
             
             if error != nil {
-                self.alertModel = self.configureAlertModel(with: Localization.error)
+                self.alertModel = self.configureAlertModel(with: error?.localizedDescription ?? "error")
                 return
             }
             
-            self.alertModel = self.configureAlertModel(with: Localization.dataSavedSuccessfully)
+            self.alertModel = self.configureAlertModel(with: "Данные успешно обновлены")
             
             guard let selectedImage = self.selectedImage, let imageURL = selectedProduct.image else { return }
             
@@ -86,7 +86,7 @@ extension ProductEditVM {
                 if let updatedURL = updatedURL {
                     self.selectedProduct?.image = updatedURL
                 } else {
-                    self.alertModel = self.configureAlertModel(with: Localization.error)
+                    self.alertModel = self.configureAlertModel(with:  error?.localizedDescription ?? "error")
                 }
             }
         }
@@ -98,10 +98,10 @@ extension ProductEditVM {
         }
         productsDB.delete(product: product) { [weak self] error in
             if error != nil {
-                self?.alertModel = self?.configureAlertModel(with: Localization.error)
+                self?.alertModel = self?.configureAlertModel(with:  error?.localizedDescription ?? "error")
             } else {
-                self?.alertModel = AlertModel(title: Localization.productRemoved, message: nil, buttons: [
-                    AlertButtonModel(title: Localization.ok, action: {
+                self?.alertModel = AlertModel(title: "Товар успешно удален", message: nil, buttons: [
+                    AlertButtonModel(title: "ok", action: {
                         onDelete()
                     })
                 ])

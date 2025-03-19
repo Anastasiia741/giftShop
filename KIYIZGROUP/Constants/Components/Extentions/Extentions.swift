@@ -9,3 +9,8 @@ enum TabType: Int {
 }
 
 
+extension String {
+    var localized: String {
+        LanguageManager.shared.localizedString(forKey: self)
+    }
+}

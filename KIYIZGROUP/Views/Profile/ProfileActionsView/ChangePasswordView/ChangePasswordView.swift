@@ -24,20 +24,20 @@ struct ChangePasswordView: View {
             }
             .padding([.leading, .top], 16)
             VStack(spacing: 16) {
-                textComponent.createText(text: "Change Password", fontSize: 20, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "change_password".localized, fontSize: 20, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     .padding(.top, 20)
-                textComponent.createText(text: "You will be signed out upon changing your password and required to sign back into the app.", fontSize: 18, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
+                textComponent.createText(text: "to_change_the_password".localized, fontSize: 18, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
                 
-                SecureField("Current Password", text: $viewModel.currentPassword)
+                SecureField("current_password".localized, text: $viewModel.currentPassword)
                     .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
                     .padding(.horizontal)
                     .overlay(
                         RoundedRectangle(cornerRadius: 40)
                             .stroke(Color.gray, lineWidth: 1.3)
                     )
-                SecureField("New Password", text: $viewModel.newPassword)
+                SecureField("new_password".localized, text: $viewModel.newPassword)
                     .frame(maxWidth: .infinity, minHeight: 50, alignment: .leading)
                     .padding(.horizontal)
                     .overlay(
