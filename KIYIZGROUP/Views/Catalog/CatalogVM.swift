@@ -11,8 +11,9 @@ final class CatalogVM: ObservableObject {
     @Published var popularProducts: [Product] = []
     @Published var allProducts: [Product] = []
     @Published var filteredProducts: [Product] = []
-    @Published var categories = [Localization.allCategories.lowercased()]
-    @Published var selectedCategory = Localization.allCategories.lowercased()
+    @Published var categories = ["allCategories".localized.lowercased()]
+    @Published var selectedCategory = "all_categories".localized
+//    Localization.allCategories.lowercased()
     private let productService = ProductService()
 }
 
@@ -28,7 +29,7 @@ extension CatalogVM {
                     $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased()
                 }
                 let productCategories = Set(result.map { $0.category.lowercased() })
-                self.categories = [Localization.allCategories.lowercased()] + productCategories.sorted()
+                self.categories = ["all_categories".localized] + productCategories.sorted()
                 self.filterProducts(by: self.selectedCategory)
             }
         } catch {
@@ -41,7 +42,7 @@ extension CatalogVM {
 extension CatalogVM {
     func filterProducts(by category: String) {
         selectedCategory = category
-        if category == Localization.allCategories.lowercased() {
+        if category == "all_categories".localized {
             filteredProducts = allProducts
         } else {
             filteredProducts = allProducts.filter { $0.category.lowercased() == category.lowercased() }

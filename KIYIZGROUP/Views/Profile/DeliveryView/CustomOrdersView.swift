@@ -21,7 +21,7 @@ struct CustomOrdersView: View {
             .padding([.leading, .top], 16)
             Spacer()
             
-            textComponent.createText(text: "Заказы", fontSize: 26, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "orders".localized, fontSize: 26, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             

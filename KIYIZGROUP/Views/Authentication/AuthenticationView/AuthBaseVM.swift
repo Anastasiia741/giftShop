@@ -15,29 +15,29 @@ class AuthBaseVM: ObservableObject {
 extension AuthBaseVM {
     func validateFieldsForReg(email: String, password: String) -> String? {
         if email.isEmpty {
-            return "Email cannot be empty"
+            return "email_cannot_be_empty".localized
         }
         if !isValidEmail(email) {
-            return "Invalid email format."
+            return "invalid_email_format".localized
         }
         if password.isEmpty {
-            return "Password cannot be empty"
+            return "password_cannot_be_empty".localized
         }
         if password.count < 6 {
-            return "Password must be at least 6 characters."
+            return "password_must_be_at_least_6_characters".localized
         }
         return nil
     }
     
     func validateFieldsForAuth(email: String, password: String) -> String? {
         if email.isEmpty {
-            return "Email cannot be empty."
+            return "email_cannot_be_empty".localized
         }
         if !isValidEmail(email) {
-            return "Invalid email format."
+            return "invalid_email_format".localized
         }
         if password.isEmpty {
-            return "Password cannot be empty."
+            return "password_cannot_be_empty".localized
         }
         return nil
     }
@@ -61,11 +61,11 @@ extension AuthBaseVM {
     
     func handleError(_ error: Error) {
         if error.localizedDescription.contains("password") {
-            updateError(message: "Неверный password", type: .password)
+            updateError(message: "incorrect_password".localized, type: .password)
         } else if error.localizedDescription.contains("email") {
-            updateError(message: "Email не найден", type: .email)
+            updateError(message: "email_not_found".localized, type: .email)
         } else {
-            updateError(message: "Ошибка операции: \(error.localizedDescription)", type: .general)
+            updateError(message: "\(NSLocalizedString("operation_error".localized, comment: "")) \(error.localizedDescription)", type: .general)
         }
     }
 }

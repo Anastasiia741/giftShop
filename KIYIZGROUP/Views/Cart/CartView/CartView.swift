@@ -33,7 +33,7 @@ struct CartView: View {
                 }
             }
             .padding([.vertical, .horizontal])
-            .navigationTitle("Koрзина")
+            .navigationTitle("cart".localized)
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: CartNavigation.self) { destination in
                 switch destination {

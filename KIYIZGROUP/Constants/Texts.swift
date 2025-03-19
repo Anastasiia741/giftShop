@@ -4,9 +4,7 @@
 
 import Foundation
 
-struct LanguageOptions {
-    static let available = ["EN", "KG", "РУ"]
-}
+
 
 //--------------- 
 

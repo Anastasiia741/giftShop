@@ -14,11 +14,11 @@ final class ChangePassword: ObservableObject {
     
     func changePassword() {
         guard !currentPassword.isEmpty else {
-            errorMessage = "Current password is required"
+            errorMessage = "current_password_is_required".localized
             return
         }
         guard !newPassword.isEmpty else {
-            errorMessage = "New password cannot be empty"
+            errorMessage = "new_password_cannot_be_empty".localized
             return
         }
         isLoading = true
@@ -32,10 +32,10 @@ final class ChangePassword: ObservableObject {
                         self?.isLoading = false
                         switch updateResult {
                         case .success:
-                            self?.successMessage = "Password updated successfully!"
+                            self?.successMessage = "password_updated_successfully".localized
                             self?.resetPasswordFields()
                         case .failure(let error):
-                            self?.errorMessage = "Failed to update password: \(error.localizedDescription)"
+                            self?.errorMessage = "\("failed_to_update_password".localized) \(error.localizedDescription)"
                         }
                     }
                 }

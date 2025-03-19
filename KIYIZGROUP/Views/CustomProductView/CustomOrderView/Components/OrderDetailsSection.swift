@@ -14,20 +14,20 @@ struct OrderDetailsSection: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack{
-                textComponent.createText(text: "Заказ", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "order".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 Spacer()
             }
             .padding()
             
             VStack{
                 HStack {
-                    textComponent.createText(text: "Тип товара", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "product_type".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     textComponent.createText(text: productType, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
                 .padding(.vertical, 4)
                 HStack {
-                    textComponent.createText(text: "Дизайн", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "design".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     Spacer()
                     
                     if let image = designImage {
@@ -43,14 +43,14 @@ struct OrderDetailsSection: View {
                                     lineWidth: 1
                                 )
                                 .frame(width: 40, height: 40)
-                            textComponent.createText(text: "нет", fontSize: 12, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                            textComponent.createText(text: "no".localized, fontSize: 12, fontWeight: .regular, lightColor: .black, darkColor: .white)
                         }
                     }
                 }
                 .padding(.vertical, 4)
                 
                 HStack {
-                    textComponent.createText(text: "Добавленное фото", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "added_photo".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     
                     Spacer()
                     
@@ -64,7 +64,7 @@ struct OrderDetailsSection: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(ColorManager.adaptiveColor(light: Color.gray.opacity(0.3), dark: Color.white.opacity(0.2)), lineWidth: 1)
                                 .frame(width: 40, height: 40)
-                            textComponent.createText(text: "нет", fontSize: 12, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                            textComponent.createText(text: "no".localized, fontSize: 12, fontWeight: .regular, lightColor: .black, darkColor: .white)
                         }
                     }
                 }
@@ -77,7 +77,7 @@ struct OrderDetailsSection: View {
             )
             
             VStack(alignment: .leading) {
-                textComponent.createText(text: "Комментарий", fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
+                textComponent.createText(text: "comment".localized, fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .gray)
                     .padding(.vertical, 4)
                 textComponent.createText(text: comment, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             }

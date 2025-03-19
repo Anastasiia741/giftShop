@@ -57,7 +57,7 @@ struct CartOrderView: View {
         }
         .animation(.easeInOut, value: isLoading)
         .animation(.easeInOut, value: showInfoView)
-        .navigationTitle("Оформление заказа")
+        .navigationTitle("order_placement".localized)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading: CustomBackButton())
         .onChange(of: currentTab) { _, _ in

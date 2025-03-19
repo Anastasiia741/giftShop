@@ -253,7 +253,7 @@ struct OrderStatusButton: View {
         }
         .actionSheet(isPresented: $isShowStatus) {
             ActionSheet(
-                title: Text(Localization.selectOrderStatus),
+                title: Text("Выбрать статус"),
                 buttons: OrderStatus.allCases.map { orderStatus in
                         .default(Text(orderStatus.rawValue)) {
                             updateStatus(orderStatus.rawValue)
@@ -322,7 +322,7 @@ struct ForgotPasswordButton {
     
     func createButton(action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            textComponent.createText(text: "Забыл пароль?", fontSize: 16, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
+            textComponent.createText(text: "forgot_your_password".localized, fontSize: 16, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                 .padding()
         }
     }
@@ -470,12 +470,12 @@ struct LogoutButton: View {
         }
         .actionSheet(isPresented: $isPresented) {
             ActionSheet(
-                title: Text(Localization.logOut),
+                title: Text("Хотите выйти из аккаунта?"),
                 buttons: [
-                    .default(Text(Localization.yes)) {
+                    .default(Text("Да")) {
                         viewModel.logout(mainTabVM: mainTabVM)
                     },
-                    .cancel(Text(Localization.cancel))
+                    .cancel(Text("Отмена"))
                 ]
             )
         }

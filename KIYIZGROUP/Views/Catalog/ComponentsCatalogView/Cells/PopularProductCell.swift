@@ -21,7 +21,7 @@ struct PopularProductCell: View {
                     textComponent.createText(text: product.name, fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
                         .padding(.top, 16)
                         .padding(.leading, 8)
-                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
+                    textComponent.createText(text: "\(product.price) \("som".localized)", fontSize: 16, fontWeight: .bold, lightColor: .white, darkColor: .white)
                         .padding(.top, 22)
                         .padding(.leading, 8)
                 }

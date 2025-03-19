@@ -12,7 +12,7 @@ struct ProductTypeSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            textComponent.createText(text: "Тип товара", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "product_type".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
@@ -61,7 +61,7 @@ extension ProductTypeSection {
             .frame(width: 87, height: 101)
             
             textComponent.createText(text: product.name, fontSize: 12, fontWeight: .regular, lightColor: .black, darkColor: .white)
-            .padding(.top, 4)
+                .padding(.top, 4)
         }
         .padding(.vertical)
         .padding(.horizontal, 2)

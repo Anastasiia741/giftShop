@@ -37,7 +37,7 @@ struct OrderHeaderSection: View {
     let textComponent: TextComponent
     
     var body: some View {
-        textComponent.createText(text: Localization.orderDetails, fontSize: 22, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "Детали заказа", fontSize: 22, fontWeight: .heavy, lightColor: .black, darkColor: .white)
             .padding(.horizontal)
             .padding(.top, 16)
     }
@@ -61,13 +61,13 @@ struct CustomOrderDetailsSection: View {
     }
     
     private var orderDateView: some View {
-        let orderDateText = "\(Localization.orderDate) \(Extentions().formattedDate(order.date))"
+        let orderDateText = "Дата заказа: \(Extentions().formattedDate(order.date))"
         return textComponent.createText(text: orderDateText, fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
     }
     
     private var orderStatusView: some View {
         HStack {
-            textComponent.createText(text: Localization.status, fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "Статус:", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
             
             textComponent.createText(text: order.status, fontSize: 18, fontWeight: .regular,
                                      lightColor: StatusColors.getTextColor(OrderStatus(rawValue: order.status) ?? .new),

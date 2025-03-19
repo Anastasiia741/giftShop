@@ -25,7 +25,7 @@ final class ProfileVM: ObservableObject {
     @Published var email = ""
     @Published var phone: String = ""
     
-    @Published var cities = ["Бишкек", "Ош", "Нарын", "Талас", "Баткен"]
+    @Published var cities = ["bishkek".localized, "osh".localized, "naryn".localized, "talas".localized, "batken".localized]
     @Published var selectedCity: String = ""
     @Published var address = ""
     @Published var appatment = ""

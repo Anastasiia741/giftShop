@@ -14,24 +14,25 @@ struct ProfileActionsView: View {
             if let lastOrder = viewModel.orders.max(by: { $0.date < $1.date }) {
                 let itemsWord = getItemsWord(for: lastOrder.totalItems)
                 NavigationLink(destination: DeliveryView(viewModel: viewModel, currentTab: $currentTab)) {
-                    ProfileActionRow(title: "Доставки", subtitle: "\(lastOrder.totalItems) \(itemsWord) на сумму \(lastOrder.cost) сом", textComponent: textComponent, showChevron: true)
+                    ProfileActionRow(title: "deliveries".localized,
+                                     subtitle: "\(lastOrder.totalItems) \(itemsWord) \("for_the_amount".localized) \(lastOrder.cost) \("com".localized)", textComponent: textComponent, showChevron: true)
                 }
             } else {
-                ProfileActionRow(title: "Доставки", subtitle: "Доставок не ожидается", textComponent: textComponent, showChevron: false)
+                ProfileActionRow(title: "deliveries".localized, subtitle: "no_deliveries_expected".localized, textComponent: textComponent, showChevron: false)
             }
             CustomDivider()
             
             if let lastCustomOrder = viewModel.customOrders.max(by: { $0.date < $1.date }) {
                 NavigationLink(destination: CustomOrdersView(viewModel: viewModel, currentTab: $currentTab)) {
-                    ProfileActionRow(title: "Индивидуальные заказы", subtitle: "\(lastCustomOrder.product?.name ?? "Заказ отсутствует")", textComponent: textComponent, showChevron: true)
+                    ProfileActionRow(title: "individual_orders".localized, subtitle: "\(lastCustomOrder.product?.name ?? "order_missing".localized)", textComponent: textComponent, showChevron: true)
                 }
             } else {
-                ProfileActionRow(title: "Индивидуальные заказы", subtitle: "Заказы отсутствуют", textComponent: textComponent, showChevron: false)
+                ProfileActionRow(title: "individual_orders".localized, subtitle: "no_orders".localized, textComponent: textComponent, showChevron: false)
             }
             
             CustomDivider()
             
-            ProfileActionRow(title: "Способ оплаты", subtitle: "Оплата курьеру",textComponent: textComponent, showChevron: false)
+            ProfileActionRow(title: "payment_method".localized, subtitle: "payment_to_courier".localized, textComponent: textComponent, showChevron: false)
         }
         .background(
             RoundedRectangle(cornerRadius: 16)
@@ -54,13 +55,13 @@ extension ProfileActionsView {
         let lastTwoDigits = count % 100
         
         if lastTwoDigits >= 11 && lastTwoDigits <= 19 {
-            return "товаров"
+            return "goods".localized
         } else if lastDigit == 1 {
-            return "товар"
+            return "good".localized
         } else if lastDigit >= 2 && lastDigit <= 4 {
-            return "товара"
+            return "goodss".localized
         } else {
-            return "товаров"
+            return "goods".localized
         }
     }
 }

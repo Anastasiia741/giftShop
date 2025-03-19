@@ -56,11 +56,11 @@ struct ContactInfoView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            textComponent.createText(text: "ОСТАЛИСЬ ВОПРОСЫ?", fontSize: 22, fontWeight: .bold, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "any_questions".localized, fontSize: 22, fontWeight: .bold, lightColor: .black, darkColor: .white)
             Divider()
                 .padding(.horizontal)
                 .background(Color.colorGreen)
-            textComponent.createText(text: "Оставьте заявку или позвоните по телефону, указанному на сайте, чтобы получить бесплатную консультацию.", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "leave_request".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             HStack {
                 Image(systemName: "phone.fill")
                     .foregroundColor(.colorGreen)
@@ -75,8 +75,8 @@ struct ContactInfoView: View {
                 Image(systemName: "mappin.and.ellipse")
                     .foregroundColor(.colorGreen)
                 VStack(alignment: .leading, spacing: 5) {
-                    textComponent.createText(text: "ТЦ БетаСторес 1, Бишкек", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    textComponent.createText(text: "83 Мамырова, Ош", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "shopping_center_betastores".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "mamyrova".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 }
             }
             Spacer()

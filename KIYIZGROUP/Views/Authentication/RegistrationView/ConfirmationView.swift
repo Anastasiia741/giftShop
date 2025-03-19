@@ -16,20 +16,22 @@ struct ConfirmationView: View {
         VStack {
             VStack{
                 Spacer()
-                textComponent.createText(text: "Поздравляем!", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "congratulations".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
+                HStack{
+                    textComponent.createText(text: email, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "successfully_registered".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                }
+                .padding(.vertical)
                 
-                textComponent.createText(text: "\(email) успешно зарегистрирован.", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    .padding(.vertical)
-                
-                textComponent.createText(text: "Завершите авторизацию, чтобы получить доступ к вашему аккаунту.", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "complete_authorization".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal)
             VStack(spacing: 16) {
-                customButton.createButton(text: "Войти", fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black, backgroundColor: .clear, borderColor: .colorDarkBrown,action: {
+                customButton.createButton(text: "sign_in".localized, fontSize: 16, fontWeight: .regular, color: colorScheme == .dark ? .white : .black, backgroundColor: .clear, borderColor: .colorDarkBrown,action: {
                     showAuthView = true
                 })
                 .padding(.horizontal, 16)

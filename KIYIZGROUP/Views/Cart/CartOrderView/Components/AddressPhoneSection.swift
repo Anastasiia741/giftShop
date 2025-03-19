@@ -15,9 +15,9 @@ struct AddressPhoneSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            textComponent.createText(text: "Адрес и номер телефона", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "address_and_phone_number".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
             HStack {
-                textComponent.createText(text: getAddress().isEmpty ? "Добавить адрес" : getAddress(), fontSize: 16, fontWeight: .medium, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: getAddress().isEmpty ? "add_address".localized : getAddress(), fontSize: 16, fontWeight: .medium, lightColor: .black, darkColor: .white)
                     .foregroundColor(getAddress().isEmpty ? .gray : .primary)
                 
                 Spacer()

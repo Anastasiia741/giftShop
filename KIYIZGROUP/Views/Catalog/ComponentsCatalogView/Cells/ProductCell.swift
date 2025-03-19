@@ -40,7 +40,7 @@ struct ProductCell: View {
             VStack(alignment: .leading, spacing: 4) {
                 textComponent.createText(text: product.name, fontSize: 12, fontWeight: .medium, lightColor: .black, darkColor: .white)
                 HStack {
-                    textComponent.createText(text: "\(product.price) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(product.price) сом)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     
                     fullPriceView()
                 }
@@ -81,7 +81,7 @@ extension ProductCell {
     @ViewBuilder
     private func fullPriceView() -> some View {
         if let fullPrice = product.fullPrice, fullPrice > 0 {
-            textComponent.createText(text: "\(fullPrice) \(Localization.som)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+            textComponent.createText(text: "\(fullPrice) сом", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
                 .strikethrough()
         }
     }

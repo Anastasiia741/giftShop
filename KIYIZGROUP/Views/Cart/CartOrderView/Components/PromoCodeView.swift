@@ -20,7 +20,7 @@ struct PromoCodeView: View {
                 .offset(y: -80)
             VStack {
                 Spacer()
-                textComponent.createText(text: promo.isEmpty ? "Неверный промокод" : "\(promo)", fontSize: 22, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: promo.isEmpty ? "invalid_promo_code".localized : "\(promo)", fontSize: 22, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     .padding(.vertical)
                     .padding(.horizontal)
             }

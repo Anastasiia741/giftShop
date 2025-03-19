@@ -16,13 +16,13 @@ struct AuthorizationFieldsView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 8) {
-                textComponent.createText(text: Localization.authorization, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "authorization".localized, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(6)
-                textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, borderColor: viewModel.errorType == .email ? .r : .colorDarkBrown)
+                textFieldComponent.createCustomTextField(placeholder: "email".localized, text: $viewModel.email, borderColor: viewModel.errorType == .email ? .r : .colorDarkBrown)
                     .padding(6)
                 HStack {
-                    textFieldComponent.createSecureField(placeholder: Localization.enterPassword, text: $viewModel.password,
+                    textFieldComponent.createSecureField(placeholder: "enter_password".localized, text: $viewModel.password,
                                                          isPasswordVisible: $isPasswordVisible,
                                                          color: Color.primary,
                                                          borderColor: viewModel.errorType == .password ? .r : .colorDarkBrown)

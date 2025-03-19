@@ -14,13 +14,13 @@ struct HeaderView: View {
     var body: some View {
         VStack {
             HStack {
-                textComponent.createText(text: "Товары", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "items".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                 Spacer()
                 if showEditButton {
                     Button(action: {
                         dismiss()
                     }) {
-                        textComponent.createText(text: "Изменить", fontSize: 16, fontWeight: .medium, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
+                        textComponent.createText(text: "change".localized, fontSize: 16, fontWeight: .medium, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                             .font(.body)
                             .foregroundColor(.brown)
                     }

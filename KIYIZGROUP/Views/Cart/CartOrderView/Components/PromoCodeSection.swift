@@ -7,7 +7,7 @@ import SwiftUI
 struct PromoCodeSection: View {
     @ObservedObject var cartVM: CartVM
     private let textFieldComponent = TextFieldComponent()
-    @State private var placeholderText = "Ввести промокод"
+    @State private var placeholderText = "enter_promo_code".localized
     @State private var promoCode = ""
     @State private var showPromoCodeView = false
     
@@ -31,7 +31,8 @@ extension PromoCodeSection {
         cartVM.promoCode = promoCode
         let isPromoApplied = cartVM.applyPromoCode()
         
-        placeholderText = isPromoApplied ? "Скидка применена" : "Такого кода не существует"
+        placeholderText = isPromoApplied ? "discount_applied".localized :
+        "there_is_no_such_code".localized
         promoCode = ""
         
         withAnimation {

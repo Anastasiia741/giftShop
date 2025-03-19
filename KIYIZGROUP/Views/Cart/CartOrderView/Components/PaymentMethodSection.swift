@@ -6,13 +6,13 @@ import SwiftUI
 
 struct PaymentMethodSection: View {
     private let textComponent = TextComponent()
-    let payments = ["Оплата курьеру"]
-    @State private var selectedPayment: String = "Оплата курьеру"
+    let payments = ["payment_to_courier".localized]
+    @State private var selectedPayment: String = "payment_to_courier".localized
     @State private var showDropdown: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            textComponent.createText(text: "Способ оплаты", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "payment_method".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
     
             paymentSelectionView
             
@@ -46,7 +46,7 @@ private extension PaymentMethodSection {
             }
         }) {
             HStack {
-                textComponent.createText(text: "Все способы оплаты", fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
+                textComponent.createText(text: "all_payment_methods".localized, fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
                 Spacer()
                 Image(systemName: "chevron.down")
                     .rotationEffect(.degrees(showDropdown ? 180 : 0))

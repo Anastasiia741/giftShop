@@ -23,7 +23,7 @@ struct DesignSelectionSection: View {
     }
     
     private func headerSection() -> some View {
-        textComponent.createText(text: "Выберите стиль", fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
+        textComponent.createText(text: "choose_style".localized, fontSize: 21, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
     }
 }
 

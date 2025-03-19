@@ -13,14 +13,14 @@ struct RegistrationFieldsView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            textComponent.createText(text: Localization.registration, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "registration".localized, fontSize: 24, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
     
-            textFieldComponent.createCustomTextField(placeholder: Localization.email, text: $viewModel.email, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
+            textFieldComponent.createCustomTextField(placeholder: "Email", text: $viewModel.email, borderColor: viewModel.errorType == .email ? .red : .colorDarkBrown)
                 .padding(6)
             
-            textFieldComponent.createSecureField(placeholder: Localization.createPassword,
+            textFieldComponent.createSecureField(placeholder: "create_password".localized,
                                                 text: $viewModel.password,
                                                 isPasswordVisible: $isPasswordVisible, color: Color.primary,
                                                 borderColor: viewModel.errorType == .password ? .red : .colorDarkBrown)
@@ -32,7 +32,7 @@ struct RegistrationFieldsView: View {
                     .padding()
             }
             
-            customButton.createButton(text: Localization.registr, fontSize: 16, fontWeight: .regular,
+            customButton.createButton(text: "register".localized, fontSize: 16, fontWeight: .regular,
                                       color: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .white,
                                       backgroundColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? Color.clear : Color.colorGreen,
                                       borderColor: viewModel.email.isEmpty || viewModel.password.isEmpty ? .gray : .colorGreen) {

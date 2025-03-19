@@ -27,7 +27,7 @@ struct OrderDetailsView: View {
                 await profileVM.fetchUserProfile()
             }
         }
-        .navigationTitle("Доставка")
+        .navigationTitle("delivery".localized)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading: CustomBackButton())
     }

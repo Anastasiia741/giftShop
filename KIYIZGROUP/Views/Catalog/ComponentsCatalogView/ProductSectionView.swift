@@ -8,7 +8,6 @@ struct ProductSectionView: View {
     private let layoutForProducts = [GridItem(.adaptive(minimum: UIScreen.main.bounds.width / 2.4))]
     @StateObject var viewModel: CatalogVM
     let filteredProducts: [Product]
-//    @Binding var navigationPath: NavigationPath
     @Binding var currentTab: Int
     @Binding var selectedProduct: Product?
 

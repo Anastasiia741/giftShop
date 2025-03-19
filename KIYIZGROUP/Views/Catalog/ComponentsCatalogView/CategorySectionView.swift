@@ -14,7 +14,7 @@ struct CategorySectionView: View {
     var body: some View {
         VStack(alignment: .leading ) {
             if showText {
-                textComponent.createText(text: Localization.products, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: "products".localized, fontSize: 21, fontWeight: .heavy, lightColor: .black, darkColor: .white)
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {

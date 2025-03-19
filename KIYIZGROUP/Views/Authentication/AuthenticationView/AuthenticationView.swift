@@ -6,7 +6,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct AuthenticationView: View {
-    @State private var selectedLanguage = "EN"
+    @StateObject private var languageManager = LanguageManager.shared
+
     @State private var activeScreen: ActiveScreen? = nil
     @Binding var currentTab: Int
    
@@ -35,7 +36,7 @@ struct AuthenticationView: View {
             }
             .overlay(HStack {
                 Spacer()
-                LanguageToggleAuthView(availableLanguages: LanguageOptions.available, selectedLanguage: $selectedLanguage)
+                LanguageToggleAuthView()
                     .padding(.horizontal)
             }
                 .padding()

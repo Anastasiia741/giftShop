@@ -14,7 +14,7 @@ struct DeliveryView: View {
     
     var body: some View {
         VStack {
-            textComponent.createText(text: "Детали", fontSize: 26, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: "details".localized, fontSize: 26, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
             List(viewModel.orders) { order in

@@ -15,7 +15,7 @@ struct CustomDetailsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            OrderDetailsSection(productType: viewModel.selectedProduct?.name ?? "Не выбран", comment: viewModel.comment, designImage: designImage, addedImage: addedImage)
+            OrderDetailsSection(productType: viewModel.selectedProduct?.name ?? "not_selected".localized, comment: viewModel.comment, designImage: designImage, addedImage: addedImage)
             
             VStack(alignment: .leading, spacing: 16) {
                 CustomDetailView(viewModel: viewModel, customOrder: customOrder)
@@ -34,7 +34,7 @@ struct CustomDetailsView: View {
             }
         }
         .padding(.horizontal)
-        .navigationTitle("Индивидуальный заказ")
+        .navigationTitle("custom_design".localized)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
     }

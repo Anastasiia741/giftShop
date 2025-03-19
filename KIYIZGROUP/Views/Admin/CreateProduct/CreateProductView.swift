@@ -14,7 +14,7 @@ struct CreateProductView: View {
     var body: some View {
         VStack {
             List {
-                Section(header: Text(Localization.image)) {
+                Section(header: Text("Изображение")) {
                     VStack {
                         Image(uiImage: (viewModel.productImage ?? Images.CreateProduct.image ?? UIImage()))
                             .resizable()
@@ -29,23 +29,23 @@ struct CreateProductView: View {
                             }
                     }
                 }
-                Section(header: Text(Localization.description)
+                Section(header: Text("Описание")
                     )
                 {
-                    TextField(Localization.productName, text: $viewModel.name)
+                    TextField("Название товара", text: $viewModel.name)
                         .validationBorder(isValid: viewModel.isNameValid)
-                    TextField(Localization.category, text: $viewModel.category)
+                    TextField("Категория", text: $viewModel.category)
                         .keyboardType(.alphabet)
                         .autocapitalization(.none)
                         .validationBorder(isValid: viewModel.isCategoryValid)
-                    TextField(Localization.price, text: $viewModel.price)
+                    TextField("Цена", text: $viewModel.price)
                         .validationBorder(isValid: viewModel.isPriceValid)
                         .keyboardType(.decimalPad)
                     TextField("Цена до скидки", text: $viewModel.fullPrice)
                         .keyboardType(.decimalPad)
                         .validationBorder(isValid: viewModel.isFullPriceValid)
                 }
-                Section(header: Text(Localization.detailedProductDescrip)) {
+                Section(header: Text("Детали")) {
                     TextEditor(text: $viewModel.detail)
                         .frame(height: 100)
                         .padding(.horizontal)
@@ -53,7 +53,7 @@ struct CreateProductView: View {
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 }
             }
-            Button(Localization.save) {
+            Button("сохранить") {
                 viewModel.createNewProduct()
             }
             .font(.system(size: 16))
@@ -92,7 +92,7 @@ struct CreateProductView: View {
             Alert(
                 title: Text(alertModel.title ?? ""),
                 message: Text(alertModel.message ?? ""),
-                dismissButton: .default(Text(alertModel.buttons.first?.title ?? Localization.ok), action: {
+                dismissButton: .default(Text(alertModel.buttons.first?.title ?? "ок"), action: {
                     alertModel.buttons.first?.action?()
                 })
             )

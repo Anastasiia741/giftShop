@@ -52,9 +52,9 @@ struct ProductEditView: View {
                 }
                 .padding([.leading, .trailing], 20)
                 VStack(alignment: .leading, spacing: 8) {
-                    textComponent.createText(text: Localization.productName, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "Название товара", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     
-                    TextField(Localization.enterProductName, text: Binding(
+                    TextField("Введите название товара", text: Binding(
                         get: { viewModel.selectedProduct?.name ?? "" },
                         set: { newValue in
                             viewModel.selectedProduct?.name = newValue
@@ -63,9 +63,9 @@ struct ProductEditView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    textComponent.createText(text: Localization.category, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "Категория", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     
-                    TextField(Localization.enterCategory, text: Binding(
+                    TextField("Введите название категории", text: Binding(
                         get: { viewModel.selectedProduct?.category ?? "" },
                         set: { newValue in
                             viewModel.selectedProduct?.category = newValue
@@ -77,9 +77,9 @@ struct ProductEditView: View {
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                     
-                    textComponent.createText(text: Localization.price, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "Цена", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     
-                    TextField(Localization.enterPrice, text: Binding(
+                    TextField("Введите цену товара", text: Binding(
                         get: { String(viewModel.selectedProduct?.price ?? 0) },
                         set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }))
                     .keyboardType(.decimalPad)
@@ -97,7 +97,7 @@ struct ProductEditView: View {
                     .padding(.vertical, 8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                     
-                    textComponent.createText(text: Localization.detailedProductDescrip, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "Введите цену до скидки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                     
                     TextEditor(text: Binding(
                         get: { viewModel.selectedProduct?.detail ?? "" },
@@ -111,7 +111,7 @@ struct ProductEditView: View {
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 }.padding([.leading, .trailing], 20)
                 HStack(spacing: 16){
-                    Button(Localization.delete) {
+                    Button("Удалить товар") {
                         viewModel.showDeleteConfirmationAlert {
                             dismiss()
                         }
@@ -123,7 +123,7 @@ struct ProductEditView: View {
                     .background(Color.red)
                     .cornerRadius(20)
                     Spacer().frame(width: 16)
-                    Button(Localization.save) {
+                    Button("Сохранить") {
                         viewModel.saveEditedProduct()
                         viewModel.onSaveCompletion = {
                             dismiss()
