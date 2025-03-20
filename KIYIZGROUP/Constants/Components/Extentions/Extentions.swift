@@ -14,3 +14,15 @@ extension String {
         LanguageManager.shared.localizedString(forKey: self)
     }
 }
+
+extension URL {
+    func appendingQueryParameter(_ name: String, value: String) -> URL {
+        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return self
+        }
+        var queryItems = urlComponents.queryItems ?? []
+        queryItems.append(URLQueryItem(name: name, value: value))
+        urlComponents.queryItems = queryItems
+        return urlComponents.url ?? self
+    }
+}

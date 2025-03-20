@@ -26,7 +26,7 @@ struct TabBar: View {
         .onAppear {
             viewModel.fetchUserId()
             setupTabBarAppearance()
-            currentTab = 0 
+            currentTab = 0
         }
     }
 }
@@ -132,7 +132,7 @@ struct UserTabView: View {
 struct GuestTabView: View {
     @Binding var currentTab: Int
     @State private var navigationPath = NavigationPath()
-
+    
     var body: some View {
         TabView(selection: $currentTab) {
             CatalogView(currentTab: $currentTab)

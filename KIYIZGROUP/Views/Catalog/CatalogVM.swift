@@ -13,7 +13,6 @@ final class CatalogVM: ObservableObject {
     @Published var filteredProducts: [Product] = []
     @Published var categories = ["allCategories".localized.lowercased()]
     @Published var selectedCategory = "all_categories".localized
-//    Localization.allCategories.lowercased()
     private let productService = ProductService()
 }
 
@@ -26,9 +25,10 @@ extension CatalogVM {
             DispatchQueue.main.async {
                 self.allProducts = result
                 self.popularProducts = result.filter {
-                    $0.category.lowercased() == TextMessage.Menu.porularProducts.lowercased()
+                    let category = $0.localizedValue(for: $0.category).lowercased()
+                    return category == "popular".localized.lowercased()
                 }
-                let productCategories = Set(result.map { $0.category.lowercased() })
+                let productCategories = Set(result.map { $0.localizedValue(for: $0.category).lowercased() })
                 self.categories = ["all_categories".localized] + productCategories.sorted()
                 self.filterProducts(by: self.selectedCategory)
             }
@@ -45,7 +45,9 @@ extension CatalogVM {
         if category == "all_categories".localized {
             filteredProducts = allProducts
         } else {
-            filteredProducts = allProducts.filter { $0.category.lowercased() == category.lowercased() }
+            filteredProducts = allProducts.filter {
+                           $0.localizedValue(for: $0.category).lowercased() == category.lowercased()
+                       }
         }
     }
 }

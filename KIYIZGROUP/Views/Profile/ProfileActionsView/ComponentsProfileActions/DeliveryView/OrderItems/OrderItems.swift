@@ -32,7 +32,7 @@ struct OrderItems: View {
                                     .fill(Color.gray.opacity(0.3))
                                     .frame(width: 97, height: 111)
                             }
-                            textComponent.createText(text: position.product.name, fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                            textComponent.createText(text: position.product.localizedValue(for: position.product.name), fontSize: 14, fontWeight: .regular, lightColor: .black, darkColor: .white)
                                 .lineLimit(1)
                                 .padding(.vertical, 6)
                             textComponent.createText(text: "\(position.count) шт.", fontSize: 12, fontWeight: .regular, lightColor: .gray, darkColor: .white)

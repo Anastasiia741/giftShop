@@ -85,7 +85,7 @@ extension CustomProductVM {
     }
 }
 
-//MARK: - 
+//MARK: - Image
 extension CustomProductVM {
     @MainActor
     func loadSelectedDesignImage() async -> UIImage? {

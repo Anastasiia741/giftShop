@@ -38,9 +38,9 @@ struct ProductCell: View {
                     }
             }
             VStack(alignment: .leading, spacing: 4) {
-                textComponent.createText(text: product.name, fontSize: 12, fontWeight: .medium, lightColor: .black, darkColor: .white)
+                textComponent.createText(text: product.localizedValue(for: product.name), fontSize: 12, fontWeight: .medium, lightColor: .black, darkColor: .white)
                 HStack {
-                    textComponent.createText(text: "\(product.price) сом)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(product.price) \("com".localized)", fontSize: 16, fontWeight: .heavy, lightColor: .black, darkColor: .white)
                     
                     fullPriceView()
                 }
@@ -56,7 +56,6 @@ struct ProductCell: View {
 
 
 extension ProductCell {
-    
     private func fetchImage() {
         guard let imagePath = product.image else { return }
         
@@ -81,20 +80,9 @@ extension ProductCell {
     @ViewBuilder
     private func fullPriceView() -> some View {
         if let fullPrice = product.fullPrice, fullPrice > 0 {
-            textComponent.createText(text: "\(fullPrice) сом", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+            textComponent.createText(text: "\(fullPrice) \("som".localized)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
                 .strikethrough()
         }
     }
 }
 
-extension URL {
-    func appendingQueryParameter(_ name: String, value: String) -> URL {
-        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
-            return self
-        }
-        var queryItems = urlComponents.queryItems ?? []
-        queryItems.append(URLQueryItem(name: name, value: value))
-        urlComponents.queryItems = queryItems
-        return urlComponents.url ?? self
-    }
-}

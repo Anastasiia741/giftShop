@@ -23,9 +23,9 @@ struct CartCell: View {
                 }
                 .padding(.leading)
                 VStack(alignment: .leading) {
-                    textComponent.createText(text: position.name, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: position.localizedValue(for: position.name), fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                             .padding()
-                    textComponent.createText(text: position.category.uppercased(), fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
+                    textComponent.createText(text: position.localizedValue(for: position.category).uppercased(), fontSize: 16, fontWeight: .regular, lightColor: .gray, darkColor: .white)
                             .padding()
                     buttonComponents.createCustomStepper(position: position, count: $count, range: 0...10, colorScheme: colorScheme) {
                         viewModel.updateProduct(position, count)
@@ -75,7 +75,7 @@ extension CartCell {
     @ViewBuilder
     private func fullPriceView() -> some View {
         if let fullPrice = position.fullPrice, fullPrice > 0 {
-            textComponent.createText(text: "\(fullPrice) сом", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
+            textComponent.createText(text: "\(fullPrice) \("som".localized)", fontSize: 16, fontWeight: .heavy, lightColor: .gray, darkColor: .gray)
                 .strikethrough()
         }
     }

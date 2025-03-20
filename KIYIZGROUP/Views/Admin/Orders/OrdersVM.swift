@@ -120,7 +120,6 @@ extension OrdersVM {
         }
     }
     
-    
     func filterCustomOrders(_ status: OrderStatus) {
         selectedStatus = status
         switch status {

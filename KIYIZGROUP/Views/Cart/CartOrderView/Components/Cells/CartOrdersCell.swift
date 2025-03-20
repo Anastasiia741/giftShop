@@ -23,7 +23,7 @@ struct CartOrdersCell: View {
                         .frame(width: 97, height: 111)
                         .clipped()
                         .cornerRadius(24)
-            textComponent.createText(text: position.name, fontSize: 12, fontWeight: .thin, lightColor: .black, darkColor: .white)
+            textComponent.createText(text: position.localizedValue(for: position.name), fontSize: 12, fontWeight: .thin, lightColor: .black, darkColor: .white)
                     .padding(.bottom, 20)
             }
         }

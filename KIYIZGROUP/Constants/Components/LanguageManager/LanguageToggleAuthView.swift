@@ -22,14 +22,12 @@ struct LanguageToggleAuthView: View {
 class LanguageManager: ObservableObject {
     static let shared = LanguageManager()
     
-    @AppStorage("selectedLanguage") private var storedLanguage: String = "en" {
+    @AppStorage("selectedLanguage") private var storedLanguage: String = "ru" {
         didSet {
-            let newLanguageCode = languageMap[storedLanguage] ?? "en"
+            let newLanguageCode = languageMap[storedLanguage] ?? "ru"
             Bundle.setLanguage(newLanguageCode)
-            print("🔄 Switching language to:", languageMap[newLanguageCode] ?? "UNKNOWN")
             
-            
-            selectedLanguage = reverseLanguageMap[newLanguageCode] ?? "EN"
+            selectedLanguage = reverseLanguageMap[newLanguageCode] ?? "ru"
             
             NotificationCenter.default.post(name: .languageChanged, object: nil)
         }
@@ -52,27 +50,24 @@ class LanguageManager: ObservableObject {
     ]
     
     init() {
-        let initialLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en"
-        let uiLanguage = reverseLanguageMap[initialLanguage] ?? "EN"
+        let initialLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "ru"
+        let uiLanguage = reverseLanguageMap[initialLanguage] ?? "ru"
         
         self.selectedLanguage = uiLanguage
         
-        Bundle.setLanguage(languageMap[uiLanguage] ?? "en")
+        Bundle.setLanguage(languageMap[uiLanguage] ?? "ru")
     }
     
     func toggleLanguage() {
-        print("🔄 Trying to switch from:", selectedLanguage)
         
         if let currentIndex = availableLanguages.firstIndex(of: selectedLanguage) {
             let nextIndex = (currentIndex + 1) % availableLanguages.count
             let newLanguage = availableLanguages[nextIndex]
             
             let languageCode = languageMap[newLanguage] ?? "UNKNOWN"
-            print("✅ Switching language to:", languageCode)
-            
             
             withAnimation {
-                storedLanguage = languageMap[newLanguage] ?? "en"
+                storedLanguage = languageMap[newLanguage] ?? "ru"
                 selectedLanguage = newLanguage
             }
             
@@ -82,12 +77,10 @@ class LanguageManager: ObservableObject {
     }
     
     func localizedString(forKey key: String) -> String {
-        let currentLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en"
-        print("🌎 Localizing:", self, "for language:", currentLanguage)
+        let currentLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "ru"
         
         guard let path = Bundle.main.path(forResource: currentLanguage, ofType: "lproj"),
               let bundle = Bundle(path: path) else {
-            print("❌ Could not find localization for:", currentLanguage)
             
             return NSLocalizedString(key, comment: "")
         }
@@ -104,11 +97,9 @@ extension Bundle {
     static func setLanguage(_ language: String) {
         onLanguageDispatchOnce()
         if let currentLanguage = UserDefaults.standard.stringArray(forKey: "AppleLanguages")?.first, currentLanguage == language {
-            print("✅ Language is already set to:", language)
             return
         }
         
-        print("🔄 Setting new language:", language)
         UserDefaults.standard.set([language], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
         
@@ -123,10 +114,9 @@ extension Notification.Name {
 }
 
 
-
 private class PrivateBundle: Bundle, @unchecked Sendable {
     override func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
-        let currentLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en"
+        let currentLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "ru"
         guard let path = Bundle.main.path(forResource: currentLanguage, ofType: "lproj"),
               let bundle = Bundle(path: path) else {
             return super.localizedString(forKey: key, value: value, table: tableName)

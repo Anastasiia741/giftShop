@@ -34,7 +34,7 @@ struct CustomDetailsView: View {
             }
         }
         .padding(.horizontal)
-        .navigationTitle("custom_design".localized)
+        .navigationTitle("custom_order".localized)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
     }

@@ -13,6 +13,13 @@
 "email" = "Email:";
 "enter_password" = "Сырсөзүңүздү киргизиңиз";
 "forgot_your_password" = "Сырсөзүңүздү унутуп калдыңызбы?";
+"password_recovery" = "Сырсөздү калыбына келтирүү";
+"enter_your_email" = "Электрондук почтаңызды киргизиңиз";
+"close" = "Жабуу";
+"send" = "Жөнөтүү";
+"password_has_been_sent_to" = "Сырсөз жөнөтүлдү";
+
+
 
 //MARK: - Authentication - errors
 "email_cannot_be_empty" = "Электрондук почта бош болушу мүмкүн эмес";
@@ -36,10 +43,10 @@
 
 
 //MARK: - CatalogView
-"popular" = "популярдуу";
+"popular" = "Популярдуу";
 "make_custom_order" = "Ыңгайлаштырылган заказ жасоо";
 "products" = "Категориялар";
-"all_categories" = "Бардыгы";
+"all_categories" = "бардыгы";
 
 //MARK: - CustomView
 "attach_photo" = "Сүрөттү тиркөө";
@@ -55,7 +62,7 @@
 "place_an_order" = "Заказ берүү";
 
 "order" = "Заказ";
-"дизайн" = "Дизайн";
+"design" = "Дизайн";
 "added_photo" = "Кошулган сүрөт";
 "comment" = "Comment";
 
@@ -65,14 +72,13 @@
 //MARK: - InfoView
 "order_placed" = "Заказ берилди";
 "our_operator_will_contact_you" = "Биздин оператор буйрутмаңызды ырастоо үчүн сиз менен жакын арада байланышат";
-"улуу" = "мыкты";
-
+"great" = "мыкты";
 
 //MARK: - CustomDetailView
 "details" = "Маалымат";
 "order_number" = "Буйрутма номери";
 "date_and_time_of_order" = "Заказдын датасы жана убактысы";
-"телефон" = "Телефон";
+"phone" = "Телефон";
 
 //MARK: - ProductDetailView
 "som" = "сом";
@@ -94,6 +100,7 @@
 "apartment_number" = "Квартира номери";
 "floor_entrance" = "Кабат, кире бериш";
 "additional_comments" = "Кошумча комментарийлер";
+"order" = "Заказ";
 
 "payment_to_courier" = "Курьерге төлөм";
 "payment_method" = "Төлөм ыкмасы";
@@ -110,12 +117,14 @@
 
 
 "total" = "Бардыгы";
-"delivery" = "жеткирүү";
+"delivery" = "Жеткирүү";
 "for_free" = "Акысыз";
 "total_amount" = "Жалпы сумма";
-"status" = "Абал:";
+"status" = "Абал";
 
 "order_amount" = "Буйрутма суммасы";
+"your_delivery_address" = "Жеткирүү дареги";
+
 
 //MARK: - ProfileView
 "name" = "Аты";
@@ -126,7 +135,7 @@
 "logout" = "Чыгуу";
 "delete_your_account" = "Каттоо эсебин жок кылуу";
 "log_out" = "Каттоо эсебиңизден чын эле чыккыңыз келеби?";
-"delete_account" = "Каттоо эсебиңизди чын эле жок кылгыңыз келеби";
+"delete_account" = "Каттоо эсебиңизди чын эле жок кылгыңыз келеби?";
 "yes" = "Ооба";
 "no" = "Жок";
 
@@ -135,6 +144,8 @@
 "naryn" = "Нарын";
 "talas" = "Талас";
 "batken" = "Баткен";
+
+"save" = "Сактоо";
 
 "orders" = "Заказдар";
 "deliveries" = "жеткирүү";
@@ -148,12 +159,15 @@
 "goodss" = "товар";
 
 "order_status" = "Буйрутма абалы";
-"sum" = "Сума:";
+"sum" = "Сума";
 
 "change_password" = "Сырсөздү өзгөртүү";
 "to_change_the_password" = "Сырсөзүңүздү өзгөртүү үчүн эски сырсөздү киргизип, жаңысын кошушуңуз керек.";
 "current_password" = "Учурдагы сырсөз";
 "new_password" = "Жаңы сырсөз";
+"about_company" = "Компаниялар жөнүндө";
+"contacts" = "Байланыштар";
+
 
 "username" = "Колдонуучунун аты";
 "any_questions" = "КАНДАЙ СУРООЛОР КАЛДЫ?";

@@ -7,152 +7,49 @@ import SwiftUI
 
 struct ProductEditView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var selectedLanguageTab: LanguageTab = .ru
     @ObservedObject var viewModel: ProductEditVM
     private let textComponent = TextComponent()
     @State private var selectedImage: UIImage?
-    @State private var showPicker = false
+    @State private var showImgAlert = false
     @State private var showGallery = false
     @State private var showCamera = false
-    @State private var showImgAlert = false
     
     var body: some View {
-        ScrollView{
+        ScrollView {
             VStack(spacing: 16) {
-                VStack(alignment: .leading) {
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: .infinity, maxHeight: 260)
-                            .clipped()
-                            .border(Color.gray, width: 2)
-                            .cornerRadius(10)
-                            .padding(.vertical, 8)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                showImgAlert = true
+                imageSection
+                HStack {
+                    ForEach(LanguageTab.allCases) { tab in
+                        Button(action: {
+                            withAnimation {
+                                selectedLanguageTab = tab
                             }
-                    } else {
-                        KFImage(viewModel.imageURL)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth: .infinity, maxHeight: 260)
-                            .clipped()
-                            .border(Color.gray, width: 2)
-                            .cornerRadius(10)
-                            .padding(.vertical, 8)
-                            .contentShape(Rectangle())
-                            .onAppear {
-                                viewModel.updateImageDetail()
-                            }
-                            .onTapGesture {
-                                showImgAlert = true
-                            }
+                        }) {
+                            Text(tab.rawValue)
+                                .padding(8)
+                                .frame(maxWidth: .infinity)
+                                .background(selectedLanguageTab == tab ? Color.orange : Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .padding([.leading, .trailing], 20)
-                VStack(alignment: .leading, spacing: 8) {
-                    textComponent.createText(text: "Название товара", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    
-                    TextField("Введите название товара", text: Binding(
-                        get: { viewModel.selectedProduct?.name ?? "" },
-                        set: { newValue in
-                            viewModel.selectedProduct?.name = newValue
-                        }
-                    ))
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    textComponent.createText(text: "Категория", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    
-                    TextField("Введите название категории", text: Binding(
-                        get: { viewModel.selectedProduct?.category ?? "" },
-                        set: { newValue in
-                            viewModel.selectedProduct?.category = newValue
-                        }
-                    ))
-                    .keyboardType(.alphabet)
-                    .autocapitalization(.none)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    
-                    textComponent.createText(text: "Цена", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    
-                    TextField("Введите цену товара", text: Binding(
-                        get: { String(viewModel.selectedProduct?.price ?? 0) },
-                        set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }))
-                    .keyboardType(.decimalPad)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    
-                    textComponent.createText(text: "Цена до скидки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    
-                    TextField("0", text: Binding(
-                        get: { String(viewModel.selectedProduct?.fullPrice ?? 0) },
-                        set: { viewModel.selectedProduct?.fullPrice = Int($0) ?? 0 }))
-                    .keyboardType(.decimalPad)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    
-                    textComponent.createText(text: "Введите цену до скидки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
-                    
-                    TextEditor(text: Binding(
-                        get: { viewModel.selectedProduct?.detail ?? "" },
-                        set: { newValue in
-                            viewModel.selectedProduct?.detail = newValue
-                        }
-                    ))
-                    .frame(height: 100)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 5)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                }.padding([.leading, .trailing], 20)
-                HStack(spacing: 16){
-                    Button("Удалить товар") {
-                        viewModel.showDeleteConfirmationAlert {
-                            dismiss()
-                        }
-                    }
-                    .font(.system(size: 16))
-                    .fontWeight(.medium)
-                    .frame(maxWidth: 120, minHeight: 40)
-                    .foregroundColor(.white)
-                    .background(Color.red)
-                    .cornerRadius(20)
-                    Spacer().frame(width: 16)
-                    Button("Сохранить") {
-                        viewModel.saveEditedProduct()
-                        viewModel.onSaveCompletion = {
-                            dismiss()
-                        }
-                    }
-                    .font(.system(size: 16))
-                    .fontWeight(.medium)
-                    .frame(maxWidth: 120, minHeight: 40)
-                    .foregroundColor(.white)
-                    .background(Color(StatusColor.greenButtom))
-                    .cornerRadius(20)
-                    .shadow(color: Color(.green).opacity(0.5), radius: 5, x: 0, y: 5)
-                }
-                .padding(.bottom)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .padding(.horizontal)
+                getTextFieldsForLanguage(selectedLanguageTab)
+                priceSection
+                saveDeleteButtons
             }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+        .onTapGesture { self.hideKeyboard() }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: CustomBackButton())
-    
         .sheet(isPresented: $showImgAlert) {
             PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera, onDismiss: { showImgAlert = false })
                 .presentationDetents([.height(250)])
         }
-        
         .sheet(isPresented: $showGallery) {
             ImagePicker(sourceType: .photoLibrary, onSelected: { image, fileName in
                 selectedImage = image
@@ -161,7 +58,6 @@ struct ProductEditView: View {
                         isPresented: $showGallery
             )
         }
-        
         .sheet(isPresented: $showCamera) {
             ImagePicker(sourceType: .camera, onSelected: { image, fileName in
                 selectedImage = image
@@ -189,5 +85,132 @@ struct ProductEditView: View {
     }
 }
 
-
+extension ProductEditView {
+    @ViewBuilder
+    private func getTextFieldsForLanguage(_ language: LanguageTab) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            let langCode = getLanguageCode(language)
+            
+            textComponent.createText(text: "Название товара (\(language.rawValue))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                .padding(.horizontal)
+            
+            TextField("Введите название", text: Binding(
+                get: { viewModel.selectedProduct?.name[langCode] ?? "" },
+                set: { viewModel.selectedProduct?.name[langCode] = $0 }
+            ))
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.horizontal)
+            
+            textComponent.createText(text: "Категория (\(language.rawValue))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                .padding(.horizontal)
+            
+            TextField("Введите категорию", text: Binding(
+                get: { viewModel.selectedProduct?.category[langCode] ?? "" },
+                set: { viewModel.selectedProduct?.category[langCode] = $0 }
+            ))
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.horizontal)
+            
+            textComponent.createText(text: "Описание (\(language.rawValue))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                .padding(.horizontal)
+            
+            TextEditor(text: Binding(
+                get: { viewModel.selectedProduct?.detail[langCode] ?? "" },
+                set: { viewModel.selectedProduct?.detail[langCode] = $0 }
+            ))
+            .frame(height: 100)
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+            .padding(.horizontal)
+        }
+    }
+    
+    private var priceSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            textComponent.createText(text: "Цена", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                .padding(.horizontal)
+            TextField("Введите цену", text: Binding(
+                get: { String(viewModel.selectedProduct?.price ?? 0) },
+                set: { viewModel.selectedProduct?.price = Int($0) ?? 0 }
+            ))
+            .keyboardType(.decimalPad)
+            .padding(.horizontal)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            textComponent.createText(text: "Цена до скидки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                .padding(.horizontal)
+            TextField("0", text: Binding(
+                get: { String(viewModel.selectedProduct?.fullPrice ?? 0) },
+                set: { viewModel.selectedProduct?.fullPrice = Int($0) ?? 0 }
+            ))
+            .keyboardType(.decimalPad)
+            .padding(.horizontal)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+    }
+    
+    private var saveDeleteButtons: some View {
+        HStack(spacing: 16) {
+            Button("Удалить товар") {
+                viewModel.showDeleteConfirmationAlert {
+                    dismiss()
+                }
+            }
+            .font(.system(size: 16))
+            .fontWeight(.medium)
+            .frame(maxWidth: 140, minHeight: 40)
+            .foregroundColor(.white)
+            .background(Color.red)
+            .cornerRadius(20)
+            
+            Spacer().frame(width: 16)
+            
+            Button("Сохранить") {
+                viewModel.saveEditedProduct()
+                viewModel.onSaveCompletion = { dismiss() }
+            }
+            .font(.system(size: 16))
+            .fontWeight(.medium)
+            .frame(maxWidth: 140, minHeight: 40)
+            .foregroundColor(.white)
+            .background(Color(StatusColor.greenButtom))
+            .cornerRadius(20)
+        }
+        .padding(.horizontal)
+        .padding(.bottom)
+    }
+    
+    private var imageSection: some View {
+        VStack {
+            if let selectedImage = selectedImage {
+                Image(uiImage: selectedImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity, maxHeight: 260)
+                    .clipped()
+                    .border(Color.gray, width: 2)
+                    .cornerRadius(10)
+                    .onTapGesture { showImgAlert = true }
+            } else {
+                KFImage(viewModel.imageURL)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity, maxHeight: 260)
+                    .clipped()
+                    .border(Color.gray, width: 2)
+                    .cornerRadius(10)
+                    .onAppear { viewModel.updateImageDetail() }
+                    .onTapGesture { showImgAlert = true }
+            }
+        }
+        .padding(.horizontal)
+    }
+    
+    private func getLanguageCode(_ language: LanguageTab) -> String {
+        switch language {
+        case .ru: return "ru"
+        case .inl: return "en"
+        case .kyrg: return "ky"
+        }
+    }
+}
 

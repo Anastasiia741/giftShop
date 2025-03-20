@@ -99,7 +99,7 @@ extension EditProfileView {
 
 extension EditProfileView {
     private func showLogoutAlert() -> some View {
-        AlertView(title: "log_out".localized, okButton: "Yes".localized, canselButton: "No".localized, okButtonAction: {
+        AlertView(title: "log_out".localized, okButton: "yes".localized, canselButton: "no".localized, okButtonAction: {
             viewModel.logout(mainTabVM: mainTabVM)
         },
                   isOpenView: $showAuthView
@@ -109,7 +109,7 @@ extension EditProfileView {
 
 extension EditProfileView {
     private func showDeleteAccountAlert() -> some View {
-        AlertView(title: "delete_account".localized, okButton: "Yes".localized, canselButton: "No".localized, okButtonAction: {
+        AlertView(title: "delete_account".localized, okButton: "yes".localized, canselButton: "no".localized, okButtonAction: {
             viewModel.deleteAccount {
                 showDeleteView = false
             }

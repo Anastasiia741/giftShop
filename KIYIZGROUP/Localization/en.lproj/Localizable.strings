@@ -13,6 +13,14 @@
 "email" = "Email:";
 "enter_password" = "Enter your password";
 "forgot_your_password" = "Forgot password?";
+"password_recovery" = "Password recovery";
+"enter_your_email" = "Enter your email";
+"close" = "Close";
+"send" = "Send";
+"password_has_been_sent_to" = "The password has been sent to";
+
+
+
 
 //MARK: - Authentication - errors
 "email_cannot_be_empty" = "Email cannot be empty";
@@ -36,7 +44,7 @@
 "popular" = "Popular";
 "make_custom_order" = "Make Custom Order";
 "products" = "Categories";
-"all_categories" = "All";
+"all_categories" = "all";
 
 //MARK: - CustomView
 "attach_photo" = "Attach Photo";
@@ -70,6 +78,7 @@
 "date_and_time_of_order" = "Date and time of order";
 "phone" = "Phone";
 
+
 //MARK: - ProductDetailView
 "som" = "som";
 "buy_now" = "Buy now";
@@ -90,6 +99,7 @@
 "street_house" = "Street, House*";
 "apartment_number" = "Apartment number";
 "floor_entrance" = "Floor, entrance";
+"order" = "Order";
 
 "additional_comments" = "Additional comments";
 "payment_to_courier" = "Payment to courier";
@@ -109,8 +119,10 @@
 "delivery" = "Delivery";
 "for_free" = "Free";
 "total_amount" = "Total amount";
-"status" = "Status:";
+"status" = "Status";
 "order_amount" = "Order amount";
+"your_delivery_address" = "Delivery address";
+
 
 //MARK: - ProfileView
 "name" = "Name";
@@ -133,8 +145,8 @@
 "talas" = "Talas";
 "batken" = "Batken";
 
+"save" = "Save";
 "orders" = "Orders";
-
 "deliveries" = "Deliveries";
 "for_the_amount" = "for the amount of";
 
@@ -147,12 +159,14 @@
 "goodss" = "products";
 
 "order_status" = "Order status";
-"sum" = "Amount:";
+"sum" = "Amount";
 
 "change_password" = "Change password";
 "to_change_the_password" = "To change your password, you must enter your old password and add a new one.";
 "current_password" = "Current password";
 "new_password" = "New password";
+"about_company" = "About the company";
+"contacts" = "Contacts";
 
 "username" = "Username";
 
@@ -166,4 +180,3 @@
 "new_password_cannot_be_empty" = "New password cannot be empty";
 "password_updated_successfully" = "Password updated successfully!";
 "failed_to_update_password" = "Failed to update password:";
-
