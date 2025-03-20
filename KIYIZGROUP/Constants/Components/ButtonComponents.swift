@@ -198,9 +198,9 @@ struct ButtonComponents {
     func createOrderButton(amount: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
-                textComponent.createText(text: "Оформить заказ", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: "place_an_order".localized, fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
                 
-                textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
+                textComponent.createText(text: "\(amount) \("som".localized)", fontSize: 16, fontWeight: .regular, lightColor: .white, darkColor: .white)
             }
             .padding()
             .frame(maxWidth: 380)
@@ -213,9 +213,9 @@ struct ButtonComponents {
     func createOrdersButton(amount: String, color: Color, backgroundColor: Color, borderColor: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
-                textComponent.createText(text: "Заказать", fontSize: 16, fontWeight: .regular, lightColor: color, darkColor: color)
+                textComponent.createText(text: "order".localized, fontSize: 16, fontWeight: .regular, lightColor: color, darkColor: color)
                 
-                textComponent.createText(text: "\(amount) сом", fontSize: 16, fontWeight: .regular, lightColor: color, darkColor: color)
+                textComponent.createText(text: "\(amount) \("som".localized)", fontSize: 16, fontWeight: .regular, lightColor: color, darkColor: color)
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -447,7 +447,7 @@ struct SectionHeader: View {
             Spacer()
             if showButton, let action = action {
                 Button(action: action) {
-                    textComponent.createText(text: "Save".uppercased(), fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
+                    textComponent.createText(text: "save".localized.uppercased(), fontSize: 14, fontWeight: .regular, lightColor: .colorLightBrown, darkColor: .colorLightBrown)
                 }
             }
         }
@@ -470,12 +470,12 @@ struct LogoutButton: View {
         }
         .actionSheet(isPresented: $isPresented) {
             ActionSheet(
-                title: Text("Хотите выйти из аккаунта?"),
+                title: Text("log_out".localized),
                 buttons: [
-                    .default(Text("Да")) {
+                    .default(Text("yes".localized)) {
                         viewModel.logout(mainTabVM: mainTabVM)
                     },
-                    .cancel(Text("Отмена"))
+                    .cancel(Text("no".localized))
                 ]
             )
         }

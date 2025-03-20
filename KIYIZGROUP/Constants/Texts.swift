@@ -9,11 +9,11 @@ import Foundation
 //--------------- 
 
 
-enum TextMessage {
-    enum Menu {
-        static let porularProducts = "популярное"
-    }
-}
+//enum TextMessage {
+//    enum Menu {
+//        static let porularProducts = "популярное"
+//    }
+//}
 
 enum TextStyle {
     static let avenir = "AvenirNext"

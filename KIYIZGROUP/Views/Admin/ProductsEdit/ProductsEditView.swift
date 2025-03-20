@@ -39,7 +39,7 @@ extension ProductsEditView {
             .padding(.vertical, 8)
         }
     }
-
+    
     private var productsGridView: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: layoutForProducts, spacing: 8) {
@@ -50,14 +50,14 @@ extension ProductsEditView {
             .padding(.horizontal, 8)
         }
     }
-
+    
     @ViewBuilder
     private func productNavigationLink(for product: Product) -> some View {
         NavigationLink(destination: ProductEditView(viewModel: ProductEditVM(selectedProduct: product))) {
             ProductCell(product: product)
         }
     }
-
+    
     @MainActor
     private func fetchAndFilterProducts() async {
         await viewModel.fetchProducts()

@@ -70,24 +70,3 @@ extension AuthorizationVM {
         }
     }
 }
-
-//    func signIn() async {
-//        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
-//        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
-//
-//        if let errorMessage = validateFieldsForAuth(email: trimmedEmail, password: trimmedPassword) {
-//            updateError(message: errorMessage, type: .general)
-//            return
-//        }
-//        updateError(message: nil, type: nil)
-//
-//        authService.signIn(email: trimmedEmail, password: trimmedPassword) { [weak self] result in
-//            switch result {
-//            case .success(_):
-//                self?.isShowCatalog = true
-//            case .failure(let error):
-//                self?.handleError(error)
-//            }
-//        }
-//    }
-//

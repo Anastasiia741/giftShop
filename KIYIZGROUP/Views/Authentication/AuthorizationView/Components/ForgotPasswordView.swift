@@ -10,7 +10,7 @@ struct ForgotPasswordView: View, InfoDialogHandling {
     private let textComponent = TextComponent()
     private let textFieldComponent = TextFieldComponent()
     let customButton = CustomButton()
-    @State private var title = "Восстановление пароля"
+    @State private var title = "password_recovery".localized
     @State private var email = ""
     @State private var offset: CGFloat = 1000
     var isOpenView: Binding<Bool>
@@ -31,10 +31,10 @@ struct ForgotPasswordView: View, InfoDialogHandling {
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
-                textFieldComponent.createCustomTextField(placeholder: "Введите ваш email", text: $email, borderColor: .colorDarkBrown)
+                textFieldComponent.createCustomTextField(placeholder: "enter_your_email".localized, text: $email, borderColor: .colorDarkBrown)
                     .padding([.horizontal])
                 Spacer()
-                customButton.createButton(text: email.isEmpty ? "Закрыть" : "Отправить", fontSize: 18, fontWeight: .medium, color: .white, backgroundColor: email.isEmpty ? (colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2)) : .colorGreen, borderColor: .clear, cornerRadius: 100, action: {
+                customButton.createButton(text: email.isEmpty ? "close".localized : "send".localized, fontSize: 18, fontWeight: .medium, color: .white, backgroundColor: email.isEmpty ? (colorScheme == .dark ? Color.gray.opacity(0.5) : Color.gray.opacity(0.2)) : .colorGreen, borderColor: .clear, cornerRadius: 100, action: {
                     if email.isEmpty {
                         closeDialog()
                     } else {
@@ -76,7 +76,7 @@ extension ForgotPasswordView {
         viewModel.email = email
         viewModel.resetPassword { success, errorMessage in
             if success {
-                title = "Пароль был отправлен на \(email)"
+                title = "\("password_has_been_sent_to".localized) \(email)"
                 email = ""
             } else if let errorMessage = errorMessage {
                 title = errorMessage

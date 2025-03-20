@@ -14,7 +14,7 @@ struct ProfileInfoView: View {
                 UIApplication.openWebsite("https://kiyizgroup.kg/?fbclid=PAZXh0bgNhZW0CMTEAAaZrqMJ3JG4WVxq3d5RE8Y_hN-if-AJf5k1v8tt5TM2TyoytfqGc1qELgGY_aem_AFfebXBzp9jkPkuNIRfgWQ")
             }) {
                 HStack {
-                    textComponent.createText(text: "О компании", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "about_company".localized, fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
@@ -29,7 +29,7 @@ struct ProfileInfoView: View {
             
             NavigationLink(destination: ContactInfoView()) {
                 HStack {
-                    textComponent.createText(text: "Контакты", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "contacts".localized, fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)

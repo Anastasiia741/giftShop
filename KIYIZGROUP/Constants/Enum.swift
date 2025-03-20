@@ -9,3 +9,11 @@ enum CartNavigation: Hashable {
     case orderDetailsView(Order)
     case addressInputView
 }
+
+enum LanguageTab: String, CaseIterable, Identifiable {
+    case ru = "ру"
+    case inl = "en"
+    case kyrg = "кырг"
+    
+    var id: String { self.rawValue }
+}

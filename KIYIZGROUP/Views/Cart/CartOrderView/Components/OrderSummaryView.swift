@@ -19,7 +19,7 @@ struct OrderSummaryView: View {
                         HStack {
                             textComponent.createText(text: "\(product.name)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                             Spacer()
-                            textComponent.createText(text: "\(product.price * product.quantity) сом", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                            textComponent.createText(text: "\(product.price * product.quantity) \("som".localized)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                         }
                     }
                     HStack {

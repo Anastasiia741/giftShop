@@ -10,11 +10,20 @@ final class CreateProductVM: ObservableObject {
     private var productService = ProductService()
     @Published var productImage: UIImage?
     @Published var imageURL: String?
-    @Published var name: String = ""
-    @Published var category: String = ""
+    @Published var nameRu: String = ""
+    @Published var categoryRu: String = ""
+    @Published var detailRu: String = ""
+    
+    @Published var nameEn: String = ""
+    @Published var categoryEn: String = ""
+    @Published var detailEn: String = ""
+    
+    @Published var nameKg: String = ""
+    @Published var categoryKg: String = ""
+    @Published var detailKg: String = ""
+    
     @Published var price: String = ""
     @Published var fullPrice: String = ""
-    @Published var detail: String = ""
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     @Published var alertModel: AlertModel?
@@ -32,7 +41,7 @@ extension CreateProductVM {
         productService.create(product: product) { [weak self] error in
             guard let self = self else { return }
             if let error = error {
-                print(error.localizedDescription)
+                self.alertModel = self.configureAlertModel(with: "Ошибка", message: error.localizedDescription)
             } else {
                 DispatchQueue.main.async {
                     self.alertModel = self.configureAlertModel(with: "Данные успешно добавлены", message: nil)
@@ -68,9 +77,9 @@ extension CreateProductVM {
                 }
                 
                 let newProduct = Product(id: 0,
-                                         name: self.name,
-                                         category: self.category,
-                                         detail: self.detail,
+                                         name: ["ru": self.nameRu, "en": self.nameEn, "ky-KG" : self.nameKg],
+                                         category: ["ru": self.categoryRu, "en": self.categoryEn, "ky-KG" : self.categoryKg],
+                                         detail: ["ru": self.detailRu, "en": self.detailEn, "ky-KG" : self.detailKg],
                                          price: Int(self.price) ?? 0,
                                          fullPrice: Int(self.fullPrice) ?? 0,
                                          image: uploadedImageURL,
@@ -89,12 +98,41 @@ extension CreateProductVM {
     }
 }
 
+
+
+extension Product {
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "name": [
+                "ru": name["ru"] ?? "",
+                "en": name["en"] ?? "",
+                "ky": name["ky"] ?? ""
+            ],
+            "category": [
+                "ru": category["ru"] ?? "",
+                "en": category["en"] ?? "",
+                "ky": category["ky"] ?? ""
+            ],
+            "detail": [
+                "ru": detail["ru"] ?? "",
+                "en": detail["en"] ?? "",
+                "ky": detail["ky"] ?? ""
+            ],
+            "price": price,
+            "fullPrice": fullPrice ?? 0,
+            "image": image ?? "",
+            "quantity": quantity
+        ]
+    }
+}
+
 //MARK: - errors
 private extension CreateProductVM {
     func validateFields() -> Bool {
         isImageValid = productImage != nil
-        isNameValid = !name.trimmingCharacters(in: .whitespaces).isEmpty
-        isCategoryValid = !category.trimmingCharacters(in: .whitespaces).isEmpty
+        isNameValid = !nameRu.trimmingCharacters(in: .whitespaces).isEmpty || !nameEn.trimmingCharacters(in: .whitespaces).isEmpty || !nameKg.trimmingCharacters(in: .whitespaces).isEmpty
+        isCategoryValid = !categoryRu.trimmingCharacters(in: .whitespaces).isEmpty || !categoryEn.trimmingCharacters(in: .whitespaces).isEmpty || !categoryKg.trimmingCharacters(in: .whitespaces).isEmpty
         isPriceValid = !price.trimmingCharacters(in: .whitespaces).isEmpty && Int(price) != nil
         isFullPriceValid = !fullPrice.trimmingCharacters(in: .whitespaces).isEmpty && Int(fullPrice) != nil
         
@@ -107,11 +145,18 @@ private extension CreateProductVM {
     }
     
     func clearFields() {
-        name = ""
-        category = ""
+        nameRu = ""
+        categoryRu = ""
+        detailRu = ""
+        nameEn = ""
+        categoryEn = ""
+        detailEn = ""
+        nameKg = ""
+        categoryKg = ""
+        detailKg = ""
         price = ""
         fullPrice = ""
-        detail = ""
+        detailRu = ""
         productImage = nil
     }
 }

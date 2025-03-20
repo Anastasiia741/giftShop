@@ -6,8 +6,8 @@ import SwiftUI
 
 struct CreateProductView: View {
     @StateObject private var viewModel = CreateProductVM()
+    @State private var selectedLanguageTab: LanguageTab = .ru
     @State private var showImgAlert = false
-    @State private var showPicker = false
     @State private var showGallery = false
     @State private var showCamera = false
     
@@ -29,15 +29,31 @@ struct CreateProductView: View {
                             }
                     }
                 }
-                Section(header: Text("Описание")
-                    )
-                {
-                    TextField("Название товара", text: $viewModel.name)
-                        .validationBorder(isValid: viewModel.isNameValid)
-                    TextField("Категория", text: $viewModel.category)
-                        .keyboardType(.alphabet)
-                        .autocapitalization(.none)
-                        .validationBorder(isValid: viewModel.isCategoryValid)
+                
+                HStack {
+                    ForEach(LanguageTab.allCases) { tab in
+                        Button(action: {
+                            withAnimation {
+                                selectedLanguageTab = tab
+                            }
+                        }) {
+                            Text(tab.rawValue)
+                                .padding(8)
+                                .frame(maxWidth: .infinity)
+                                .background(selectedLanguageTab == tab ? Color.orange : Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                
+                Section(header: Text("Описание")) {
+                    getTextFieldForSelectedLanguage()
+                        .padding(.vertical, 5)
+                }
+                
+                Section(header: Text("Цена")) {
                     TextField("Цена", text: $viewModel.price)
                         .validationBorder(isValid: viewModel.isPriceValid)
                         .keyboardType(.decimalPad)
@@ -45,14 +61,8 @@ struct CreateProductView: View {
                         .keyboardType(.decimalPad)
                         .validationBorder(isValid: viewModel.isFullPriceValid)
                 }
-                Section(header: Text("Детали")) {
-                    TextEditor(text: $viewModel.detail)
-                        .frame(height: 100)
-                        .padding(.horizontal)
-                        .padding(.bottom, 5)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                }
             }
+            
             Button("сохранить") {
                 viewModel.createNewProduct()
             }
@@ -87,7 +97,6 @@ struct CreateProductView: View {
                         selectedImage: $viewModel.productImage,
                         isPresented: $showCamera)
         }
-        
         .alert(item: $viewModel.alertModel) { alertModel in
             Alert(
                 title: Text(alertModel.title ?? ""),
@@ -96,6 +105,54 @@ struct CreateProductView: View {
                     alertModel.buttons.first?.action?()
                 })
             )
+        }
+    }
+}
+
+extension CreateProductView {
+    
+    @ViewBuilder
+    private func getTextFieldForSelectedLanguage() -> some View {
+        switch selectedLanguageTab {
+        case .ru:
+            TextField("Название товара (РУ)", text: $viewModel.nameRu)
+                .validationBorder(isValid: viewModel.isNameValid)
+            TextField("Категория (РУ)", text: $viewModel.categoryRu)
+                .keyboardType(.alphabet)
+                .autocapitalization(.none)
+                .validationBorder(isValid: viewModel.isCategoryValid)
+            Text("Детали (РУ)").foregroundColor(.gray)
+            TextEditor(text: $viewModel.detailRu)
+                .frame(height: 100)
+                .padding(.horizontal)
+                .padding(.bottom, 5)
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+        case .inl:
+            TextField("Название товара (EN)", text: $viewModel.nameEn)
+                .validationBorder(isValid: viewModel.isNameValid)
+            TextField("Категория (EN)", text: $viewModel.categoryEn)
+                .keyboardType(.alphabet)
+                .autocapitalization(.none)
+                .validationBorder(isValid: viewModel.isCategoryValid)
+            Text("Детали (EN)").foregroundColor(.gray)
+            TextEditor(text: $viewModel.detailEn)
+                .frame(height: 100)
+                .padding(.horizontal)
+                .padding(.bottom, 5)
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+        case .kyrg:
+            TextField("Название товара (КЫРГ)", text: $viewModel.nameKg)
+                .validationBorder(isValid: viewModel.isNameValid)
+            TextField("Категория (КЫРГ)", text: $viewModel.categoryKg)
+                .keyboardType(.alphabet)
+                .autocapitalization(.none)
+                .validationBorder(isValid: viewModel.isCategoryValid)
+            Text("Детали (КЫРГ)").foregroundColor(.gray)
+            TextEditor(text: $viewModel.detailKg)
+                .frame(height: 100)
+                .padding(.horizontal)
+                .padding(.bottom, 5)
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
         }
     }
 }
@@ -113,4 +170,3 @@ extension View {
             .padding(.vertical, 4)
     }
 }
-

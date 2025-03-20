@@ -45,20 +45,18 @@ struct ProductDetailView: View {
         .background(Color.colorDarkBrown)
         .cornerRadius(24)
         
-        ProductInfoView(productDetail: viewModel.product.detail)
+        ProductInfoView(productDetail: viewModel.product.localizedValue(for: viewModel.product.detail))
         VStack {
             HStack(spacing: 16) {
                 buttonComponent.createWhiteButton(text: "buy_now".localized, isAddedToCart: $isAddedToCart) {
-                    let product = Product(
-                        id: viewModel.product.id,
-                        name: viewModel.product.name,
-                        category: viewModel.product.category,
-                        detail: viewModel.product.detail,
-                        price: viewModel.product.price,
-                        fullPrice: viewModel.product.fullPrice ?? 0,
-                        image: viewModel.product.image,
-                        quantity: count
-                    )
+                    let product = Product(id: viewModel.product.id,
+                                          name: viewModel.product.name,
+                                          category: viewModel.product.category,
+                                          detail: viewModel.product.detail,
+                                          price: viewModel.product.price,
+                                          fullPrice: viewModel.product.fullPrice ?? 0,
+                                          image: viewModel.product.image,
+                                          quantity: count)
                     viewModel.addProductToCart(product)
                     DispatchQueue.main.async {
                         currentTab = TabType.cart.rawValue
