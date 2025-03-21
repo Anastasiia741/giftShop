@@ -13,9 +13,7 @@ struct PromoCodeSection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            textFieldComponent.createPromoTextField(placeholder: placeholderText, text: $cartVM.promoCode) {
-                applyPromoCode()
-            }
+            textFieldComponent.createPromoTextField(placeholder: placeholderText, text: $cartVM.promoCode) { applyPromoCode() }
         }
         .sheet(isPresented: $showPromoCodeView) {
             PromoCodeView(promo: $cartVM.promoResultText, isPromoSheetVisible: $showPromoCodeView)
@@ -28,11 +26,9 @@ struct PromoCodeSection: View {
 
 extension PromoCodeSection {
     private func applyPromoCode() {
-        cartVM.promoCode = promoCode
         let isPromoApplied = cartVM.applyPromoCode()
-        
-        placeholderText = isPromoApplied ? "discount_applied".localized :
-        "there_is_no_such_code".localized
+
+        placeholderText = isPromoApplied ? "discount_applied".localized : "there_is_no_such_code".localized
         promoCode = ""
         
         withAnimation {

@@ -56,7 +56,9 @@ struct OrderDetailsAdminSection: View {
         .adaptiveStroke()
         .padding(.horizontal)
     }
-    
+}
+ 
+extension OrderDetailsAdminSection {
     private var orderDateView: some View {
         textComponent.createText(text: "\("Дата") \(Extentions().formattedDate(order.date))", fontSize: 18, fontWeight: .regular, lightColor: .black, darkColor: .white)
     }
@@ -106,7 +108,7 @@ struct GoodsSection: View {
             
             ForEach(order.positions) { position in
                 HStack {
-                    textComponent.createText(text: "\(position.product.name): \(position.count) шт.", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
+                    textComponent.createText(text: "\(position.product.localizedValue(for: position.product.name)): \(position.count) шт.", fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

@@ -73,12 +73,8 @@ struct CreateProductView: View {
             .cornerRadius(20)
             .padding(.bottom)
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
-        .onDisappear {
-            viewModel.resetValidation()
-        }
+        .onTapGesture { self.hideKeyboard() }
+        .onDisappear { viewModel.resetValidation() }
         .sheet(isPresented: $showImgAlert) {
             PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera, onDismiss: { showImgAlert = false })
                 .presentationDetents([.height(250)])

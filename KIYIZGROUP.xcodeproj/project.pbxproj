@@ -577,9 +577,9 @@
 				7193632A2CEE4028006FDC6A /* AddressPhoneSection.swift */,
 				719363282CEE3EB7006FDC6A /* AddressInputView.swift */,
 				7193632C2CEE489F006FDC6A /* PaymentMethodSection.swift */,
-				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
-				7193632E2CEE6338006FDC6A /* OrderSummaryView.swift */,
 				719363312CEFAC9D006FDC6A /* PromoCodeSection.swift */,
+				7193632E2CEE6338006FDC6A /* OrderSummaryView.swift */,
+				71AE76962BE8DF4100E4E3A3 /* PromoCodeView.swift */,
 				712A0D3D2D6F8B98000DD8FF /* Cells */,
 			);
 			path = Components;
@@ -906,8 +906,8 @@
 			children = (
 				71E45FB32B48717000941CE7 /* Product.swift */,
 				7100AE9D2D7B509D009C1C60 /* CustomProduct.swift */,
-				710082C12B4C6228007831F5 /* Position.swift */,
 				711ED95A2B50120F0052752F /* Order.swift */,
+				710082C12B4C6228007831F5 /* Position.swift */,
 				71F5B2392D3115A6003B3106 /* CustomOrder.swift */,
 				711ED9582B5011F70052752F /* Profile.swift */,
 				711ED9562B5011140052752F /* NewUser.swift */,

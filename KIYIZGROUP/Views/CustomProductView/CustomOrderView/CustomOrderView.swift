@@ -57,15 +57,9 @@ struct CustomOrderView: View {
                     .transition(.opacity)
             }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+        .onTapGesture { self.hideKeyboard() }
         .onChange(of: currentTab) { _, _ in
             dismiss()
-        }
-        .onTapGesture {
-            self.hideKeyboard()
-            UIApplication.shared.endEditing()
         }
         .navigationDestination(isPresented: $viewModel.showOrderDetails) {
             CustomDetailsView(viewModel: viewModel, customOrder: customOrder, currentTab: $currentTab, isViewActive: $viewModel.showOrderDetails)

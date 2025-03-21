@@ -52,11 +52,7 @@ struct CustomView: View {
                 showCustomOrderView = false
                 dismiss()
             }
-            
-            .onTapGesture {
-                self.hideKeyboard()
-                UIApplication.shared.endEditing()
-            }
+            .onTapGesture { self.hideKeyboard()}
             .navigationDestination(isPresented: $viewModel.isShowConfirm) {
                 if let customOrder = customOrder {
                     CustomOrderView(viewModel: viewModel, customOrder: customOrder, currentTab: $currentTab)
@@ -65,9 +61,6 @@ struct CustomView: View {
         }
         .navigationTitle("custom_order".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .onTapGesture {
-            self.hideKeyboard()
-        }
         .sheet(isPresented: $showPicker) {
             PhotoSourceSheetView(isShowGallery: $showGallery, isShowCamera: $showCamera,
                                  onDismiss: {showPicker = false})

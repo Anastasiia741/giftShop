@@ -46,9 +46,7 @@ final class Product: Codable, Identifiable, Equatable, Hashable {
         self.image = image
         self.quantity = quantity
     }
-    
 }
-
 
 extension Product {
     func localizedValue(for key: [String: String]) -> String {

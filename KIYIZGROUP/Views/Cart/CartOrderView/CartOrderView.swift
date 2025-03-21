@@ -71,9 +71,7 @@ struct CartOrderView: View {
                 await profileVM.fetchUserProfile()
             }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+        .onTapGesture { self.hideKeyboard() }
     }
 }
 

@@ -7,9 +7,9 @@ import FirebaseStorage
 
 final class ImageService {
     static let shared = ImageService()
-    
-    private init() {}
-    
+}
+
+extension ImageService {
     func fetchImages(for order: CustomOrder, designImage: @escaping (String, URL?) -> Void, attachedImage: @escaping (String, URL?) -> Void) {
         if let designURLString = order.style?.image {
             fetchImageURL(from: designURLString) { url in

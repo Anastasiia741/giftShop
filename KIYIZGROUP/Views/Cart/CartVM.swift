@@ -62,23 +62,23 @@ extension CartVM {
         let discountMessages: [String: String] = [
             "promo 10": "10%_discount".localized,
             "promo 20": "20%_discount".localized,
-            "promo 30": "30%_discount".localized
-        ]
+            "promo 30": "30%_discount".localized,
+            "промо супер": "Вы получили скидку 50% на заказ!"]
         
         if let message = discountMessages[promoCode.lowercased()] {
             promoResultText = message
-            promoCode = ""
+//            promoCode = ""
             return true
         } else {
             promoResultText = "there_is_no_such_code".localized
             return false
         }
     }
+
 }
 
-//MARK: - Save Data
+//MARK: - Save
 extension CartVM {
-    
     func saveOrder(with promoCode: String?, profileVM: ProfileVM) async -> Order? {
         let isUserLoggedIn = profileVM.authService.currentUser != nil
         
@@ -114,6 +114,16 @@ extension CartVM {
             }
         }
     }
+    
+    func updateOrderData(from profileVM: ProfileVM) {
+        self.selectedCity = profileVM.selectedCity
+        self.address = profileVM.address
+        self.appatment = profileVM.appatment
+        self.floor = profileVM.floor
+        self.comments = profileVM.comments
+        self.phone = profileVM.phone
+    }
+    
     
     func fetchGuestData() {
         address = UserDefaults.standard.string(forKey: "guestAddress") ?? ""

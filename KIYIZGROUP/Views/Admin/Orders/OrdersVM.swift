@@ -38,7 +38,11 @@ extension OrdersVM {
         dbOrdersService.fetchUserOrders { [weak self] orders  in
             let sortedOrders = orders.sorted(by: { $0.date > $1.date })
             self?.orders = sortedOrders
+            for order in orders {
+                print("✅ Correct order -> cost: \(order.date),  \(order.cost), items: \(order.totalItems)")
+                   }
             self?.filterOrders(.all)
+            
         }
     }
     
@@ -59,9 +63,7 @@ extension OrdersVM {
     }
     
     func fetchUserProfile() async {
-        guard let userID = selectOrder?.userID else {
-            
-            return }
+        guard let userID = selectOrder?.userID else { return }
         do {
             let userProfile = try await profileService.getProfile(by: userID)
             await MainActor.run {
@@ -106,7 +108,6 @@ extension OrdersVM {
         }
     }
 }
-
 
 //MARK: - Filters
 extension OrdersVM {

@@ -92,7 +92,6 @@ extension ProfileVM {
                 switch result {
                 case .success:
                     self.profile = updatedProfile
-                    
                     self.errorType = .dataSuccessfullySaved
                 case .failure:
                     self.errorType = .profileSaveFailed
@@ -115,7 +114,6 @@ extension ProfileVM {
                 case .success(let orders):
                     let sortedOrders = orders.sorted { $0.date > $1.date }
                     self?.orders = sortedOrders
-                    
                     self?.deliveries = orders.isEmpty || orders.allSatisfy { $0.status == OrderStatus.delivered.rawValue }
                 case .failure(_):
                     self?.errorType = .orderFetchFailed

@@ -26,18 +26,14 @@ class Order: Identifiable, Equatable, Hashable {
     var appatment: String?
     var floor: String?
     var comments: String?
-    
+    var storedCost: Int = 0
     var cost: Int {
-        var sum = 0
-        for position in positions {
-            sum += position.cost
-        }
-        return sum
+        storedCost > 0 ? storedCost : positions.reduce(0) { $0 + $1.cost }
     }
     
     var totalItems: Int {
         positions.reduce(0) { $0 + $1.count }
-     }
+    }
     
     var representation: [String: Any] {
         var repres = [String: Any]()
@@ -53,8 +49,7 @@ class Order: Identifiable, Equatable, Hashable {
         repres["appatment"] = appatment
         repres["floor"] = floor
         repres["comments"] = comments
-
-
+        
         return repres
     }
     
@@ -85,7 +80,8 @@ class Order: Identifiable, Equatable, Hashable {
               let appatment = data["appatment"] as? String,
               let floor = data["floor"] as? String,
               let comments = data["comments"] as? String,
-              let promocode = data["promocode"] as? String
+              let promocode = data["promocode"] as? String,
+              let cost = data["cost"] as? Int
         else {
             return nil
         }
@@ -103,15 +99,15 @@ class Order: Identifiable, Equatable, Hashable {
         self.floor = floor
         self.comments = comments
         self.positions = []
-
-        let positionsCollection = doc.reference.collection("positions")
-            positionsCollection.getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    print("\(error.localizedDescription)")
-                    return
-                }
-                self.positions = querySnapshot?.documents.compactMap { Position(doc: $0) } ?? []
-            }
+        self.storedCost = cost
         
+        let positionsCollection = doc.reference.collection("positions")
+        positionsCollection.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("\(error.localizedDescription)")
+                return
+            }
+            self.positions = querySnapshot?.documents.compactMap { Position(doc: $0) } ?? []
+        }
     }
 }

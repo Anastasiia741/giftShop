@@ -35,12 +35,6 @@ extension ProductService {
 
 //  MARK: - Add product
 extension ProductService {
-    func add(product: Product, completion: @escaping (Error?) -> Void) throws {
-        try productCollection.addDocument(from: product) { error in
-            completion(error)
-        }
-    }
-    
     func create(product: Product, completion: @escaping (Error?) -> Void) {
         let newProduct = product
         newProduct.id = UUID().hashValue
@@ -81,7 +75,6 @@ extension ProductService {
         }
     }
 }
-
 
 //  MARK: - Image
 extension ProductService {

@@ -43,6 +43,7 @@ struct ProfileView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
             }
+            .onTapGesture { self.hideKeyboard() }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(item: $activeScreen) { screen in
                 switch screen {
@@ -56,11 +57,7 @@ struct ProfileView: View {
                 Task {
                     await viewModel.fetchUserProfile()
                 }
-            }
-            .onTapGesture {
-                self.hideKeyboard()
-            }
-        }
+            }        }
     }
 }
 
