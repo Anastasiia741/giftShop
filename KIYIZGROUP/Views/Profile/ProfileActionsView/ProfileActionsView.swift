@@ -15,7 +15,8 @@ struct ProfileActionsView: View {
                 let itemsWord = getItemsWord(for: lastOrder.totalItems)
                 NavigationLink(destination: DeliveryView(viewModel: viewModel, currentTab: $currentTab)) {
                     ProfileActionRow(title: "deliveries".localized,
-                                     subtitle: "\(lastOrder.totalItems) \(itemsWord) \("for_the_amount".localized) \(lastOrder.cost) \("com".localized)", textComponent: textComponent, showChevron: true)
+                                     subtitle: "\(lastOrder.totalItems) \(itemsWord) \("for_the_amount".localized) \(lastOrder.cost) \("com".localized)",
+                                     textComponent: textComponent, showChevron: true)
                 }
             } else {
                 ProfileActionRow(title: "deliveries".localized, subtitle: "no_deliveries_expected".localized, textComponent: textComponent, showChevron: false)
@@ -24,7 +25,7 @@ struct ProfileActionsView: View {
             
             if let lastCustomOrder = viewModel.customOrders.max(by: { $0.date < $1.date }) {
                 NavigationLink(destination: CustomOrdersView(viewModel: viewModel, currentTab: $currentTab)) {
-                    ProfileActionRow(title: "individual_orders".localized, subtitle: "\(lastCustomOrder.product?.name ?? "order_missing".localized)", textComponent: textComponent, showChevron: true)
+                    ProfileActionRow(title: "individual_orders".localized, subtitle: "\(lastCustomOrder.product?.name ?? "order_placed".localized)", textComponent: textComponent, showChevron: true)
                 }
             } else {
                 ProfileActionRow(title: "individual_orders".localized, subtitle: "no_orders".localized, textComponent: textComponent, showChevron: false)

@@ -29,7 +29,8 @@ struct OrderDetailsView: View {
         }
         .navigationTitle("delivery".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(leading: CustomBackButton())
+        .navigationBarBackButtonHidden(true)
+
     }
 }
 

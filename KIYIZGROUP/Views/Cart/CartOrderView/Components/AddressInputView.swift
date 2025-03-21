@@ -53,6 +53,10 @@ struct AddressInputView: View {
         .onAppear {
             if profileVM.authService.currentUser == nil {
                 cartVM.fetchGuestData()
+            } else {
+                Task {
+                    await profileVM.fetchUserProfile()
+                }
             }
         }
         .padding()
@@ -74,8 +78,12 @@ extension AddressInputView {
     
     private func saveAddress() {
         if profileVM.authService.currentUser != nil {
+            isSaving = true
+            
             Task {
                 await profileVM.saveProfile()
+                cartVM.updateOrderData(from: profileVM)
+                
                 dismiss()
             }
         } else {

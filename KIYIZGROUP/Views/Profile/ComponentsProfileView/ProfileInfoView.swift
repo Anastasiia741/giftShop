@@ -23,10 +23,7 @@ struct ProfileInfoView: View {
             }
             .background(Color.clear)
             
-            Divider()
-                .padding(.horizontal)
-                .background(Color.gray.opacity(0.5))
-            
+            CustomDivider()
             NavigationLink(destination: ContactInfoView()) {
                 HStack {
                     textComponent.createText(text: "contacts".localized, fontSize: 16, fontWeight: .bold, lightColor: .black, darkColor: .white)
@@ -57,9 +54,7 @@ struct ContactInfoView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             textComponent.createText(text: "any_questions".localized, fontSize: 22, fontWeight: .bold, lightColor: .black, darkColor: .white)
-            Divider()
-                .padding(.horizontal)
-                .background(Color.colorGreen)
+            CustomDivider()
             textComponent.createText(text: "leave_request".localized, fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
             HStack {
                 Image(systemName: "phone.fill")

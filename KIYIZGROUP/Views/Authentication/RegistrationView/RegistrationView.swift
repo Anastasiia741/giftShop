@@ -34,10 +34,7 @@ struct RegistrationView: View {
         .onChange(of: currentTab) { _, _ in
             dismiss()
                 }
-        .onTapGesture {
-            self.hideKeyboard()
-            UIApplication.shared.endEditing()
-        }
+        .onTapGesture { self.hideKeyboard() }
     }
         .navigationDestination(isPresented: $viewModel.isShowConfirmView) {
             ConfirmationView(customButton: customButton, email: viewModel.email, currentTab: $currentTab)

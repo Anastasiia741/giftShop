@@ -17,37 +17,68 @@ final class ChangePassword: ObservableObject {
             errorMessage = "current_password_is_required".localized
             return
         }
+        
         guard !newPassword.isEmpty else {
             errorMessage = "new_password_cannot_be_empty".localized
             return
         }
+        
         isLoading = true
         errorMessage = nil
         successMessage = nil
-        authService.reauthenticateUser(currentPassword: currentPassword) { [weak self] result in
-            switch result {
-            case .success:
-                self?.authService.updatePassword(newPassword: self?.newPassword ?? "") { updateResult in
-                    DispatchQueue.main.async {
-                        self?.isLoading = false
-                        switch updateResult {
-                        case .success:
-                            self?.successMessage = "password_updated_successfully".localized
-                            self?.resetPasswordFields()
-                        case .failure(let error):
-                            self?.errorMessage = "\("failed_to_update_password".localized) \(error.localizedDescription)"
-                        }
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.isLoading = false
-                    self?.errorMessage = "Reauthentication failed: \(error.localizedDescription)"
+        
+        authService.changePassword(currentPassword: currentPassword, newPassword: newPassword) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success:
+                    self?.successMessage = "password_updated_successfully".localized
+                    self?.resetPasswordFields()
+                case .failure(let error):
+                    self?.errorMessage = "\("failed_to_update_password".localized) \(error.localizedDescription)"
                 }
             }
         }
     }
 }
+
+    
+//    func changePassword() {
+//        guard !currentPassword.isEmpty else {
+//            errorMessage = "current_password_is_required".localized
+//            return
+//        }
+//        guard !newPassword.isEmpty else {
+//            errorMessage = "new_password_cannot_be_empty".localized
+//            return
+//        }
+//        isLoading = true
+//        errorMessage = nil
+//        successMessage = nil
+//        authService.reauthenticateUser(currentPassword: currentPassword) { [weak self] result in
+//            switch result {
+//            case .success:
+//                self?.authService.updatePassword(newPassword: self?.newPassword ?? "") { updateResult in
+//                    DispatchQueue.main.async {
+//                        self?.isLoading = false
+//                        switch updateResult {
+//                        case .success:
+//                            self?.successMessage = "password_updated_successfully".localized
+//                            self?.resetPasswordFields()
+//                        case .failure(let error):
+//                            self?.errorMessage = "\("failed_to_update_password".localized) \(error.localizedDescription)"
+//                        }
+//                    }
+//                }
+//            case .failure(let error):
+//                DispatchQueue.main.async {
+//                    self?.isLoading = false
+//                    self?.errorMessage = "Reauthentication failed: \(error.localizedDescription)"
+//                }
+//            }
+//        }
+//    }
+//}
 
 extension ChangePassword {
     private func resetPasswordFields() {

@@ -45,12 +45,8 @@ struct EditProfileView: View {
                         RoundedField(placeholder: "apartment_number".localized, borderColor: .gray, text: $viewModel.appatment)
                         RoundedField(placeholder: "floor_entrance".localized, borderColor: .gray, text: $viewModel.floor)
                         SectionHeader(title: "account".localized, showButton: false, action: nil)
-                        RoundedButton(title: "logout".localized) {
-                            showAuthView.toggle()
-                        }
-                        RoundedRedButton(title: "delete_your_account".localized) {
-                            showDeleteView.toggle()
-                        }
+                        RoundedButton(title: "logout".localized) { showAuthView.toggle() }
+                        RoundedRedButton(title: "delete_your_account".localized) { showDeleteView.toggle() }
                     }
                     .padding(.top, 16)
                     .padding(.horizontal)
@@ -60,10 +56,8 @@ struct EditProfileView: View {
                     TabBar(viewModel: mainTabVM)
                 }
             }
+            .onTapGesture { self.hideKeyboard() }
             .navigationBarHidden(true)
-            .onTapGesture {
-                self.hideKeyboard()
-            }
             .onChange(of: currentTab) { _, new_alue in
                 dismiss()
             }

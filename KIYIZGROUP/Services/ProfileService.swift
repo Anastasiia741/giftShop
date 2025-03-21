@@ -12,9 +12,10 @@ final class ProfileService {
     private var usersRef: CollectionReference {
         return db.collection("users")
     }
-    
+    init() {}
 }
 
+//MARK: - Profile
 extension ProfileService {
     func setProfile(user: NewUser, email: String, completion: @escaping (Result<NewUser, Error>) -> ()) {
         var updatedUser = user

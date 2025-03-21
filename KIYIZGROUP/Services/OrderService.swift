@@ -6,7 +6,9 @@ import Foundation
 
 final class OrderService {
     private let productRepository = ProductsRepository()
-    
+}
+
+extension OrderService {
     func calculatePrice() -> (Int, Int) {
         var totalPrice = 0
         var totalQuantity = 0

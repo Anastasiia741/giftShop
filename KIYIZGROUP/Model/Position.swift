@@ -10,7 +10,7 @@ struct Position: Identifiable {
     let product: Product
     let count: Int
     let image: String?
-
+    
     var cost: Int {
         return product.price * self.count
     }
@@ -24,7 +24,7 @@ struct Position: Identifiable {
         repres["fullPrice"] = product.fullPrice
         repres["cost"] = self.cost
         repres["image"] = image
-
+        
         return repres
     }
     
@@ -37,14 +37,24 @@ struct Position: Identifiable {
     
     init?(doc: QueryDocumentSnapshot) {
         let data = doc.data()
-        guard let id = data["id"] as? String else { return nil}
-        guard let name = data["name"] as? String else { return nil}
-        guard let price = data["price"] as? Int else { return nil}
-        guard let fullPrice = data["fullPrice"] as? Int else { return nil }
-        guard let image = data["image"] as? String else { return nil}
-
-        let product: Product = Product( id: 0, name: ["en": name], category: ["en": ""], detail: ["en": ""], price: price, fullPrice: fullPrice, image: "", quantity: 1)
-        guard let count = data["count"] as? Int else { return nil}
+        guard let id = data["id"] as? String,
+              let nameDict = data["name"] as? [String: String],
+              let price = data["price"] as? Int,
+              let fullPrice = data["fullPrice"] as? Int,
+              let count = data["count"] as? Int else {
+            return nil
+        }
+        
+        let image = data["image"] as? String
+        
+        let product = Product(id: 0,
+                              name: nameDict,
+                              category: ["en": ""],
+                              detail: ["en": ""],
+                              price: price,
+                              fullPrice: fullPrice,
+                              image: image ?? "",
+                              quantity: 1)
         
         self.id = id
         self.product = product

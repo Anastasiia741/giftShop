@@ -17,7 +17,7 @@ struct OrderSummaryView: View {
                 VStack(spacing: 12) {
                     ForEach(viewModel.orderProducts, id: \.id) { product in
                         HStack {
-                            textComponent.createText(text: "\(product.name)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
+                            textComponent.createText(text: "\(product.localizedValue(for: product.name))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                             Spacer()
                             textComponent.createText(text: "\(product.price * product.quantity) \("som".localized)", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                         }
@@ -29,9 +29,7 @@ struct OrderSummaryView: View {
                     }
                 }
                 .padding()
-                Divider()
-                    .padding(.horizontal)
-                    .background(.gray)
+                CustomDivider()
                 HStack {
                     textComponent.createText(text: "total_amount".localized, fontSize: 16, fontWeight: .bold, style: .headline, lightColor: .black, darkColor: .white)
                     Spacer()

@@ -16,9 +16,8 @@ final class CustomProductService: ObservableObject {
     }
 }
 
-//MARK: - fetchCustomProducts
+//MARK: - fetch custom products
 extension CustomProductService {
-    
     func fetchCustomProducts() async throws -> [CustomProduct] {
         let querySnapshot = try await db.collection(Accesses.customDesign).getDocuments()
         var products: [CustomProduct] = []
@@ -47,7 +46,7 @@ extension CustomProductService {
     }
 }
 
-//MARK: - fetchCustomOrders for Admin
+//MARK: - fetch custom orders for Admin
 extension CustomProductService {
     func fetchCustomOrders() async throws -> [CustomOrder] {
         let querySnapshot = try await db.collection("customOrders").getDocuments()

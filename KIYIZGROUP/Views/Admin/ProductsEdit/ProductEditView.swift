@@ -37,7 +37,7 @@ struct ProductEditView: View {
                     }
                 }
                 .padding(.horizontal)
-                getTextFieldsForLanguage(selectedLanguageTab)
+                getTextFields(selectedLanguageTab)
                 priceSection
                 saveDeleteButtons
             }
@@ -87,7 +87,7 @@ struct ProductEditView: View {
 
 extension ProductEditView {
     @ViewBuilder
-    private func getTextFieldsForLanguage(_ language: LanguageTab) -> some View {
+    private func getTextFields(_ language: LanguageTab) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             let langCode = getLanguageCode(language)
             
@@ -98,7 +98,9 @@ extension ProductEditView {
                 get: { viewModel.selectedProduct?.name[langCode] ?? "" },
                 set: { viewModel.selectedProduct?.name[langCode] = $0 }
             ))
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.horizontal)
+            .frame(height: 30)
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             .padding(.horizontal)
             
             textComponent.createText(text: "Категория (\(language.rawValue))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
@@ -108,7 +110,9 @@ extension ProductEditView {
                 get: { viewModel.selectedProduct?.category[langCode] ?? "" },
                 set: { viewModel.selectedProduct?.category[langCode] = $0 }
             ))
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.horizontal)
+            .frame(height: 30)
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             .padding(.horizontal)
             
             textComponent.createText(text: "Описание (\(language.rawValue))", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
@@ -118,6 +122,7 @@ extension ProductEditView {
                 get: { viewModel.selectedProduct?.detail[langCode] ?? "" },
                 set: { viewModel.selectedProduct?.detail[langCode] = $0 }
             ))
+            .padding(.horizontal)
             .frame(height: 100)
             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
             .padding(.horizontal)
@@ -134,7 +139,9 @@ extension ProductEditView {
             ))
             .keyboardType(.decimalPad)
             .padding(.horizontal)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .frame(height: 30)
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+            .padding(.horizontal)
             
             textComponent.createText(text: "Цена до скидки", fontSize: 16, fontWeight: .regular, lightColor: .black, darkColor: .white)
                 .padding(.horizontal)
@@ -144,7 +151,10 @@ extension ProductEditView {
             ))
             .keyboardType(.decimalPad)
             .padding(.horizontal)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .frame(height: 30)
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+            .padding(.horizontal)
+            
         }
     }
     

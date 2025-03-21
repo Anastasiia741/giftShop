@@ -30,8 +30,3 @@ struct PromoCodeView: View {
     }
 }
 
-struct PromoCodeView_Previews: PreviewProvider {
-    static var previews: some View {
-        PromoCodeView(promo: .constant(""), isPromoSheetVisible: .constant(false))
-    }
-}

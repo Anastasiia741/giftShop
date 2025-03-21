@@ -11,20 +11,10 @@ final class AuthService {
     var currentUser: User? {
         return auth.currentUser
     }
-    
-    init() {}
-    
-    //  MARK: - SignIn
-    func signIn(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
-        auth.signIn(withEmail: email, password: password)  { result, error in
-            if let result = result {
-                completion(.success(result.user))
-            } else if let error = error {
-                completion(.failure(error))
-            }
-        }
-    }
-    
+}
+
+//  MARK: - Authentication
+extension AuthService {
     //  MARK: - SignUp
     func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
         auth.createUser(withEmail: email, password: password) { result, error in
@@ -44,6 +34,17 @@ final class AuthService {
         }
     }
     
+    //  MARK: - SignIn
+    func signIn(email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
+        auth.signIn(withEmail: email, password: password)  { result, error in
+            if let result = result {
+                completion(.success(result.user))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        }
+    }
+    
     //  MARK: - SignOut
     func signOut(completion: @escaping (Result<Void, Error>) -> Void) {
         do {
@@ -53,34 +54,37 @@ final class AuthService {
             completion(.failure(error))
         }
     }
-    
-    //  MARK: - Change password
-    func reauthenticateUser(currentPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let email = Auth.auth().currentUser?.email else {
-            completion(.failure(NSError(domain: "No email found", code: 0)))
+}
+
+//  MARK: - Change password
+extension AuthService {
+    func changePassword(currentPassword: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let user = Auth.auth().currentUser, let email = user.email else {
+            completion(.failure(NSError(domain: "User not found", code: 0)))
             return
         }
+        
         let credential = EmailAuthProvider.credential(withEmail: email, password: currentPassword)
-        Auth.auth().currentUser?.reauthenticate(with: credential) { _, error in
+        
+        user.reauthenticate(with: credential) { _, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                completion(.success(()))
+                return
+            }
+            
+            user.updatePassword(to: newPassword) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
             }
         }
     }
-    
-    func updatePassword(newPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
-            }
-        }
-    }
-    
-    //  MARK: - Delete account
+}
+
+//  MARK: - Delete account
+extension AuthService {
     func deleteAccount(completion: @escaping (Result<Void, Error>) -> Void){
         guard auth.currentUser != nil else {
             return

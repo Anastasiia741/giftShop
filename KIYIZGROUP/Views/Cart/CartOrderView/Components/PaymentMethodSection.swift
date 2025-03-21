@@ -73,8 +73,7 @@ private extension PaymentMethodSection {
                     .padding()
                 }
                 if method != payments.last {
-                    Divider()
-                        .padding(.horizontal)
+                    CustomDivider()
                 }
             }
         }
